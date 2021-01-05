@@ -1,0 +1,129 @@
+div,
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+#outerTotalWrapper {
+    width: 1250px;
+    min-height: 10px;
+
+    margin: auto;
+}
+
+#upperArticle {
+    box-sizing: border-box;
+
+    display: flex;
+    width: 100%;
+}
+
+#product_carousal {
+    width: 60%;
+}
+
+#product_info {
+    padding-top: 30px;
+
+    width: 40%;
+}
+
+#carousel-example-generic {
+    margin: auto;
+
+    width: 680px;
+}
+
+#carousel-example-generic > .carousel-inner > div > img {
+    height: 700px;
+}
+
+.carouselTitle {
+    font-size: 64px;
+    font-weight: 100;
+    color: white;
+    text-shadow: 0 1px 2px #000;
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+}
+
+#productOptionDisplay > tr {
+    text-align: center;
+    height: 30px;
+}
+
+#productOptionDisplay > tr > th {
+    background-color: whitesmoke;
+    border: 1px solid lightgrey;
+}
+
+#optionSelecter {
+    display: flex;
+    justify-content: space-between;
+}
+
+#optionSelecter > div {
+    width: 33%;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+}
+
+#middlePolicyInfo {
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+
+    min-height: 10px;
+}
+
+#leftPolicyArticle {
+    width: 47.5%;
+    margin-right: 3%;
+}
+#rightPolicyArticle {
+    width: 47.5%;
+}
+
+#bottomBoard {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#bottomBoard > div {
+    width: 49%;
+}
+
+.reviewTable {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    width: 100%;
+    margin-top: 10px;
+}
+.reviewTable > thead {
+    border-bottom: 1px solid lightgray;
+}
+
+.reviewTable > thead > tr > th {
+    text-align: center;
+    font-size: 0.7rem;
+    height: 30px;
+    color: darkgray;
+}
+.reviewTable > tbody > tr > td {
+    text-align: center;
+    font-size: 0.7rem;
+    height: 30px;
+    color: black;
+}
+
+.btn-outline-dark {
+    height: 30px;
+    line-height: 10px;
+    float: right;
+    margin-top: 10px;
+}
