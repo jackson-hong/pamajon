@@ -49,12 +49,12 @@ div,
     left: 80px;
 }
 
-#productOptionDisplay > tr {
+.productOptionHead > tr {
     text-align: center;
     height: 30px;
 }
 
-#productOptionDisplay > tr > th {
+.productOptionHead > tr > th {
     background-color: whitesmoke;
     border: 1px solid lightgrey;
 }
@@ -77,6 +77,12 @@ div,
     margin-top: 20px;
 
     min-height: 10px;
+}
+
+.feeDisplayTable td,
+th {
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
 #leftPolicyArticle {
@@ -119,6 +125,11 @@ div,
     font-size: 0.7rem;
     height: 30px;
     color: black;
+}
+
+.reviewTable > tbody > tr:hover {
+    background-color: rgb(243, 243, 243);
+    cursor: pointer;
 }
 
 .btn-outline-dark {

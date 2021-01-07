@@ -68,18 +68,18 @@
                 </div>
                 <hr>
                 <table>
-                    <tbody>
+                    <tbody class="feeDisplayTable">
                         <tr>
-                            <th>판매가</th>
-                            <th>89,000</th>
+                            <td>판매가</td>
+                            <th>&nbsp;&nbsp;&nbsp;89,000</th>
                         </tr>
                         <tr>
-                            <th>배송방법</th>
-                            <th>택배</th>
+                            <td>배송방법</td>
+                            <th>&nbsp;&nbsp;&nbsp;택배</th>
                         </tr>
                         <tr>
-                            <th>배송비</th>
-                            <th>9천만원</th>
+                            <td>배송비</td>
+                            <th>&nbsp;&nbsp;&nbsp;9천만원</th>
                         </tr>
     
                 </tbody>
@@ -89,10 +89,12 @@
                 <tbody>
                         <tr>
                             <th>옵션선택</th>
-                            <th><select>
-                                <option value="null">- [필수] 필수 옵션을 선택해주세요 -</option>
-                                <option value="null">----------------------------------</option>
-                                <option value="L">L(100~103)</option>
+                            <th><select id="productSelector" name="productOption">
+                                <option value="empty">- [필수] 필수 옵션을 선택해주세요 -</option>
+                                <option value="empty">----------------------------------</option>
+                                <option value="M(95~100)">M(95~100)</option>
+                                <option value="L(100~105)">L(100~105)</option>
+                                <option value="XL(105~110)">XL(105~110)</option>
                             </select>
                             </th>
                         </tr>
@@ -106,8 +108,8 @@
                     </tr>
                 </tbody>
             </table>
-            <table style="width:100%">
-                <thead id="productOptionDisplay">
+            <table style="width:100%" id="productOptionDisplay">
+                <thead class="productOptionHead">
                     <tr>
                         <th style="width:50%">option</th>
                         <th style="width:20%">quantity</th>
@@ -115,16 +117,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th style="width:50%">L(100~103)</th>
-                    <th style="display: flex; padding-top: 5px;" ><input type="number" name="quantity" style="width:80px" ><div>&nbsp;x</div></th>
                     
-                    <th align="center">22000</th>
-                  </tr>
+     
                 </tbody>
             </table>
             <hr>
-            <h3 align="right">Total:229,000 KRW</h3>
+            <h3 align="right" id="priceDisplay">Total:0 KRW</h3>
             <hr>
             <div id="optionSelecter">
                 <div style="background-color: royalblue;">BUY-NOW</div>
@@ -157,7 +155,7 @@
         <div id="bottomBoard">
             <div id="tableLeft">
                 <div style="font-weight: bold;">REVIEW</div>
-                <table class=reviewTable>
+                <table class="reviewTable review">
                     <thead>
                         <tr>
                             <th style="width: 10%;">no</th>
@@ -179,7 +177,7 @@
             </div>
             <div id="tableRight">
                 <div style="font-weight: bold;">QNA</div>
-                <table class=reviewTable>
+                <table class="reviewTable qna">
                     <thead>
                         <tr>
                             <th style="width: 10%;">no</th>
@@ -201,5 +199,6 @@
             </div>
         </div>
     </div>
+    <script defer src="../../resources/js/mallDetailView/mallPriceController.js"></script>
 </body>
 </html>
