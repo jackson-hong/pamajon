@@ -1,11 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pamajon</title>
-    <link rel="stylesheet" type="text/css" href="resources/images/glider.css">
+    <link rel="stylesheet" type="text/css" href="glider.css">
     <style>
         body {
             /*border:1px red solid;*/
@@ -283,7 +281,7 @@
     <div id="content">
         <div id="logo-search">
             <div id="logo-container">
-                <img id="logo" src="resources/images/Logo.png">
+                <img id="logo" src="Logo.png">
             </div>
             <div id="searchbar-container">
                 <div id="searchbar">
@@ -342,10 +340,10 @@
             </div>
             <div id="center-carousel" class="glider-contain">
                 <div class="glider">
-                    <div class="glider-pic-con"><img src="resources/images/glider-1.jpg"></div>
-                    <div class="glider-pic-con"><img src="resources/images/glider-2.jpg"></div>
-                    <div class="glider-pic-con"><img src="resources/images/glider-3.jpg"></div>
-                    <div class="glider-pic-con"><img src="resources/images/glider-4.jpg"></div>
+                    <div class="glider-pic-con"><img src="glider-1.jpg"></div>
+                    <div class="glider-pic-con"><img src="glider-2.jpg"></div>
+                    <div class="glider-pic-con"><img src="glider-3.jpg"></div>
+                    <div class="glider-pic-con"><img src="glider-4.jpg"></div>
                 </div>
                 <button aria-label="Previous" class="glider-prev">«</button>
                 <button aria-label="Next" class="glider-next">»</button>
@@ -366,7 +364,7 @@
         <div id="new-arrival">
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -382,7 +380,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -398,7 +396,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -414,7 +412,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -430,7 +428,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -446,7 +444,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -462,7 +460,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -478,7 +476,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -494,7 +492,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -510,7 +508,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="resources/images/new1.jpg">
+                    <img src="new1.jpg">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -528,7 +526,7 @@
         <hr id="footer-separator">
         <div id="footer">
             <div id="footer-logo-con">
-                <img src="resources/images/Logo.png">
+                <img src="Logo.png">
             </div>
             <div id="footer-info1">
                 <b>COMPANY INFO</b><br><br>
@@ -565,7 +563,7 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-<script src="resources/js/glider.js"></script>
+<script src="glider.js"></script>
 <script>
     new Glider(document.querySelector('.glider'), {
         slidesToShow: 1,
