@@ -1,4 +1,4 @@
-package com.pamajon.controller;
+package com.pamajon.common;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

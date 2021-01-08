@@ -1,4 +1,4 @@
-package com.pamajon.board.model.vo;
+package com.pamajon.member.model.vo;
 
 import lombok.Data;
 
