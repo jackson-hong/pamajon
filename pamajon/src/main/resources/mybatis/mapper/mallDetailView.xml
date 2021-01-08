@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mallDetailView">
+
+    <resultMap id="cityResultSet" type="com.pamajon.mybatisTest.model.vo.City">
+        <result column="ID" property="cityId"></result>
+        <result column="NAME" property="cityName"></result>
+        <result column="COUNTRY" property="cityCode"></result>
+        <result column="POPULATION" property="population"></result>
+    </resultMap>
+
+
+    <select id="citySelector" resultMap="cityResultSet">
+        SELECT * FROM TEST.CITY
+    </select>
+</mapper>    
