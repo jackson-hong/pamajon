@@ -28,7 +28,9 @@ $("select[name='productOption']").on('change', function () {
             `<tr class="purchaseInfoDisplay">
             <th style="width:50%">${$("select[name='productOption']").val()}<input type="hidden"  name="productSize[${parseInt(arrayNum)}]" value="${$("select[name='productOption']").val()}">
             </th>
-            <th style="display: flex; padding-top: 5px;" ><input type="number" value="1" min="1" onchange="priceCal(event);" name="quantity[${parseInt(arrayNum)}]" style="width:80px" ><div onclick="optionDelete(this)">&nbsp;x</div></th>
+            <th style="display: flex; padding-top: 5px;" >
+            <input type="number" value="1" min="1" onchange="priceCal(event);" name="quantity[${parseInt(arrayNum)}]" style="width:80px" >
+            <div onclick="optionDelete(this)" style="cursor:pointer;">&nbsp;x</div></th>
             <th align="center">89000</th>
                 </tr>`;
 
