@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Pamajon</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/glider.css}">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
+    <script th:src="@{/js/glider.js}"></script>
     <style>
         body {
             /*border:1px red solid;*/
@@ -318,7 +321,7 @@
                     LOG-IN
                 </div>
                 <div class="user-cate">
-                    MYPAGE
+                    <a th:href="@{/member/myPage}">MYPAGE</a>
                 </div>
             </div>
         </div>
@@ -561,9 +564,6 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
-<script th:src="@{/js/glider.js}"></script>
 <script>
     new Glider(document.querySelector('.glider'), {
         slidesToShow: 1,

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pamajon</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/glider.css}">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
+    <script th:src="@{/js/glider.js}"></script>
+    <style>
+        body {
+            /*border:1px red solid;*/
+            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+            color: #353535;
+        }
+        #wrapper {
+            display: flex;
+            justify-content: center;
+            padding-top: 1.5em;
+        }
+        #content {
+            width:88%;
+            height: 100em;
+        }
+        #logo-search{
+            display: flex;
+        }
+        #logo-container{
+            display: flex;
+            align-items: center;
+            width:30%;
+        }
+        #searchbar-container{
+            width:40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #searchbar {
+            display: flex;
+            align-items: center;
+        }
+        #search-input{
+            border: 2px rgb(7,34,66) solid;
+            height:3em;
+            width: 34em;
+        }
+        #search-input:focus{
+            outline: none;
+        }
+        #search-btn {
+            border: 2px rgb(7,34,66) solid;
+            background-color: rgb(7,34,66);
+        }
+        ion-icon[name="search-outline"]{
+            font-size: 2.72em;
+            color: white;
+        }
+        #shop-info-container{
+            width:30%;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 11px;
+        }
+        #logo{
+            width:100px;
+            height:100px;
+        }
+        #menus {
+            display: flex;
+        }
+        #shop-cates {
+            width:80%;
+            display: flex;
+        }
+        #user-cates{
+            width:20%;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .shop-cate{
+            margin-right: 5em;
+            height: 3.5em;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            border:0;
+        }
+        .user-cate{
+            margin-right: 1em;
+            display: flex;
+            align-items: center;
+            font-size: small;
+            border:0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="content">
+        <div id="logo-search">
+            <div id="logo-container">
+                <img id="logo" th:src="@{/images/Logo.png}">
+            </div>
+            <div id="searchbar-container">
+                <div id="searchbar">
+                    <input id="search-input" type="text">
+                    <button id="search-btn" type="button"><ion-icon name="search-outline"></ion-icon></button>
+                </div>
+            </div>
+            <div id="shop-info-container">
+                MON-FRI : 11~9 / SAT : 12~9 / SUN : 12~8<br>
+                555-13 4TH FL. SINSA-DONG, GANGNAM-GU, SEOUL<br>
+                JHLEE1@BLUESMAN.CO.KR / 02-543-7137
+            </div>
+        </div>
+        <div id="menus">
+            <div id="shop-cates">
+                <div class="shop-cate">
+                    HOME
+                </div>
+                <div class="shop-cate">
+                    NEW ARRIVAL
+                </div>
+                <div class="shop-cate">
+                    BRAND
+                </div>
+                <div class="shop-cate">
+                    CATEGORIES
+                </div>
+            </div>
+            <div id="user-cates">
+                <div class="user-cate">
+                    JOIN
+                </div>
+                <div class="user-cate">
+                    LOG-IN
+                </div>
+                <div class="user-cate">
+                    MYPAGE
+                </div>
+            </div>
+        </div>
+        <hr>
