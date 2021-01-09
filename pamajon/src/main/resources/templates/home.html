@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Pamajon</title>
-    <link rel="stylesheet" type="text/css" href="glider.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/glider.css}">
     <style>
         body {
             /*border:1px red solid;*/
@@ -281,7 +281,7 @@
     <div id="content">
         <div id="logo-search">
             <div id="logo-container">
-                <img id="logo" src="Logo.png">
+                <img id="logo" th:src="@{/images/Logo.png}">
             </div>
             <div id="searchbar-container">
                 <div id="searchbar">
@@ -340,10 +340,10 @@
             </div>
             <div id="center-carousel" class="glider-contain">
                 <div class="glider">
-                    <div class="glider-pic-con"><img src="glider-1.jpg"></div>
-                    <div class="glider-pic-con"><img src="glider-2.jpg"></div>
-                    <div class="glider-pic-con"><img src="glider-3.jpg"></div>
-                    <div class="glider-pic-con"><img src="glider-4.jpg"></div>
+                    <div class="glider-pic-con"><img th:src="@{/images/glider-1.jpg}"></div>
+                    <div class="glider-pic-con"><img th:src="@{/images/glider-2.jpg}"></div>
+                    <div class="glider-pic-con"><img th:src="@{/images/glider-3.jpg}"></div>
+                    <div class="glider-pic-con"><img th:src="@{/images/glider-4.jpg}"></div>
                 </div>
                 <button aria-label="Previous" class="glider-prev">«</button>
                 <button aria-label="Next" class="glider-next">»</button>
@@ -364,7 +364,7 @@
         <div id="new-arrival">
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -380,7 +380,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -396,7 +396,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -412,7 +412,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -428,7 +428,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -444,7 +444,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -460,7 +460,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -476,7 +476,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -492,7 +492,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -508,7 +508,7 @@
             </div>
             <div class="item">
                 <div class="item-img-con">
-                    <img src="new1.jpg">
+                    <img th:src="@{/images/new1.jpg}">
                 </div>
                 <div class="item-description">
                     <div class="item-brand">
@@ -526,7 +526,7 @@
         <hr id="footer-separator">
         <div id="footer">
             <div id="footer-logo-con">
-                <img src="Logo.png">
+                <img th:src="@{/images/Logo.png}">
             </div>
             <div id="footer-info1">
                 <b>COMPANY INFO</b><br><br>
@@ -562,8 +562,8 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-<script src="glider.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
+<script th:src="@{/js/glider.js}"></script>
 <script>
     new Glider(document.querySelector('.glider'), {
         slidesToShow: 1,
