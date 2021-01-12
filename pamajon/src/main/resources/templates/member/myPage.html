@@ -1,6 +1,396 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <th:block th:replace="common/header.html"></th:block>
+    <style>
+        #title-idx {
+            margin-top:2.5em;
+            display: flex;
+        }
+        #title {
+            width: 50%;
+            font-size:18px;
+            font-weight: 900;
+            font-family: "Gill Sans", sans-serif;
+            color: #353535;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: 1.5px;
+        }
+        #idx {
+            width: 50%;
+            text-align: right;
+            font-weight: bold;
+        }
+        #my-con-wrap {
+            display: flex;
+            justify-content: center;
+        }
+        #my-con{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-width: 100em;
+            max-width: 290em;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Spoqa Han Sans','Sans-serif'!important;
+            align-self: center;
+        }
+        #my-con-con{
+            margin-top:2em;
+            width: 100%;
+            height: 7em;
+            border: 1px silver solid;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #user-grade-con {
+            margin:1em;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        #user-icon{
+            width: 65px;
+            height: 65px;
+            background:rgb(141,152,168);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 35px;
+        }
+        #user-grade-con .vl {
+            margin:1em;
+            width: 1px;
+            height: 86%;
+            border-left: 1px lightgray solid;
+        }
+        #user-grade-description {
+            display: flex;
+            align-items: center;
+            font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        }
+        .blue-text {
+            color:#008bcc;
+            font-weight: bold;
+        }
+        #mileage-con {
+            width: 100%;
+            margin-top:1.5em;
+            height: 12em;
+            border: 1px rgb(232,232,232) solid;
+            -webkit-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+            -moz-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+            box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+            display: flex;
+        }
+        #mileage-con>div {
+            width: 50%;
+        }
+        #mileage-con>div>div {
+            margin:3em;
+            margin-right: 3em;
+            margin-left: 3em;
+        }
+        #mileage-left {
+            border-right: 1px rgb(232,232,232) solid;
+        }
+        .mileage-left-ele {
+            margin-top:1em;
+            font-size: 12px;
+            display: flex;
+        }
+        .mileage-right-ele {
+            margin-top:1em;
+            font-size: 12px;
+            display: flex;
+        }
+        .mileage-name {
+            width: 20%;
+        }
+        .mileage {
+            width: 80%;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            text-align: right;
+            font-weight: bold;
+        }
+        #order-con {
+            width: 100%;
+            margin-top:1.5em;
+            border: 1px gray solid;
+            height: 14em;
+        }
+        #order-title {
+            width: 100%;
+            height: 25%;
+            background: rgb(246,246,246);
+            display: flex;
+            align-items: center;
+            text-indent: 10px;
+            font-size: 14px;
+            font-weight: 900;
+            border-bottom:1px silver solid;
+        }
+        small#order-small {
+            font-weight: normal;
+            text-indent: 5px;
+        }
+        small#order-small span {
+            font-weight: normal;
+        }
+        #order-content {
+            height: 74%;
+        }
+        #order-content-in {
+            margin: 2em;
+            height: 58%;
+            display: flex;
+        }
+        .order-content-col{
+            width: 20%;
+            height: 100%;
+            border-right: 1px silver dotted;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .order-content-col:nth-of-type(5){
+            border-right: 0;
+        }
+        .order-content-text {
+            display: flex;
+            flex-direction: column;
+            font-weight: 900;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            font-size:15px;
+        }
+        .order-content-last {
+            font-weight: normal;
+            font-size:13px;
+        }
+        .order-content-last>div {
+            margin-bottom: 0.4em;
+        }
+        .order-content-text>.blue-text {
+            font-size: 20px;
+        }
+        #thick-hr {
+            margin-top: 2em;
+            width: 100%;
+            border-top:3px gray solid;
+        }
+        .mypage-menu{
+            width: 100%;
+            height: 10em;
+            border-bottom: 1px rgb(232,232,232) solid;
+        }
+        .mypage-menu:nth-of-type(10){
+            border-bottom:3px gray solid;
+        }
+        .mypage-menu-ele{
+            margin: 1.5em;
+        }
+        .mypage-menu-ele>.mypage-menu-title {
+            font-size: 19px;
+            font-weight: 900;
+        }
+        .mypage-menu-ele>.mypage-menu-title small {
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .mypage-menu-description {
+            margin-top: 1em;
+            font-size: 13px;
+            color:gray;
+        }
+    </style>
+    <div id="title-idx">
+        <div id="title">
+            마이 페이지
+        </div>
+        <div id="idx">
+            HOME > MYPAGE
+        </div>
+    </div>
+    <div id="my-con-wrap">
+        <div id="my-con">
+            <div id="my-con-con">
+                <div id="user-grade-con">
+                    <div id="user-icon">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <div class="vl"></div>
+                    <div id="user-grade-description">
+                        저희 쇼핑몰을 이용해 주셔서 감사합니다. &nbsp<span class="blue-text">홍지운</span>&nbsp님은&nbsp<strong>[일반회원]</strong>&nbsp회원이십니다.
+                    </div>
+                </div>
+            </div>
+            <div id="mileage-con">
+                <div id="mileage-left">
+                    <div id="mileage-left-in">
+                        <div class="mileage-left-ele">
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp가용적립금</div><div class="mileage"><span class="blue-text"> 1,000원</span></div>
+                        </div>
+                        <div class="mileage-left-ele">
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp사용적립금</div><div class="mileage">0원</div>
+                        </div>
+                        <div class="mileage-left-ele">
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp쿠폰</div><div class="mileage">6</div>개
+                        </div>
+                    </div>
+                </div>
+                <div id="mileage-right">
+                    <div id="mileage-right-in">
+                        <div class="mileage-right-ele">
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp총적립금</div><div class="mileage">1,000원</div>
+                        </div>
+                        <div class="mileage-right-ele">
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp총 주문</div><div class="mileage">KRW 0(0회)</div>
+                        </div>
+                        <div class="mileage-right-ele">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="order-con">
+                <div id="order-title">
+                    나의 주문처리 현황<small id="order-small">(최근 <span class="blue-text">3개월</span> 기준)</small>
+                </div>
+                <div id="order-content">
+                    <div id="order-content-in">
+                        <div class="order-content-col">
+                            <div class="order-content-text">
+                                입금전
+                                <br>
+                                <br>
+                                <span class="blue-text">0</span>
+                            </div>
+                        </div>
+                        <div class="order-content-col">
+                            <div class="order-content-text">
+                                배송준비중
+                                <br>
+                                <br>
+                                <span class="blue-text">0</span>
+                            </div>
+                        </div>
+                        <div class="order-content-col">
+                            <div class="order-content-text">
+                                배송중
+                                <br>
+                                <br>
+                                <span class="blue-text">0</span>
+                            </div>
+                        </div>
+                        <div class="order-content-col">
+                            <div class="order-content-text">
+                                배송완료
+                                <br>
+                                <br>
+                                <span class="blue-text">0</span>
+                            </div>
+                        </div>
+                        <div class="order-content-col">
+                            <div class="order-content-text order-content-last">
+                                <div class="order-content-record">
+                                   * 취소 : 0
+                                </div>
+                                <div class="order-content-record">
+                                    * 교환 : 0
+                                </div>
+                                <div class="order-content-record">
+                                    * 반품 : 0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr id="thick-hr">
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                            order <small>주문내역조회</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        고객님께서 주문하신 상품의 주문내역을 확인하실 수 있습니다.<br>
+                        비회원의 경우, 주문서의 주문번호와 비밀번호로 주문조회가 가능합니다.
+                    </div>
+                </div>
+            </div>
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                        profile <small>회원 정보</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        회원이신 고객님의 개인정보를 관리하는 공간입니다.<br>
+                        개인정보를 최신 정보로 유지하시면 보다 간편히 쇼핑을 즐기실 수 있습니다.
+                    </div>
+                </div>
+            </div>
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                        wishlist <small>관심 상품</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        관심상품으로 등록하신 상품의 목록을 보여드립니다.
+                    </div>
+                </div>
+            </div>
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                        mileage <small>적립금</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        적립금은 상품 구매 시 사용하실 수 있습니다.<br>
+                        적립된 금액은 현금으로 환불되지 않습니다.
+                    </div>
+                </div>
+            </div>
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                        coupon <small>쿠폰</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        고객님이 보유하고 계신 쿠폰내역을 보여드립니다.
+                    </div>
+                </div>
+            </div>
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                        board <small>게시물 관리</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        고객님께서 작성하신 게시물을 관리하는 공간입니다.<br>
+                        고객님께서 작성하신 글을 한눈에 관리하실 수 있습니다.
+                    </div>
+                </div>
+            </div>
+            <div class="mypage-menu">
+                <div class="mypage-menu-ele">
+                    <div class="mypage-menu-title">
+                        address <small>배송 주소록 관리</small>
+                    </div>
+                    <div class="mypage-menu-description">
+                        자주 사용하는 배송지를 등록하고 관리하실 수 있습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <th:block th:replace="common/footer.html"></th:block>
 </html>
