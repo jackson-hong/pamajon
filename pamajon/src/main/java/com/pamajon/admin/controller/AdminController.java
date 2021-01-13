@@ -13,6 +13,26 @@ public class AdminController {
         return"admin/adminMainPage";
 
     }
+    @GetMapping("/bResgistration")
+    public String gotoResgistration(){
+
+        return "admin/profile";
+    }
+
+    @GetMapping("/memberManager")
+    public String gotoMemberHandler(){
+
+        return "admin/memberHandler";
+    }
+
+    @GetMapping("/productManager")
+    public String gotoProductHandler(){
+
+        return "admin/productHandler";
+    }
+
+
+
 
 
 }
