@@ -13,17 +13,22 @@
             font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
             color: #353535;
         }
+
         #wrapper {
             display: flex;
             justify-content: center;
             padding-top: 1.5em;
         }
         #content {
-            width:88%;
+            width:86%;
             height: 100em;
         }
         #logo-search{
             display: flex;
+            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+            font-family: "Gill Sans";
+            color: #353535;
+            -webkit-font-smoothing: antialiased;
         }
         #logo-container{
             display: flex;
@@ -71,6 +76,10 @@
         }
         #menus {
             display: flex;
+            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+            font-family: "Gill Sans";
+            color: #353535;
+            -webkit-font-smoothing: antialiased;
         }
         #shop-cates {
             width:80%;
@@ -315,10 +324,10 @@
             </div>
             <div id="user-cates">
                 <div class="user-cate">
-                    JOIN
+                    <a th:href="@{/member/join}">JOIN</a>
                 </div>
                 <div class="user-cate">
-                    LOG-IN
+                    <a th:href="@{/member/login}">LOGIN</a>
                 </div>
                 <div class="user-cate">
                     <a th:href="@{/member/myPage}">MYPAGE</a>

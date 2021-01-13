@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/header.html"></th:block>
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #login-con {
+        width: 100%;
+        height: 30em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #login-con-in{
+        width: 40em;
+    }
+    #login-title{
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 1em;
+    }
+    #login-content {
+        display: flex;
+    }
+    #login-left {
+        height: 100%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+    #login-left input {
+        width: 94%;
+        height: 2.02em;
+        border: 1px rgb(220,220,220) solid;
+        padding-left: 0.5em;
+
+    }
+    #login-left #id-input {
+        margin-bottom: 0.5em;
+    }
+    #login-right{
+        height: 100%;
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+    }
+    #login-button {
+        width: 100%;
+        height: 4.9em;
+        background: rgb(55,88,136);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: white;
+    }
+    .btn {
+        cursor: pointer;
+    }
+    .btnLay {
+        background: white;
+        border-radius: 1px;
+        border:1px silver solid;
+        width:5em;
+        height: 2em;
+        font-size: 12px;
+    }
+    #login-left-btns {
+        display: flex;
+        margin-top: 0.5em;
+    }
+    #login-left-btns button{
+        margin-right: 0.5em;
+    }
+    #login-right button {
+        margin-top: 0.5em;
+        width: 100%;
+    }
+</style>
+<div id="title-idx">
+    <div id="title">
+        LOGIN
+    </div>
+    <div id="idx">
+        HOME > LOGIN
+    </div>
+</div>
+<div id="login-con">
+    <div id="login-con-in">
+        <div id="login-title">MEMBER LOGIN</div>
+        <div id="login-content">
+            <div id="login-left">
+                <input type="text" id="id-input" placeholder="아이디">
+                <input type="text" id="password-input" placeholder="비밀번호">
+                <div id="login-left-btns">
+                    <button type="button" name="id" class="btnLay btn">find ID</button>
+                    <button type="button" name="password" class="btnLay btn">find PW</button>
+                </div>
+            </div>
+            <div id="login-right">
+                <div id="login-button" class="btn">
+                    LOGIN
+                </div>
+                <button type="button" class="btnLay btn">join</button>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="common/footer.html"></th:block>
+</html>
