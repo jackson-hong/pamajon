@@ -1,8 +1,146 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="common/header.html"></th:block>
-
-
-
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #table-wrapper {
+        margin-top: 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    #description {
+        text-align: right;
+        margin-bottom: 0.5em;
+    }
+    table {
+        min-width: 100em;
+        max-width: 120em;
+        border: 1px silver solid;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    td{
+        border:1px silver solid;
+        height: 34px;
+    }
+    .table-title {
+        width: 12%;
+        text-indent: 15px;
+        font-size: 14px;
+        background: rgb(251,250,250);
+    }
+    .table-content {
+        font-size: 14px;
+        width: 78%;
+        text-indent: 10px;
+    }
+    input {
+        border:1px rgb(220,220,220) solid;
+        height: 1.5em;
+        margin: 0.5em;
+    }
+    .address {
+        text-indent: 0;
+        padding-left: 10px;
+    }
+    ion-icon[name="medical"]{
+        color: orangered;
+        font-size: 10px;
+    }
+</style>
+<div id="title-idx">
+    <div id="title">
+        JOIN
+    </div>
+    <div id="idx">
+        HOME > JOIN
+    </div>
+</div>
+<div id="table-wrapper">
+    <div id="description">
+        <ion-icon name="medical"></ion-icon>필수입력사항
+    </div>
+    <table>
+        <tr>
+            <td class="table-title">아이디<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">비밀번호 확인<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">비밀번호 확인 질문<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">비밀번호 확인 답변<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">주소</td>
+            <td class="table-content address">
+                <input><br>
+                <input><br>
+                <input><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">일반전화<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">휴대전화</td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-title">이메일<ion-icon name="medical"></ion-icon></td>
+            <td class="table-content">
+                <input>
+            </td>
+        </tr>
+    </table>
+</div>
 <th:block th:replace="common/footer.html"></th:block>
 </html>
