@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../resources/css/malldetail/mallDetailview.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/malldetail/mallDetailview.css}">
 </head>
 <body>
+
+<th:block th:replace="common/header.html"></th:block>
+
     <div id="outerTotalWrapper">
         <div id="upperArticle">
             <div id="product_carousal">
@@ -199,6 +202,10 @@
             </div>
         </div>
     </div>
-    <script defer th:src="../../resources/js/mallDetailView/mallPriceController.js"></script>
+
+<th:block th:replace="common/footer.html"></th:block>
+
+
+    <script defer th:src="@{/js/mallDetailView/mallPriceController.js}"></script>
 </body>
 </html>

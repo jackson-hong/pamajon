@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>PamajonAdminPage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Favicon icon -->
+    <!-- Custom CSS -->
+    <link href="../../static/adminTemplateResources/plugins/bower_components/chartist/dist/chartist.min.css"  rel="stylesheet" th:href="@{adminTemplateResources/plugins/bower_components/chartist/dist/chartist.min.css}">
+    <link rel="stylesheet" href="../../static/adminTemplateResources/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" th:href="@{adminTemplateResources/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css}">
+    <!-- Custom CSS -->
+    <link href="../../static/adminTemplateResources/css/style.min.css" th:href="@{adminTemplateResources/css/style.min.css}" rel="stylesheet">
+    <script src="../../static/adminTemplateResources/bootstrap/dist/js/bootstrap.min.js" th:src="@{adminTemplateResources/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+      <header th:replace="admin/adminCommon/adminHeader.html"></header>
+
+       <th:block th:replace="admin/adminCommon/adminAside.html"></th:block>
+
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">Dashboard</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ml-auto">
+                                <li><a href="#">Dashboard</a></li>
+                            </ol>
+            
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Three charts -->
+                <!-- ============================================================== -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">방문자 현황</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div id="sparklinedash"><canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                    </div>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-success">659</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">VIP고객 방문</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div id="sparklinedash2"><canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                    </div>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-purple">869</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">총 판매량</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div id="sparklinedash3"><canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                    </div>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-info">911</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- PRODUCTS YEARLY SALES -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">월별 판매현황</h3>
+                            <div class="d-md-flex">
+                                <ul class="list-inline d-flex ml-auto">
+                                    <li class="pl-3">
+                                        <h5><i class="fa fa-circle m-r-5 text-info"></i>Mac</h5>
+                                    </li>
+                         
+                                </ul>
+                            </div>
+                            
+
+                            <div style="height: 600px;">
+                                <div class="container"> <canvas id="myChart"></canvas> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script> var ctx = document.getElementById('myChart'); 
+                var myChart = new Chart(ctx, { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug','Oct','Nov',"Dec"],
+                datasets: [{ label: '# of Votes', data: [5, 19, 3, 5, 2, 3,7,7,7,7,7,7],
+                backgroundColor: [ 'rgba(54, 162, 235, 0.2)',
+                                   'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'],
+                borderColor: [ 'rgba(54, 162, 235, 1)',
+                               'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',],
+                borderWidth: 1 }] }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } }); 
+                </script>
+
+                <!-- ============================================================== -->
+                <!-- RECENT SALES -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="white-box">
+                            <div class="d-md-flex mb-3">
+                                <h3 class="box-title mb-0">Recent sales</h3>
+                                <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                    <select class="form-control row border-top">
+                                        <option>March 2017</option>
+                                        <option>April 2017</option>
+                                        <option>May 2017</option>
+                                        <option>June 2017</option>
+                                        <option>July 2017</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">이름</th>
+                                            <th class="border-top-0">상품코드</th>
+                                            <th class="border-top-0">날짜</th>
+                                            <th class="border-top-0">가격</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td class="txt-oflo">홍지운</td>
+                                            <td>KHQ1231LOQ</td>
+                                            <td class="txt-oflo">April 18, 2017</td>
+                                            <td><span class="text-success">$24</span></td>
+                                        </tr>
+                             
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- Recent Comments -->
+                <!-- ============================================================== -->
+     
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
+    <script src="../../static/adminTemplateResources/plugins/bower_components/chartist/dist/chartist.min.js" th:src="@{adminTemplateResources/plugins/bower_components/chartist/dist/chartist.min.js}"></script>
+    <script src="../../static/adminTemplateResources/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js" th:src="@{adminTemplateResources/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js}"></script>
+    <script src="../../static/adminTemplateResources/js/pages/dashboards/dashboard1.js" th:src="@{adminTemplateResources/js/pages/dashboards/dashboard1.js}"></script>
+    <script src="../../static/adminTemplateResources/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js" th:src="@{adminTemplateResources/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js}"></script>
+</body>
+</html>
