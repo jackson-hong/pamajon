@@ -47,7 +47,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">상품관리</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">상품관리 테이블</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -64,35 +64,117 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            <div style="display: flex; width:300px">
+                            <h3 class="box-title" style="width:250px">검색옵션 설정 ▶</h3>
+                            <select name="searchOption" id="searchOption" class="form-control">
+                                <option value="pName" selected>상품명으로 검색</option>
+                                <option value="pPrice">가격순 검색</option>
+                                <option value="pCode">상품코드 검색</option>
+                            </select>
+                            </div>
+                            <div id="priceInput" style="display: flex; align-items: center; margin-top:10px" >
+                                <h4 style="padding-top: 7px;">가격입력:  &nbsp; </h4>
+                                <input type="number" class="form-control" style="width:200px">
+                                <p style="padding-top: 10px;">~</p>
+                                <input type="number" class="form-control" style="width:200px">
+                                <button type="button" class="btn btn-primary" style="margin-left: 5px">검색</button>
+                            </div>
+                            <div id="nameInput" style="display: none; align-items: center; margin-top:10px">
+                                <h4 style="padding-top: 7px;">상품명 입력: &nbsp;</h4>
+                                <input type="number" class="form-control" style="width:200px">
+                                <button type="button" class="btn btn-primary">검색</button>
+                            </div>
+                            <div id="codeInput" style="display: none; align-items: center; margin-top:10px">
+                                <h4 style="padding-top: 7px;">코드 입력: &nbsp;</h4>
+                                <input type="number" class="form-control" style="width:200px">
+                                <button type="button" class="btn btn-primary">검색</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">상품관리</h3>
-
+                            <div style="display: flex; justify-content: space-between;">
+                            <h3 class="box-title">상품관리 테이블</h3>
+                                <button type="button" class="btn btn-outline-danger">삭제하기</button>
+                            </div>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" style="text-align: center; align-items: center;" >
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0" style="text-align: center">선택</th>
-                                            <th class="border-top-0" style="text-align: center">상품이미지</th>
-                                            <th class="border-top-0" style="text-align: center">상품명</th>
-                                            <th class="border-top-0" style="text-align: center">판매가</th>
-                                            <th class="border-top-0" style="text-align: center">노출관리</th>
-                                            <th class="border-top-0" style="text-align: center">재고수량</th>
-                                            <th class="border-top-0" style="text-align: center">등록일</th>
-                                            <th class="border-top-0" style="text-align: center">관리</th>
+                                            <th class="border-top-0" style="width:100px; padding-bottom: 7px;"><button class="btn btn-outline-dark">선택</button></th>
+                                            <th class="border-top-0" >상품이미지</th>
+                                            <th class="border-top-0" >상품코드</th>
+                                            <th class="border-top-0" >상품명</th>
+                                            <th class="border-top-0" >판매가</th>
+                                            <th class="border-top-0" >노출관리</th>
+                                            <th class="border-top-0" >재고수량</th>
+                                            <th class="border-top-0" >등록일</th>
+                                            <th class="border-top-0" style="width: 200px" >관리</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
                                         <tr>
-                                            <td style="text-align: center">1</td>
-                                            <td style="text-align: center">Deshmukh</td>
-                                            <td style="text-align: center">Prohaska</td>
-                                            <td style="text-align: center">@Genelia</td>
-                                            <td style="text-align: center">admin</td>
-                                            <td style="text-align: center">admin</td>
-                                            <td style="text-align: center">admin</td>
-                                            <td style="text-align: center">admin</td>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -100,17 +182,34 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <footer class="footer text-center"> 2020 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
-            </footer>
-
         </div>
-
     </div>
+    <script>
+        $(function (){
 
+            $("#searchOption").change(function(){
+                if($("#searchOption option:checked").val()=="pPrice"){
+                    $("#priceInput").css('display','flex');
+                    $("#nameInput").css('display','none');
+                    $("#codeInput").css('display','none');
+
+                } else if ($("#searchOption option:checked").val()=="pName"){
+                    $("#priceInput").css('display','none');
+                    $("#nameInput").css('display','flex');
+                    $("#codeInput").css('display','none');
+             } else {
+                    $("#priceInput").css('display','none');
+                    $("#nameInput").css('display','none');
+                    $("#codeInput").css('display','flex');
+                }
+            });
+
+
+        })
+
+    </script>
     <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
 </body>
 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,nofollow">
+    <title>빈페이지</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet" th:href="@{/adminTemplateResources/css/style.min.css}">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+    <header th:replace="admin/adminCommon/adminHeader.html"></header>
+
+    <th:block th:replace="admin/adminCommon/adminAside.html"></th:block>
+
+    <div class="page-wrapper" style="min-height: 250px;">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title text-uppercase font-medium font-14">Profile Page</h4>
+                </div>
+
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 class="box-title">Blank Page</h3>
+
+                        <div class="container">
+                            <h3 class=" text-center">Messaging</h3>
+                            <div class="messaging">
+                                <div class="inbox_msg">
+                                    <div class="inbox_people">
+                                        <div class="headind_srch">
+                                            <div class="recent_heading">
+                                                <h4>Recent</h4>
+                                            </div>
+                                            <div class="srch_bar">
+                                                <div class="stylish-input-group">
+                                                    <input type="text" class="search-bar"  placeholder="Search" >
+                                                    <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="inbox_chat">
+                                            <div class="chat_list active_chat">
+                                                <div class="chat_people">
+                                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                                    <div class="chat_ib">
+                                                        <h5>유호연 <span class="chat_date">2021-01-14</span></h5>
+                                                        <p>야 요청처리좀 똑바로좀 해라 진짜.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="mesgs">
+                                        <div class="msg_history">
+                                            <div class="incoming_msg">
+                                                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                                <div class="received_msg">
+                                                    <h6>유호연</h6>
+                                                    <div class="received_withd_msg">
+                                                        <p>Test which is a new approach to have all
+                                                            solutions</p>
+                                                        <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="outgoing_msg">
+                                                <div class="sent_msg">
+                                                    <p>Test which is a new approach to have all
+                                                        solutions</p>
+                                                    <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+                                            </div>
+                                            <div class="incoming_msg">
+                                                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                                <div class="received_msg">
+                                                    <h6>유호연</h6>
+                                                    <div class="received_withd_msg">
+                                                        <p>환장하겠구만..</p>
+                                                        <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="type_msg">
+                                            <div class="input_msg_write">
+                                                <input type="text" class="write_msg" placeholder="Type a message" />
+                                                <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
+</body>
+
