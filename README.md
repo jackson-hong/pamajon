@@ -1,2 +1,2 @@
 # pamajon
-Jackson &amp; Patrick's Web Project
+Jackson Patrick &amp; Ethen's Web Project

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -7,12 +7,11 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Ample Admin Lite Template by WrapPixel</title>
+    <title>상품관리 페이지</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
     <!-- Custom CSS -->
-   <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet" th:href="@{/adminTemplateResources/css/style.min.css}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,7 +36,9 @@
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <!-- ============================================================== -->
+        <header th:replace="admin/adminCommon/adminHeader.html"></header>
 
+        <th:block th:replace="admin/adminCommon/adminAside.html"></th:block>
         <!-- ============================================================== -->
         <div class="page-wrapper">
             <!-- ============================================================== -->
@@ -46,7 +47,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title text-uppercase font-medium font-14">상품관리</h4>
+                        <h4 class="page-title text-uppercase font-medium font-14">상품관리 테이블</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -58,88 +59,157 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
+
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            <div style="display: flex; width:300px">
+                            <h3 class="box-title" style="width:250px">검색옵션 설정 ▶</h3>
+                            <select name="searchOption" id="searchOption" class="form-control">
+                                <option value="pName" selected>상품명으로 검색</option>
+                                <option value="pPrice">가격순 검색</option>
+                                <option value="pCode">상품코드 검색</option>
+                            </select>
+                            </div>
+                            <div id="priceInput" style="display: flex; align-items: center; margin-top:10px" >
+                                <h4 style="padding-top: 7px;">가격입력:  &nbsp; </h4>
+                                <input type="number" class="form-control" style="width:200px">
+                                <p style="padding-top: 10px;">~</p>
+                                <input type="number" class="form-control" style="width:200px">
+                                <button type="button" class="btn btn-primary" style="margin-left: 5px">검색</button>
+                            </div>
+                            <div id="nameInput" style="display: none; align-items: center; margin-top:10px">
+                                <h4 style="padding-top: 7px;">상품명 입력: &nbsp;</h4>
+                                <input type="number" class="form-control" style="width:200px">
+                                <button type="button" class="btn btn-primary">검색</button>
+                            </div>
+                            <div id="codeInput" style="display: none; align-items: center; margin-top:10px">
+                                <h4 style="padding-top: 7px;">코드 입력: &nbsp;</h4>
+                                <input type="number" class="form-control" style="width:200px">
+                                <button type="button" class="btn btn-primary">검색</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Basic Table</h3>
-                            <p class="text-muted">Add class <code>.table</code></p>
+                            <div style="display: flex; justify-content: space-between;">
+                            <h3 class="box-title">상품관리 테이블</h3>
+                                <button type="button" class="btn btn-outline-danger">삭제하기</button>
+                            </div>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" style="text-align: center; align-items: center;" >
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">First Name</th>
-                                            <th class="border-top-0">Last Name</th>
-                                            <th class="border-top-0">Username</th>
-                                            <th class="border-top-0">Role</th>
+                                            <th class="border-top-0" style="width:100px; padding-bottom: 7px;"><button class="btn btn-outline-dark">선택</button></th>
+                                            <th class="border-top-0" >상품이미지</th>
+                                            <th class="border-top-0" >상품코드</th>
+                                            <th class="border-top-0" >상품명</th>
+                                            <th class="border-top-0" >판매가</th>
+                                            <th class="border-top-0" >노출관리</th>
+                                            <th class="border-top-0" >재고수량</th>
+                                            <th class="border-top-0" >등록일</th>
+                                            <th class="border-top-0" style="width: 200px" >관리</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
                                         <tr>
-                                            <td>1</td>
-                                            <td>Deshmukh</td>
-                                            <td>Prohaska</td>
-                                            <td>@Genelia</td>
-                                            <td>admin</td>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>2</td>
-                                            <td>Deshmukh</td>
-                                            <td>Gaylord</td>
-                                            <td>@Ritesh</td>
-                                            <td>member</td>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
                                         </tr>
-                  
+                                        <tr>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: middle"><input type="checkbox"></td>
+                                            <td style="vertical-align: middle"><img style="width: 80px; height: 80px" th:src="@{/images/new1.jpg}"></td>
+                                            <td style="vertical-align: middle">JP540982QLE</td>
+                                            <td style="vertical-align: middle">젠킨스 후드티</td>
+                                            <td style="vertical-align: middle">229,000</td>
+                                            <td style="vertical-align: middle; color:lightgreen">게시중</td>
+                                            <td style="vertical-align: middle">총 39개</td>
+                                            <td style="vertical-align: middle">2021-01-14</td>
+                                            <td style="vertical-align: middle">
+                                                <button type="button" class="btn btn-outline-primary">상세보기</button>
+                                                <button type="button" class="btn btn-outline-primary">수정하기</button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center"> 2020 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
+    <script>
+        $(function (){
+
+            $("#searchOption").change(function(){
+                if($("#searchOption option:checked").val()=="pPrice"){
+                    $("#priceInput").css('display','flex');
+                    $("#nameInput").css('display','none');
+                    $("#codeInput").css('display','none');
+
+                } else if ($("#searchOption option:checked").val()=="pName"){
+                    $("#priceInput").css('display','none');
+                    $("#nameInput").css('display','flex');
+                    $("#codeInput").css('display','none');
+             } else {
+                    $("#priceInput").css('display','none');
+                    $("#nameInput").css('display','none');
+                    $("#codeInput").css('display','flex');
+                }
+            });
+
+
+        })
+
+    </script>
     <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
 </body>
 

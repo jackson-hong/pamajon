@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <header class="topbar" data-navbarbg="skin5">
@@ -11,14 +12,14 @@
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <a class="navbar-brand" href="dashboard.html">
+            <a class="navbar-brand" href="admin" style="padding:0px;">
                 <!-- Logo icon -->
 
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span class="logo-text" style="margin: 0px; padding: 0px;">
                             <!-- dark Logo text -->
-                            <img src="../../static/adminTemplateResources/plugins/images/Adminlogo.png" th:src="@{adminTemplateResources/plugins/images/Adminlogo.png}" style="width:240px; height: 60.5px; outline-color: none; margin: 0; position: relative; right: 10px; bottom: 1px;" alt="homepage" />
+                            <img src="../../static/adminTemplateResources/plugins/images/Adminlogo.png" th:src="@{/adminTemplateResources/plugins/images/Adminlogo.png}" style="width:260px; height: 60.5px; margin: 0; position: relative; bottom: 1px;" alt="homepage" />
                         </span>
             </a>
             <!-- ============================================================== -->
