@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,nofollow">
+    <title>상품 등록 페이지</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
+    <!-- Favicon icon -->
+
+    <!-- Custom CSS -->
+    <link href="../../static/css/style.min.css" rel="stylesheet" th:href="@{/css/admin/projectInsert.css}">
+    <link href="../../static/adminTemplateResources/css/style.min.css" rel="stylesheet" th:href="@{/adminTemplateResources/css/style.min.css}">
+    <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/ckeditor/ckeditor.js}"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+        <header th:replace="admin/adminCommon/adminHeader.html"></header>
+
+        <th:block th:replace="admin/adminCommon/adminAside.html"></th:block>
+
+        <div class="page-wrapper" style="min-height: 250px;">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title text-uppercase font-medium font-14">상품등록페이지</h4>
+                    </div>
+                  
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            <h3 class="box-title" style="font-size: 1.5rem; font-weight: bold">상품등록</h3>
+                            <form method="post" enctype="multipart/form-data">
+                                <div id="insertWrapper">
+                                    <div class="insertblock">
+                                        <div class="titleSection">
+                                            <span class="title">기본</span>
+                                        </div>
+                                        <table class="productInfoTable">
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*카테고리</td>
+                                                <td class="userInput">
+                                                    <select class="form-control">
+                                                        <option value="">Hoodie</option>
+                                                        <option value="">Jeans</option>
+                                                        <option value="">Shoes</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*상품명</td>
+                                                <td class="userInput">
+                                                    <input type="text" class="form-control textType" placeholder="상품명을 적어주세요">
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*가격</td>
+                                                <td class="userInput">
+                                                    <input type="number" class="form-control textType" placeholder="가격을 적어주세요">
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*상품이미지</td>
+                                                <td class="userInput">
+                                                    <div class="filebox bs3-primary">
+                                                        <label for="ex_file2">업로드</label>
+                                                        <input type="file" id="ex_file2" onchange="setThumbnail(this);" multiple>
+                                                    </div>
+                                                    <div id="imgArea" style="display: flex; margin-bottom: 10px">
+                                                        <div class="imgBox 1"></div>
+                                                        <div class="imgBox 2"></div>
+                                                        <div class="imgBox 3"></div>
+                                                        <div class="imgBox 4"></div>
+                                                        <div class="imgBox 5"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*상품설명</td>
+                                                <td class="userInput">
+                                                    <textarea name="projectContent" id="editor1"></textarea>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                    <div class="insertblock">
+                                        <div class="titleSection">
+                                            <span class="title">상품옵션</span>
+                                        </div>
+                                        <table class="productInfoTable">
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*재고수량</td>
+                                                <td class="userInput">
+                                                    <div style="padding-top: 8px;">
+                                                    <input type="radio" name="quantity" id="unlimited" value="unlimited"><label for="unlimited">수량제한 없음</label>
+                                                    <input type="radio" name="quantity" id="limited" value="limited"><label for="limited">수량설정</label>
+                                                    <input type="checkbox" id="quantityOption"><label for="quantityOption">재고 소진 후에도 주문 가능</label>
+                                                    </div>
+                                                    <input type="number" class="form-control textType" placeholder="수량을 적어주세요" style="margin-bottom:10px; display: none">
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*사이즈정보</td>
+                                                <td class="userInput">
+                                                    <input type="text" class="form-control textType" placeholder="사이즈 정보를 넣어주세요">
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*재고관리코드</td>
+                                                <td class="userInput">
+                                                    <input type="text" class="form-control textType" placeholder="상품 관리 코드를넣어주세요">
+                                                </td>
+                                            </tr>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper" colspan="2" style="padding-top: 10px">
+                                                    <button type="button" class="btn btn-info">PJK123890D</button>
+                                                    <button type="button" class="btn btn-info">PJK123890D</button>
+                                                    <button type="button" class="btn btn-info">PJK123890D</button>
+                                                    <button type="button" class="btn btn-info">PJK123890D</button>
+                                                    <button type="button" class="btn btn-info">PJK123890D</button>
+                                                </td>
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper" colspan="2" style="padding-top: 10px" align="center">
+                                                    <button type="button" class="btn btn-primary">옵션추가</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="insertblock">
+                                        <div class="titleSection">
+                                            <span class="title">배송</span>
+                                        </div>
+                                    </div>
+                                    <div class="insertblock">
+                                        <div class="titleSection">
+                                            <span class="title">상품정보</span>
+                                        </div>
+                                    </div>
+                                    <div class="insertblock">
+                                        <div class="titleSection">
+                                            <span class="title">판매 노출상태</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/CKEDITOR.js}"></script>
+    <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/fileHandler.js}"></script>
+    <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
+
+</body>
+
+</html>

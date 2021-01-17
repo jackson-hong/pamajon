@@ -38,6 +38,12 @@ public class AdminController {
         return "/admin/chattingRoom";
     }
 
+    @GetMapping("/productInsert")
+    public String gotoInsertProduct(){
+
+        return "/admin/insertProduct";
+    }
+
 
 
 

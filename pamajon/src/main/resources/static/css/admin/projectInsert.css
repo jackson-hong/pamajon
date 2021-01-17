@@ -1,0 +1,105 @@
+.box-title{
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+#insertWrapper{
+    width:1200px;
+    margin-top: 20px;
+}
+span.title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.insertblock {
+    margin-bottom: 20px;
+}
+.insertblock > .titleSection {
+    border-bottom: 2px solid black;
+}
+
+.productInfoTable {
+    margin-top:5px ;
+    width:100%;
+}
+
+.explanation_wrapper {
+    padding:25px 80px 10px 0px;
+    width:180px;
+}
+
+select.form-control{
+    width:300px;
+}
+.imgBox {
+    border: 1px solid black;
+    width:130px;
+    height: 130px;
+    margin-right: 10px;
+
+}
+.tablefloor {
+    border-bottom: 1px dotted lightgray;
+}
+
+input.textType {
+    width:350px;
+    border: none;
+    border-bottom: 1px solid darkgray;
+}
+
+#cke_editor1{
+    width:800px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+label {
+    cursor: pointer;
+}
+input[name="quantity"] , #quantityOption{
+cursor: pointer;
+}
+
+.filebox {display:inline-block; margin-right: 10px; margin-top: 5px;}
+
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.filebox.bs3-primary label {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.previewImg{
+    width:100%;
+    height:100%;
+}
+.btn.btn-primary{
+    margin:0;
+
+}
+.btn.btn-info{
+    margin-right: 10px;
+}
