@@ -99,6 +99,10 @@
             font-size: small;
             border:0;
         }
+        a {
+            color: #353535;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +110,9 @@
     <div id="content">
         <div id="logo-search">
             <div id="logo-container">
+                <a th:href="@{/}">
                 <img id="logo" th:src="@{/images/Logo.png}">
+                </a>
             </div>
             <div id="searchbar-container">
                 <div id="searchbar">
@@ -123,7 +129,7 @@
         <div id="menus">
             <div id="shop-cates">
                 <div class="shop-cate">
-                    HOME
+                    <a th:href="@{/}">HOME</a>
                 </div>
                 <div class="shop-cate">
                     NEW ARRIVAL
@@ -137,13 +143,13 @@
             </div>
             <div id="user-cates">
                 <div class="user-cate">
-                    JOIN
+                    <a th:href="@{/member/join}">JOIN</a>
                 </div>
                 <div class="user-cate">
-                    LOG-IN
+                    <a th:href="@{/member/login}">LOG-IN</a>
                 </div>
                 <div class="user-cate">
-                    MYPAGE
+                    <a th:href="@{/member/myPage}">MYPAGE</a>
                 </div>
             </div>
         </div>

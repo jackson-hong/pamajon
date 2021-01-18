@@ -189,6 +189,7 @@
             width: 100%;
             height: 10em;
             border-bottom: 1px rgb(232,232,232) solid;
+            cursor: pointer;
         }
         .mypage-menu:nth-of-type(10){
             border-bottom:3px gray solid;
@@ -208,6 +209,9 @@
             margin-top: 1em;
             font-size: 13px;
             color:gray;
+        }
+        .mypage-menu:hover .mypage-menu-description{
+            text-decoration: underline;
         }
     </style>
     <div id="title-idx">
@@ -313,7 +317,7 @@
                 </div>
             </div>
             <hr id="thick-hr">
-            <div class="mypage-menu">
+            <div class="mypage-menu" th:onclick="|location.href='@{member/orderList}'|">
                 <div class="mypage-menu-ele">
                     <div class="mypage-menu-title">
                             order <small>주문내역조회</small>

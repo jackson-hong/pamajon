@@ -21,4 +21,8 @@ public class MemberController {
     public String join(){
         return "/member/join";
     }
+
+    @RequestMapping("/member/orderList")
+    public String orderList() {
+        return "/member/orderList";}
 }
