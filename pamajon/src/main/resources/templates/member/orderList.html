@@ -1,6 +1,343 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="common/header.html"></th:block>
+<!-- datepicker   -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    #order-wrapper {
+        margin-top: 2.5em;
+        min-width: 100em;
+        max-width: 120em;
+    }
+    #order-top-btns {
+        width: 100%;
+        height: 3.2em;
+        background: rgb(242,242,242);
+        border: 1px silver solid;
+        border-bottom-color: black;
+        display: flex;
+        font-size: 13px;
+    }
+    .order-top-btn {
+        width: 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-right: 1px silver solid;
+    }
+    .top-select {
+        border: 1px black solid;
+        border-bottom: 0;
+        background: rgb(75,81,98);
+        font-weight: bolder;
+        color: white;
+    }
+    #order-period-con {
+        width: 100%;
+        margin-top:1.5em;
+        border: 1px rgb(232,232,232) solid;
+        -webkit-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+        -moz-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+        box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+        display: flex;
+        align-items: center;
+    }
+    #order-status {
+        border:1px rgb(220,220,220) solid;
+        height: 100%;
+        width: 10em;
+        margin: 0;
+        font-size: 12px;
+    }
+    #order-period-con-in {
+        margin: 2em;
+        height: 2.5em;
+        display: flex;
+        align-items: center;
+    }
+    .bar {
+        border-right:1px silver solid;
+        margin: 1em;
+        height: 1em;
+        width: 1px;
+    }
+    .period-btn {
+        background: rgb(248,248,248);
+        border:1px silver solid;
+        border-right: 0;
+        color: rgb(150,150,150);
+        height: 1.75em;
+    }
+    .period-btn:nth-of-type(1){
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+    .period-btn:nth-of-type(5){
+        border-right: 1px silver solid;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        margin-right: 0.5em;
+    }
+    .datepicker {
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+    }
+    ion-icon[name="calendar-outline"] {
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 0.5em;
+    }
+    button#date-submit{
+        background: rgb(75,81,98);
+        width: 3em;
+        height: 1.8em;
+        border-radius: 2px;
+        border:1px black solid;
+        color: whitesmoke;
+    }
+    #order-des {
+        color:gray;
+    }
+    #order-des ul {
+        margin-left: 0;
+        padding-left:5px;
+        list-style-type: "∙";
+    }
+    #order-des li {
+        padding-left:5px;
+    }
+    #product-info-title {
+        padding-left: 5px;
+        font-weight: bolder;
+        margin-top: 2em;
+        display: flex;
+        align-items: center;
+        font-size: 11px;
+    }
+    table {
+        margin-top: 1em;
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border:1px silver solid;
+        text-align: center;
+    }
+    th {
+        background: rgb(251,250,250);
+        color:rgb(40,40,40);
+        font-weight: lighter;
+        -webkit-font-smoothing: antialiased;
+        height:4.5em;
+    }
+    .product-date {
+        width: 11%;
+    }
+    .product-img {
+        width: 7%;
+    }
+    .product-detail {
+        width: 50%;
+    }
+    .product-quantity {
+        width: 5%;
+    }
+    .product-price {
+        width: 10%;
+    }
+    .product-date-content{
+        font-size: 11px;
+        letter-spacing: -1px;
+        border-right: 0;
+    }
+    .product-date-btn {
+        position: relative;
+        background: white;
+        border:1px silver solid;
+        border-radius: 3px;
+        color: black;
+        width: 5.5em;
+        height: 1.75em;
+        margin: 0.1em;
+        text-align: left;
+    }
+    ion-icon[name="chevron-forward-outline"] {
+        position: absolute;
+        top: 47%;
+        left: 87%;
+        transform: translate(-50%, -50%);
+    }
+    .product-img-content {
+        width: 80px;
+        height: 80px;
+        border-right: 0;
+    }
+    td {
+        border:0;
+        padding:1em;
+    }
+    .product-info-content {
+        text-align: left;
+        vertical-align: top;
+
+    }
+    small {
+        font-size: 11px;
+        font-weight: lighter;
+    }
+    .blue-text {
+        color:#008bcc;
+        font-weight: bold;
+    }
+    #pagination {
+        margin-top: 2em;
+        display: flex;
+        justify-content: center;
+    }
+    .page-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5em;
+        height: 2.5em;
+        letter-spacing: -2px;
+        font-weight: bold;
+        border-radius: 0;
+        background: white;
+        border: 1px silver solid;
+        border-right: 0;
+        color: rgb(100,100,100);
+    }
+    .page-btn.selected {
+        border-bottom:3px rgb(80,80,80) solid;
+    }
+    .page-btn:last-of-type {
+        border-right: 1px silver solid;
+    }
+</style>
+<div id="title-idx">
+    <div id="title">
+        주문조회
+    </div>
+    <div id="idx">
+        HOME > 마이쇼핑 > 주문조회
+    </div>
+</div>
+<div id="wrapper">
+    <div id="order-wrapper">
+        <div id="order-top-btns">
+            <div class="order-top-btn top-select">주문내역조회 (0)</div>
+            <div class="order-top-btn">취소/반품/교환 내역 (0)</div>
+        </div>
+        <div id="order-period-con">
+            <div id="order-period-con-in">
+                <select name="order-status" id="order-status">
+                    <option value="all">전체 주문처리 상태</option>
+                </select>
+                <div class="bar"></div>
+                <button class="period-btn">오늘</button>
+                <button class="period-btn">1주일</button>
+                <button class="period-btn">1개월</button>
+                <button class="period-btn">3개월</button>
+                <button class="period-btn">6개월</button>
+                <input type="text" id="date-start" class="datepicker" size="10">
+                <ion-icon onclick="fn_calStart();" name="calendar-outline"></ion-icon>
+                ~
+                <input type="text" id="date-end" class="datepicker" size="10">
+                <ion-icon onclick="fn_calEnd();" name="calendar-outline"></ion-icon>
+                <button type="button" id="date-submit">조회</button>
+            </div>
+        </div>
+        <div id="order-des">
+            <ul>
+                <li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
+                <li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
+                <li>취소/교환/반품 신청은 주문완료일 기준 30일까지 가능합니다.</li>
+            </ul>
+        </div>
+        <div id="product-info-title">주문 상품 정보</div>
+        <table border="1">
+            <tr>
+                <th class="product-date">주문일자<br>[주문번호]</th>
+                <th class="product-img">이미지</th>
+                <th class="product-detail">상품정보</th>
+                <th class="product-quantity">수량</th>
+                <th class="product-price">상품구매금액</th>
+                <th class="product-state">주문처리상태</th>
+                <th class="product-recall">취소/교환/반품</th>
+            </tr>
+            <tr>
+                <td class="product-date-content">
+                    2021-01-18<br>
+                    <a href="#">[20210118-0000197]</a><br>
+                    <button class="product-date-btn">주문취소 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
+                    <button class="product-date-btn">교환신청 <ion-icon name="chevron-forward-outline"></ion-icon></button>
+                </td>
+                <td>
+                    <img class="product-img-content" th:src="@{/images/new6.jpg}">
+                </td>
+                <td class="product-info-content">
+                    <b>REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)</b></b><br><br>
+                    <small>[옵션: L(100~103)]</small>
+                </td>
+                <td>
+                    1
+                </td>
+                <td class="product-price-content">
+                    <b>KRW 229,000</b>
+                </td>
+                <td>
+                    <p class="blue-text">입금전</p>
+                </td>
+                <td>
+                    -
+                </td>
+            </tr>
+        </table>
+        <div id="pagination">
+            <button class="page-btn" id="big-left"><<</button>
+            <button class="page-btn" id="left"><</button>
+            <button class="page-btn selected" id="num-page">1</button>
+            <button class="page-btn" id="right">></button>
+            <button class="page-btn" id="big-right">>></button>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(".datepicker").datepicker({
+            dateFormat:"yy-mm-dd"
+        });
+    });
+    function fn_calStart(){
+        $("#date-start").focus();
+    }
+    function fn_calEnd(){
+        $("#date-end").focus();
+    }
+</script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>
