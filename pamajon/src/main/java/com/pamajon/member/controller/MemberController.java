@@ -31,4 +31,9 @@ public class MemberController {
     public String modify(){
         return "member/modify";
     }
+
+    @RequestMapping("/member/wishList")
+    public String wishList(){
+        return "member/wishList";
+    }
 }
