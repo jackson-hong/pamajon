@@ -24,5 +24,11 @@ public class MemberController {
 
     @RequestMapping("/member/orderList")
     public String orderList() {
-        return "member/orderList";}
+        return "member/orderList";
+    }
+
+    @RequestMapping("/member/modify")
+    public String modify(){
+        return "member/modify";
+    }
 }

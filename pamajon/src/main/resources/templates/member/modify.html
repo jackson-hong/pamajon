@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/header.html"></th:block>
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    #modify-wrapper {
+        margin-top: 2em;
+        min-width: 100em;
+        max-width: 120em;
+    }
+    #my-con-con{
+        width: 100%;
+        height: 7em;
+        border: 1px silver solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2em;
+    }
+    #user-grade-con {
+        margin:1em;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    #user-icon{
+        width: 65px;
+        height: 65px;
+        background:rgb(141,152,168);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 35px;
+    }
+    #user-grade-con .vl {
+        margin:1em;
+        width: 1px;
+        height: 86%;
+        border-left: 1px lightgray solid;
+    }
+    #user-grade-description {
+        display: flex;
+        align-items: center;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+    }
+    .blue-text {
+        color:#008bcc;
+        font-weight: bold;
+    }
+    #description {
+        margin-bottom: 1em;
+        display: flex;
+    }
+    #des-title {
+        font-weight: bold;
+        font-size: 16px;
+        width: 80%;
+    }
+    #des-required {
+        text-align: right;
+        vertical-align: bottom;
+        width: 20%;
+    }
+    table {
+        min-width: 100em;
+        max-width: 120em;
+        border: 1px silver solid;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    td{
+        border:1px silver solid;
+        height: 34px;
+    }
+    .table-title {
+        width: 12%;
+        text-indent: 15px;
+        font-size: 12px;
+        background: rgb(251,250,250);
+    }
+    .table-content {
+        font-size: 12px;
+        width: 78%;
+        text-indent: 10px;
+    }
+    table input {
+        border:1px rgb(220,220,220) solid;
+        height: 1.5em;
+        margin: 0.5em;
+    }
+    select[name="pw-confirm"] {
+        border:1px rgb(220,220,220) solid;
+        height: 2.2em;
+        width: 25em;
+        margin: 0.5em;
+        font-size: 12px;
+    }
+    select.phone-num{
+        border:1px rgb(220,220,220) solid;
+        height: 2.2em;
+        width: 5em;
+        margin: 0.5em;
+        font-size: 12px;
+    }
+    .address {
+        text-indent: 0;
+        padding-left: 10px;
+    }
+    ion-icon[name="medical"]{
+        color: orangered;
+        font-size: 10px;
+    }
+    button[name="postal-code"]{
+        text-align: center;
+        background: white;
+        border:1px silver solid;
+        height:2em;
+        font-size: 12px;
+        padding-top: 2px;
+    }
+    ion-icon[name="caret-forward-circle-outline"] {
+        vertical-align: middle;
+    }
+    #submit-con {
+        display: flex;
+        justify-content: center;
+        margin-top:1.5em;
+    }
+    #submit {
+        width: 8em;
+        height: 2em;
+        font-size: 16px;
+        background: rgba(7,34,66,0.8);
+        border:1px silver solid;
+        color: white;
+        cursor:pointer;
+        transition-duration: 0.15s;
+    }
+    #submit:hover {
+        background: white;
+        color:black;
+    }
+</style>
+<div id="title-idx">
+    <div id="title">
+        MEMBER PROFILE
+    </div>
+    <div id="idx">
+        HOME > MEMBER PROFILE
+    </div>
+</div>
+<div id="wrapper">
+    <div id="modify-wrapper">
+        <div id="my-con-con">
+            <div id="user-grade-con">
+                <div id="user-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                </div>
+                <div class="vl"></div>
+                <div id="user-grade-description">
+                    저희 쇼핑몰을 이용해 주셔서 감사합니다. &nbsp<span class="blue-text">홍지운</span>&nbsp님은&nbsp<strong>[일반회원]</strong>&nbsp회원이십니다.
+                </div>
+            </div>
+        </div>
+        <div id="description">
+            <div id="des-title">
+                기본정보
+            </div>
+            <div id="des-required">
+                <ion-icon name="medical"></ion-icon>필수입력사항
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td class="table-title">아이디<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input>(영문소문자/숫자, 4~16자)
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">비밀번호 확인<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">비밀번호 확인 질문<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <select name="pw-confirm">
+                        <option value="기억에 남는 추억의 장소는?">기억에 남는 추억의 장소는?</option>
+                        <option value="자신의 인생 좌우명은?">자신의 인생 좌우명은?</option>
+                        <option value="자신의 보물 1호는?">자신의 보물 1호는?</option>
+                        <option value="가장 기억에 남는 선생님 이름은?">가장 기억에 남는 선생님 이름은?</option>
+                        <option value="타인이 모르는 자신만의 신체비밀이 있다면?">타인이 모르는 자신만의 신체비밀이 있다면?</option>
+                        <option value="추억하고 싶은 날짜가 있다면?">추억하고 싶은 날짜가 있다면?</option>
+                        <option value="받았던 선물 중 기억에 남는 선물은?">받았던 선물 중 기억에 남는 선물은?</option>
+                        <option value="유년시절 가장 기억에 남는 친구의 이름은?">유년시절 가장 기억에 남는 친구의 이름은?</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">비밀번호 확인 답변<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input size="50">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">주소</td>
+                <td class="table-content address">
+                    <input size="8"><button name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
+                    <input size="36"><br>
+                    <input size="36"><br>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">일반전화<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <select class="phone-num" name="phone-num">
+                        <option value="02">02</option>
+                        <option value="031">031</option>
+                        <option value="032">032</option>
+                        <option value="033">033</option>
+                        <option value="041">041</option>
+                        <option value="042">042</option>
+                        <option value="043">043</option>
+                        <option value="044">044</option>
+                        <option value="051">051</option>
+                        <option value="052">052</option>
+                        <option value="053">053</option>
+                        <option value="054">054</option>
+                        <option value="055">055</option>
+                        <option value="061">061</option>
+                        <option value="062">062</option>
+                        <option value="063">063</option>
+                        <option value="064">064</option>
+                        <option value="0502">0502</option>
+                        <option value="0503">0503</option>
+                        <option value="0504">0504</option>
+                        <option value="0505">0505</option>
+                        <option value="0506">0506</option>
+                        <option value="0507">0507</option>
+                        <option value="070">070</option>
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                        <option value="0508">0508</option>
+                    </select>
+                    -
+                    <input size="8"> - <input size="8">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">휴대전화</td>
+                <td class="table-content">
+                    <select class="phone-num" name="phone-num-2">
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                    </select>
+                    -
+                    <input size="8"> - <input size="8">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">이메일<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input size="50">
+                </td>
+            </tr>
+        </table>
+        <div id="submit-con">
+            <button id="submit" type="submit">정보수정</button>
+        </div>
+    </div>
+</div>
+<th:block th:replace="common/footer.html"></th:block>
+</html>
