@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PamajonQ&A</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
+    <style>
+        thead th:first-child{width: 70px;}
+        thead th:nth-child(2){width: 150px;}
+        thead th:nth-child(3){width: 615px;}
+        thead th:nth-child(4){width: 85px;}
+        thead th:nth-child(5){width: 77px;}
+        thead th:nth-child(6){width: 55px;}
+
+    </style>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<th:block th:replace="common/header.html"></th:block>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>상품정보</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>3000</td>
+        <td>
+            <a href="">
+                <img src="http://placehold.it/46" />
+                <span>CANADIAN SWEATER - SPOUTING WHALE NAVY / RED</span>
+            </a>
+        </td>
+        <td>사이즈 문의 드립니다.</td>
+        <td>정***</td>
+        <td>2021-01-19 10:15:00</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>3000</td>
+        <td>CANADIAN SWEATER - SPOUTING WHALE NAVY / RED</td>
+        <td>사이즈 문의 드립니다.</td>
+        <td>정***</td>
+        <td>2021-01-19 10:15:00</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>3000</td>
+        <td>CANADIAN SWEATER - SPOUTING WHALE NAVY / RED</td>
+        <td>사이즈 문의 드립니다.</td>
+        <td>정***</td>
+        <td>2021-01-19 10:15:00</td>
+        <td>6</td>
+    </tr>
+    </tbody>
+</table>
+        <a class="btn btn-default" th:href="@{productQnA/write}">글쓰기</a>
+<select>
+    <option>일주일</option>
+    <option>한달</option>
+    <option>세달</option>
+    <option>전체</option>
+</select>
+<select>
+    <option>제목</option>
+    <option>내용</option>
+    <option>글쓴이</option>
+    <option>별명</option>
+    <option>아이디</option>
+    <option>상품정보</option>
+</select>
+<input type="text">
+<button type="button" class="btn btn-dark">찾기</button>
+
+<div class="text-center">
+    <ul class="pagination">
+
+            <li><a href=""><</a></li>
+            <li><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+            <li><a href="">5</a></li>
+            <li><a href="">6</a></li>
+            <li><a href="">7</a></li>
+            <li><a href="">8</a></li>
+            <li><a href="">9</a></li>
+            <li><a href="">10</a></li>
+            <li><a href="">></a></li>
+    </ul>
+</div>
+<th:block th:replace="common/footer.html"></th:block>
+</body>
+</html>
