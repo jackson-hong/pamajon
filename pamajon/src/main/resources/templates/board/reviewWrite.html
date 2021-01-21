@@ -182,7 +182,7 @@
             <td class="userInput">
                 <textarea name="reviewContent" class="review--content" style="resize: none"></textarea>
                 <div class="reviewTextCounterBox">
-                <span class="reviewTextCounter"style="color: #aaa;">(0 / 최대 2000자)</span>
+                <span class="reviewTextCounter"style="color: #aaa;">(0 / 최대 1000자)</span>
                 </div>
             </td>
         </tr>
@@ -208,7 +208,7 @@
 <script>
     $('.review--content').keyup(function (e){
         let content = $(this).val();
-        $('.reviewTextCounter').html("("+content.length+" / 최대 2000자)");
+        $('.reviewTextCounter').html("("+content.length+" / 최대 1000자)");
     });
 </script>
 </body>
