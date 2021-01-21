@@ -36,4 +36,9 @@ public class MemberController {
     public String wishList(){
         return "member/wishList";
     }
+
+    @RequestMapping("/member/mileage")
+    public String mileage(){
+        return "member/mileage";
+    }
 }

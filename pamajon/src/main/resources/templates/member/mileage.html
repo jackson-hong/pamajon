@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/header.html"></th:block>
+
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    #mileage-wrapper {
+        margin-top: 2.5em;
+        min-width: 100em;
+        max-width: 120em;
+    }
+    #mileage-con {
+        width: 100%;
+        height: 12em;
+        border: 1px rgb(232,232,232) solid;
+        -webkit-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+        -moz-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+        box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
+        display: flex;
+    }
+    #mileage-con>div {
+        width: 50%;
+    }
+    #mileage-con>div>div {
+        margin:3em;
+        margin-right: 3em;
+        margin-left: 3em;
+    }
+    #mileage-left {
+        border-right: 1px rgb(232,232,232) solid;
+    }
+    .mileage-left-ele {
+        margin-top:1em;
+        font-size: 12px;
+        display: flex;
+    }
+    .mileage-right-ele {
+        margin-top:1em;
+        font-size: 12px;
+        display: flex;
+    }
+    .mileage-name {
+        width: 30%;
+    }
+    .mileage {
+        width: 70%;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        text-align: right;
+    }
+    #order-top-btns {
+        width: 100%;
+        height: 3.2em;
+        margin-top: 2em;
+        background: rgb(242,242,242);
+        border: 1px silver solid;
+        border-bottom-color: black;
+        display: flex;
+        font-size: 12px;
+    }
+    .order-top-btn {
+        width: 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-right: 1px silver solid;
+    }
+    .top-select {
+        border: 1px black solid;
+        border-bottom: 0;
+        background: rgb(75,81,98);
+        font-weight: bolder;
+        color: white;
+    }
+    table {
+        margin-top: 1em;
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border:1px silver solid;
+        text-align: center;
+    }
+    th {
+        background: rgb(251,250,250);
+        color:rgb(40,40,40);
+        font-weight: lighter;
+        -webkit-font-smoothing: antialiased;
+        height:3em;
+    }
+    td {
+        border:0;
+        padding:1em;
+    }
+
+    .order-date {
+        width: 15%;
+    }
+
+    .mileage-count {
+        width: 15%;
+    }
+
+    .order-detail {
+        width: 25%;
+    }
+
+    ion-icon[name="chevron-forward-outline"] {
+        position: absolute;
+        top: 47%;
+        left: 87%;
+        transform: translate(-50%, -50%);
+    }
+    small {
+        font-size: 11px;
+        font-weight: lighter;
+    }
+    .blue-text {
+        color:#008bcc;
+        font-weight: bold;
+    }
+    #pagination {
+        margin-top: 2em;
+        display: flex;
+        justify-content: center;
+    }
+    .page-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5em;
+        height: 2.5em;
+        letter-spacing: -2px;
+        font-weight: bold;
+        border-radius: 0;
+        background: white;
+        border: 1px silver solid;
+        border-right: 0;
+        color: rgb(100,100,100);
+    }
+    .page-btn.selected {
+        border-bottom:3px rgb(80,80,80) solid;
+    }
+    .page-btn:last-of-type {
+        border-right: 1px silver solid;
+    }
+</style>
+
+<div id="title-idx">
+    <div id="title">
+        적립금
+    </div>
+    <div id="idx">
+        HOME > 마이쇼핑 > 적립금
+    </div>
+</div>
+<div id="wrapper">
+    <div id="mileage-wrapper">
+        <div id="mileage-con">
+            <div id="mileage-left">
+                <div id="mileage-left-in">
+                    <div class="mileage-left-ele">
+                        <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp총 적립금</div><div class="mileage"><span class="blue-text"> 3,000원</span></div>
+                    </div>
+                    <div class="mileage-left-ele">
+                        <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp사용된 적립금</div><div class="mileage">0원</div>
+                    </div>
+                    <div class="mileage-left-ele">
+                        <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp환불예정 적립금</div><div class="mileage">6</div>개
+                    </div>
+                </div>
+            </div>
+            <div id="mileage-right">
+                <div id="mileage-right-in">
+                    <div class="mileage-right-ele">
+                        <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp사용가능 적립금</div><div class="mileage">1,000원</div>
+                    </div>
+                    <div class="mileage-right-ele">
+                        <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp미가용 적립금</div><div class="mileage">2,000원</div>
+                    </div>
+                    <div class="mileage-right-ele">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="order-top-btns">
+            <div class="order-top-btn top-select">적립내역보기</div>
+            <div class="order-top-btn">미가용적립내역보기</div>
+            <div class="order-top-btn">미가용쿠폰/회원등급적립내역</div>
+        </div>
+        <table border="1">
+            <tr>
+                <th class="order-date">주문날짜</th>
+                <th class="mileage-count">적립금</th>
+                <th class="order-detail">관련주문</th>
+                <th class="mileage-info">내용</th>
+            </tr>
+            <tr>
+                <td>
+                    2019-03-24
+                </td>
+                <td>
+                    1,000원
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    신규회원 적립금
+                </td>
+            </tr>
+        </table>
+        <div id="pagination">
+            <button class="page-btn" id="big-left"><<</button>
+            <button class="page-btn" id="left"><</button>
+            <button class="page-btn selected" id="num-page">1</button>
+            <button class="page-btn" id="right">></button>
+            <button class="page-btn" id="big-right">>></button>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="common/footer.html"></th:block>
+</html>
