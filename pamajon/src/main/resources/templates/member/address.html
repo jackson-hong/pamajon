@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/header.html"></th:block>
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    #addr-wrapper {
+        margin-top: 2.5em;
+        min-width: 110em;
+        max-width: 130em;
+    }
+    table {
+        margin-top: 1em;
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border:1px silver solid;
+        text-align: center;
+    }
+    th {
+        background: rgb(251,250,250);
+        color:rgb(40,40,40);
+        font-weight: lighter;
+        -webkit-font-smoothing: antialiased;
+        height:2.5em;
+    }
+    .addr-select {
+        width: 3%;
+    }
+    .addr-fix {
+        width: 7%;
+    }
+    .addr-name {
+        width: 7%;
+    }
+    .addr-receiver {
+        width: 7%;
+    }
+    .addr-tel {
+        width: 8%;
+    }
+    .addr-phone {
+        width: 8%;
+    }
+    .addr-address {
+        width: 50%;
+    }
+    .addr-fix {
+        width: 6%;
+    }
+    .product-select-content{
+        font-size: 11px;
+        letter-spacing: -1px;
+        border-right: 0;
+    }
+    .addr-btn {
+        position: relative;
+        background: white;
+        border:1px silver solid;
+        border-radius: 3px;
+        color: black;
+        width: 4.5em;
+        height: 1.75em;
+        margin: 0.1em;
+        text-align: left;
+        text-indent: 5px;
+    }
+    .addr-sm-btn {
+        position: relative;
+        background: white;
+        border:1px silver solid;
+        border-radius: 3px;
+        color: black;
+        width: 3em;
+        height: 1.75em;
+        margin: 0.1em;
+    }
+    ion-icon[name="chevron-forward-outline"] {
+        position: absolute;
+        top: 47%;
+        left: 87%;
+        transform: translate(-50%, -50%);
+        color: orangered;
+    }
+    td {
+        border:0;
+        padding:1em;
+        font-size: 11px;
+    }
+    .product-info-content {
+        font-size: 11px;
+        text-align: left;
+    }
+    small {
+        font-size: 11px;
+        font-weight: lighter;
+    }
+    th {
+        width: 8%;
+    }
+
+    #select-btns {
+        margin-top: 1em;
+        display: flex;
+    }
+    #select-left-btns {
+        width: 70%;
+    }
+    .select-left-btn {
+        position: relative;
+        background: white;
+        border:1px silver solid;
+        border-radius: 3px;
+        color: black;
+        width: 9em;
+        height: 2.2em;
+        margin: 0.1em;
+    }
+    .select-left-btn>ion-icon {
+        position: absolute;
+        top: 47%;
+        left: 15%;
+        font-weight: bold;
+        transform: translate(-50%, -50%);
+    }
+
+    #select-right-btns {
+        display: flex;
+        width: 30%;
+        flex-direction: row-reverse;
+    }
+    .select-right-btn {
+        position: relative;
+        background: white;
+        border:1px silver solid;
+        border-radius: 3px;
+        color: black;
+        width: 10em;
+        height: 2.75em;
+        margin: 0.1em;
+        font-weight: bold;
+    }
+    .submit {
+        background: rgb(75,81,98);
+        color: white;
+        border:black;
+    }
+    #tbl-cau {
+        text-align: left;
+    }
+
+    #tbl-cau th {
+        text-indent: 8px;
+        font-weight: bold;
+    }
+    .fa-li {
+        font-size: 14px;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    li {
+        margin-bottom: 0.5em;
+    }
+</style>
+<div id="title-idx">
+    <div id="title">
+        배송 주소지 관리
+    </div>
+    <div id="idx">
+        HOME > 마이쇼핑 > 배송 주소지 관리
+    </div>
+</div>
+<div id="wrapper">
+    <div id="addr-wrapper">
+        <table border="1">
+            <tr>
+                <th class="addr-select"><input type="checkbox"></th>
+                <th class="addr-fix">주소록 고정</th>
+                <th class="addr-name">배송지명</th>
+                <th class="addr-receiver">수령인</th>
+                <th class="addr-tel">일반전화</th>
+                <th class="addr-phone">휴대전화</th>
+                <th class="addr-address">주소</th>
+                <th class="addr-modify">수정</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>
+                    <button class="addr-sm-btn">해제</button>
+                </td>
+                <td>
+                    미지정
+                </td>
+                <td>
+                    홍지운
+                </td>
+                <td>
+                    82-
+                </td>
+                <td>
+                    010-7474-9884
+                </td>
+                <td>
+                    (12807)경기도 광주시 초월읍 산이리 18-1 코아루햇빛마을아파트 101-1003
+                </td>
+                <td>
+                    <button class="addr-btn">수정<ion-icon name="chevron-forward-outline"></ion-icon></button>
+                </td>
+            </tr>
+        </table>
+        <div id="select-btns">
+            <div id="select-left-btns">
+                <button class="select-left-btn">선택 주소록 삭제</button>
+            </div>
+            <div id="select-right-btns">
+                <button class="select-right-btn submit">배송지등록</button>
+            </div>
+        </div>
+        <table id="tbl-cau" border="1">
+            <tr>
+                <th>
+                    배송주소록 유의사항
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <ol class="fa-ul">
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>배송 주소록은 최대 10개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>자동 업데이트를 원하지 않을 경우 주소록 고정 선택을 선택하시면 선택된 주소록은 업데이트 대상에서 제외됩니다.</li>
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<th:block th:replace="common/footer.html"></th:block>
+</html>

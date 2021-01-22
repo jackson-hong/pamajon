@@ -41,4 +41,9 @@ public class MemberController {
     public String mileage(){
         return "member/mileage";
     }
+
+    @RequestMapping("/member/address")
+    public String address(){
+        return "member/address";
+    }
 }

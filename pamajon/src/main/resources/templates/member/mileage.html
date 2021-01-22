@@ -164,6 +164,22 @@
     .page-btn:last-of-type {
         border-right: 1px silver solid;
     }
+    #tbl-cau {
+        text-align: left;
+    }
+
+    #tbl-cau th {
+        text-indent: 8px;
+        font-weight: bold;
+    }
+    .fa-li {
+        font-size: 14px;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    li {
+        margin-bottom: 0.5em;
+    }
 </style>
 
 <div id="title-idx">
@@ -237,6 +253,22 @@
             <button class="page-btn" id="right">></button>
             <button class="page-btn" id="big-right">>></button>
         </div>
+        <table id="tbl-cau" border="1">
+            <tr>
+                <th>
+                    적립금 안내
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <ol class="fa-ul">
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>주문으로 발생한 적립금은 배송완료 후 3일 부터 실제 사용 가능한 적립금으로 전환됩니다. 배송완료 시점으로부터 3일 동안은 미가용 적립금으로 분류됩니다.</li>
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>미가용 적립금은 반품, 구매취소 등을 대비한 임시 적립금으로 사용가능 적립금으로 전환되기까지 상품구매에 사용하실 수 없습니다.</li>
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>사용가능 적립금(총적립금 - 사용된적립금 - 미가용적립금)은 상품구매 시 바로 사용가능합니다.</li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 
