@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<th:block th:replace="common/header.html"></th:block>
     <meta charset="UTF-8">
     <title>PAMAJON Review</title>
 </head>
@@ -131,8 +131,6 @@
 </style>
 <body>
 
-<th:block th:replace="common/header.html"></th:block>
-
 <div class="reviewBlock">
     <div class="titleSection">
         <span class="title">후기 등록</span>
@@ -204,7 +202,6 @@
 
 
 
-<th:block th:replace="common/footer.html"></th:block>
 <script>
     $('.review--content').keyup(function (e){
         let content = $(this).val();
@@ -212,4 +209,5 @@
     });
 </script>
 </body>
+<th:block th:replace="common/footer.html"></th:block>
 </html>

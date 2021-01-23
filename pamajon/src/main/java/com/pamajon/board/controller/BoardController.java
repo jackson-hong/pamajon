@@ -14,4 +14,6 @@ public class BoardController {
     public String review(){ return "/board/review"; }
     @RequestMapping("/board/reviewWrite")
     public String reviewWrite(){ return "/board/reviewWrite"; }
+    @RequestMapping("/board/boardList")
+    public String listBoard(){ return "/board/boardList"; }
 }

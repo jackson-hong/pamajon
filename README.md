@@ -10,15 +10,15 @@
 
 - OS : Windows 10 , Mac OS
 - Version Control : [GitHub](https://github.com/jackson-hong/pamajon)
-- FW : Spring / Bootstrap
+- FW : SpringBoot / Bootstrap
 - Front-end : HTML5 / CSS3 / Javascript / jQuery / AJAX / JSON 
 - Back-end : Java 
-- WAS : Apache Tomcat 8.0
+- WAS : Apache Tomcat
 - DB : Maria DB
-- Developer Tools : STS / Intelli J / VS Code / SqlDeveloper
-- 사용 API : 
+- Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber 
 
 
 ## 2. 개발일정
 
-
+- 01/23 : ERD 테이블 작업시작
+- 01/27 : 뷰 마무리
