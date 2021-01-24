@@ -1,105 +1,302 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/header.html"></th:block>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PamajonQ&A</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-
+    <title>QnA</title>
     <style>
-        thead th:first-child{width: 70px;}
-        thead th:nth-child(2){width: 150px;}
-        thead th:nth-child(3){width: 615px;}
-        thead th:nth-child(4){width: 85px;}
-        thead th:nth-child(5){width: 77px;}
-        thead th:nth-child(6){width: 55px;}
+        body{
+            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+            color: #353535;
+        }
 
+        #wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        #board-wrapper {
+            margin-top: 2.5em;
+            min-width: 100em;
+            max-width: 120em;
+        }
+
+        #title-idx {
+            margin-top:2.5em;
+            display: flex;
+        }
+        #title {
+            margin-left:65px;
+            text-align: right;
+            justify-items: left;
+            width: 50%;
+            font-size:22px;
+            font-weight: 900;
+            color: #353535;
+            font-family: 'Spoqa Han Sans','Sans-serif'!important;
+            -webkit-font-smoothing: antialiased;
+        }
+        #idx {
+            width: 50%;
+            text-align: right;
+            font-weight: bold;
+        }
+        table {
+            margin-top: 1em;
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border:1px silver solid;
+            text-align: center;
+        }
+        th {
+            background: rgb(251,250,250);
+            color:rgb(40,40,40);
+            font-weight: lighter;
+            -webkit-font-smoothing: antialiased;
+            height:3em;
+        }
+
+        .form-control{
+            margin-top: 10px;
+            margin-left: 3px;
+            height: 25px;
+            font-size: 100%;
+            font-family: "돋움",Dotum;
+            color: #353535;
+            vertical-align: middle;
+
+        }
+        #boardSortOption{
+            display: inline;
+        }
+        .post-Num{width: 6%;}
+        .qna-PostOption{width: 12%;}
+        .qna-PostTitle{width: 65%;}
+        .qna-UserName{width: 7%;}
+        .qna-PostDate{width: 7%;}
+        .qna-PostViewCount{width: 3%;}
+
+
+        .qnaPostOption{
+            display: inline;
+        }
+
+        .postImgBox{
+            display: inline;
+            margin-top: 1px;
+            margin-left: 1px;
+        }
+        #boardSearch{
+            display: flex;
+            margin-top: 2em;
+            justify-content: left;
+        }
+
+        .SearchForm{
+            margin-top: 11px;
+            margin-left: 2px;
+            height: 15px;
+
+        }
+        .search-btn{
+            margin-top: 11px;
+            margin-left: 2px;
+            width: 60px;
+            height: 23px;
+            color: white;
+            background-color: #8C8C8C;
+            border-radius: 4px;
+            border-collapse: collapse;
+        }
+        #paging {
+            margin-top: 2em;
+            display: flex;
+            justify-content: center;
+        }
+        .page-btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 2.5em;
+            height: 2.5em;
+            letter-spacing: -2px;
+            font-weight: bold;
+            border-radius: 0;
+            background: white;
+            border: 1px silver solid;
+            border-right: 0;
+            color: rgb(100,100,100);
+        }
+        .page-btn.selected {
+            border-bottom:3px rgb(80,80,80) solid;
+        }
+        .page-btn:last-of-type {
+            border-right: 1px silver solid;
+        }
+
+        a.qnaPostTitle:hover   { text-decoration:underline; }
     </style>
+
 </head>
+
 <body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<th:block th:replace="common/header.html"></th:block>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>번호</th>
-            <th>상품정보</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>3000</td>
-        <td>
-            <a href="">
-                <img src="http://placehold.it/46" />
-                <span>CANADIAN SWEATER - SPOUTING WHALE NAVY / RED</span>
-            </a>
-        </td>
-        <td>사이즈 문의 드립니다.</td>
-        <td>정***</td>
-        <td>2021-01-19 10:15:00</td>
-        <td>6</td>
-    </tr>
-    <tr>
-        <td>3000</td>
-        <td>CANADIAN SWEATER - SPOUTING WHALE NAVY / RED</td>
-        <td>사이즈 문의 드립니다.</td>
-        <td>정***</td>
-        <td>2021-01-19 10:15:00</td>
-        <td>6</td>
-    </tr>
-    <tr>
-        <td>3000</td>
-        <td>CANADIAN SWEATER - SPOUTING WHALE NAVY / RED</td>
-        <td>사이즈 문의 드립니다.</td>
-        <td>정***</td>
-        <td>2021-01-19 10:15:00</td>
-        <td>6</td>
-    </tr>
-    </tbody>
-</table>
-        <a class="btn btn-default" th:href="@{productQnA/write}">글쓰기</a>
-<select>
-    <option>일주일</option>
-    <option>한달</option>
-    <option>세달</option>
-    <option>전체</option>
-</select>
-<select>
-    <option>제목</option>
-    <option>내용</option>
-    <option>글쓴이</option>
-    <option>별명</option>
-    <option>아이디</option>
-    <option>상품정보</option>
-</select>
-<input type="text">
-<button type="button" class="btn btn-dark">찾기</button>
-
-<div class="text-center">
-    <ul class="pagination">
-
-            <li><a href=""><</a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href="">5</a></li>
-            <li><a href="">6</a></li>
-            <li><a href="">7</a></li>
-            <li><a href="">8</a></li>
-            <li><a href="">9</a></li>
-            <li><a href="">10</a></li>
-            <li><a href="">></a></li>
-    </ul>
+<div id="title-idx">
+    <div id="title">
+       <span>Q&A</span>
+    </div>
+    <div id="idx">
+        <a href="/pamajon">HOME</a> > 게시물 관리
+    </div>
 </div>
-<th:block th:replace="common/footer.html"></th:block>
+
+<div id="wrapper">
+    <div id="board-wrapper">
+
+        <div id="boardBox">
+            <table border="1">
+                <tr>
+                    <th class="qna-PostNum">번호</th>
+                    <th class="qna-PostOption">상품정보</th>
+                    <th class="qna-PostTitle">제목</th>
+                    <th class="qna-UserName">작성자</th>
+                    <th class="qna-PostDate">작성일</th>
+                    <th class="qna-PostViewCount">조회</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="qnaPostNum">2313</p>
+                    </td>
+                    <td class="QnaOptionBox">
+                        <p class="qnaPostOption">
+                        </p>
+                    </td>
+                    <td>
+                        <a class="qnaPostTitle" href="">배송 줜나 느리네<a>
+                    </td>
+                    <td>
+                        <p class="qnaUserName">홍지운 </p>
+                    </td>
+                    <td>
+                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                    </td>
+                    <td>
+                        <P CLASS="qnaPostViewCount">10</P>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <p class="qnaPostNum">3244</p>
+                    </td>
+                    <td class="QnaOptionBox">
+                        <p class="qnaPostOption">
+                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46" />
+                            <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
+                        </p>
+                    </td>
+                    <td>
+                        <a class="qnaPostTitle" href="">옷이 개작네</a>
+                    </td>
+                    <td>
+                        <p class="qnaUserName">김종구 </p>
+                    </td>
+                    <td>
+                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                    </td>
+                    <td>
+                        <P CLASS="qnaPostViewCount">101</P>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p class="qnaPostNum">2315</p>
+                    </td>
+                    <td class="QnaOptionBox">
+                        <p class="qnaPostOption">
+                        </p>
+                    </td>
+                    <td>
+                        <a class="qnaPostTitle" href="">배송 줜나 느리네<a>
+                    </td>
+                    <td>
+                        <p class="qnaUserName">홍지운 </p>
+                    </td>
+                    <td>
+                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                    </td>
+                    <td>
+                        <P CLASS="qnaPostViewCount">10</P>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <p class="qnaPostNum">3246</p>
+                    </td>
+                    <td class="QnaOptionBox">
+                        <p class="qnaPostOption">
+                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46" />
+                            <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
+                        </p>
+                    </td>
+                    <td>
+                        <a class="qnaPostTitle" href="">옷이 개작네</a>
+                    </td>
+                    <td>
+                        <p class="qnaUserName">유호연</p>
+                    </td>
+                    <td>
+                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                    </td>
+                    <td>
+                        <P CLASS="qnaPostViewCount">100</P>
+                    </td>
+                </tr>
+            </table>
+
+
+            <div id="paging">
+                <button class="page-btn" id="big-left"><<</button>
+                <button class="page-btn" id="left"><</button>
+                <button class="page-btn selected" id="pageNum">1</button>
+                <button class="page-btn" id="pageNum">2</button>
+                <button class="page-btn" id="pageNum">3</button>
+                <button class="page-btn" id="pageNum">4</button>
+                <button class="page-btn" id="pageNum">5</button>
+                <button class="page-btn" id="pageNum">6</button>
+                <button class="page-btn" id="pageNum">7</button>
+                <button class="page-btn" id="pageNum">8</button>
+                <button class="page-btn" id="pageNum">9</button>
+                <button class="page-btn" id="pageNum">10</button>
+                <button class="page-btn" id="right">></button>
+                <button class="page-btn" id="big-right">>></button>
+            </div>
+
+
+            <div id="boardSearch">
+                <select class="form-control">
+                    <option id="searchPeriod-Week">일주일</option>
+                    <option id="searchPeriod-OneMonth">한달</option>
+                    <option id="searchPeriod-threeMonthes">세달</option>
+                    <option id="earchPeriod-All">전체</option>
+                </select>
+                <select class="form-control">
+                    <option id="searchByTitle">제목</option>
+                    <option id="searchByContent">내용</option>
+                    <option id="searchByName">글쓴이</option>
+                    <option id="searchById">아이디</option>
+                    <option id="searchByNickName">별명</option>
+                </select>
+                <input type="text" class="SearchForm">
+                <button type="submit" th:method="get" class="search-btn">찾기</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<th:block th:replace="common/footer.html"></th:block>
 </html>
