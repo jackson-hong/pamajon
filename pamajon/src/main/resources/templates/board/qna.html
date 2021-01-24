@@ -81,12 +81,41 @@
         .qnaPostOption{
             display: inline;
         }
+        .qnaTitleAlign{
+            text-align: left;
+        }
+
+        .qnaPostTitle{
+            margin-left: 10px
+        }
 
         .postImgBox{
             display: inline;
             margin-top: 1px;
             margin-left: 1px;
         }
+
+        a.qnaPostTitle:hover   { text-decoration:underline; }
+
+
+        .qnaWriteBtnBox{
+            border: 1px solid #d7d5d5;
+            background: #fbfafa;
+            height: 40px;
+        }
+        .qnaWriteBtn{
+            margin-top: 5px;
+            margin-right: 30px;
+            float: right;
+            width: 6em;
+            height: 2em;
+            font-size: 14px;
+            color : white;
+            background: rgba(7,34,66,0.8);
+            border: 1px silver solid;
+            border-radius: 2px;
+        }
+
         #boardSearch{
             display: flex;
             margin-top: 2em;
@@ -134,8 +163,6 @@
         .page-btn:last-of-type {
             border-right: 1px silver solid;
         }
-
-        a.qnaPostTitle:hover   { text-decoration:underline; }
     </style>
 
 </head>
@@ -147,7 +174,7 @@
        <span>Q&A</span>
     </div>
     <div id="idx">
-        <a href="/pamajon">HOME</a> > 게시물 관리
+        <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
     </div>
 </div>
 
@@ -172,11 +199,11 @@
                         <p class="qnaPostOption">
                         </p>
                     </td>
-                    <td>
+                    <td class="qnaTitleAlign">
                         <a class="qnaPostTitle" href="">배송 줜나 느리네<a>
                     </td>
                     <td>
-                        <p class="qnaUserName">홍지운 </p>
+                        <p class="qnaUserName">홍**</p>
                     </td>
                     <td>
                         <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
@@ -196,11 +223,11 @@
                             <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
                         </p>
                     </td>
-                    <td>
+                    <td class="qnaTitleAlign">
                         <a class="qnaPostTitle" href="">옷이 개작네</a>
                     </td>
                     <td>
-                        <p class="qnaUserName">김종구 </p>
+                        <p class="qnaUserName">김**</p>
                     </td>
                     <td>
                         <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
@@ -218,11 +245,13 @@
                         <p class="qnaPostOption">
                         </p>
                     </td>
-                    <td>
-                        <a class="qnaPostTitle" href="">배송 줜나 느리네<a>
+                    <td class="qnaTitleAlign">
+                        <a class="qnaPostTitle qnaSecret" href="">배송 줜나 느리네<a>
+                            <!-- QnASecret 관련 -->
+                            <i class="fas fa-lock"></i>
                     </td>
                     <td>
-                        <p class="qnaUserName">홍지운 </p>
+                        <p class="qnaUserName">홍**</p>
                     </td>
                     <td>
                         <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
@@ -243,11 +272,11 @@
                             <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
                         </p>
                     </td>
-                    <td>
+                    <td class="qnaTitleAlign">
                         <a class="qnaPostTitle" href="">옷이 개작네</a>
                     </td>
                     <td>
-                        <p class="qnaUserName">유호연</p>
+                        <p class="qnaUserName">유**</p>
                     </td>
                     <td>
                         <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
@@ -258,6 +287,9 @@
                 </tr>
             </table>
 
+            <div class="qnaWriteBtnBox">
+                <input class="qnaWriteBtn" type="button" value="글쓰기">
+            </div>
 
             <div id="paging">
                 <button class="page-btn" id="big-left"><<</button>
@@ -298,5 +330,7 @@
     </div>
 </div>
 </body>
+<script>
+</script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>
