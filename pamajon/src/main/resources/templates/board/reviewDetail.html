@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="common/header.html"></th:block>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>QnA</title>
     <style>
-        body{
-            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+        body {
+            font: 0.75em Verdana, Dotum, AppleGothic, sans-serif;
             color: #353535;
         }
 
         #title-idx {
-            margin-top:2.5em;
+            margin-top: 2.5em;
             display: flex;
         }
+
         #title {
-            margin-left:65px;
+            margin-left: 65px;
             text-align: right;
             justify-items: left;
             width: 50%;
-            font-size:22px;
+            font-size: 22px;
             font-weight: 900;
             color: #353535;
-            font-family: 'Spoqa Han Sans','Sans-serif'!important;
+            font-family: 'Spoqa Han Sans', 'Sans-serif' !important;
             -webkit-font-smoothing: antialiased;
         }
+
         #idx {
             width: 50%;
             text-align: right;
             font-weight: bold;
         }
+
         #wrapper {
             display: flex;
             justify-content: center;
         }
+
         #board-wrapper {
             margin-top: 2.5em;
             min-width: 100em;
@@ -45,6 +48,7 @@
 </head>
 
 <body>
+<th:block th:replace="common/header.html"></th:block>
 
 <div id="title-idx">
     <div id="title">
@@ -60,8 +64,6 @@
 
     </div>
 </div>
-</body>
-<script>
-</script>
 <th:block th:replace="common/footer.html"></th:block>
+</body>
 </html>

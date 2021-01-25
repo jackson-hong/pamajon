@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="common/header.html"></th:block>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Review</title>
@@ -67,10 +65,8 @@
             vertical-align: middle;
 
         }
-        #boardSortOption{
-            display: inline;
-        }
-        .post-Num{width: 6%;}
+
+        .review-postNum{width: 6%;}
         .review-PostOption{width: 12%;}
         .review-PostTitle{width: 65%;}
         .review-UserName{width: 7%;}
@@ -143,6 +139,7 @@
 </head>
 
 <body>
+<th:block th:replace="common/header.html"></th:block>
 
 <div id="title-idx">
     <div id="title">
@@ -181,7 +178,7 @@
                         <p class="reviewUserName">홍지운 </p>
                     </td>
                     <td>
-                        <p class="reviewPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="reviewPostDate">2021-01-23<br/> 13:13:13 </p>
                     </td>
                     <td>
                         <P CLASS="reviewPostViewCount">10</P>
@@ -205,7 +202,7 @@
                         <p class="reviewUserName">김종구 </p>
                     </td>
                     <td>
-                        <p class="reviewPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="reviewPostDate">2021-01-23<br/> 13:13:13</p>
                     </td>
                     <td>
                         <P CLASS="reviewPostViewCount">101</P>
@@ -227,7 +224,7 @@
                         <p class="reviewUserName">홍지운 </p>
                     </td>
                     <td>
-                        <p class="reviewPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="reviewPostDate">2021-01-23<br/> 13:13:13</p>
                     </td>
                     <td>
                         <P CLASS="reviewPostViewCount">10</P>
@@ -264,16 +261,16 @@
             <div id="paging">
                 <button class="page-btn" id="big-left"><<</button>
                 <button class="page-btn" id="left"><</button>
-                <button class="page-btn selected" class="pageNum">1</button>
-                <button class="page-btn" class="pageNum">2</button>
-                <button class="page-btn" class="pageNum">3</button>
-                <button class="page-btn" class="pageNum">4</button>
-                <button class="page-btn" class="pageNum">5</button>
-                <button class="page-btn" class="pageNum">6</button>
-                <button class="page-btn" class="pageNum">7</button>
-                <button class="page-btn" class="pageNum">8</button>
-                <button class="page-btn" class="pageNum">9</button>
-                <button class="page-btn" class="pageNum">10</button>
+                <button class="page-btn selected pageNum">1</button>
+                <button class="page-btn pageNum">2</button>
+                <button class="page-btn pageNum">3</button>
+                <button class="page-btn pageNum">4</button>
+                <button class="page-btn pageNum">5</button>
+                <button class="page-btn pageNum">6</button>
+                <button class="page-btn pageNum">7</button>
+                <button class="page-btn pageNum">8</button>
+                <button class="page-btn pageNum">9</button>
+                <button class="page-btn pageNum">10</button>
                 <button class="page-btn" id="right">></button>
                 <button class="page-btn" id="big-right">>></button>
             </div>
@@ -283,8 +280,8 @@
                 <select class="form-control">
                     <option id="searchPeriod-Week">일주일</option>
                     <option id="searchPeriod-OneMonth">한달</option>
-                    <option id="searchPeriod-threeMonthes">세달</option>
-                    <option id="earchPeriod-All">전체</option>
+                    <option id="searchPeriod-threeMonths">세달</option>
+                    <option id="searchPeriod-All">전체</option>
                 </select>
                 <select class="form-control">
                     <option id="searchByTitle">제목</option>
@@ -299,6 +296,6 @@
         </div>
     </div>
 </div>
-</body>
 <th:block th:replace="common/footer.html"></th:block>
+</body>
 </html>

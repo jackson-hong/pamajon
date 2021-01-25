@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="common/header.html"></th:block>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>QnA</title>
     <style>
-        body{
-            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+        body {
+            font: 0.75em Verdana, Dotum, AppleGothic, sans-serif;
             color: #353535;
         }
 
@@ -15,6 +13,7 @@
             display: flex;
             justify-content: center;
         }
+
         #board-wrapper {
             margin-top: 2.5em;
             min-width: 100em;
@@ -22,113 +21,141 @@
         }
 
         #title-idx {
-            margin-top:2.5em;
+            margin-top: 2.5em;
             display: flex;
         }
+
         #title {
-            margin-left:65px;
+            margin-left: 65px;
             text-align: right;
             justify-items: left;
             width: 50%;
-            font-size:22px;
+            font-size: 22px;
             font-weight: 900;
             color: #353535;
-            font-family: 'Spoqa Han Sans','Sans-serif'!important;
+            font-family: 'Spoqa Han Sans', 'Sans-serif' !important;
             -webkit-font-smoothing: antialiased;
         }
+
         #idx {
             width: 50%;
             text-align: right;
             font-weight: bold;
         }
+
         table {
             margin-top: 1em;
             border-collapse: collapse;
             border-spacing: 0;
             width: 100%;
-            border:1px silver solid;
+            border: 1px silver solid;
             text-align: center;
         }
+
         th {
-            background: rgb(251,250,250);
-            color:rgb(40,40,40);
+            background: rgb(251, 250, 250);
+            color: rgb(40, 40, 40);
             font-weight: lighter;
             -webkit-font-smoothing: antialiased;
-            height:3em;
+            height: 3em;
         }
 
-        .form-control{
+        .form-control {
             margin-top: 10px;
             margin-left: 3px;
             height: 25px;
             font-size: 100%;
-            font-family: "돋움",Dotum;
+            font-family: "돋움", Dotum;
             color: #353535;
             vertical-align: middle;
 
         }
-        #boardSortOption{
+
+        #boardSortOption {
             display: inline;
         }
-        .post-Num{width: 6%;}
-        .qna-PostOption{width: 12%;}
-        .qna-PostTitle{width: 65%;}
-        .qna-UserName{width: 7%;}
-        .qna-PostDate{width: 7%;}
-        .qna-PostViewCount{width: 3%;}
+
+        .qna-postNum {
+            width: 6%;
+        }
+
+        .qna-PostOption {
+            width: 12%;
+        }
+
+        .qna-PostTitle {
+            width: 65%;
+        }
+
+        .qna-UserName {
+            width: 7%;
+        }
+
+        .qna-PostDate {
+            width: 7%;
+        }
+
+        .qna-PostViewCount {
+            width: 3%;
+        }
 
 
-        .qnaPostOption{
+        .qnaPostOption {
             display: inline;
         }
-        .qnaTitleAlign{
+
+        .qnaTitleAlign {
             text-align: left;
         }
 
-        .qnaPostTitle{
+        .qnaPostTitle {
             margin-left: 10px
         }
 
-        .postImgBox{
+        .postImgBox {
             display: inline;
             margin-top: 1px;
             margin-left: 1px;
         }
 
-        a.qnaPostTitle:hover   { text-decoration:underline; }
+        a.qnaPostTitle:hover {
+            text-decoration: underline;
+        }
 
 
-        .qnaWriteBtnBox{
+        .qnaWriteBtnBox {
             border: 1px solid #d7d5d5;
             background: #fbfafa;
             height: 40px;
         }
-        .qnaWriteBtn{
+
+        .qnaWriteBtn {
             margin-top: 5px;
             margin-right: 30px;
             float: right;
             width: 6em;
             height: 2em;
             font-size: 14px;
-            color : white;
-            background: rgba(7,34,66,0.8);
+            color: white;
+            background: rgba(7, 34, 66, 0.8);
             border: 1px silver solid;
             border-radius: 2px;
         }
 
-        #boardSearch{
+        #boardSearch {
             display: flex;
             margin-top: 2em;
             justify-content: left;
         }
 
-        .SearchForm{
+        .SearchForm {
             margin-top: 11px;
             margin-left: 2px;
             height: 15px;
 
         }
-        .search-btn{
+
+        .search-btn {
             margin-top: 11px;
             margin-left: 2px;
             width: 60px;
@@ -138,12 +165,14 @@
             border-radius: 4px;
             border-collapse: collapse;
         }
+
         #paging {
             margin-top: 2em;
             display: flex;
             justify-content: center;
         }
-        .page-btn{
+
+        .page-btn {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -155,11 +184,13 @@
             background: white;
             border: 1px silver solid;
             border-right: 0;
-            color: rgb(100,100,100);
+            color: rgb(100, 100, 100);
         }
+
         .page-btn.selected {
-            border-bottom:3px rgb(80,80,80) solid;
+            border-bottom: 3px rgb(80, 80, 80) solid;
         }
+
         .page-btn:last-of-type {
             border-right: 1px silver solid;
         }
@@ -168,10 +199,11 @@
 </head>
 
 <body>
+<th:block th:replace="common/header.html"></th:block>
 
 <div id="title-idx">
     <div id="title">
-       <span>Q&A</span>
+        <span>Q&A</span>
     </div>
     <div id="idx">
         <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
@@ -206,7 +238,7 @@
                         <p class="qnaUserName">홍**</p>
                     </td>
                     <td>
-                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
                     </td>
                     <td>
                         <P CLASS="qnaPostViewCount">10</P>
@@ -219,7 +251,7 @@
                     </td>
                     <td class="QnaOptionBox">
                         <p class="qnaPostOption">
-                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46" />
+                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46"/>
                             <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
                         </p>
                     </td>
@@ -230,7 +262,7 @@
                         <p class="qnaUserName">김**</p>
                     </td>
                     <td>
-                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
                     </td>
                     <td>
                         <P CLASS="qnaPostViewCount">101</P>
@@ -247,14 +279,14 @@
                     </td>
                     <td class="qnaTitleAlign">
                         <a class="qnaPostTitle qnaSecret" href="/pamajon/board/qna/secret">배송 줜나 느리네</a>
-                            <!-- QnASecret 관련 -->
-                            <i class="fas fa-lock"></i>
+                        <!-- QnASecret 관련 -->
+                        <i class="fas fa-lock"></i>
                     </td>
                     <td>
                         <p class="qnaUserName">홍**</p>
                     </td>
                     <td>
-                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
                     </td>
                     <td>
                         <P CLASS="qnaPostViewCount">10</P>
@@ -268,7 +300,7 @@
                     </td>
                     <td class="QnaOptionBox">
                         <p class="qnaPostOption">
-                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46" />
+                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46"/>
                             <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
                         </p>
                     </td>
@@ -279,7 +311,7 @@
                         <p class="qnaUserName">유**</p>
                     </td>
                     <td>
-                        <p class="qnaPostDate">2021-01-23</br> 13:13:13</p>
+                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
                     </td>
                     <td>
                         <P CLASS="qnaPostViewCount">100</P>
@@ -294,16 +326,16 @@
             <div id="paging">
                 <button class="page-btn" id="big-left"><<</button>
                 <button class="page-btn" id="left"><</button>
-                <button class="page-btn selected" class="pageNum">1</button>
-                <button class="page-btn" class="pageNum">2</button>
-                <button class="page-btn" class="pageNum">3</button>
-                <button class="page-btn" class="pageNum">4</button>
-                <button class="page-btn" class="pageNum">5</button>
-                <button class="page-btn" class="pageNum">6</button>
-                <button class="page-btn" class="pageNum">7</button>
-                <button class="page-btn" class="pageNum">8</button>
-                <button class="page-btn" class="pageNum">9</button>
-                <button class="page-btn" class="pageNum">10</button>
+                <button class="page-btn selected pageNum">1</button>
+                <button class="page-btn pageNum">2</button>
+                <button class="page-btn pageNum">3</button>
+                <button class="page-btn pageNum">4</button>
+                <button class="page-btn pageNum">5</button>
+                <button class="page-btn pageNum">6</button>
+                <button class="page-btn pageNum">7</button>
+                <button class="page-btn pageNum">8</button>
+                <button class="page-btn pageNum">9</button>
+                <button class="page-btn pageNum">10</button>
                 <button class="page-btn" id="right">></button>
                 <button class="page-btn" id="big-right">>></button>
             </div>
@@ -313,8 +345,8 @@
                 <select class="form-control">
                     <option id="searchPeriod-Week">일주일</option>
                     <option id="searchPeriod-OneMonth">한달</option>
-                    <option id="searchPeriod-threeMonthes">세달</option>
-                    <option id="earchPeriod-All">전체</option>
+                    <option id="searchPeriod-threeMonths">세달</option>
+                    <option id="searchPeriod-All">전체</option>
                 </select>
                 <select class="form-control">
                     <option id="searchByTitle">제목</option>
@@ -330,7 +362,6 @@
     </div>
 </div>
 </body>
-<script>
-</script>
 <th:block th:replace="common/footer.html"></th:block>
+
 </html>
