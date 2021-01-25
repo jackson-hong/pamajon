@@ -100,24 +100,6 @@
 
         }
 
-        .reviewWriteBtnBox{
-            border: 1px solid #d7d5d5;
-            background: #fbfafa;
-            height: 40px;
-        }
-        .reviewWriteBtn{
-            margin-top: 5px;
-            margin-right: 30px;
-            float: right;
-            width: 6em;
-            height: 2em;
-            font-size: 14px;
-            color : white;
-            background: rgba(7,34,66,0.8);
-            border: 1px silver solid;
-            border-radius: 2px;
-        }
-
 
         .search-btn{
             margin-top: 11px;
@@ -193,7 +175,7 @@
                         </p>
                     </td>
                     <td>
-                        <a class="reviewPostTitle" href="">핵비쌈요 ㅈㅈ<a>
+                        <a class="reviewPostTitle" href="">핵비쌈요 ㅈㅈ</a>
                     </td>
                     <td>
                         <p class="reviewUserName">홍지운 </p>
@@ -239,7 +221,7 @@
                         </p>
                     </td>
                     <td>
-                        <a class="reviewPostTitle" href="">개별로임 아무튼 그럼<a>
+                        <a class="reviewPostTitle" href="">개별로임 아무튼 그럼</a>
                     </td>
                     <td>
                         <p class="reviewUserName">홍지운 </p>
@@ -278,23 +260,20 @@
                 </tr>
             </table>
 
-            <div class="reviewWriteBtnBox">
-                <input class="reviewWriteBtn" type="button" value="글쓰기">
-            </div>
 
             <div id="paging">
                 <button class="page-btn" id="big-left"><<</button>
                 <button class="page-btn" id="left"><</button>
-                <button class="page-btn selected" id="pageNum">1</button>
-                <button class="page-btn" id="pageNum">2</button>
-                <button class="page-btn" id="pageNum">3</button>
-                <button class="page-btn" id="pageNum">4</button>
-                <button class="page-btn" id="pageNum">5</button>
-                <button class="page-btn" id="pageNum">6</button>
-                <button class="page-btn" id="pageNum">7</button>
-                <button class="page-btn" id="pageNum">8</button>
-                <button class="page-btn" id="pageNum">9</button>
-                <button class="page-btn" id="pageNum">10</button>
+                <button class="page-btn selected" class="pageNum">1</button>
+                <button class="page-btn" class="pageNum">2</button>
+                <button class="page-btn" class="pageNum">3</button>
+                <button class="page-btn" class="pageNum">4</button>
+                <button class="page-btn" class="pageNum">5</button>
+                <button class="page-btn" class="pageNum">6</button>
+                <button class="page-btn" class="pageNum">7</button>
+                <button class="page-btn" class="pageNum">8</button>
+                <button class="page-btn" class="pageNum">9</button>
+                <button class="page-btn" class="pageNum">10</button>
                 <button class="page-btn" id="right">></button>
                 <button class="page-btn" id="big-right">>></button>
             </div>
@@ -312,7 +291,7 @@
                     <option id="searchByContent">내용</option>
                     <option id="searchByName">글쓴이</option>
                     <option id="searchById">아이디</option>
-                    <option id="searchByNickName">별명</option>
+                    <option id="searchByProductName">상품</option>
                 </select>
                 <input type="text" class="SearchForm">
                 <button type="submit" th:method="get" class="search-btn">찾기</button>

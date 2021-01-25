@@ -10,7 +10,7 @@ public class BoardController {
     public String qna(){return "/board/qna"; }
     @RequestMapping("/board/qna/write")
     public String qnaWrite(){ return "/board/qnaWrite"; }
-    @RequestMapping("/board/qna/secert")
+    @RequestMapping("/board/qna/secret")
     public String qnaSecret(){ return "/board/qnaSecret"; }
 
     //비밀글일경우 거치는 페이지
