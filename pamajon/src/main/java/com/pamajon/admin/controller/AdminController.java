@@ -32,12 +32,6 @@ public class AdminController {
         return "/admin/productHandler";
     }
 
-    @GetMapping("/chatroom")
-    public String gotoChatroom(){
-
-        return "/admin/chattingRoom";
-    }
-
     @GetMapping("/productInsert")
     public String gotoInsertProduct(){
 
