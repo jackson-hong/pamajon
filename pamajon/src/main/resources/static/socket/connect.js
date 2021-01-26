@@ -165,11 +165,6 @@ function updateUsers(userName) {
                         activeUserSpan.html(activeUserSpan.html() + createUserNode(userList[index]));
                     }
                 }
-                /*
-                $.each(userList, function(index, item) {
-                    //now you can access properties using dot notation
-                });
-                */
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

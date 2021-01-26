@@ -22,7 +22,9 @@ public class UserInterCepter implements ChannelInterceptor {
                     .getHeaders()
                     .get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
             if (raw instanceof Map) {
+
                 Object name = ((Map) raw).get("username");
+
                 if (name instanceof LinkedList) {
                     accessor.setUser(new User(((LinkedList) name).get(0).toString()));
                 }
