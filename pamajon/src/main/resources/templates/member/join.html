@@ -34,7 +34,7 @@
         margin-bottom: 0.5em;
     }
     table {
-        min-width: 100em;
+        min-width: 90em;
         max-width: 120em;
         border: 1px silver solid;
         border-collapse: collapse;
@@ -127,23 +127,24 @@
         <div id="description">
             <ion-icon name="medical"></ion-icon>필수입력사항
         </div>
+        <form th:action="@{/member/joinEnd}" method="post">
         <table>
             <tr>
                 <td class="table-title">아이디<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input>(영문소문자/숫자, 4~16자)
+                    <input name="user_id" id="user_id">(영문소문자/숫자, 4~16자)
                 </td>
             </tr>
             <tr>
                 <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
+                    <input name="user_pw" id="user_pw">(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
                 </td>
             </tr>
             <tr>
                 <td class="table-title">비밀번호 확인<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input>
+                    <input name="user_pw_ch" id="user_pw_ch">
                 </td>
             </tr>
             <tr>
@@ -164,21 +165,21 @@
             <tr>
                 <td class="table-title">비밀번호 확인 답변<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input size="50">
+                    <input size="50" name="pw_answer">
                 </td>
             </tr>
             <tr>
                 <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input>
+                    <input name="user_name" id="user_name">
                 </td>
             </tr>
             <tr>
                 <td class="table-title">주소</td>
                 <td class="table-content address">
-                    <input size="8"><button name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
-                    <input size="36"><br>
-                    <input size="36"><br>
+                    <input size="8" name="postal_code" id="postal_code"><button name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
+                    <input size="36" name="user_addr"><br>
+                    <input size="36" name="user_addr_rest"><br>
                 </td>
             </tr>
             <tr>
@@ -218,34 +219,35 @@
                         <option value="0508">0508</option>
                     </select>
                     -
-                    <input size="8"> - <input size="8">
+                    <input size="8" name="phone_middle" id="phone_middle"> - <input size="8" name="phone_tail" id="phone_tail">
                 </td>
             </tr>
-            <tr>
-                <td class="table-title">휴대전화</td>
-                <td class="table-content">
-                    <select class="phone-num" name="phone-num-2">
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
-                    </select>
-                    -
-                    <input size="8"> - <input size="8">
-                </td>
-            </tr>
+<!--            <tr>-->
+<!--                <td class="table-title">휴대전화</td>-->
+<!--                <td class="table-content">-->
+<!--                    <select class="phone-num" name="phone-num-2">-->
+<!--                        <option value="010">010</option>-->
+<!--                        <option value="011">011</option>-->
+<!--                        <option value="016">016</option>-->
+<!--                        <option value="017">017</option>-->
+<!--                        <option value="018">018</option>-->
+<!--                        <option value="019">019</option>-->
+<!--                    </select>-->
+<!--                    - -->
+<!--                    <input size="8"> - <input size="8">-->
+<!--                </td>-->
+<!--            </tr>-->
             <tr>
                 <td class="table-title">이메일<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input size="50">
+                    <input size="50" name="user_email" id="user_email">
                 </td>
             </tr>
         </table>
         <div id="submit-con">
             <button id="submit" type="submit">회원가입</button>
         </div>
+        </form>
     </div>
 </div>
 <th:block th:replace="common/footer.html"></th:block>

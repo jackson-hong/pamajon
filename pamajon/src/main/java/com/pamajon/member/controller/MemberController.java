@@ -1,48 +1,64 @@
 package com.pamajon.member.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 
-@Controller
+@RestController
+@RequestMapping("/member")
 public class MemberController {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    @RequestMapping("/member/myPage")
+    @RequestMapping("/myPage")
     public String myPage(){
         return "/member/myPage";
     }
 
-    @RequestMapping("/member/login")
+    @RequestMapping("/login")
     public String login(){
         return "/member/login";
     }
 
-    @RequestMapping("/member/join")
-    public String join(){
-        return "/member/join";
+    @GetMapping("/join")
+    public ModelAndView join(ModelAndView mv){
+        mv.setViewName("/member/join");
+        return mv;
     }
 
-    @RequestMapping("/member/orderList")
+    @PostMapping("/joinEnd")
+    public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
+
+        logger.debug(""+inputs);
+
+        return mv;
+    }
+
+    @RequestMapping("/orderList")
     public String orderList() {
         return "member/orderList";
     }
 
-    @RequestMapping("/member/modify")
+    @RequestMapping("/modify")
     public String modify(){
         return "member/modify";
     }
 
-    @RequestMapping("/member/wishList")
+    @RequestMapping("/wishList")
     public String wishList(){
         return "member/wishList";
     }
 
-    @RequestMapping("/member/mileage")
+    @RequestMapping("/mileage")
     public String mileage(){
         return "member/mileage";
     }
 
-    @RequestMapping("/member/address")
+    @RequestMapping("/address")
     public String address(){
         return "member/address";
     }
