@@ -18,7 +18,8 @@ public class WebSocketConnectionRestController {
 
     @PostMapping("/chat/user-connect")
     public String userConnect(HttpServletRequest request,
-                              @ModelAttribute("username") String userName) {
+                              @ModelAttribute("username") String userName,
+                              @ModelAttribute("userId") String userId) {
         String remoteAddr = "";
         if (request != null) {
             remoteAddr = request.getHeader("Remote_Addr");
@@ -29,7 +30,7 @@ public class WebSocketConnectionRestController {
                 }
             }
         }
-        activeSessionManager.add(userName, remoteAddr);
+        activeSessionManager.add(userName,userId,remoteAddr);
         return remoteAddr;
     }
 

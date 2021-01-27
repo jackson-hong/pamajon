@@ -1,20 +1,18 @@
 package com.pamajon.chat.controller;
 
-import com.google.gson.Gson;
+
 import com.pamajon.chat.ActiveUserChangeListener;
 import com.pamajon.chat.ActiveUserManager;
 import com.pamajon.chat.model.dto.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.security.Principal;
-import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -45,17 +43,16 @@ public class WebSocketController implements ActiveUserChangeListener {
     }
 
     @MessageMapping("/chat")
-    @SendToUser("/queue/messages")
-    public String send(String sender, Principal principal, @Payload ChatMessage chatMessage) throws Exception {
+    public void send(SimpMessageHeaderAccessor sha, @Payload ChatMessage chatMessage) throws Exception {
 
-        ChatMessage message = new ChatMessage(chatMessage.getFrom(), chatMessage.getText(), chatMessage.getRecipient());
+        String sender = sha.getUser().getName();
+        ChatMessage message = new ChatMessage(chatMessage.getFrom(),chatMessage.getText(), chatMessage.getRecipient());
         if (!sender.equals(chatMessage.getRecipient())) {
-            return "ㅇㅋㅇㅋ";
+            webSocket.convertAndSendToUser(sender, "/queue/messages", message);
         }
-        //webSocket.convertAndSendToUser(chatMessage.getRecipient(),"/queue/messages", message);
-        return "넘아감";
-    }
+        webSocket.convertAndSendToUser(chatMessage.getRecipient(), "/queue/messages", message);
 
+    }
     @Override
     public void notifyActiveUserChange() {
 

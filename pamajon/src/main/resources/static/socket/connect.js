@@ -26,17 +26,13 @@ function connect() {
         function (remoteAddr, status, xhr) {
             var socket = new SockJS('/pamajon/chat');
             stompClient = Stomp.over(socket);
-            stompClient.connect({ username: userName }, function () {
-                console.log("실행");
-                stompClient.subscribe('/queue/messages', function (output) {
-                    alert(output);
-                    showMessage(createTextNode(JSON.parse(output.body)));
-                });
+            stompClient.connect({ username: userName ,userId:"test" }, function () {
                 stompClient.subscribe('/topic/active', function () {
-                    updateUsers(userName);
+                    if(userName=="운영자") {
+                        updateUsers(userName);
+                    }
                 });
                 stompClient.subscribe('/user/queue/messages', function (output) {
-                    alert(output);
                     showMessage(createTextNode(JSON.parse(output.body)));
                 });
                 sendConnection(' connected to server');
@@ -82,9 +78,13 @@ function sendBroadcast(json) {
 
 function send() {
     var text = $("#write_msg").val();
-    if (selectedUser == null) {
-        alert('Please select a user.');
-        return;
+    if(userName=="운영자") {
+        if (selectedUser == null) {
+            alert('Please select a user.');
+            return;
+        }
+    } else {
+        selectedUser="운영자";
     }
     stompClient.send("/app/chat", {'sender': userName},
         JSON.stringify({ 'from': userName, 'text': text, 'recipient': selectedUser }));
@@ -93,33 +93,38 @@ function send() {
 
 function createTextNode(messageObj) {
 
-    var classAlert = 'alert-info';
-    var fromTo = messageObj.from;
-    var addTo = fromTo;
-    if (userName == messageObj.from) {
-        fromTo = messageObj.recipient;
-        addTo = 'to: ' + fromTo;
+    let fromTo = messageObj.from;
+    let addTo = fromTo;
+    //fromTo 와 userName 이 다른경우 받은 메세지임.
+    if(userName!=fromTo){
+        return`
+                <div class="incoming_msg">
+                    <div class="incoming_msg_img"><img
+                            src="https://ptetutorials.com/images/user-profile.png"
+                            alt="sunil"></div>
+                    <div class="received_msg">
+                        <h6>${messageObj.from}</h6>
+                        <div class="received_withd_msg">
+                            <p>${messageObj.text}</p>
+                            <span class="time_date">${messageObj.time}</span></div>
+                    </div>
+                </div>
+             `
+    } else {
+        return `
+                <div class="outgoing_msg">
+                    <div class="sent_msg">
+                        <p>${messageObj.text}</p>
+                        <span class="time_date">${messageObj.time}</span></div>
+                </div>
+        `
     }
-    if (userName != messageObj.from && messageObj.from != "server") {
-        classAlert = "alert-warning";
-    }
-    if (messageObj.from != "server") {
-        addTo = '<a href="javascript:void(0)" onclick="setSelectedUser(\'' + fromTo + '\')">' + addTo + '</a>'
-    }
-    return '<div class="row alert ' + classAlert + '"><div class="col-md-8">' +
 
-        messageObj.text +
-        '</div><div class="col-md-4 text-right"><small>[<b>' +
-        addTo +
-        '</b> ' +
-        messageObj.time +
-        ']</small>' +
-        '</div></div>';
 }
 
 function showMessage(message) {
 
-    $("#content").html($("#content").html() + message);
+    $(".msg_history").html($(".msg_history").html() + message);
     $("#clear").show();
 
 }
@@ -143,34 +148,37 @@ function setSelectedUser(username) {
 }
 function updateUsers(userName) {
 
-    // console.log('List of users : ' + userList);
-    let activeUserSpan = $(".inbox_chat");
-    let index;
-    activeUserSpan.html('');
-    let url = '/pamajon/chat/active-user-except/' + userName;
+    if(userName=="운영자") {
+        // console.log('List of users : ' + userList);
+        let activeUserSpan = $(".inbox_chat");
+        let index;
+        activeUserSpan.html('');
+        let url = '/pamajon/chat/active-user-except/' + userName;
 
-    $.ajax({
-        type: 'GET',
-        url: url,
-        // data: data,
-        dataType: 'json', // ** ensure you add this line **
-        success: function (userList) {
-            if (userList.length == 0) {
-                activeUserSpan.html('<p><i>No active users found.</i></p>');
-            }
-            else {
-                activeUserSpan.html('<p class="text-muted">click on user to begin chat</p>');
-                for (index = 0; index < userList.length; ++index) {
-                    if (userList[index] != userName) {
-                        activeUserSpan.html(activeUserSpan.html() + createUserNode(userList[index]));
+        $.ajax({
+            type: 'GET',
+            url: url,
+            // data: data,
+            dataType: 'json', // ** ensure you add this line **
+            success: function (userList) {
+                if (userList.length == 0) {
+                    activeUserSpan.html('<p><i>No active users found.</i></p>');
+                } else {
+                    activeUserSpan.html('<p class="text-muted">click on user to begin chat</p>');
+                    for (index = 0; index < userList.length; ++index) {
+                        if (userList[index] != userName) {
+                            activeUserSpan.html(activeUserSpan.html() + createUserNode(userList[index]));
+                        }
                     }
                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error occurred");
             }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("error occurred");
-        }
-    });
+        });
+    }
+
+
 }
 
 function createUserNode(username) {
