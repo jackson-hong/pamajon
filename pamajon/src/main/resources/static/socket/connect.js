@@ -21,24 +21,52 @@ function connect() {
         alert('Please input a nickname!');
         return;
     }
+    if(userName!="운영자"){
+        selectedUser="운영자";
+    }
     $.post('/pamajon/chat/user-connect',
         { username: userName },
         function (remoteAddr, status, xhr) {
             var socket = new SockJS('/pamajon/chat');
             stompClient = Stomp.over(socket);
-            stompClient.connect({ username: userName }, function () {
-                console.log("실행");
-                stompClient.subscribe('/queue/messages', function (output) {
-                    alert(output);
-                    showMessage(createTextNode(JSON.parse(output.body)));
-                });
+            stompClient.connect({ username: userName, userId: "test" }, function () {
                 stompClient.subscribe('/topic/active', function () {
-                    updateUsers(userName);
+                    if (userName == "운영자") {
+                        updateUsers(userName);
+                    }
                 });
+                //메세지를 서버에 보낸후 응답을 받음.
                 stompClient.subscribe('/user/queue/messages', function (output) {
-                    alert(output);
-                    showMessage(createTextNode(JSON.parse(output.body)));
+                    if(selectedUser!="운영자") {
+                        //이 케이스는 운영자가 다른 사람에게 메세지를 받는 케이스
+
+                        //selectedUser 외 다른 사람이 메세지를 보냈을경우 채팅방에서 보여주지않음
+                        if(JSON.parse(output.body).from==selectedUser) {
+                            showMessage(createTextNode(JSON.parse(output.body)));
+
+                         //내가 운영자면 내가 보낸 매세지 볼 수 있어야함.
+                        } else if(JSON.parse(output.body).from=="운영자"){
+                            showMessage(createTextNode(JSON.parse(output.body)));
+                        }
+                    } else if(selectedUser=="운영자"){
+                        //운영자가 아닌 일반 유저 통신은 운영자만이랑 이뤄짐으로 그냥 다 볼 수있어야함.
+                            showMessage(createTextNode(JSON.parse(output.body)));
+                    }
                 });
+                //방에 입장했을때 메세지 리스트를 보여줌.
+                stompClient.subscribe('/user/queue/messageList', function (messageList) {
+                    if (messageList.length != 0) {
+                        reconstructMessage(JSON.parse(messageList.body));
+                    }
+                });
+                //대화방에 입장한 후 보게될 메세지를 서버로부터 응답 받음.
+                stompClient.subscribe('/user/queue/entrymessage', function (result) {
+                    entryHandler(result.body);
+                });
+                if(selectedUser=="운영자"){
+                    stompClient.send("/app/user/messageList", { 'sender': userName },
+                    JSON.stringify({ 'from': userName, 'recipient': selectedUser }));
+                }
                 sendConnection(' connected to server');
                 setConnected(true);
             }, function (err) {
@@ -47,7 +75,7 @@ function connect() {
         }).done(function () {
             // alert('Request done!');
         }).fail(function (jqxhr, settings, ex) {
-            console.log('failed, ' + ex);
+
         }
         );
 }
@@ -59,12 +87,12 @@ function disconnect() {
             function () {
                 sendConnection(' disconnected from server');
                 stompClient.disconnect(function () {
-                    console.log('disconnected...');
+
                     setConnected(false);
                 });
             }).done(function () {
             }).fail(function (jqxhr, settings, ex) {
-                console.log('failed, ' + ex);
+
             }
             );
     }
@@ -82,45 +110,52 @@ function sendBroadcast(json) {
 
 function send() {
     var text = $("#write_msg").val();
-    if (selectedUser == null) {
-        alert('Please select a user.');
-        return;
+    if (userName == "운영자") {
+        if (selectedUser == null) {
+            alert('Please select a user.');
+            return;
+        }
+    } else {
+        selectedUser = "운영자";
     }
-    stompClient.send("/app/chat", {'sender': userName},
+    stompClient.send("/app/chat", { 'sender': userName },
         JSON.stringify({ 'from': userName, 'text': text, 'recipient': selectedUser }));
     $("#write_msg").val("");
 }
 
 function createTextNode(messageObj) {
 
-    var classAlert = 'alert-info';
-    var fromTo = messageObj.from;
-    var addTo = fromTo;
-    if (userName == messageObj.from) {
-        fromTo = messageObj.recipient;
-        addTo = 'to: ' + fromTo;
+    let fromTo = messageObj.from;
+    let addTo = fromTo;
+    //fromTo 와 userName 이 다른경우 받은 메세지임.
+    if (userName != fromTo) {
+        return `<div class="incoming_msg">
+                    <div class="incoming_msg_img"><img
+                            src="https://ptetutorials.com/images/user-profile.png"
+                            alt="sunil"></div>
+                    <div class="received_msg">
+                        <h6>${messageObj.from}</h6>
+                        <div class="received_withd_msg">
+                            <p>${messageObj.text}</p>
+                            <span class="time_date">${messageObj.time}</span></div>
+                    </div>
+                </div>
+             `
+    } else {
+        return `
+                <div class="outgoing_msg">
+                    <div class="sent_msg">
+                        <p>${messageObj.text}</p>
+                        <span class="time_date">${messageObj.time}</span></div>
+                </div>
+        `
     }
-    if (userName != messageObj.from && messageObj.from != "server") {
-        classAlert = "alert-warning";
-    }
-    if (messageObj.from != "server") {
-        addTo = '<a href="javascript:void(0)" onclick="setSelectedUser(\'' + fromTo + '\')">' + addTo + '</a>'
-    }
-    return '<div class="row alert ' + classAlert + '"><div class="col-md-8">' +
 
-        messageObj.text +
-        '</div><div class="col-md-4 text-right"><small>[<b>' +
-        addTo +
-        '</b> ' +
-        messageObj.time +
-        ']</small>' +
-        '</div></div>';
 }
 
 function showMessage(message) {
 
-    $("#content").html($("#content").html() + message);
-    $("#clear").show();
+    $(".msg_history").html($(".msg_history").html() + message);
 
 }
 
@@ -130,58 +165,123 @@ function clearMessages() {
 }
 
 function setSelectedUser(username) {
+
     selectedUser = username;
 
-    $("#selectedUser").html(selectedUser);
-    if ($("#selectedUser").html() == "") {
-        $("#divSelectedUser").hide();
+    stompClient.send("/app/admin/messageList", { 'sender': userName },
+        JSON.stringify({ 'from': userName, 'recipient': selectedUser }));
+
+    stompClient.send("/app/entry", { 'sender': userName },
+        JSON.stringify({ 'from': userName, 'recipient': selectedUser }));
+
+}
+
+function reconstructMessage(messageList) {
+
+    let str = "";
+    let msgHistory = document.querySelector(".msg_history");
+
+    while (msgHistory.hasChildNodes()) {
+        msgHistory.removeChild(msgHistory.firstChild);
     }
-    else {
-        $("#divSelectedUser").show();
+    for (let i = 0; i < messageList.length; i++) {
+
+        if(selectedUser=="운영자"){
+
+            if(messageList[i].from == "운영자"){
+                str += `
+                <div class="incoming_msg">
+                    <div class="incoming_msg_img"><img
+                            src="https://ptetutorials.com/images/user-profile.png"
+                            alt="sunil"></div>
+                    <div class="received_msg">
+                        <h6>${messageList[i].from}</h6>
+                        <div class="received_withd_msg">
+                            <p>${messageList[i].text}</p>
+                            <span class="time_date">${messageList[i].time}</span></div>
+                    </div>
+                </div>
+            `
+            } else {
+                str += `<div class="outgoing_msg">
+                    <div class="sent_msg">
+                        <p>${messageList[i].text}</p>
+                        <span class="time_date">${messageList[i].time}</span></div>
+                </div>
+                `
+            }
+
+        } else if(selectedUser!="운영자") {
+
+            if (messageList[i].from == "운영자") {
+
+                str += `<div class="outgoing_msg">
+                    <div class="sent_msg">
+                        <p>${messageList[i].text}</p>
+                        <span class="time_date">${messageList[i].time}</span></div>
+                </div>`
+            } else {
+
+                str += `
+            <div class="incoming_msg">
+                    <div class="incoming_msg_img"><img
+                            src="https://ptetutorials.com/images/user-profile.png"
+                            alt="sunil"></div>
+                    <div class="received_msg">
+                        <h6>${messageList[i].from}</h6>
+                        <div class="received_withd_msg">
+                            <p>${messageList[i].text}</p>
+                            <span class="time_date">${messageList[i].time}</span></div>
+                    </div>
+                </div>
+            `
+            }
+        }
+        $(".msg_history").html(str);
+
     }
 
 }
 function updateUsers(userName) {
 
-    // console.log('List of users : ' + userList);
-    let activeUserSpan = $(".inbox_chat");
-    let index;
-    activeUserSpan.html('');
-    let url = '/pamajon/chat/active-user-except/' + userName;
+    if (userName == "운영자") {
+        let activeUserSpan = $(".inbox_chat");
+        let index;
+        activeUserSpan.html('');
+        let url = '/pamajon/chat/active-user-except/' + userName;
 
-    $.ajax({
-        type: 'GET',
-        url: url,
-        // data: data,
-        dataType: 'json', // ** ensure you add this line **
-        success: function (userList) {
-            if (userList.length == 0) {
-                activeUserSpan.html('<p><i>No active users found.</i></p>');
-            }
-            else {
-                activeUserSpan.html('<p class="text-muted">click on user to begin chat</p>');
-                for (index = 0; index < userList.length; ++index) {
-                    if (userList[index] != userName) {
-                        activeUserSpan.html(activeUserSpan.html() + createUserNode(userList[index]));
+        $.ajax({
+            type: 'GET',
+            url: url,
+            // data: data,
+            dataType: 'json', // ** ensure you add this line **
+            success: function (userList) {
+                if (userList.length == 0) {
+                    activeUserSpan.html('<p align="center">접속한 유저가 없습니다.</p>');
+                } else {
+                    for (index = 0; index < userList.length; ++index) {
+                        if (userList[index] != userName) {
+                            activeUserSpan.html(activeUserSpan.html() + createUserNode(userList[index]));
+                        }
                     }
                 }
-                /*
-                $.each(userList, function(index, item) {
-                    //now you can access properties using dot notation
-                });
-                */
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("error occurred");
             }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("error occurred");
-        }
-    });
+        });
+    }
+}
+function entryHandler(result) {
+
+    let entryNode = `<span class="time_date" style="color:black" align="center">${result}</span>`
+    showMessage(entryNode);
 }
 
 function createUserNode(username) {
 
     return `
-                <div class="chat_list active_chat" href="javascript:void(0)" onclick="setSelectedUser(`+'\''+username+'\''+`)">
+                <div class="chat_list active_chat" href="javascript:void(0)" onclick="setSelectedUser(`+ '\'' + username + '\'' + `)">
                     <div class="chat_people">
                         <div class="chat_ib">
                             <h5>${username}<span class="chat_date">2021-01-14</span></h5>

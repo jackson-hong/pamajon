@@ -9,7 +9,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketMessageBrokerConfig implements WebSocketMessageBrokerConfigurer {
+public class WebSocketMessageBrokerConfig implements WebSocketMessageBrokerConfigurer{
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -21,13 +21,14 @@ public class WebSocketMessageBrokerConfig implements WebSocketMessageBrokerConfi
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-
+        //in-memory message-broker, topic에 대한 prefix 설정
         registry.enableSimpleBroker("/topic","/queue");
+        //메세지를 수신하는 handler의 메세지 prefix 설정
         registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new UserInterCepter());
+        registration.interceptors(new UserInterceptor());
     }
 }

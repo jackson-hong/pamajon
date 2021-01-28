@@ -17,14 +17,11 @@ public class TextWebSocketHandler extends org.springframework.web.socket.handler
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println("???들어오나");
         super.afterConnectionEstablished(session);
     }
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
-        System.out.println("???들어오나");
-        System.out.println(message);
         sessions.forEach(webSocketSession -> {
             try {
                 webSocketSession.sendMessage(message);
