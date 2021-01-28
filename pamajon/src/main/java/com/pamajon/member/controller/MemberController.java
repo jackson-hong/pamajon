@@ -2,7 +2,6 @@ package com.pamajon.member.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,7 +9,6 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/member")
 public class MemberController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -24,15 +22,15 @@ public class MemberController {
         return "/member/login";
     }
 
-    @GetMapping("/join")
+    @GetMapping("/member/join")
     public ModelAndView join(ModelAndView mv){
         mv.setViewName("/member/join");
         return mv;
     }
 
-    @PostMapping("/joinEnd")
+    @RequestMapping("/member/insert")
     public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
-
+        logger.debug("???????");
         logger.debug(""+inputs);
 
         return mv;
