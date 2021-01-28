@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,5 +23,6 @@ public class ChatMessage {
         this.text = text;
         this.recipient = recipient;
         this.time = StringUtils.getCurrentTimeStamp();
+
     }
 }

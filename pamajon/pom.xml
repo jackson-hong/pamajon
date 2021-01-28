@@ -78,14 +78,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-
+		<!--STOMP-->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>stomp-websocket</artifactId>
 			<version>2.3.3-1</version>
 		</dependency>
-
-
+		<!-- sockJs -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>sockjs-client</artifactId>
@@ -96,8 +95,12 @@
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>
-
-
+		<!--Multimap-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-guava</artifactId>
+			<version>2.2.0</version>
+		</dependency>
     </dependencies>
 
 	<build>

@@ -1,6 +1,8 @@
 package com.pamajon.chat.controller;
 
 import com.pamajon.chat.ActiveUserManager;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +44,7 @@ public class WebSocketConnectionRestController {
     }
 
     @GetMapping("/chat/active-user-except/{userName}")
-    public Set<String> getActiveUserExceptionCurrentUser(@PathVariable String userName){
-        return activeSessionManager.getActiveUsersExceptCurrentUser(userName);
+    public ResponseEntity<Set<String>> getActiveUserExceptionCurrentUser(@PathVariable String userName){
+        return new ResponseEntity(activeSessionManager.getActiveUsersExceptCurrentUser(userName), HttpStatus.OK);
     }
 }
