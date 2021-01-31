@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 페이지</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/order/order.css" th:href="@{/css/order/order.css}">
+</head>
+
+<body>
+<th:block th:replace="common/header.html"></th:block>
+    <div id=contentWrapper>
+        <div id="titlewrapper">
+            <h3>주문서작성</h3>
+        </div>
+        <div id="second_layer">
+            <!-- 혜택정보 display -->
+
+            <div id="benefit_table">
+                <div class="left_font">혜택정보</div>
+                <div class="right_font">
+                    <div class="user_level">
+                        <div class="user_level floor1" style="line-height: 10px;">
+                            <span style="font-weight: bolder;">XXX</span><span> 님은,[일반회원] 이십니다.</span>
+                        </div>
+                        <div class="user_level floor2">
+                            <span>가용적립금 : </span>
+                            <span style="font-weight: bolder; color: #008bcc;">7,000원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="productdisplay_table">
+                <div class="product layer1">
+                    <span style="font-weight: bolder; font-size: 0.75rem;">국내배송상품 주문내역</span>
+                </div>
+                <table id="product_table">
+                    <thead>
+                        <tr>
+                            <th style="width:2%;"><input type="checkbox"></th>
+                            <th style="width:8%">이미지</th>
+                            <th style="width:40%">상품정보</th>
+                            <th style="width:8%">판매가</th>
+                            <th style="width:6%">수량</th>
+                            <th style="width:9%">적립금</th>
+                            <th style="width:9%">배송구분</th>
+                            <th style="width:7%">배송비</th>
+                            <th style="width:9%">합계</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td style="width:2%;"></td>
+                            <td colspan="8">
+                                <div style="width: 100%; display: flex; justify-content: space-between;">
+                                    <span style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[기본배송]</span>
+                                    <div>
+                                        <span style="line-height: 40px;">상품구매금액</span>
+                                        <span style="line-height: 40px; font-weight: bolder;">239,000</span>
+                                        <span style="line-height: 40px;">+ 배송비</span>
+                                        <span style="line-height: 40px;">0(무료)</span>
+                                        <span style="line-height: 40px;">합계: </span>
+                                        <span style="color: #008bcc; font-weight: bold;">KRW</span>
+                                        <span
+                                            style="color: #008bcc; font-size: 1.1rem; font-weight: bolder;">239,000</span>
+                                    </div>
+                                </div>
+                                </th>
+                        </tr>
+                    </tfoot>
+                    <tbody style="border-bottom: 1px solid #d7d5d5;">
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td><img src="../../static/images/new4.jpg" th:src="@{/images/new4.jpg}" width="100%" height="100px" alt=""></td>
+                            <td>
+                                <div class="pro_title" style="height: 30px;"><span
+                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">&nbsp;&nbsp;CHAMBRAY
+                                        WORK SHIRTS - BLUE CHAMBRAY</span></div>
+                                <div class="pro_option"><span
+                                        style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[옵션:
+                                        5(105~110)]</span></div>
+                            </td>
+                            <td style="text-align: center; font-weight: bold;">KRW 239,000</td>
+                            <td style="text-align: center; ">1</td>
+                            <td style="text-align: center; ">2,000원</td>
+                            <td style="text-align: center; ">기본배송</td>
+                            <td style="text-align: center; ">[무료]</td>
+                            <td style="text-align: center; font-weight: bold;">KRW 239,000</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td><img src="../../static/images/new2.jpg" th:src="@{/images/new2.jpg}" width="100%" height="100px" alt=""></td>
+                            <td>
+                                <div class="pro_title" style="height: 30px;"><span
+                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">&nbsp;&nbsp;CHAMBRAY
+                                        WORK SHIRTS - BLUE CHAMBRAY</span></div>
+                                <div class="pro_option"><span
+                                        style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[옵션:
+                                        5(105~110)]</span></div>
+                            </td>
+                            <td style="text-align: center; font-weight: bold;">KRW 239,000</td>
+                            <td style="text-align: center; ">1</td>
+                            <td style="text-align: center; ">2,000원</td>
+                            <td style="text-align: center; ">기본배송</td>
+                            <td style="text-align: center; ">[무료]</td>
+                            <td style="text-align: center;  font-weight: bold;">KRW 239,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="align-items: center; display: flex;">
+                    <span style="font-weight: bold;">선택상품을&nbsp;</span><a href="#none" class="btn_product_delete"><img
+                            src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif"
+                            style="margin-top: 3px;" alt="삭제하기"></a>
+                </div>
+                <hr style="margin-top: 50px; margin-bottom: 50px; border-bottom: 0px;">
+            </div>
+
+            <div id="shippinginfo_table">
+                <header style="display: flex; justify-content: space-between;">
+                    <span style="font-weight: bolder;">배송정보</span>
+                    <div style="display: flex; align-items: center;">
+                        <span style="color:red; font-size: 1rem; font-weight: bolder;">*</span>
+                        <span>필수입력사항</span>
+                    </div>
+                </header>
+            </div>
+            <table id="shipping_table">
+                <tr>
+                    <th style="width: 10%;">배송지선택</th>
+                    <td>
+                        <input type="radio" name="shippingAddr" id="">
+                        <span style="line-height: 40px;">회원정보와 동일</span>
+                        <input type="radio" name="shippingAddr" id="">
+                        <span>새로운배송지</span>
+                        <a href="#none" id="btn_shipp_addr" class="" style="">
+                            <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_address.gif"
+                                style="position: relative; top:6px;" alt="주소록 보기">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width: 10%;">받으시는 분<span> *</span></th>
+                    <td><input type="text" name="" id=""></td>
+                </tr>
+                <tr>
+                    <th style="width: 10%;">주소<span> *</span></th>
+                    <td>
+                        <input style="margin-bottom: 4px;" id="rzipcode1" name="rzipcode1" fw-filter="isFill" fw-label="수취자 우편번호1" fw-msg=""
+                            class="inputTypeText" placeholder="" size="6" maxlength="6" readonly="1" value=""
+                            type="text">
+                        <a href="#none" id="btn_search_rzipcode"><img
+                                src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_zipcode.gif"
+                                style="position: relative; top:8px" alt="우편번호"></a><br>
+                        <input style="margin-bottom: 4px;" id="raddr1" name=""
+                            class="inputTypeText" placeholder="" size="40" readonly="1" value="" type="text"> <span
+                            class="grid">기본주소</span><br>
+                        <input style="margin-bottom: 4px;" id="raddr2" name="raddr2" fw-filter="" fw-label="수취자 주소2" fw-msg="" class="inputTypeText"
+                            placeholder="" size="40" value="" type="text"> <span class="grid">나머지주소</span><span
+                            class="grid ">(선택입력가능)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width: 10%;">휴대전화<span> *</span></th>
+                    <td><select id="rphone2_1" name="">
+                            <option value="010">010</option>
+                            <option value="011">011</option>
+                            <option value="016">016</option>
+                            <option value="017">017</option>
+                            <option value="018">018</option>
+                            <option value="019">019</option>
+                        </select>&nbsp;-&nbsp;<input id="rphone2_2" name="rphone2_[]" maxlength="4" fw-filter="isNumber&amp;isFill"
+                            fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text">&nbsp;-&nbsp;<input
+                            id="rphone2_3" name="rphone2_[]" maxlength="4" fw-filter="isNumber&amp;isFill"
+                            fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text"></td>
+                </tr>
+                <tr>
+                    <th style="width: 10%;">이메일<span> *</span></th>
+                    <td style="padding-top: 7px;">
+                        <input id="oemail1" name="oemail1" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg=""
+                            class="mailId" value="" type="text">&nbsp;@&nbsp;<input style="margin-right: 3px;" id="oemail2" name="oemail2" fw-filter="isFill"
+                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" value="" type="text">
+                            <select style="position: relative; top: 0.5px"
+                            id="oemail3" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg="">
+                            <option value="" selected="selected">- 이메일 선택 -</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="daum.net">daum.net</option>
+                            <option value="nate.com">nate.com</option>
+                            <option value="hotmail.com">hotmail.com</option>
+                            <option value="yahoo.com">yahoo.com</option>
+                            <option value="empas.com">empas.com</option>
+                            <option value="korea.com">korea.com</option>
+                            <option value="dreamwiz.com">dreamwiz.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="etc">직접입력</option>
+                        </select>
+                        <p class="gBlank5">이메일을 통해 주문처리과정을 보내드립니다.<br>이메일 주소란에는 반드시 수신가능한 이메일주소를 입력해 주세요.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width: 10%;">배송지메세지</th>
+                    <td style="padding-top: 7px;">
+                        <textarea id="omessage" name="omessage" fw-filter="" fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70" style="margin: 0px; height: 75px; width: 703px; resize: none;"></textarea>	                        <div class="devMessage displaynone">
+                      
+                    </div>
+                    </td>
+                </tr>
+            </table>
+
+            
+            <table id="price_table">
+                <caption style="text-align: left; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px;">결제 예정 금액</caption>
+                <colgroup>
+                    <col style="width:33.33%">
+                    <col style="width:33.33%" class="">
+                    <col style="width:33.33%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <strong>총 주문 금액</strong> <a href="#none"
+                                class="more"><img style="position: relative; top:6px; left: 5px;"
+                                    src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_list.gif" alt="내역보기"></a>
+                        </th>
+                        <th scope="col" class="">
+                            <strong>총 </strong><strong id="total_addsale_text" class="">할인</strong><strong id="plus_mark" class=""> +
+                            </strong><strong id="total_addpay_text" class="">부가결제</strong><strong> 금액</strong>
+                        </th>
+                        <th scope="col"><strong>총 결제예정 금액</strong></th>
+                    </tr>
+                </thead>
+                <tbody class="center">
+                    <tr>
+                        <td class="price">
+                            <div class="box txt16">
+                                <strong>KRW <span id="total_order_price_view" class="txt23">239,000</span></strong> <span
+                                    class="displaynone"><span id="total_order_price_ref_view"></span></span>
+                            </div>
+                        </td>
+                        <td class="option ">
+                            <div class="box txt16">
+                                <strong>-</strong> <strong>KRW <span id="total_sale_price_view" class="txt23">0</span></strong> <span
+                                    class="displaynone"><span id="total_sale_price_ref_view"></span></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="box txtEm txt16">
+                                <strong>=</strong> <strong>KRW <span id="total_order_sale_price_view"
+                                        class="txt23">239,000</span></strong> <span class="displaynone"><span
+                                        id="total_order_sale_price_ref_view"></span></span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+
+                <table id="discount_table">
+                    <tbody>
+                        <tr class="sum txt14">
+                            <th style="height: 40px;"><strong style="font-size: 0.85rem;">총 부가결제금액</strong></th>
+                            <td style="background-color: #f7f6f6;">KRW <strong id="total_addpay_price_view" style="font-size: 1.2rem;">1,000</strong></td>
+                        </tr>
+                        <tr>
+                            <th>적립금</th>
+                            <td >
+                                <p> <input id="input_mile"  size="23" value="" type="text"> 원 (총 사용가능 적립금 : <strong
+                                        class="txtWarn">1,000</strong>원)</p>
+                                <ul class="info">
+                                    <li>적립금은 최소 0 이상일 때 결제가 가능합니다.</li>
+                                    <li id="mileage_max_unlimit" class="">최대 사용금액은 제한이 없습니다.</li>
+                                    <li id="mileage_max_limit" class="">1회 구매시 적립금 최대 사용금액은 1,000원입니다.</li>
+                                    <li>적립금으로만 결제할 경우, 결제금액이 0으로 보여지는 것은 정상이며 [결제하기] 버튼을 누르면 주문이 완료됩니다.</li>
+                             </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="title">
+                    <span style="font-weight: bolder;">결제수단</span>
+                </div>
+<div id="payArea">
+    <div class="payment">
+        <div class="payment_method">
+            <span class="ec-base-label"><input id="addr_paymethod0" name="addr_paymethod"
+                    value="cash" type="radio" checked="checked"><label
+                    for="addr_paymethod0">무통장 입금</label></span>
+            <span class="ec-base-label"><input id="addr_paymethod1" name="addr_paymethod" value="card" type="radio"><label for="addr_paymethod1">카드
+                    결제</label></span>
+        </div>
+
+        <hr style="height: 1.5px; border: 1px solid rgb(194, 194, 194);">
+
+        <!-- 카드사 직접결제 -->
+
+
+        
+            <!-- 무통장입금 -->
+            <table summary="" id="payment_input_cash" style="display: table;">
+                <tbody>
+                    <tr>
+                        <th scope="row" style="background-color: #f7f6f6; height: 30px;">입금자명</th>
+                        <td><input id="pname" name="pname" fw-filter="" fw-label="무통장 입금자명" fw-msg=""
+                                class="inputTypeText" placeholder="" size="15" maxlength="20" value="" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="background-color: #f7f6f6; height: 50px;">입금은행</th>
+                        <td>
+                            <select id="bankaccount" name="bankaccount" fw-filter="" fw-label="무통장 입금은행" fw-msg="">
+                                <option value="-1">::: 선택해 주세요. :::</option>
+                                <option value="bank_04:654501-04-008112:이종헌(딜리버리보이즈컴퍼니):국민은행:www.kbstar.com">
+                                    신한은행:110-296-109579 유호연(파마존대표이사)</option>
+                                <option value="bank_26:110-390-336769:이종헌(딜리버리보이즈컴퍼니):신한은행:www.shinhan.com">
+                                    신한은행:110-390-336769 홍지운(파마존회장)</option>
+                            </select>
+                       
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+            <div id="pg_paymethod_info" class="payHelp" style="display: none;">
+                 <span id="pg_paymethod_info_pg" class="ec-base-help">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</span>
+            </div>
+    
+    </div>
+    <div class="total">
+        <h4 align="right" style="margin: 0px;">
+<strong id="current_pay_name" style="font-size: 0.75rem;">카드 결제</strong> <span style="font-weight: lighter;">최종결제
+    금액</span>
+</h4>
+<p class="price1"><span style="color: #008bcc; font-size: 0.9rem;">KRW </span><input id="total_price" name="total_price"
+        fw-filter="isFill" fw-label="결제금액" fw-msg="" class="inputTypeText" placeholder=""
+        style="text-align:right;ime-mode:disabled;clear:none;border:0px;float:none;background-color: #fafafa;color: #008bcc; font-size: 1.3rem;"
+        size="10" readonly="1" value="478000" type="text"></p>
+<p class="paymentAgree" id="chk_purchase_agreement" style="display: none;"><input id="chk_purchase_agreement0"
+        name="chk_purchase_agreement" fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T" type="checkbox"
+        style="display: none;"><label for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label></p>
+<div class="button"><a href="#none">
+        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" style="width: 230px;" id="btn_payment" alt="결제하기"></a>
+</div>
+
+<div class="mileage ">
+    <dl class="ec-base-desc gLarge right" style="display: flex; justify-content: space-between;">
+        <dt><strong style="font-size: 0.75rem;">총 적립예정금액</strong></dt>
+        <dd id="mAllMileageSum" class="txtWarn" style="display: block; font-size: 0.8rem;">4,000원</dd>
+    </dl>
+    <div class="ec-base-desc gLarge right">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <dt style="font-size: 0.75rem;">상품별 적립금</dt>
+            <dd id="mProductMileage" style="font-size: 0.75rem;">4,000원</dd>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <dt style="font-size: 0.75rem;">회원 적립금</dt>
+            <dd id="mMemberMileage" style="font-size: 0.75rem;">0원</dd>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<br><br><br>
+</div>
+</div>
+    <th:block th:replace="common/footer.html"></th:block>
+<script>
+    $("input[name='addr_paymethod']").on('change',function(){
+        
+        if($("input[name='addr_paymethod']:checked").val() == "cash"){
+            $("#payment_input_cash").css('display','table');
+            $("#pg_paymethod_info").css("display","none");
+        } else {
+            $("#payment_input_cash").css('display','none');
+            $("#pg_paymethod_info").css("display","block");
+        }
+    });
+</script>
+</body>
+</html>

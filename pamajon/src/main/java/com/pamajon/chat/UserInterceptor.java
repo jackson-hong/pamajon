@@ -10,6 +10,7 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 
     public class UserInterceptor implements ChannelInterceptor {

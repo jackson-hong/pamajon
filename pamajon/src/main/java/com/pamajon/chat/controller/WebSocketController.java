@@ -1,23 +1,20 @@
 package com.pamajon.chat.controller;
 
-
 import com.pamajon.chat.ActiveUserChangeListener;
 import com.pamajon.chat.ActiveUserManager;
 import com.pamajon.chat.model.dto.ChatMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.Collection;
+
 import java.util.Set;
 
 @Controller
@@ -40,11 +37,6 @@ public class WebSocketController implements ActiveUserChangeListener {
     @PreDestroy
     private void destroy() {
         activeUserManager.removeListener(this);
-    }
-
-    @GetMapping("/admin/chatroom")
-    public String getWebSocketWithSockJs() {
-        return "/admin/chattingRoom";
     }
 
     @MessageMapping("/chat")
@@ -98,6 +90,11 @@ public class WebSocketController implements ActiveUserChangeListener {
 
         Set<String> activeUsers = activeUserManager.getAll();
         webSocket.convertAndSend("/topic/active", activeUsers);
+    }
+
+    @GetMapping("/admin/chatroom")
+    public String getWebSocketWithSockJs() {
+        return "/admin/chattingRoom";
     }
 
 }

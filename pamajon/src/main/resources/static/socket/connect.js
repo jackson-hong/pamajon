@@ -112,7 +112,7 @@ function send() {
     var text = $("#write_msg").val();
     if (userName == "운영자") {
         if (selectedUser == null) {
-            alert('Please select a user.');
+            alert('문의 처리를 진행할 회원을 선택해주세요.');
             return;
         }
     } else {
