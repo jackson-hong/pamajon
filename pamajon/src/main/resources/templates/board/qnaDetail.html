@@ -40,6 +40,172 @@
             min-width: 100em;
             max-width: 120em;
         }
+
+
+        .product-wrapper{
+            border: #e8e8e8 solid 5px;
+            width: 100%;
+            height: 150px;
+            display: table;
+        }
+
+        .product-img-box{
+            display: table-cell;
+            padding: 0 20px;
+            width: 100px;
+            vertical-align: middle;
+        }
+        .product-img-content{
+            width: 75px;
+            height: 75px;
+            border: #e8e8e8 solid 1px;
+        }
+
+
+        .product-info-box{
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .productName{
+            font-weight: bold;
+        }
+        a.productName:hover {
+            text-decoration: underline;
+        }
+
+        .productPrice{
+            color:#008bcc;
+            font-weight: bold;
+        }
+
+        table {
+            margin-top: 1em;
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px silver solid;
+            text-align: center;
+        }
+
+        th {
+            background: rgb(251, 250, 250);
+            color: rgb(40, 40, 40);
+            font-weight: lighter;
+            -webkit-font-smoothing: antialiased;
+            height: 3em;
+        }
+
+        .form-control {
+            margin-top: 10px;
+            margin-left: 3px;
+            height: 25px;
+            font-size: 100%;
+            font-family: "돋움", Dotum;
+            color: #353535;
+            vertical-align: middle;
+
+        }
+
+        #boardSortOption {
+            display: inline;
+        }
+
+        .qna-postNum {
+            width: 6%;
+        }
+
+        .qna-PostOption {
+            width: 12%;
+        }
+
+        .qna-PostTitle {
+            width: 65%;
+        }
+
+        .qna-UserName {
+            width: 7%;
+        }
+
+        .qna-PostDate {
+            width: 7%;
+        }
+
+        .qna-PostViewCount {
+            width: 3%;
+        }
+
+
+        .qnaPostOption {
+            display: inline;
+        }
+
+        .qnaTitleAlign {
+            text-align: left;
+        }
+
+        .qnaPostTitle {
+            margin-left: 10px
+        }
+
+        .postImgBox {
+            display: inline;
+            margin-top: 1px;
+            margin-left: 1px;
+        }
+
+        a.qnaPostTitle:hover {
+            text-decoration: underline;
+        }
+
+        a.productName:hover{
+            text-decoration: underline;
+        }
+
+        #contentBox{
+            text-align: left;
+        }
+
+
+
+        h3{
+            margin-top: 15px;
+            font-size: 10px;
+            color: #353535;
+        }
+
+        .contentTable{
+            text-align: left;
+        }
+        .qnaDate{
+            margin-right: 30px;
+        }
+        .content-info{
+            margin-left: 10px;
+            margin-top: 10px;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: #dfdfdf solid 1px;
+        }
+        .content-info > strong{
+            font-size: 11px;
+        }
+        .content-info > span {
+            font-size: 10px;
+            color: grey;
+        }
+
+        .content-detail{
+            font-size: 11px;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-bottom: 30px;
+        }
+
+
+
+
+
     </style>
 
 </head>
@@ -53,15 +219,101 @@
     <div id="idx">
         <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
     </div>
-</div>
-
+</div>  
 <div id="wrapper">
     <div id="board-wrapper">
+        <div class="product-wrapper hasProduct">
+            <div class="product-img-box">
+                <a href="/pamajon/board/detailView"> <img class="product-img-content" th:src="@{/images/new6.jpg}"></a>
+            </div>
+            <div class="product-info-box">
+                <a href="/pamajon/board/detailView"> <p class="productName"> REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511) </p> </a>
+                    <p class="productPrice">KRW 999,000</p>
+                <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_prd_detail.gif}" alt="상품상세보기"/></a>
+            </div>
+        </div>
+
+
+        <div id="contentBox">
+
+            <table class="contentTable" border="1">
+                <colgroup>
+                    <col style = "width: 130px;">
+                    <col style = "width: auto;">
+                </colgroup>
+                <tbody class="">
+                <tr>
+
+                    <th scope="row">제목</th>
+                    <td class="qnaTitle"> 배송 줜나 느리네</td>
+                </tr>
+                    <th scope="row">작성자</th>
+                    <td class="qnaMember">홍****</td>
+                <tr>
+                    <td colspan="2">
+                        <div class="content-info">
+                            <strong>작성일</strong>
+                            <span class="qnaDate">2021-01-27 18:58:00</span>
+                            <strong>조회수</strong>
+                            <span class="qnaViewCount">7</span>
+                        </div>
+                        <div class="content-detail">
+                            살다살다 이렇게 느린 곳은</br>
+                            처음봤습니다.</br>
+                            거의 한달 걸렸네요.
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+
+        <h3>관련 글 보기</h3>
+        <div id="relatedBox hasProduct">
+            <table border="1">
+                <tr>
+                    <th class="qna-PostNum">번호</th>
+                    <th class="qna-PostOption">상품정보</th>
+                    <th class="qna-PostTitle">제목</th>
+                    <th class="qna-UserName">작성자</th>
+                    <th class="qna-PostDate">작성일</th>
+                    <th class="qna-PostViewCount">조회</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="qnaPostNum">2313</p>
+                    </td>
+                    <td class="QnaOptionBox">
+                        <p class="qnaPostOption">
+                            REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)
+                        </p>
+                    </td>
+                    <td class="qnaTitleAlign">
+                        <a class="qnaPostTitle" href="">배송 줜나 느리네</a>
+                    </td>
+                    <td>
+                        <p class="qnaUserName">홍**</p>
+                    </td>
+                    <td>
+                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
+                    </td>
+                    <td>
+                        <P CLASS="qnaPostViewCount">10</P>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
 
     </div>
 </div>
+<th:block th:replace="common/footer.html"></th:block>
 </body>
 <script>
 </script>
-<th:block th:replace="common/footer.html"></th:block>
 </html>
