@@ -1,17 +1,29 @@
 package com.pamajon.member.controller;
 
+import com.pamajon.member.model.service.MemberService;
+import com.pamajon.member.model.service.MemberServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
-
 @Controller
 public class MemberController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    @Qualifier("memberService")
+    private final MemberService service;
+
+    @Autowired
+    public MemberController(MemberService service) {
+        this.service = service;
+    }
 
     @RequestMapping("/myPage")
     public String myPage(){
@@ -33,7 +45,10 @@ public class MemberController {
     public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
         logger.info("???????");
         logger.info(""+inputs);
+        service.memberInsert(inputs);
 
+
+        mv.setViewName("member/myPage");
         return mv;
     }
 
