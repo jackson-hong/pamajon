@@ -47,4 +47,5 @@ public class WebSocketConnectionRestController {
     public ResponseEntity<Set<String>> getActiveUserExceptionCurrentUser(@PathVariable String userName){
         return new ResponseEntity(activeSessionManager.getActiveUsersExceptCurrentUser(userName), HttpStatus.OK);
     }
+
 }

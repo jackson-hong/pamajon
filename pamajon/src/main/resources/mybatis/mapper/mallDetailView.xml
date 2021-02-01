@@ -5,14 +5,10 @@
 <mapper namespace="mallDetailView">
 
     <resultMap id="cityResultSet" type="com.pamajon.mybatisTest.model.vo.City">
-        <result column="ID" property="cityId"></result>
-        <result column="NAME" property="cityName"></result>
-        <result column="COUNTRY" property="cityCode"></result>
-        <result column="POPULATION" property="population"></result>
+        <result column="user_id" property="cityId"></result>
     </resultMap>
 
-
     <select id="citySelector" resultMap="cityResultSet">
-        SELECT * FROM TEST.CITY
+        SELECT * FROM test
     </select>
 </mapper>    
