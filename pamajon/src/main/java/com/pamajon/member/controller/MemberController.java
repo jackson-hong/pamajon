@@ -8,19 +8,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
-@Controller
+@RestController
 public class MemberController {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-    @Qualifier("memberService")
+
+    @Qualifier("memberServiceImpl")
     private final MemberService service;
 
-    @Autowired
     public MemberController(MemberService service) {
         this.service = service;
     }
