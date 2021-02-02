@@ -202,9 +202,111 @@
             margin-bottom: 30px;
         }
 
+        .btnsWrapper{
+            margin-top: 20px;
+            margin-bottom: 100px;
+            align-items: flex-end;
 
 
+        }
 
+        .listbtnWrapper{
+            float: left;
+        }
+        .answerbtnWrapper{
+            float: right;
+        }
+
+
+        .replyBox{
+            margin: 30px 0 0;
+            padding: 5px 20px 0px;
+            border: 1px solid #e9e9e9;
+            background-color: #fbfafa;
+            color: #353535;
+        }
+        .replyBox > fieldset{border: none;}
+        .replyInput{
+
+        }
+        .replyName , .replyPwd {
+            width: 135px;
+            margin: 0 10px 0 9px;
+            height: 18px;
+            line-height: 20px;
+            padding: 2px 4px;
+            border: 1px solid #d5d5d5;
+            color: #353535;
+            font-size: 12px;
+        }
+
+        .comment-box{
+            border: 1px solid #d7d5d5;
+        }
+
+        .comment-user-detail{
+            border-bottom: 1px solid #d7d5d5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .commentUserName{
+            height: 10px;
+            color: #353535;
+            margin-left: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .commentDate{
+            color: grey;
+            font-size: 10px;
+        }
+
+        .comment-user-btns{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+
+        .comment-detail{
+            padding: 20px 0 20px 25px;
+        }
+
+
+        #comment{
+            width: 100%;
+            height: 44px;
+            padding: 2px 2px 2px 4px;
+            font-size: 100%;
+            font-family: "돋움",Dotum;
+            border: 1px solid #d5d5d5;
+            color: #353535;
+            vertical-align: middle;
+        }
+        .comment-content{
+            margin-top: 10px;
+            display: flex;
+        }
+
+        .submitImg{
+            margin-left: 10px;
+        }
+
+
+        .boardList{
+            margin-top: 50px;
+        }
+
+        .beforeAndAfter th{
+            text-align: center;
+
+        }
+        td a:hover{
+            text-decoration: underline;
+        }
 
     </style>
 
@@ -267,14 +369,74 @@
 
                 </tbody>
             </table>
+        </div>
+
+        <div class ="btnsWrapper">
+            <span class="listbtnWrapper">
+                <a href="/pamajon/board/qna"><img th:src="@{/images/board/btn_list.gif}" alt="목록"/></a>
+            </span>
+            <span class="answerbtnWrapper">
+                <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_reply.gif}" alt="답변"/></a>
+            </span>
+        </div>
+
+        <div class="comment-box">
+            <div class="comment-user-detail">
+                <div class="comment-user-name-and-date">
+                    <span class="commentUserName">김****</span>
+                    <span class="commentDate">2021-02-02 10:31:35</span>
+                </div>
+                <div class="comment-user-btns">
+                    <img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
+                    <img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
+                </div>
+            </div>
+            <div class="comment-detail">
+                1111
+            </div>
 
 
         </div>
 
+        <div class="replyBox">
+            <fieldset>
+                <div class="replyInput">
+                    <form method="post" action="">
+                        <h3>댓글달기</h3>
+                        <label>이름 : </label>
+                        <input class="replyName" type="text" value="사용자이름">
+                        <label>비밀번호 : </label>
+                        <input class="replyPwd" type="password" value="password">
+                        <div class="comment-content">
+                            <textarea id="comment" name="comment" label="댓글내용"></textarea>
+                            <a href="" class="submitImg" id="commentFormSubmit"><img th:src="@{/images/board/btn_comment_submit.gif}" alt="답변"/></a>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+
+        </div>
+
+        <div class="boardList">
+            <table class="contentTable" border="1">
+                <colgroup>
+                    <col style = "width: 130px;">
+                    <col style = "width: auto;">
+                </colgroup>
+                <tbody class="beforeAndAfter">
+                <tr>
+                    <th scope="row">이전글보기</th>
+                    <td class="qnaBefore"><a href="" class="linkQnaBefore"> 주문 취소 문의 드립니다.</a></td>
+                </tr>
+                    <th scope="row">다음글보기</th>
+                    <td class="qnaAfter"><a href="" class="linkQnaAfter"> 배송이 됐나요?</a></td>
+                </tbody>
+            </table>
+        </div>
 
 
-        <h3>관련 글 보기</h3>
         <div id="relatedBox hasProduct">
+        <h3>관련 글 보기</h3>
             <table border="1">
                 <tr>
                     <th class="qna-PostNum">번호</th>
