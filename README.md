@@ -16,9 +16,4 @@
 - WAS : Apache Tomcat
 - DB : Maria DB
 - Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber 
-
-
-## 2. 개발일정
-
-- 01/23 : ERD 테이블 작업시작
-- 01/27 : 뷰 마무리
+- 배포 : 네이버 클라우드 플랫폼, AWS 프리티어

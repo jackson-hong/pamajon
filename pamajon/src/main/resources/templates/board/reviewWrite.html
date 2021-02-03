@@ -1,72 +1,214 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QnA</title>
-    <style>
-        body {
-            font: 0.75em Verdana, Dotum, AppleGothic, sans-serif;
-            color: #353535;
-        }
-
-        #title-idx {
-            margin-top: 2.5em;
-            display: flex;
-        }
-
-        #title {
-            margin-left: 65px;
-            text-align: right;
-            justify-items: left;
-            width: 50%;
-            font-size: 22px;
-            font-weight: 900;
-            color: #353535;
-            font-family: 'Spoqa Han Sans', 'Sans-serif' !important;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        #idx {
-            width: 50%;
-            text-align: right;
-            font-weight: bold;
-        }
-
-        #wrapper {
-            display: flex;
-            justify-content: center;
-        }
-
-        #board-wrapper {
-            margin-top: 2.5em;
-            min-width: 100em;
-            max-width: 120em;
-        }
-    </style>
-
+    <title>PAMAJON Review</title>
 </head>
+<style>
+    .box-title{
+        font-size: 5rem;
+        font-weight: bold;
+    }
+    span.title {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+    .reviewBlock {
+        justify-content: center;
+        width: 60%;
+        margin-left: 25%;
+    }
+    .reviewBlock > .titleSection {
+        border-bottom: 2px solid black;
+    }
 
+    .insertReviewTable {
+        margin-top:5px ;
+        margin-left: 10%;
+        width:100%;
+    }
+
+    .explanation_wrapper {
+        padding:25px 80px 10px 0px;
+        width:180px;
+    }
+
+    select.form-control{
+        width:300px;
+    }
+    .imgBox {
+        border: 1px solid black;
+        width:130px;
+        height: 130px;
+        margin-right: 10px;
+
+    }
+    .tablefloor {
+        border-bottom: 1px dotted lightgray;
+    }
+
+    input.textType {
+        width:350px;
+        border: none;
+        border-bottom: 1px solid darkgray;
+    }
+    label {
+        cursor: pointer;
+    }
+    input[name="quantity"] , #quantityOption{
+        cursor: pointer;
+    }
+
+    .filebox {display:inline-block; margin-right: 10px; margin-top: 5px;}
+
+    .filebox label {
+        display: inline-block;
+        padding: .5em .75em;
+        color: #999;
+        font-size: inherit;
+        line-height: normal;
+        vertical-align: middle;
+        background-color: #fdfdfd;
+        cursor: pointer;
+        border: 1px solid #ebebeb;
+        border-bottom-color: #e2e2e2;
+        border-radius: .25em;
+    }
+
+    .filebox input[type="file"] {  /* 파일 필드 숨기기 */
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip:rect(0,0,0,0);
+        border: 0;
+    }
+
+    .filebox.bs3-primary label {
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        margin-bottom: 10px;
+    }
+    .previewImg{
+        width:100%;
+        height:100%;
+    }
+    .btn.btn-primary{
+        margin:0;
+
+    }
+    .btn.btn-info{
+        margin-right: 10px;
+    }
+    .review--content{
+        width: 500px;
+        height: 500px;
+    }
+
+    .reviewComment{
+        width: 500px;
+        height: 15px;
+    }
+    .reviewBtn--box{
+        text-align: center;
+    }
+    .reviewBtn{
+        margin: 10px 10px 0 10px;
+        width: 80px;
+        height: 30px;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        border-radius: 3px;
+        color: white;
+        font-size: inherit;
+    }
+    .reviewTextCounterBox{
+        margin-left :400px;
+    }
+</style>
 <body>
 
 <th:block th:replace="common/header.html"></th:block>
 
-<div id="title-idx">
-    <div id="title">
-        <span>Q&A</span>
+<div class="reviewBlock">
+    <div class="titleSection">
+        <span class="title">후기 등록</span>
     </div>
-    <div id="idx">
-        <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
-    </div>
+    <form method="post">
+        <table class="insertReviewTable">
+            <tr class="tablefloor">
+                <td class="explanation_wrapper">상품 카테고리</td>
+                <td class="userInput">
+                    <select class="form-control" disabled>
+                        <option value="">Hoodie</option>
+                        <option value="">Shirts</option>
+                        <option value="">Jeans</option>
+                        <option value="">Pants</option>
+                        <option value="">Shoes</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="tablefloor">
+                <td class="explanation_wrapper">상품명</td>
+                <td class="userInput">
+                    <input type="text" class="form-control textType" value="비싼 후드티" disabled>
+                </td>
+            </tr>
+            <tr class="tablefloor">
+                <td class="explanation_wrapper">제목</td>
+                <td class="userInput">
+                    <input type="text" class="form-control textType" placeholder="리뷰 제목을 적어주세요.">
+                </td>
+            </tr>
+            <tr class="tablefloor">
+                <td class="explanation_wrapper">*착용 사진</td>
+                <td class="userInput">
+                    <div class="filebox bs3-primary">
+                        <label for="ex_file2">사진 첨부</label>
+                        <input type="file" id="ex_file2" onchange="" multiple>
+                    </div>
+                    <div id="imgArea" style="display: flex; margin-bottom: 10px">
+                        <div class="imgBox 1"></div>
+                        <div class="imgBox 2"></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="tablefloor">
+                <td class="explanation_wrapper">*후기(50자 이상)</td>
+                <td class="userInput">
+                    <textarea name="reviewContent" class="review--content" style="resize: none"></textarea>
+                    <div class="reviewTextCounterBox">
+                        <span class="reviewTextCounter"style="color: #aaa;">(0 / 최대 2000자)</span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="tablefloor">
+                <td class="explanation_wrapper">한줄평(20자 이상)</td>
+                <td class="userInput">
+                    <input type="text" class="reviewComment">
+                </td>
+            </tr>
+        </table>
+        <div class="reviewBtn--box">
+            <button type="submit" class="reviewBtn">업로드</button>
+            <button type="button" class="reviewBtn" onclick="location.href='review'">취소</button>
+
+        </div>
+    </form>
 </div>
 
-<div id="wrapper">
-    <div id="board-wrapper">
-
-    </div>
-</div>
 
 <th:block th:replace="common/footer.html"></th:block>
-
+<script>
+    $('.review--content').keyup(function (e){
+        let content = $(this).val();
+        $('.reviewTextCounter').html("("+content.length+" / 최대 2000자)");
+    });
+</script>
 </body>
 </html>
