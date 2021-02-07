@@ -242,6 +242,7 @@
 </div>
 <script th:inline="javascript">
     var contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
+
     function fn_postal(){
         new daum.Postcode({
             oncomplete: function(data) {

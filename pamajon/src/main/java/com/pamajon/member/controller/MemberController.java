@@ -43,6 +43,14 @@ public class MemberController {
         return mv;
     }
 
+    @GetMapping("/test")
+    public ModelAndView test(ModelAndView mv, @RequestParam Map input) {
+
+        logger.info(""+input);
+
+        return mv;
+    }
+
     @RequestMapping("/member/insert")
     public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
         logger.info("???????");
