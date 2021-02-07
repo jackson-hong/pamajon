@@ -1,0 +1,87 @@
+body,
+html {
+    width: 800px;
+    padding: 0;
+    margin: 0;
+}
+h1,
+h2 {
+    margin: 0px;
+}
+table {
+    border-collapse: collapse;
+}
+.header {
+    background-color: #495164;
+    padding-top: 10px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    height: 30px;
+}
+.header > h1 {
+    font-size: 1rem;
+    color: whitesmoke;
+}
+
+.content {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.ec-base-help {
+    border: 1px solid rgb(215, 213, 213);
+    margin-bottom: 15px;
+}
+
+.ec-base-help > h2 {
+    padding: 5px 0px 0px 10px;
+    height: 25px;
+    border-bottom: 1px solid rgb(215, 213, 213);
+    background-color: #fbfbfb;
+    font-size: 0.85rem;
+}
+
+.inner > ul > li {
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+    color: #495164;
+}
+
+.head > tr > th {
+    font-size: 0.8rem;
+    border: 1px solid rgb(215, 213, 213);
+}
+#addrTable {
+    border: 1px solid rgb(215, 213, 213);
+}
+
+.head > tr > th {
+    font-weight: lighter;
+}
+
+.center > tr > td {
+    text-align: center;
+}
+
+.center > tr > td > span {
+    font-size: 0.75rem;
+}
+#inputAddr {
+    width: 100%;
+    border: 1px solid rgb(215, 213, 213);
+}
+
+input[type="text"] {
+    border: 1px solid rgb(215, 213, 213);
+    height: 22px;
+}
+
+#inputAddr > tbody > tr > th {
+    border: 1px solid rgb(215, 213, 213);
+    height: 40px;
+}
+#inputAddr > tbody > tr > td {
+    padding-left: 10px;
+    border: 1px solid rgb(215, 213, 213);
+    height: 40px;
+}

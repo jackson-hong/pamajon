@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.pamajon")
+@MapperScan(basePackages = "com.pamajon.mapper")
 public class MyBatisApplication {
 
     @Bean

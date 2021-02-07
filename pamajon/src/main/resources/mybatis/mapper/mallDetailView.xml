@@ -4,11 +4,4 @@
 
 <mapper namespace="mallDetailView">
 
-    <resultMap id="cityResultSet" type="com.pamajon.mybatisTest.model.vo.City">
-        <result column="user_id" property="cityId"></result>
-    </resultMap>
-
-    <select id="citySelector" resultMap="cityResultSet">
-        SELECT * FROM test
-    </select>
 </mapper>    

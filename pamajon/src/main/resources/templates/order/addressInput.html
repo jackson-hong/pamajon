@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>  
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/css/order/address.css" th:href="@{/css/order/address.css}">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+    <div class="xans-element- xans-myshop xans-myshop-addrlist ec-base-layer"><!--
+        $return_url = /myshop/addr_popup/list.html
+    -->
+<div class="header">
+        <h1>배송 주소록 관리</h1>
+    </div>
+<div class="content">
+        <div class="ec-base-help">
+            <h2>배송주소록 유의사항</h2>
+            <div class="inner">
+                <ul>
+<li>배송 주소록은 최대 10개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
+                    <li>자동 업데이트를 원하지 않을 경우 주소록 고정 선택을 선택하시면 선택된 주소록은 업데이트 대상에서 제외됩니다.</li>
+                    <li>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
+                </ul>
+</div>
+        </div>
+
+        <div class="ec-base-table typeList">
+            <table id="addrTable" style="border-collapse: collapse; width: 760px;">
+                <thead class="head" >
+                    <tr style="height: 40px;">
+                        <th  ><span class=""><input id="allCheck" onclick="checkAll()" value=""
+                                 type="checkbox"></span></th>
+                        <th  style="width: 90px;">주소록 고정
+                        </th>
+                        <th style="width: 90px;">배송지명</th>
+                        <th style="width: 90px;">수령인</th>
+                        <th style="width: 90px;">일반전화</th>
+                        <th style="width: 100px;"> 휴대전화</th>
+                        <th>주소</th>
+                        <th style="width: 80px;">배송지관리</th>
+                    </tr>
+                </thead>
+                <tbody class=" center">
+
+                </tbody>
+            </table>
+        </div>
+
+        <table id="inputAddr" style="width: 760px; margin-top: 15px; display: none;" >
+        
+            <tbody>
+                <tr>
+                    <th scope="row">배송지명 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></th>
+                    <td><input id="ma_rcv_title" name="addrName" fw-filter="isFill&amp;isMaxByte[90]" fw-label="배송지명"
+                            fw-msg="" class="inputTypeText" placeholder="" value="" type="text"></td>
+                </tr>
+                <tr>
+                    <th scope="row">성명 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></th>
+                    <td><input id="ma_rcv_name" name="addrReceiver" fw-filter="isFill&amp;isMaxByte[90]" fw-label="성명" fw-msg=""
+                            class="ec-member-name" placeholder="" value="" type="text"></td>
+                </tr>
+                <tr>
+                    <th scope="row">주소 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></th>
+                    <td>
+                        <input id="address_zip1" style="width: 80px; margin-bottom: 5px;" name="addrZipcode" onclick="inputAddress()"
+                            class="inputTypeText" placeholder="" readonly="readonly" maxlength="14" value="" type="text">
+                        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_zipcode.gif"
+                                alt="우편번호" style="position: relative; top:7px;" onclick="inputAddress()"><br>
+                        <input id="address_addr1" style="width: 250px; margin-bottom: 5px;" name="addr" fw-filter=""
+                            fw-label="주소" fw-msg="" class="inputTypeText" placeholder="" readonly="readonly" value=""
+                            type="text" onclick="inputAddress()"> 기본주소<br>
+                        <input id="address_addr2" style="width: 250px; margin-bottom: 5px;" name="addrDetail" fw-filter=""
+                            fw-label="주소" fw-msg="" class="inputTypeText" placeholder="" value="" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">일반전화 <span class="displaynone"><img
+                                src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></span>
+                    </th>
+                    <td><select id="ma_rcv_phone1" name="phone[]" fw-filter="isNumber" fw-label="유선전화" fw-alone="N"
+                            fw-msg="">
+                            <option value="02">02</option>
+                            <option value="031">031</option>
+            <option value="032">032</option>
+            <option value="033">033</option>
+            <option value="041">041</option>
+            <option value="042">042</option>
+            <option value="043">043</option>
+            <option value="044">044</option>
+            <option value="051">051</option>
+            <option value="052">052</option>
+            <option value="053">053</option>
+            <option value="054">054</option>
+            <option value="055">055</option>
+            <option value="061">061</option>
+            <option value="062">062</option>
+            <option value="063">063</option>
+            <option value="064">064</option>
+            <option value="0502">0502</option>
+            <option value="0503">0503</option>
+            <option value="0504">0504</option>
+            <option value="0505">0505</option>
+            <option value="0506">0506</option>
+            <option value="0507">0507</option>
+            <option value="070">070</option>
+            <option value="010">010</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+            <option value="018">018</option>
+            <option value="019">019</option>
+            <option value="0508">0508</option>
+            </select>-
+                        <input id="ma_rcv_phone2" name="phone[]" maxlength="4" fw-filter="isNumber" fw-label="유선전화" fw-alone="N" fw-msg="" value="" type="text">
+                        -<input id="ma_rcv_phone3" name="phone[]" maxlength="4" fw-filter="isNumber" fw-label="유선전화" fw-alone="N" fw-msg="" value="" type="text"></td>
+                                </tr>
+            <tr>
+            <th scope="row">휴대전화 <span class=""><img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></span>
+            </th>
+           <td><select id="ma_rcv_mobile_no1" name="mobile[]" fw-filter="isNumber&amp;isFill" fw-label="휴대전화" fw-alone="N" fw-msg="">
+            <option value="010">010</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+            <option value="018">018</option>
+            <option value="019">019</option>
+            </select>-<input id="ma_rcv_mobile_no2" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
+                fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text">-<input id="ma_rcv_mobile_no3" name="mobile[]"
+                maxlength="4" fw-filter="isNumber&amp;isFill" fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text"></td>
+            </tr>
+            <tr class="right">
+                <td colspan="2"><input id="ma_main_flag0" name="regularAddrCheck" fw-filter="" fw-label="기본 배송지로 저장" fw-msg="" value="T"
+                        type="checkbox"><label for="ma_main_flag0">기본 배송지로 저장</label></td>
+            </tr>
+            </tbody>
+            </table>
+            
+            </div>
+
+            <div class="ec-base-button 1" style="display: none; justify-content: center; margin-top: 15px;">
+                <img style="cursor: pointer; margin-right: 5px;" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_cancel.gif" alt="취소" onclick="listDisplay()">
+                <img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register2.gif" alt="등록" style="margin-right: 5px; cursor: pointer;" onclick="sendAddrToServer();">
+            </div>
+
+            <div class="ec-base-button 2" style="display: flex; justify-content: center; margin-top: 15px;">
+              <img
+                        src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_delete.gif"
+                        onclick="deleteAddress()"
+                        alt="선택 주소록 삭제"
+                        style="margin-right: 5px; cursor: pointer">
+                <img onclick="insertAddr()" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
+                     alt="배송지 등록" style="cursor: pointer">
+            </div>
+            </div>
+            <input type="hidden" name="userNo" value="1">
+            <script defer src="../../static/js/orderForm/addressController.js" th:src="@{/js/orderForm/addressController.js}"></script>
+            </body>
+            </html>
