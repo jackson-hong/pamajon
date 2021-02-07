@@ -359,6 +359,7 @@
 <br><br><br>
 </div>
 </div>
+<input type="hidden" name="userNo" value="1">
     <th:block th:replace="common/footer.html"></th:block>
 <script>
     $("input[name='addr_paymethod']").on('change',function(){
@@ -372,5 +373,6 @@
         }
     });
 </script>
+<script defer th:src="@{/js/orderForm/orderController.js}"></script>
 </body>
 </html>
