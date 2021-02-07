@@ -136,19 +136,19 @@
             <tr>
                 <td class="table-title">아이디<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="user_id" id="user_id">(영문소문자/숫자, 4~16자)
+                    <input name="user_id" id="user_id"><span id="user_id_info">(영문소문자/숫자, 6~20자)</span>
                 </td>
             </tr>
             <tr>
                 <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="user_pw" id="user_pw">(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
+                    <input type="password" name="user_pw" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
                 </td>
             </tr>
             <tr>
                 <td class="table-title">비밀번호 확인<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="user_pw_ch" id="user_pw_ch">
+                    <input type="password" name="user_pw_ch" id="user_pw_ch"><span id="user_pw_ch_info"></span>
                 </td>
             </tr>
             <tr>
@@ -243,6 +243,48 @@
 <script th:inline="javascript">
     var contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
 
+    document.getElementById("user_id").addEventListener('keyup',()=>{
+        let id = document.getElementById("user_id").value;
+        if(fn_id_check(id)){
+            document.getElementById("user_id_info").style.color = 'green';
+            document.getElementById("user_id_info").innerText = '적절한 아이디입니다.';
+        }else {
+            document.getElementById("user_id_info").style.color = 'red';
+            document.getElementById("user_id_info").innerText = '(영문소문자/숫자, 4~16자)';
+        }
+    })
+
+    document.getElementById("user_pw").addEventListener('keyup',()=>{
+        let pw = document.getElementById("user_pw").value;
+        if(fn_id_check(pw)){
+            document.getElementById("user_pw_info").style.color = 'green';
+            document.getElementById("user_pw_info").innerText = '적절한 비밀번호입니다.';
+        }else {
+            document.getElementById("user_pw_info").style.color = 'red';
+            document.getElementById("user_pw_info").innerText = '(영문 대소문자/특수문자 6자~20자)';
+        }
+    })
+
+    document.getElementById("user_pw_ch").addEventListener('keyup',()=>{
+        let pw = document.getElementById("user_pw").value;
+        let pwCh = document.getElementById("user_pw_ch").value;
+        if(pw == pwCh){
+            document.getElementById("user_pw_ch_info").style.color = 'green';
+            document.getElementById("user_pw_ch_info").innerText = '비밀번호가 일치합니다.';
+        }else {
+            document.getElementById("user_pw_ch_info").style.color = 'red';
+            document.getElementById("user_pw_ch_info").innerText = '비밀번호가 일치하지 않습니다.';
+        }
+    })
+
+    function fn_id_check(user_id){
+        if(/^[a-z]+[a-z0-9]{5,19}$/g.test(user_id))return true;
+        else return false;
+    }
+    function fn_pw_check(pw){
+        if(/^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/.test(pw))return true;
+        else return false;
+    }
     function fn_postal(){
         new daum.Postcode({
             oncomplete: function(data) {

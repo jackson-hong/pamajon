@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/member")
 public class MemberController {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -28,62 +29,60 @@ public class MemberController {
     }
 
     @RequestMapping("/myPage")
-    public String myPage(){
-        return "/member/myPage";
+    public ModelAndView myPage(ModelAndView mv){
+        mv.setViewName("/member/myPage");
+        return mv;
     }
 
     @RequestMapping("/login")
-    public String login(){
-        return "/member/login";
+    public ModelAndView login(ModelAndView mv){
+
+        mv.setViewName("/member/login");
+        return mv;
     }
 
-    @GetMapping("/member/join")
+    @GetMapping("/join")
     public ModelAndView join(ModelAndView mv){
         mv.setViewName("/member/join");
         return mv;
     }
 
-    @GetMapping("/test")
-    public ModelAndView test(ModelAndView mv, @RequestParam Map input) {
-
-        logger.info(""+input);
-
-        return mv;
-    }
-
-    @RequestMapping("/member/insert")
+    @RequestMapping("/insert")
     public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
-        logger.info("???????");
-        logger.info(""+inputs);
-        service.memberInsert(inputs);
 
+        service.memberInsert(inputs);
 
         mv.setViewName("member/myPage");
         return mv;
     }
 
     @RequestMapping("/orderList")
-    public String orderList() {
-        return "member/orderList";
+    public ModelAndView orderList(ModelAndView mv) {
+        mv.setViewName("/member/orderList");
+        return mv;
     }
 
     @RequestMapping("/modify")
-    public String modify(){
-        return "member/modify";
+    public ModelAndView modify(ModelAndView mv){
+        mv.setViewName("/member/modify");
+        return mv;
     }
 
     @RequestMapping("/wishList")
-    public String wishList(){
-        return "member/wishList";
+    public ModelAndView wishList(ModelAndView mv){
+        mv.setViewName("/member/wishList");
+        return mv;
     }
 
     @RequestMapping("/mileage")
-    public String mileage(){
-        return "member/mileage";
+    public ModelAndView mileage(ModelAndView mv){
+        mv.setViewName("/member/mileage");
+        return mv;
     }
 
     @RequestMapping("/address")
-    public String address(){
-        return "member/address";
+    public ModelAndView address(ModelAndView mv){
+        mv.setViewName("/member/address");
+        return mv;
     }
 }
