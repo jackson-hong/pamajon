@@ -22,5 +22,6 @@ public class AddressDto {
     private String addrCellPhone;
     private String addrStatus;
     private String regularCheck;
+    private String updateCheck;
 
 }

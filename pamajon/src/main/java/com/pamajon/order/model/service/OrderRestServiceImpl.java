@@ -39,4 +39,14 @@ public class OrderRestServiceImpl implements OrderRestService{
     public int deleteAddress(HashMap map) {
         return orderMapper.deleteAddress(map);
     }
+
+    @Override
+    public int updateAddress(AddressDto address) {
+        return orderMapper.updateAddress(address);
+    }
+
+    @Override
+    public AddressDto getAddress(int addrNo) {
+        return orderMapper.getAddress(addrNo);
+    }
 }

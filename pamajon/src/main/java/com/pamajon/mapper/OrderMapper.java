@@ -15,6 +15,10 @@ public interface OrderMapper {
 
     public int createAddress(AddressDto address);
 
+    public int updateAddress(AddressDto address);
+
     public int deleteAddress(HashMap map);
+
+    public AddressDto getAddress(int addrNo);
 
 }

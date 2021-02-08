@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,16 +25,19 @@ public class OrderRestController {
     }
 
     @GetMapping(value = "/order/addressinput" , produces="application/json; charset=utf-8")
-    public ResponseEntity<List<AddressDto>> getAddress(@RequestParam String userNo){
+    public ResponseEntity<List<AddressDto>> getAddressList(@RequestParam String userNo){
         return new ResponseEntity<>(orderRestService.getAddrList(Integer.parseInt(userNo)), HttpStatus.OK);
     }
 
     @PostMapping(value ="/order/address")
     public ResponseEntity<Integer> createAddress(AddressDto address){
 
+        //기존에 존재하던 주소를 일반주소로 바꿔야함.
+        if(address.getRegularCheck().equals("1")){
+            orderRestService.updateAddress(address);
+        }
         return new ResponseEntity<>(orderRestService.createAddress(address),HttpStatus.OK);
     }
-
     @GetMapping("/order/regular")
     public ResponseEntity<Integer> regularCheck(@RequestParam  int userNo){
 
@@ -44,9 +46,16 @@ public class OrderRestController {
     @DeleteMapping("/order/address")
     public ResponseEntity<Integer> deleteAddress(HttpServletRequest request , @RequestParam String userNo){
         HashMap<String,Object> map = new HashMap<>();
+
         map.put("addrList",request.getParameterValues("addrIdList[]"));
         map.put("userNo",userNo);
         return new ResponseEntity<>(orderRestService.deleteAddress(map),HttpStatus.OK);
+    }
+
+    @GetMapping("/order/address")
+    public ResponseEntity<AddressDto> getAddress(@RequestParam String addrNo){
+
+        return new ResponseEntity<>(orderRestService.getAddress(Integer.parseInt(addrNo)),HttpStatus.OK);
     }
 
 }

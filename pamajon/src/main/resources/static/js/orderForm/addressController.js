@@ -38,9 +38,11 @@
                             <img    onclick="injectAddress(this)"
                                     src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_apply.gif"
                                     alt="적용">
-                            <span class="gBlank10"><a href="modify.html?ma_idx=8439"><img
-                                        src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_modify.gif"
-                                        alt="수정"></a></span>
+                            <img
+                                src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_modify.gif"
+                                alt="수정" 
+                                onclick="modifyAddress(this);"
+                                style="cursor: pointer">
                         </td>
                     </tr>`;
                 }
@@ -125,8 +127,8 @@
             }).then((result)=>{
 
                 let status = "1";
-                if(result==0){
-                    alert("기본으로 등록되어있는 주소가 존재하지 않습니다 현재 입력하신 주소가 기본 주소로 선택됩니다.")
+                if(result==0 || regularCheck==1){
+                    alert("현재 입력하신 주소가 기본 주소로 선택됩니다.")
                     status = "0";
                 }
 
@@ -258,6 +260,20 @@ function inputRefreash(){
 
 function injectAddress(targer){
 
+
+}
+
+function modifyAddress(target){
+
+        $.ajax({
+            url:"/pamajon/order/address",
+            type:"GET",
+            data:{addrNo:`${target.parentNode.parentNode.childNodes[1].innerHTML}`},
+            success:function (result){
+                console.log(result);
+            }
+
+        })
 
 }
 

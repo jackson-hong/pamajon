@@ -14,4 +14,8 @@ public interface OrderRestService {
     public int createAddress(AddressDto address);
 
     public int deleteAddress(HashMap map);
+
+    public int updateAddress(AddressDto address);
+
+    public AddressDto getAddress(int addrNo);
 }
