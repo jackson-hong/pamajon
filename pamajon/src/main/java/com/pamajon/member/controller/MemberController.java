@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -41,16 +42,24 @@ public class MemberController {
         return mv;
     }
 
+    @GetMapping("/idCheck")
+    public Map idCheck(@RequestParam Map userId){
+        int result = service.selectOne(userId);
+        Map jackson = new HashMap();
+        jackson.put("result",result);
+        return jackson;
+    }
+
     @GetMapping("/join")
     public ModelAndView join(ModelAndView mv){
         mv.setViewName("/member/join");
         return mv;
     }
 
-    @RequestMapping("/insert")
+    @PostMapping("/insert")
     public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
-
-        service.memberInsert(inputs);
+        logger.info(""+inputs);
+        //service.memberInsert(inputs);
 
         mv.setViewName("member/myPage");
         return mv;

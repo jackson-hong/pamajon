@@ -27,4 +27,9 @@ public class MemberServiceImpl implements MemberService{
     public int memberInsert(Map inputs) {
         return dao.memberInsert(session,inputs);
     }
+
+    @Override
+    public int selectOne(Map userId) {
+        return dao.selectOne(session,userId);
+    }
 }

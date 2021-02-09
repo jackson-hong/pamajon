@@ -5,5 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.Map;
 
 public interface MemberDao {
-    public int memberInsert(SqlSession session, Map inputs);
+    int memberInsert(SqlSession session, Map inputs);
+    int selectOne(SqlSession session, Map userId);
 }

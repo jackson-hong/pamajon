@@ -13,4 +13,9 @@ public class MemberDaoImpl implements MemberDao{
     public int memberInsert(SqlSession session, Map inputs) {
         return session.insert("member.memberInsert", inputs);
     }
+
+    @Override
+    public int selectOne(SqlSession session, Map userId) {
+        return session.selectOne("member.selectOne",userId);
+    }
 }

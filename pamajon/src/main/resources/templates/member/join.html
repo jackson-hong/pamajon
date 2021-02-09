@@ -131,7 +131,7 @@
         <div id="description">
             <ion-icon name="medical"></ion-icon>필수입력사항
         </div>
-        <form role="form" th:action="@{/member/insert}" method="POST">
+        <form onsubmit="fn_submit()" id="join-fm" name="join-fm" role="form" th:action="@{/member/insert}" method="POST">
         <table>
             <tr>
                 <td class="table-title">아이디<ion-icon name="medical"></ion-icon></td>
@@ -169,7 +169,7 @@
             <tr>
                 <td class="table-title">비밀번호 확인 답변<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input size="50" name="pw_answer">
+                    <input size="50" name="pw_answer" id="pw_answer">
                 </td>
             </tr>
             <tr>
@@ -190,7 +190,7 @@
             <tr>
                 <td class="table-title">일반전화<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <select class="phone-num" name="phone-num">
+                    <select class="phone-num" name="phone-num" id="phone_num">
                         <option value="02">02</option>
                         <option value="031">031</option>
                         <option value="032">032</option>
@@ -242,26 +242,53 @@
 </div>
 <script th:inline="javascript">
     var contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
-
+    let id_check = false;
+    let pw_check = false;
     document.getElementById("user_id").addEventListener('keyup',()=>{
         let id = document.getElementById("user_id").value;
         if(fn_id_check(id)){
-            document.getElementById("user_id_info").style.color = 'green';
-            document.getElementById("user_id_info").innerText = '적절한 아이디입니다.';
+            $.ajax({
+                url: contextPath + "/member/idCheck",
+                type: "GET",
+                data: {"userId" : id},
+                dataType : "json",
+                contentType: 'application/json;charset=UTF-8',
+                success: function(data){
+                    if(data > 0) {
+                        //0보다 클 경우 중복
+                        document.getElementById("user_id_info").style.color = 'red';
+                        document.getElementById("user_id_info").innerText = '이미 존재하는 아이디입니다.';
+                        return;
+                    }else {
+                        //0일 경우 사용가능한 아이디
+                        document.getElementById("user_id_info").style.color = 'green';
+                        document.getElementById("user_id_info").innerText = '사용 가능한 아이디입니다.';
+                        id_check = true;
+                        return;
+                    }
+                },
+                error:(log)=>{
+                    console.log("실패");
+                    console.log(log);
+                }
+            })
         }else {
             document.getElementById("user_id_info").style.color = 'red';
             document.getElementById("user_id_info").innerText = '(영문소문자/숫자, 4~16자)';
+            id_check = false;
         }
     })
 
     document.getElementById("user_pw").addEventListener('keyup',()=>{
         let pw = document.getElementById("user_pw").value;
-        if(fn_id_check(pw)){
+        if(fn_pw_check(pw)){
             document.getElementById("user_pw_info").style.color = 'green';
-            document.getElementById("user_pw_info").innerText = '적절한 비밀번호입니다.';
+            document.getElementById("user_pw_info").innerText = '유효한 비밀번호입니다.';
+            pw_check = true;
         }else {
             document.getElementById("user_pw_info").style.color = 'red';
             document.getElementById("user_pw_info").innerText = '(영문 대소문자/특수문자 6자~20자)';
+            pw_check = false;
         }
     })
 
@@ -271,9 +298,14 @@
         if(pw == pwCh){
             document.getElementById("user_pw_ch_info").style.color = 'green';
             document.getElementById("user_pw_ch_info").innerText = '비밀번호가 일치합니다.';
+            pw_check = true;
+        }else if(pwCh == ""){
+            document.getElementById("user_pw_ch_info").innerText = '';
+            pw_check = false;
         }else {
             document.getElementById("user_pw_ch_info").style.color = 'red';
             document.getElementById("user_pw_ch_info").innerText = '비밀번호가 일치하지 않습니다.';
+            pw_check = false;
         }
     })
 
@@ -331,6 +363,42 @@
                 document.getElementById("user_addr_rest").focus();
             }
         }).open();
+    }
+    function fn_submit(){
+        let pw_ans = document.getElementById("pw_answer").value;
+        let user_name = document.getElementById("user_name").value;
+        let phone_num = document.getElementById("phone_num").value
+        let phone_middle = document.getElementById("phone_middle").value
+        let phone_tail = document.getElementById("phone_tail").value;
+        let user_email = document.getElementById("user_email").value;
+        if(!id_check){
+            alert("아이디를 체크해주세요");
+            document.getElementById("user_id").focus();
+            return;
+        }
+        if(!pw_check){
+            alert("비밀번호를 체크해주세요.");
+            return;
+        }
+        if(pw_ans == ""){
+            alert("비밀번호 질문에 대한 대답을 체크해주세요.");
+            document.getElementById("pw_answer").focus();
+            return;
+        }
+        if(user_name==""){
+            alert("이름을 기입해주세요");
+            document.getElementById("user_name").focus();
+            return;
+        }
+        if(phone_num==""||phone_middle==""||phone_tail==""){
+            alert("전화번호를 체크해주세요.");
+            return;
+        }
+        if(user_email==""){
+            alert("이메일을 체크해주세요");
+            document.getElementById("user_email").focus();
+            return;
+        }
     }
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
