@@ -21,11 +21,12 @@
                 <div class="right_font">
                     <div class="user_level">
                         <div class="user_level floor1" style="line-height: 10px;">
-                            <span style="font-weight: bolder;">XXX</span><span> 님은,[일반회원] 이십니다.</span>
+                            <!--/*@thymesVar id="memberName" type=""*/-->
+                            <span style="font-weight: bolder;" th:text="${member.memberName}"></span><span> 님은,</span>[<span th:text="${member.memberGrade}"></span>]이십니다.</span>
                         </div>
                         <div class="user_level floor2">
                             <span>가용적립금 : </span>
-                            <span style="font-weight: bolder; color: #008bcc;">7,000원</span>
+                            <span style="font-weight: bolder; color: #008bcc;" th:text="${mileage.mileage}">7,000원</span>
                         </div>
                     </div>
                 </div>
@@ -177,10 +178,11 @@
                 <tr>
                     <th style="width: 10%;">이메일<span> *</span></th>
                     <td style="padding-top: 7px;">
-                        <input id="oemail1" name="oemail1" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg=""
-                            class="mailId" value="" type="text">&nbsp;@&nbsp;<input style="margin-right: 3px;" id="oemail2" name="oemail2" fw-filter="isFill"
-                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" value="" type="text">
-                            <select style="position: relative; top: 0.5px"
+                        <input id="oemail1" name="email[]" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg=""
+                            class="mailId" value="" th:value="${email[0]}" type="text">&nbsp;@&nbsp;
+                            <input style="margin-right: 3px;" id="oemail2" name="email[]" fw-filter="isFill"
+                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" value="" th:value="${email[1]}" type="text">
+                            <select style="position: relative; top: 0.5px" th:value="${email[1]}"
                             id="oemail3" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg="">
                             <option value="" selected="selected">- 이메일 선택 -</option>
                             <option value="naver.com">naver.com</option>

@@ -66,10 +66,6 @@ table {
 .center > tr > td > span {
     font-size: 0.75rem;
 }
-#inputAddr {
-    width: 100%;
-    border: 1px solid rgb(215, 213, 213);
-}
 
 input[type="text"] {
     border: 1px solid rgb(215, 213, 213);
@@ -77,6 +73,7 @@ input[type="text"] {
 }
 
 #inputAddr > tbody > tr > th {
+    background-color: rgb(248, 248, 248);
     border: 1px solid rgb(215, 213, 213);
     height: 40px;
 }
@@ -84,4 +81,9 @@ input[type="text"] {
     padding-left: 10px;
     border: 1px solid rgb(215, 213, 213);
     height: 40px;
+}
+
+select {
+    border: 1px solid rgb(215, 213, 213);
+    height: 25px;
 }

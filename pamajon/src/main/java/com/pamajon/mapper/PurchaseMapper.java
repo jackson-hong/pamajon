@@ -1,12 +1,11 @@
-package com.pamajon.order.model.service;
+package com.pamajon.mapper;
 
-import com.pamajon.order.model.vo.AddressDto;
 import com.pamajon.order.model.vo.Member;
 import com.pamajon.order.model.vo.MileageDto;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
-public interface OrderService {
+@Mapper
+public interface PurchaseMapper {
 
     public Member getMember(int memNo);
 
