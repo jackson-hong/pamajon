@@ -151,12 +151,13 @@
                         onclick="deleteAddress()"
                         alt="선택 주소록 삭제"
                         style="margin-right: 5px; cursor: pointer">
-                <img onclick="insertAddr()" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
+                <img onclick="insertAddr('basic')" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
                      alt="배송지 등록" style="cursor: pointer">
             </div>
             </div>
+            <input type="hidden" name="addrId" value="">
             <input type="hidden" name="userNo" value="1">
-            <input type="hidden" name="updateCheck" value="basic">
+            <input type="hidden" name="updateCheck" value="">
             <script defer src="../../static/js/orderForm/addressController.js" th:src="@{/js/orderForm/addressController.js}"></script>
             </body>
             </html>

@@ -21,4 +21,8 @@ public interface OrderMapper {
 
     public AddressDto getAddress(int addrNo);
 
+    public int modifyAddress(AddressDto address);
+
+    public AddressDto getRegAddress(int userNo);
+
 }

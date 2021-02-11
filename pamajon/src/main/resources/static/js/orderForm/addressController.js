@@ -10,7 +10,6 @@
             contentType: "application/json;charset=UTF-8",
             success: function (result) {
                 let $addrTable = $("#addrTable > tbody");
-                console.log(result);
                 let str = "";
                 for (let i = 0; i < result.length; i++) {
                     str += `  <tr class="xans-record-" style="height: 100px; border-bottom: 1px solid rgb(215, 213, 213);">
@@ -104,6 +103,7 @@
         }
 
         let regularCheck = $("input:checkbox[name='regularAddrCheck']:checked").length;
+    if($("input[name='updateCheck']").val()=="basic"){
 
         if(confirm("주소를 입력하시겠습니까?")){
             let phone = [];
@@ -157,12 +157,74 @@
                         }
                     }
                 })
+
+
             })
+        }
+    } else if($("input[name='updateCheck']").val()=="Reload"){
+
+        if(confirm("주소를 수정 하시겠습니까?")){
+            let phone = [];
+            let mobile = [];
+            for(let i = 0 ; i<3; i++){
+                phone.push(document.getElementsByName("phone[]")[i].value);
+                mobile.push(document.getElementsByName("mobile[]")[i].value);
+            }
+            const promise = new Promise((resolve, reject)=>{
+
+                $.ajax({
+                    url:"/pamajon/order/regular",
+                    type:"GET",
+                    contentType : "application/json;charset=UTF-8",
+                    data:{'userNo':`${$("input[name='userNo']").val()}`},
+                    success:function(result) {
+                        resolve(result);
+
+                    }
+                })
+
+            }).then((result)=>{
+
+                let status = "1";
+                if(result==0 || regularCheck==1){
+                    alert("현재 입력하신 주소가 기본 주소로 선택됩니다.")
+                    status = "0";
+                }
+
+                $.ajax({
+                    url:"/pamajon/order/address",
+                    type: "PUT",
+                    data:{
+                        "addrId":$("input[name='addrId']").val(),
+                        "addrName":$("input[name='addrName']").val(),
+                        "userId":`${$("input[name='userNo']").val()}`,
+                        "addrReceiver":$("input[name='addrReceiver']").val(),
+                        "addrZipcode":$("input[name='addrZipcode']").val(),
+                        "addr":$("input[name='addr']").val(),
+                        "addrDetail":$("input[name='addrDetail']").val(),
+                        "addrPhone":phone.join("-"),
+                        "addrCellPhone":mobile.join("-"),
+                        "regularCheck":`${regularCheck}`,
+                        "addrStatus":status
+                    },
+                    success:function(result){
+
+                        if(result>0){
+                            getAddrList();
+                            listDisplay();
+                            inputRefreash();
+
+                        }
+                    }
+                })
+            })
+            }
         }
     }
 
-function insertAddr(){
+function insertAddr(str){
 
+    $("input[name='updateCheck']").val(str);
     $("#addrTable").css('display','none');
     $(".ec-base-button.1").css('display','flex');
     $("#inputAddr").css('display','block');
@@ -175,12 +237,13 @@ function inputAddress() {
 
         $("#address_zip1").val(data.zonecode);
         $("#address_addr1").val(data.roadAddress);
+
         }
     }).open();
 }
 
 function checkAll(){
-    console.log("실행");
+
         if($("#allCheck").is(":checked") == true){
 
             $("input:checkbox[name=ma_idx]").each(function() {
@@ -206,7 +269,7 @@ function checkboxLengthCheck(){
 
 function deleteAddress(){
         const checkedList = [];
-        console.log("실행");
+
     $("input:checkbox[name=ma_idx]:checked").each(function() {
         checkedList.push(this.value);
     });
@@ -257,29 +320,64 @@ function inputRefreash(){
         document.getElementsByName("mobile[]")[i].value='';
     }
 }
+//자식화면에서 부모화면으로 value 값 전송.
+function injectAddress(inject){
 
-function injectAddress(targer){
-
+    $("input[name='addrId']").val(inject.parentNode.parentNode.childNodes[1].innerHTML);
+    $.ajax({
+        url:"/pamajon/order/address",
+        type:"GET",
+        data:{addrNo:`${inject.parentNode.parentNode.childNodes[1].innerHTML}`},
+        success:function (result){
+            $(opener.document).find("input[name='addrName']").val(result.addrName);
+            $(opener.document).find("input[name='addrReceiver']").val(result.addrReceiver);
+            $(opener.document).find("input[name='addrZipcode']").val(result.addrZipcode);
+            $(opener.document).find("input[name='addr']").val(result.addr);
+            $(opener.document).find("input[name='addrDetail']").val(result.addrDetail);
+            let cellArr = result.addrCellPhone.split("-");
+            let phoneArr = result.addrPhone.split("-");
+            opener.document.getElementsByName("mobile[]")[0].value=cellArr[0];
+            opener.document.getElementsByName("mobile[]")[1].value=cellArr[1];
+            opener.document.getElementsByName("mobile[]")[2].value=cellArr[2];
+            window.close();
+        }
+    })
 
 }
 
 function modifyAddress(target){
+
+        $("input[name='addrId']").val(target.parentNode.parentNode.childNodes[1].innerHTML);
 
         $.ajax({
             url:"/pamajon/order/address",
             type:"GET",
             data:{addrNo:`${target.parentNode.parentNode.childNodes[1].innerHTML}`},
             success:function (result){
-                console.log(result);
+                $("input[name='addrName']").val(result.addrName);
+                $("input[name='addrReceiver']").val(result.addrReceiver);
+                $("input[name='addrZipcode']").val(result.addrZipcode);
+                $("input[name='addr']").val(result.addr);
+                $("input[name='addrDetail']").val(result.addrDetail);
+                let cellArr = result.addrCellPhone.split("-");
+                let phoneArr = result.addrPhone.split("-");
+                document.getElementsByName("phone[]")[0].value=phoneArr[0];
+                document.getElementsByName("phone[]")[1].value=phoneArr[1];
+                document.getElementsByName("phone[]")[2].value=phoneArr[2];
+
+                document.getElementsByName("mobile[]")[0].value=cellArr[0];
+                document.getElementsByName("mobile[]")[1].value=cellArr[1];
+                document.getElementsByName("mobile[]")[2].value=cellArr[2];
+
+                if(result.addrStatus==0){
+                $('input[name="regularAddrCheck"]').prop("checked",true);
+                } else {
+                $('input[name="regularAddrCheck"]').prop("checked",false);
+                }
+                insertAddr("Reload");
             }
-
         })
-
 }
-
-
-
-
 
 
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>결제 페이지</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/order/order.css" th:href="@{/css/order/order.css}">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 <body>
@@ -128,9 +129,9 @@
                 <tr>
                     <th style="width: 10%;">배송지선택</th>
                     <td>
-                        <input type="radio" name="shippingAddr" id="">
+                        <input type="radio" name="shippingAddr" checked value="basic">
                         <span style="line-height: 40px;">회원정보와 동일</span>
-                        <input type="radio" name="shippingAddr" id="">
+                        <input type="radio" name="shippingAddr" value="insertNew">
                         <span>새로운배송지</span>
                         <a href="#none" id="btn_shipp_addr" class="" style="">
                             <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_address.gif"
@@ -140,37 +141,37 @@
                 </tr>
                 <tr>
                     <th style="width: 10%;">받으시는 분<span> *</span></th>
-                    <td><input type="text" name="" id=""></td>
+                    <td><input type="text" name="addrReceiver"></td>
                 </tr>
                 <tr>
                     <th style="width: 10%;">주소<span> *</span></th>
                     <td>
-                        <input style="margin-bottom: 4px;" id="rzipcode1" name="rzipcode1" fw-filter="isFill" fw-label="수취자 우편번호1" fw-msg=""
+                        <input style="margin-bottom: 4px;" id="address_zip1" name="addrZipcode"
                             class="inputTypeText" placeholder="" size="6" maxlength="6" readonly="1" value=""
                             type="text">
-                        <a href="#none" id="btn_search_rzipcode"><img
+                        <img
                                 src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_zipcode.gif"
-                                style="position: relative; top:8px" alt="우편번호"></a><br>
-                        <input style="margin-bottom: 4px;" id="raddr1" name=""
+                                style="position: relative; top:8px" alt="우편번호" onclick="inputAddress()"><br>
+                        <input style="margin-bottom: 4px;" id="address_addr1" name="addr"
                             class="inputTypeText" placeholder="" size="40" readonly="1" value="" type="text"> <span
                             class="grid">기본주소</span><br>
-                        <input style="margin-bottom: 4px;" id="raddr2" name="raddr2" fw-filter="" fw-label="수취자 주소2" fw-msg="" class="inputTypeText"
+                        <input style="margin-bottom: 4px;" name="addrDetail" fw-filter="" fw-label="수취자 주소2" fw-msg="" class="inputTypeText"
                             placeholder="" size="40" value="" type="text"> <span class="grid">나머지주소</span><span
                             class="grid ">(선택입력가능)</span>
                     </td>
                 </tr>
                 <tr>
                     <th style="width: 10%;">휴대전화<span> *</span></th>
-                    <td><select id="rphone2_1" name="">
+                    <td><select id="rphone2_1" name="mobile[]">
                             <option value="010">010</option>
                             <option value="011">011</option>
                             <option value="016">016</option>
                             <option value="017">017</option>
                             <option value="018">018</option>
                             <option value="019">019</option>
-                        </select>&nbsp;-&nbsp;<input id="rphone2_2" name="rphone2_[]" maxlength="4" fw-filter="isNumber&amp;isFill"
+                        </select>&nbsp;-&nbsp;<input id="rphone2_2" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
                             fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text">&nbsp;-&nbsp;<input
-                            id="rphone2_3" name="rphone2_[]" maxlength="4" fw-filter="isNumber&amp;isFill"
+                            id="rphone2_3" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
                             fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text"></td>
                 </tr>
                 <tr>
@@ -373,6 +374,7 @@
         }
     });
 </script>
+<script defer src="../../static/js/orderForm/addressController.js" th:src="@{/js/orderForm/addressController.js}"></script>
 <script defer th:src="@{/js/orderForm/orderController.js}"></script>
 </body>
 </html>

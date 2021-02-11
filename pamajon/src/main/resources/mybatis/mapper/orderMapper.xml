@@ -114,4 +114,38 @@
         WHERE
             ADDR_ID =${addrNo}
     </select>
+    <update id="modifyAddress" parameterType="com.pamajon.order.model.vo.AddressDto">
+        UPDATE
+              ADDRESS_LIST
+           SET
+               ADDR_NAME=#{addrName},
+               ADDR_RECEIVER=#{addrReceiver},
+               ADDR_ZIPCODE=#{addrZipcode},
+               ADDR=#{addr},
+               ADDR_DETAIL=#{addrDetail},
+               ADDR_CELLPHONE=#{addrCellPhone},
+               ADDR_PHONE=#{addrPhone},
+               ADDR_STATUS=#{addrStatus}
+        WHERE
+             ADDR_ID=#{addrId}
+          AND
+             USER_ID=#{userId}
+    </update>
+    <select id="getRegAddress" parameterType="integer" resultMap="order">
+        SELECT
+            ADDR_NAME,
+            ADDR_RECEIVER,
+            ADDR_ZIPCODE,
+            ADDR,
+            ADDR_DETAIL,
+            ADDR_CELLPHONE,
+            ADDR_PHONE,
+            ADDR_STATUS
+        FROM
+            ADDRESS_LIST
+        WHERE
+            USER_ID =${userNo}
+          AND
+            ADDR_STATUS='0'
+    </select>
 </mapper>    
