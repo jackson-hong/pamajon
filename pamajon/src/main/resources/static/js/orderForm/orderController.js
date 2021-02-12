@@ -30,7 +30,7 @@ function getAddress(){
         type:"GET",
         data:{userNo:`${$("input[name='userNo']").val()}`},
         success:function (result){
-            console.log(result);
+
             $("input[name='addrName']").val(result.addrName);
             $("input[name='addrReceiver']").val(result.addrReceiver);
             $("input[name='addrZipcode']").val(result.addrZipcode);
