@@ -1,5 +1,6 @@
 package com.pamajon.member.controller;
 
+import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +23,10 @@ import java.util.Map;
 @RequestMapping("/member")
 public class MemberController {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AES256Util aes;
 
     @Qualifier("memberServiceImpl")
     private final MemberService service;
@@ -61,6 +67,8 @@ public class MemberController {
         logger.info(""+inputs);
         //service.memberInsert(inputs);
 
+        String password = passwordEncoder.encode((String)inputs.get("user_pw"));
+        inputs.put("user_pw", password);
         mv.setViewName("member/myPage");
         return mv;
     }
