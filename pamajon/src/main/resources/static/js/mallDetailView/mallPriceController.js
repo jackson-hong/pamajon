@@ -2,8 +2,6 @@
 
 $("select[name='productOption']").on('change', function () {
 
-
-
     const selectedOptionArr = new Array();
 
     for (let i = 0; i < $(".purchaseInfoDisplay").length; i++) {
@@ -15,23 +13,14 @@ $("select[name='productOption']").on('change', function () {
 
         let productOption = "";
 
-        let arrayNum = 0;
-
-        if ($(".purchaseInfoDisplay").length != 0) {
-
-            arrayNum = parseInt($(".purchaseInfoDisplay").get($(".purchaseInfoDisplay").length - 1).children[0].children[0].getAttribute('name').substring(
-                $(".purchaseInfoDisplay").get($(".purchaseInfoDisplay").length - 1).children[0].children[0].getAttribute('name').lastIndexOf("[") + 1,
-                $(".purchaseInfoDisplay").get($(".purchaseInfoDisplay").length - 1).children[0].children[0].getAttribute('name').lastIndexOf("[") + 2
-            )) + 1;
-        }
         productOption +=
             `<tr class="purchaseInfoDisplay">
-            <th style="width:50%">${$("select[name='productOption']").val()}<input type="hidden"  name="productSize[${parseInt(arrayNum)}]" value="${$("select[name='productOption']").val()}">
-            </th>
-            <th style="display: flex; padding-top: 5px;" >
-            <input type="number" value="1" min="1" onchange="priceCal(event);" name="quantity[${parseInt(arrayNum)}]" style="width:80px" >
-            <div onclick="optionDelete(this)" style="cursor:pointer;">&nbsp;x</div></th>
-            <th align="center">89000</th>
+                    <th style="width:50%">${$("select[name='productOption']").val()}<input type="hidden"  name="productSize[]" value="${$("select[name='productOption']").val()}">
+                    </th>
+                    <th style="display: flex; padding-top: 5px;" >
+                    <input type="number" value="1" min="1" onchange="priceCal(event);" name="quantity[]" style="width:80px" >
+                    <div onclick="optionDelete(this)" style="cursor:pointer;">&nbsp;x</div></th>
+                    <th align="center">89000</th>
                 </tr>`;
 
         $("#productOptionDisplay > tbody").append(productOption);
@@ -75,16 +64,3 @@ function optionListCount() {
 
     $("#priceDisplay").html(`Total:${result} KRW`);
 }
-
-
-
-
-
-/*
-    `  <tr class="purchaseInfoDisplay">
-<th style="width:50%">M(95~100)</th>
-<th style="display: flex; padding-top: 5px;" ><input type="number" name="quantity" style="width:80px" ><div>&nbsp;x</div></th>
-<th align="center">22000</th>
-</tr>`
-
-*/

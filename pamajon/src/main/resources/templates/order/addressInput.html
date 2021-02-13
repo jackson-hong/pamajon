@@ -49,12 +49,12 @@
             </table>
         </div>
 
-        <table id="inputAddr" style="width: 760px; margin-top: 15px; display: none;" >
+        <table id="inputAddr" style="display:none; margin-top: 15px;">
         
             <tbody>
                 <tr>
-                    <th scope="row">배송지명 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></th>
-                    <td><input id="ma_rcv_title" name="addrName" fw-filter="isFill&amp;isMaxByte[90]" fw-label="배송지명"
+                    <th scope="row" style="width: 120px;">배송지명 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></th>
+                    <td style="width: 667px;"><input id="ma_rcv_title" name="addrName" fw-filter="isFill&amp;isMaxByte[90]" fw-label="배송지명"
                             fw-msg="" class="inputTypeText" placeholder="" value="" type="text"></td>
                 </tr>
                 <tr>
@@ -113,9 +113,9 @@
             <option value="018">018</option>
             <option value="019">019</option>
             <option value="0508">0508</option>
-            </select>-
-                        <input id="ma_rcv_phone2" name="phone[]" maxlength="4" fw-filter="isNumber" fw-label="유선전화" fw-alone="N" fw-msg="" value="" type="text">
-                        -<input id="ma_rcv_phone3" name="phone[]" maxlength="4" fw-filter="isNumber" fw-label="유선전화" fw-alone="N" fw-msg="" value="" type="text"></td>
+            </select> -
+                        <input id="ma_rcv_phone2" name="phone[]" maxlength="4" fw-filter="isNumber" fw-label="유선전화" fw-alone="N" fw-msg="" value="" type="number">
+                        - <input id="ma_rcv_phone3" name="phone[]" maxlength="4" fw-filter="isNumber" fw-label="유선전화" fw-alone="N" fw-msg="" value="" type="number"></td>
                                 </tr>
             <tr>
             <th scope="row">휴대전화 <span class=""><img src="//img.echosting.cafe24.com/skin/base/common/ico_required.gif" alt="필수"></span>
@@ -127,9 +127,9 @@
             <option value="017">017</option>
             <option value="018">018</option>
             <option value="019">019</option>
-            </select>-<input id="ma_rcv_mobile_no2" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
-                fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text">-<input id="ma_rcv_mobile_no3" name="mobile[]"
-                maxlength="4" fw-filter="isNumber&amp;isFill" fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text"></td>
+            </select> - <input id="ma_rcv_mobile_no2" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
+                fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="number"> - <input id="ma_rcv_mobile_no3" name="mobile[]"
+                maxlength="4" fw-filter="isNumber&amp;isFill" fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="number"></td>
             </tr>
             <tr class="right">
                 <td colspan="2"><input id="ma_main_flag0" name="regularAddrCheck" fw-filter="" fw-label="기본 배송지로 저장" fw-msg="" value="T"

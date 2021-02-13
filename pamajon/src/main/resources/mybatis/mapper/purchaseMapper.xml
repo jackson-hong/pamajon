@@ -1,0 +1,45 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pamajon.mapper.PurchaseMapper">
+
+    <resultMap id="memberResultSet" type="com.pamajon.order.model.vo.Member">
+        <result property="userId" column="USER_ID"/>
+        <result property="memberName" column="MEM_NAME"/>
+        <result property="memberAddress" column="MEM_ADDRESS"/>
+        <result property="memberEmail" column="MEM_EMAIL"/>
+        <result property="memberGrade" column="MEM_GRADE"/>
+    </resultMap>
+
+    <resultMap id="mileageResultSet" type="com.pamajon.order.model.vo.MileageDto">
+        <result property="mileId" column="MILE_ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="mileage" column="MILE"/>
+        <result property="mileageContent" column="MILE_CONTENT"/>
+    </resultMap>
+
+    <select id="getMember" parameterType="integer" resultMap="memberResultSet">
+        SELECT
+               USER_ID,
+               MEM_NAME,
+               MEM_ADDRESS,
+               MEM_EMAIL,
+               MEM_GRADE
+          FROM
+              MEMBER
+        WHERE
+             USER_ID=#{memNo}
+    </select>
+
+    <select id="getMileage" parameterType="integer" resultMap="mileageResultSet">
+        SELECT
+            USER_ID,
+            SUM(MILE) AS MILE
+        FROM
+            MILEAGE
+        WHERE
+            USER_ID=#{memNo}
+        GROUP BY USER_ID
+    </select>
+
+</mapper>    
