@@ -133,6 +133,7 @@
     </update>
     <select id="getRegAddress" parameterType="integer" resultMap="order">
         SELECT
+            ADDR_ID,
             ADDR_NAME,
             ADDR_RECEIVER,
             ADDR_ZIPCODE,

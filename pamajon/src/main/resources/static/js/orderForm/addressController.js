@@ -329,6 +329,8 @@ function injectAddress(inject){
         type:"GET",
         data:{addrNo:`${inject.parentNode.parentNode.childNodes[1].innerHTML}`},
         success:function (result){
+            $(opener.document).find("input[name='addrId']").val(result.addrId);
+            $(opener.document).find("input[name='addrReloadCheck']").val('basic');
             $(opener.document).find("input[name='addrName']").val(result.addrName);
             $(opener.document).find("input[name='addrReceiver']").val(result.addrReceiver);
             $(opener.document).find("input[name='addrZipcode']").val(result.addrZipcode);

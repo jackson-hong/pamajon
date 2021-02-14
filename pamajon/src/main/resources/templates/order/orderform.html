@@ -72,11 +72,14 @@
                     </tfoot>
                     <tbody style="border-bottom: 1px solid #d7d5d5;">
                         <tr>
-                            <td><input type="checkbox" name="deleteProduct" onclick="lengthCheck();"></td>
-                            <td><img src="../../static/images/new4.jpg" th:src="@{/images/new4.jpg}" width="100%" height="100px" alt=""></td>
                             <td>
-                                <div class="pro_title" style="height: 30px;"><span
-                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">&nbsp;&nbsp;CHAMBRAY
+                                <input type="checkbox" name="deleteProduct" onclick="lengthCheck();">
+                                <input type="hidden" name="optionId" value="1">
+                            </td>
+                            <td><img src="../../static/images/new4.jpg" th:src="@{/images/new4.jpg}" width="100%" height="100px" alt=""></td>
+                            <td style="padding-left: 8px">
+                                <div style="height: 30px;"><span class="pro_title"
+                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">CHAMBRAY
                                         WORK SHIRTS - BLUE CHAMBRAY</span></div>
                                 <div class="pro_option">&nbsp;&nbsp;[옵션:<span
                                         style="font-size: 0.75rem; line-height: 40px;">
@@ -90,11 +93,14 @@
                             <td style="text-align: center; font-weight: bold;">KRW <span class="product_total" th:text="${#numbers.formatInteger(239000,3,'COMMA')}"></span></td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" name="deleteProduct" onclick="lengthCheck();"></td>
-                            <td><img src="../../static/images/new4.jpg" th:src="@{/images/new1.jpg}" width="100%" height="100px" alt=""></td>
                             <td>
-                                <div class="pro_title" style="height: 30px;"><span
-                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">&nbsp;&nbsp;CHAMBRAY
+                                <input type="checkbox" name="deleteProduct" onclick="lengthCheck();">
+                                <input type="hidden" name="optionId" value="2">
+                            </td>
+                            <td><img src="../../static/images/new4.jpg" th:src="@{/images/new1.jpg}" width="100%" height="100px" alt=""></td>
+                            <td style="padding-left: 8px">
+                                <div  style="height: 30px;"><span class="pro_title"
+                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;"> CHAMBRAY
                                         WORK SHIRTS - BLUE CHAMBRAY</span></div>
                                 <div class="pro_option">&nbsp;&nbsp;[옵션:<span
                                         style="font-size: 0.75rem; line-height: 40px;">
@@ -203,7 +209,7 @@
                 <tr>
                     <th style="width: 10%;">배송지메세지</th>
                     <td style="padding-top: 7px;">
-                        <textarea id="omessage" name="omessage" fw-filter="" fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70" style="margin: 0px; height: 75px; width: 703px; resize: none;"></textarea>	                        <div class="devMessage displaynone">
+                        <textarea id="omessage" name="orderMessage" fw-filter="" fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70" style="margin: 0px; height: 75px; width: 703px; resize: none;"></textarea>	                        <div class="devMessage displaynone">
                       
                     </div>
                     </td>
@@ -266,7 +272,7 @@
                         <tr>
                             <th>적립금</th>
                             <td >
-                                <p> <input id="input_mile"  size="23" value="" type="number" step="1000" min="0"> 원 (총 사용가능 적립금 : <strong
+                                <p> <input id="input_mile" name="mileage"  size="23" value="" type="number" step="1000" min="0"> 원 (총 사용가능 적립금 : <strong
                                         class="txtWarn" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')}">1,000</strong>원)</p>
                                 <ul class="info">
                                     <li>적립금은 최소 0 이상일 때 결제가 가능합니다.</li>
@@ -303,7 +309,7 @@
                 <tbody>
                     <tr>
                         <th scope="row" style="background-color: #f7f6f6; height: 30px;">입금자명</th>
-                        <td><input id="pname" name="pname" fw-filter="" fw-label="무통장 입금자명" fw-msg=""
+                        <td><input id="pname" name="orderTransName" fw-filter="" fw-label="무통장 입금자명" fw-msg=""
                                 class="inputTypeText" placeholder="" size="15" maxlength="20" value="" type="text"></td>
                     </tr>
                     <tr>
@@ -363,7 +369,11 @@
 <br><br><br>
 </div>
 </div>
+<img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" onclick="debuggingajax();" style="width: 230px;"  alt="디버깅버튼"></a>
 <input type="hidden" name="userNo" value="1">
+<input type="hidden" name="addrId" value="">
+<input type="hidden" name="addrReloadCheck" value=""> <!--Reload-->
+
     <th:block th:replace="common/footer.html"></th:block>
 <script>
     $("input[name='addr_paymethod']").on('change',function(){

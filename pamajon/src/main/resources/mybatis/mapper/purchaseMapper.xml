@@ -42,4 +42,150 @@
         GROUP BY USER_ID
     </select>
 
+    <select id="getAddressId" resultType="integer">
+        SELECT
+            NEXTVAL(SEQ_ADLIST)
+    </select>
+
+    <insert id="createAddress" parameterType="com.pamajon.order.model.vo.AddressDto">
+        INSERT INTO
+            ADDRESS_LIST
+        (
+            ADDR_ID,
+            USER_ID,
+            ADDR_NAME,
+            ADDR_RECEIVER,
+            ADDR_ZIPCODE,
+            ADDR,
+            ADDR_DETAIL,
+            ADDR_CELLPHONE,
+            ADDR_PHONE,
+            ADDR_STATUS
+        )
+        VALUES
+        (
+            #{addrId},
+            #{userId},
+            '임시주소',
+            #{addrReceiver},
+            #{addrZipcode},
+            #{addr},
+            #{addrDetail},
+            #{addrCellPhone},
+            #{addrPhone},
+            '1'
+        )
+    </insert>
+    <insert id="createOrder" parameterType="com.pamajon.order.model.vo.OrderDto">
+        INSERT INTO
+                ORDER_P
+            (
+                ORDER_ID,
+                USER_ID,
+                ADDR_ID,
+                ORDER_ADDR,
+                ORDER_STATUS,
+                ORDER_PHONE,
+                ORDER_EMAIL,
+                ORDER_MESSAGE,
+                ORDER_PURCHASE,
+                ORDER_DELI_STATUS,
+                ORDER_DATE,
+                ORDER_CARDNUM,
+                ORDER_MEM_BIRTH,
+                ORDER_TRANS_NAME,
+                ORDER_METHOD,
+                ORDER_ACCNUM,
+                ORDER_KEY,
+                ORDER_SHIPFEE
+            )
+            VALUES
+            (
+             NEXTVAL(SEQ_ORDER),
+             #{userId},
+             #{addrId},
+             #{orderAddr},
+             #{orderStatus},
+             #{orderPhone},
+             #{orderEmail},
+             #{orderMessage},
+             #{orderPurchase},
+             #{orderDeliveryStatus},
+             #{orderDate},
+             #{orderCardNum},
+             (
+                 SELECT
+                     MEM_BIRTH
+                 FROM
+                     MEMBER
+                 WHERE
+                     USER_ID =#{userId}
+                 ),
+             #{orderTransName},
+             #{orderMethod},
+             #{orderAccountNum},
+             #{orderKey},
+             #{orderShipfee}
+            )
+    </insert>
+    <update id="insertMileage" parameterType="com.pamajon.order.model.vo.MileageDto">
+       INSERT INTO
+                 MILEAGE
+                (
+                MILE_ID,
+                USER_ID,
+                MILE,
+                MILE_CONTENT
+                )
+                VALUES
+                (
+                 NEXTVAL(SEQ_MILEAGE),
+                 #{userId},
+                 -${mileage},
+                 '상품 구매 사용'
+                )
+    </update>
+    <update id="stackMileage" parameterType="com.pamajon.order.model.vo.MileageDto">
+        INSERT INTO
+            MILEAGE
+        (
+            MILE_ID,
+            USER_ID,
+            MILE,
+            MILE_CONTENT
+        )
+        VALUES
+        (
+            NEXTVAL(SEQ_MILEAGE),
+            #{userId},
+            ${mileage},
+            '상품 구매 포인트'
+        )
+    </update>
+    <insert id="insertSold" parameterType="com.pamajon.order.model.vo.SoldDto">
+        INSERT INTO
+                   SOLD
+                (
+                SOLD_ID,
+                ORDER_ID,
+                P_OPTION_ID,
+                SOLD_QUANTITY
+                )
+            VALUES
+                (
+                 NEXTVAL(SEQ_SOLD),
+                 LASTVAL(SEQ_ORDER),
+                 #{optionId},
+                 #{soldQuantity}
+                )
+    </insert>
+
+    <update id="modifyOptionStock" parameterType="com.pamajon.order.model.vo.SoldDto">
+             UPDATE
+                    P_OPTION
+                SET
+                   P_QUAN=P_QUAN-${soldQuantity}
+              WHERE
+                   P_OPTION_ID=#{optionId}
+    </update>
 </mapper>    

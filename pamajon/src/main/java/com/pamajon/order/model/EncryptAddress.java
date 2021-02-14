@@ -13,11 +13,11 @@ public class EncryptAddress {
 
     private final AES256Util aes256Util;
 
-    public EncryptAddress(AES256Util aes256Util){
+    public EncryptAddress(AES256Util aes256Util) {
         this.aes256Util = aes256Util;
     }
 
-    public AddressDto encryption(AddressDto address){
+    public AddressDto encryption(AddressDto address) {
 
         try {
             address.setAddrPhone(aes256Util.encrypt(address.getAddrPhone()));
@@ -33,7 +33,7 @@ public class EncryptAddress {
         return address;
     }
 
-    public AddressDto decryption(AddressDto address){
+    public AddressDto decryption(AddressDto address) {
         try {
             address.setAddrPhone(aes256Util.decrypt(address.getAddrPhone()));
             address.setAddr(aes256Util.decrypt(address.getAddr()));
@@ -48,20 +48,20 @@ public class EncryptAddress {
         return address;
     }
 
-    public List<AddressDto> decryption(List<AddressDto> address){
-            try {
-                for(int i = 0 ; i<address.size(); i++){
-                    address.get(i).setAddrPhone(aes256Util.decrypt(address.get(i).getAddrPhone()));
-                    address.get(i).setAddrCellPhone(aes256Util.decrypt(address.get(i).getAddrCellPhone()));
-                    address.get(i).setAddrZipcode(aes256Util.decrypt(address.get(i).getAddrZipcode()));
-                    address.get(i).setAddr(aes256Util.decrypt(address.get(i).getAddr()));
-                    address.get(i).setAddrDetail(aes256Util.decrypt(address.get(i).getAddrDetail()));
-                }
-            } catch (GeneralSecurityException e) {
-               e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+    public List<AddressDto> decryption(List<AddressDto> address) {
+        try {
+            for (int i = 0; i < address.size(); i++) {
+                address.get(i).setAddrPhone(aes256Util.decrypt(address.get(i).getAddrPhone()));
+                address.get(i).setAddrCellPhone(aes256Util.decrypt(address.get(i).getAddrCellPhone()));
+                address.get(i).setAddrZipcode(aes256Util.decrypt(address.get(i).getAddrZipcode()));
+                address.get(i).setAddr(aes256Util.decrypt(address.get(i).getAddr()));
+                address.get(i).setAddrDetail(aes256Util.decrypt(address.get(i).getAddrDetail()));
             }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return address;
     }
 }

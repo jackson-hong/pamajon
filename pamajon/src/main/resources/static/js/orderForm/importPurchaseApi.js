@@ -17,7 +17,7 @@ function processPurchase(){
         return false;
     }
 
-    if($("input[name='addrZipcode']").val().trim() == ""){
+    if($("input[name='addr']").val().trim() == ""){
         alert("주소가 입력되지 않았습니다.");
         $("input[name='addrZipcode']").focus();
         return false;
@@ -52,30 +52,101 @@ function processPurchase(){
         }
     }
 
+    let merchant_name_arr = [];
+    let merchant_name ="";
+
+    for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
+        merchant_name_arr.push($(`span.pro_title:eq(${i})`).text().trim());
+    }
+    merchant_name = merchant_name_arr.join(",");
+
+
+
+
 var IMP = window.IMP;
 IMP.init("imp14206910");
 
     IMP.request_pay({
         pg : 'inicis', // version 1.1.0부터 지원.
         pay_method : 'card',
-        merchant_uid : 'merchant_' + new Date().getTime(),
-        name : '주문명:결제테스트주문명:결제테스트주문명:결제테스트주문명:결제테스트주문명:결제테스트주문명:결제테스트주문명:결제테스트',
-        amount : 100,
-        buyer_email : 'iamport@siot.do',
-        buyer_name : '구매자이름',
-        buyer_tel : '010-1234-5678',
-        buyer_addr : '서울특별시 강남구 삼성동',
-        buyer_postcode : '123-456',
+        merchant_uid : 'pamajon_' + new Date().getTime(),
+        name : "파마존 결제내역",
+        amount : 100, //${removeCommaConvertToNumber($("#total_price").val())} <== 실제 결제테스트는 이 주석을 풀고 사용.
+        buyer_email : `${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+        buyer_name : `${$("input[name='addrReceiver']").val().trim()}`,
+        buyer_tel : `${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+        buyer_addr : `${$("input[name='addr']").val().trim()} ${$("input[name='addrDetail']").val().trim()}`,
+        buyer_postcode : `${$("input[name='addrZipcode']").val().trim()}`,
     }, function(rsp) {
         if ( rsp.success ) {
-            var msg = '결제가 완료되었습니다.';
-            msg += '고유ID : ' + rsp.imp_uid;
-            msg += '상점 거래ID : ' + rsp.merchant_uid;
-            msg += '결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;
+            console.log(rsp);
+            //주소부터 넣고와야함.
+            let date = new Date();
 
+            let SoldObject = [];
+
+            for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
+
+                var soldObjectTemp =
+                    {
+                        optionId:$(`input[name='optionId']:eq(${i})`).val(),
+                        soldQuantity:$(`.product_quantity:eq(${i})`).text().trim()
+                    }
+                SoldObject.push(soldObjectTemp);
+            }
+            let soldDto = JSON.stringify(SoldObject);
+
+            let orderDto = JSON.stringify({
+                userId:`${$("input[name='userNo']").val()}`,
+                addrId:`${$("input[name='addrId']").val()}`,
+                addr:`${$("input[name='addrZipcode']").val()} ${$("input[name='addr']").val()} ${$("input[name='addrDetail']").val()}`,
+                orderStatus:'0',
+                orderPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+                orderEmail:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+                orderPurchase:`${rsp.paid_amount}`,
+                orderMessage:`${$("input[name='orderMessage']").val()}`,
+                orderDeliveryStatus:"1",
+                orderDate:`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
+                orderCardNum:`${rsp.card_number}`,
+                orderTransName:`${$("input[name='orderTransName']").val()}`,
+                orderMethod:`${rsp.pay_method}`,
+                orderKey:`${rsp.receipt_url}`,
+                orderShipfee:`${removeCommaConvertToNumber($(".product_tfoot_shipfee").text())}`,
+            });
+
+            let addressDto = JSON.stringify({
+                addrId:`${$("input[name='addrId']").val()}`,
+                userId:$("input[name='userNo']").val(),
+                addrReceiver:$("input[name='addrReceiver']").val(),
+                addrZipcode:$("input[name='addrZipcode']").val(),
+                addr:$("input[name='addr']").val(),
+                addrDetail:$("input[name='addrDetail']").val(),
+                addrReloadCheck:$("input[name='addrReloadCheck']").val(),
+                addrCellPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+
+            });
+
+            let usedMileageDto = JSON.stringify({
+                userId:$("input[name='userNo']").val(),
+                mileage:$("input[name='mileage']").val()
+            });
+
+            let stackMileageDto = JSON.stringify({
+                userId:$("input[name='userNo']").val(),
+                mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
+            });
+
+
+            $.ajax({
+                url:"/pamajon/order/purchase",
+                type:"POST",
+                traditional: true,
+                data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
+                success:function (result){
+                console.log(result);
+                }
+            })
         }
-        alert("결제가 취소되었습니다.");
     });
 }
 function settingTablePrice(){
@@ -261,7 +332,84 @@ function purchaseTableController(){
     }
 
 }
+/*
+function debuggingajax(){
+    let date = new Date();
 
+    let SoldObject = [];
+
+    for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
+
+        var soldObjectTemp =
+            {
+                optionId:$(`input[name='optionId']:eq(${i})`).val(),
+                soldQuantity:$(`.product_quantity:eq(${i})`).text().trim()
+            }
+        SoldObject.push(soldObjectTemp);
+    }
+    let soldDto = JSON.stringify(SoldObject);
+
+    let orderDto = JSON.stringify({
+        userId:`${$("input[name='userNo']").val()}`,
+        addrId:`${$("input[name='addrId']").val()}`,
+        addr:`${$("input[name='addrZipcode']").val()} ${$("input[name='addr']").val()} ${$("input[name='addrDetail']").val()}`,
+        orderStatus:'0',
+        orderPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+        orderEmail:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+        orderPurchase:`${removeCommaConvertToNumber($("#total_price").val())}`,
+        orderMessage:`${$("input[name='orderMessage']").val()}`,
+        orderDeliveryStatus:"1",
+        orderDate:`${rsp.paid_at}`,
+        orderCardNum:`****`,
+        orderTransName:`${$("input[name='orderTransName']").val()}`,
+        orderMethod:`${rsp.pay_method}`,
+        orderKey:`${rsp.receipt_url}`,
+        orderShipfee:`${removeCommaConvertToNumber($(".product_tfoot_shipfee").text())}`,
+    });
+
+    let addressDto = JSON.stringify({
+        addrId:`${$("input[name='addrId']").val()}`,
+        userId:$("input[name='userNo']").val(),
+        addrReceiver:$("input[name='addrReceiver']").val(),
+        addrZipcode:$("input[name='addrZipcode']").val(),
+        addr:$("input[name='addr']").val(),
+        addrDetail:$("input[name='addrDetail']").val(),
+        addrReloadCheck:$("input[name='addrReloadCheck']").val(),
+        addrCellPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+
+    });
+
+    let usedMileageDto = JSON.stringify({
+        userId:$("input[name='userNo']").val(),
+        mileage:$("input[name='mileage']").val()
+    });
+
+    let stackMileageDto = JSON.stringify({
+        userId:$("input[name='userNo']").val(),
+        mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
+    });
+
+
+    $.ajax({
+        url:"/pamajon/order/purchase",
+        type:"POST",
+        traditional: true,
+        data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
+        success:function (result){
+            console.log(result);
+        }
+    })
+}
+*/
+//receieve String
+function removeCommaConvertToNumber(number){
+
+    let numStr = "";
+    for(let i = 0 ; i<number.trim().split(",").length; i++){
+       numStr += number.trim().split(",")[i]
+    }
+    return Number(numStr);
+}
 
 
 

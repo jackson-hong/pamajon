@@ -23,5 +23,6 @@ public class AddressDto {
     private String addrStatus;
     private String regularCheck;
     private String updateCheck;
+    private String addrReloadCheck;
 
 }

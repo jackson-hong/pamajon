@@ -2,6 +2,9 @@ package com.pamajon.order.model.vo;
 
 import lombok.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -19,5 +22,6 @@ public class ProductDto {
     private String productFrom;
     private String productMaterial;
     private String productStatus;
+    private List<ProductDto> productList;
 
 }

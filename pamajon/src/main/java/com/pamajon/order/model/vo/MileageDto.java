@@ -11,7 +11,7 @@ public class MileageDto {
 
     private int mileId;
     private String userId;
-    private int mileage;
+    private String mileage;
     private String mileageContent;
 
 }
