@@ -1,4 +1,4 @@
-package com.pamajon.valldetail.model.vo;
+package com.pamajon.mallDetail.model.vo;
 
 
 public class MallDetailVo {

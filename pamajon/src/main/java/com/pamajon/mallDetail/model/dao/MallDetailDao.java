@@ -1,4 +1,4 @@
-package com.pamajon.valldetail.model.dao;
+package com.pamajon.mallDetail.model.dao;
 
 public class MallDetailDao {
 }

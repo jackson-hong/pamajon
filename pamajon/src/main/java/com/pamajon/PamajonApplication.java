@@ -12,5 +12,4 @@ public class PamajonApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PamajonApplication.class, args);
 	}
-
 }
