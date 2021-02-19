@@ -105,7 +105,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-
+		<!--DB encryption-->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
