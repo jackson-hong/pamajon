@@ -136,13 +136,13 @@
             <tr>
                 <td class="table-title">아이디<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="user_id" id="user_id"><span id="user_id_info">(영문소문자/숫자, 6~20자)</span>
+                    <input name="memId" id="user_id"><span id="user_id_info">(영문소문자/숫자, 6~20자)</span>
                 </td>
             </tr>
             <tr>
                 <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input type="password" name="user_pw" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
+                    <input type="memPwd" name="user_pw" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
                 </td>
             </tr>
             <tr>
@@ -154,7 +154,7 @@
             <tr>
                 <td class="table-title">비밀번호 확인 질문<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <select name="pw-confirm">
+                    <select name="memPwdcheckQ">
                         <option value="기억에 남는 추억의 장소는?">기억에 남는 추억의 장소는?</option>
                         <option value="자신의 인생 좌우명은?">자신의 인생 좌우명은?</option>
                         <option value="자신의 보물 1호는?">자신의 보물 1호는?</option>
@@ -169,13 +169,13 @@
             <tr>
                 <td class="table-title">비밀번호 확인 답변<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input size="50" name="pw_answer" id="pw_answer">
+                    <input size="50" name="memPwdcheckA" id="pw_answer">
                 </td>
             </tr>
             <tr>
                 <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="user_name" id="user_name">
+                    <input name="memName" id="user_name">
                 </td>
             </tr>
             <tr>
@@ -184,7 +184,7 @@
                     <input size="8" name="postal_code" id="postal_code"><button type="button" onclick="fn_postal();" name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
                     <input size="36" id="user_addr" name="user_addr"><br>
                     <input size="36" id="user_addr_rest" name="user_addr_rest"><br>
-                    <input type="hidden" size="36" id="addr_info" name="addr_info">
+                    <input type="hidden" size="36" id="addr_info" name="memAddress">
                 </td>
             </tr>
             <tr>
