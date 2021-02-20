@@ -143,7 +143,9 @@ IMP.init("imp14206910");
                 traditional: true,
                 data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
                 success:function (result){
-                console.log(result);
+                if(result>0){
+                    location.href='/pamajon/member/orderList';
+                     }
                 }
             })
         }

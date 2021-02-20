@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.stereotype.Component;
+
 
 import javax.sql.DataSource;
 
@@ -27,7 +27,6 @@ public class MyBatisApplication {
 
     @Bean
     public SqlSessionTemplate sqlSession (SqlSessionFactory sqlSessionFactory) {
-
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
