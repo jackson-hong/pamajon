@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ToString
-public class GlobalPropertySource {
+public class DataBasePropertySource {
 
     private  final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 
@@ -20,18 +20,13 @@ public class GlobalPropertySource {
     @Value("${spring.datasource.password}")
     private String password;
 
-    public GlobalPropertySource() {
+    public DataBasePropertySource() {
         encryptor.setPassword("JEP");
         encryptor.setAlgorithm("PBEWithMD5AndDES");
     }
 
-    public String getDriverClassName() {
-        return driverClassName;
-    }
-    public String getUrl() {
-
-        return encryptor.decrypt(url);
-    }
+    public String getDriverClassName() { return driverClassName; }
+    public String getUrl() { return encryptor.decrypt(url); }
     public String getUsername() {
         return encryptor.decrypt(username);
     }

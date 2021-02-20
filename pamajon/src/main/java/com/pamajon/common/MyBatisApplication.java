@@ -18,14 +18,14 @@ import javax.sql.DataSource;
 public class MyBatisApplication {
 
     @Autowired
-    GlobalPropertySource globalPropertySource;
+    DataBasePropertySource globalPropertySource;
     @Bean
     @Primary
     public DataSource customDataSource() {
         return DataSourceBuilder
                 .create()
-                .url(globalPropertySource.getUrl())
                 .driverClassName(globalPropertySource.getDriverClassName())
+                .url(globalPropertySource.getUrl())
                 .username(globalPropertySource.getUsername())
                 .password(globalPropertySource.getPassword())
                 .build();
