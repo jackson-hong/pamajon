@@ -1,4 +1,4 @@
-package com.pamajon.common;
+package com.pamajon.common.security;
 
 import lombok.ToString;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ToString
-public class DataBasePropertySource {
+public class DataBasePropertyDecrypter {
 
     private  final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 
@@ -20,7 +20,7 @@ public class DataBasePropertySource {
     @Value("${spring.datasource.password}")
     private String password;
 
-    public DataBasePropertySource() {
+    public DataBasePropertyDecrypter() {
         encryptor.setPassword("JEP");
         encryptor.setAlgorithm("PBEWithMD5AndDES");
     }

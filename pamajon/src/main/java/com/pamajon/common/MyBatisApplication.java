@@ -1,5 +1,6 @@
 package com.pamajon.common;
 
+import com.pamajon.common.security.DataBasePropertyDecrypter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,16 +19,16 @@ import javax.sql.DataSource;
 public class MyBatisApplication {
 
     @Autowired
-    DataBasePropertySource globalPropertySource;
+    DataBasePropertyDecrypter decrypter;
     @Bean
     @Primary
     public DataSource customDataSource() {
         return DataSourceBuilder
                 .create()
-                .driverClassName(globalPropertySource.getDriverClassName())
-                .url(globalPropertySource.getUrl())
-                .username(globalPropertySource.getUsername())
-                .password(globalPropertySource.getPassword())
+                .driverClassName(decrypter.getDriverClassName())
+                .url(decrypter.getUrl())
+                .username(decrypter.getUsername())
+                .password(decrypter.getPassword())
                 .build();
     }
     @Bean
