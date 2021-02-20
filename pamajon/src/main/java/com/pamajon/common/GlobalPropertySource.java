@@ -1,32 +1,35 @@
 package com.pamajon.common;
 
+import lombok.ToString;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
+@ToString
 public class GlobalPropertySource {
 
-    StandardPBEStringEncryptor encryptor;
+    private  final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 
-   @Value("spring.datasource.driverClassName")
-   private String driverClassName;
-   @Value("spring.datasource.url")
+    @Value("${spring.datasource.driverClassName}")
+    private String driverClassName;
+    @Value("${spring.datasource.url}")
     private String url;
-   @Value("spring.datasource.username")
+    @Value("${spring.datasource.username}")
     private String username;
-   @Value("spring.datasource.password")
+    @Value("${spring.datasource.password}")
     private String password;
 
     public GlobalPropertySource() {
-        encryptor = new StandardPBEStringEncryptor();
         encryptor.setPassword("JEP");
+        encryptor.setAlgorithm("PBEWithMD5AndDES");
     }
 
     public String getDriverClassName() {
-        return encryptor.decrypt(driverClassName);
+        return driverClassName;
     }
     public String getUrl() {
+
         return encryptor.decrypt(url);
     }
     public String getUsername() {
@@ -35,4 +38,6 @@ public class GlobalPropertySource {
     public String getPassword() {
         return encryptor.decrypt(password);
     }
+
+
 }
