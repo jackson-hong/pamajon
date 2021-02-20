@@ -3,6 +3,8 @@ package com.pamajon.member.controller;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
+import com.pamajon.member.model.vo.Member;
+import com.pamajon.order.model.vo.AddressDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,12 +67,22 @@ public class MemberController {
     }
 
     @PostMapping("/insert")
-    public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map inputs) {
-        logger.info(""+inputs);
-        //service.memberInsert(inputs);
+    public ModelAndView joinEnd(ModelAndView mv, @ModelAttribute Member member, @ModelAttribute AddressDto addr) {
+        logger.info(""+member);
+        logger.info(""+addr);
+        member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
+        try {
+            member.setMemEmail(aes.encrypt(member.getMemEmail()));
+            member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        service.memberInsert(member);
 
-        String password = passwordEncoder.encode((String)inputs.get("user_pw"));
-        inputs.put("user_pw", password);
+//        String password = passwordEncoder.encode((String)inputs.get("user_pw"));
+//        inputs.put("user_pw", password);
         mv.setViewName("member/myPage");
         return mv;
     }

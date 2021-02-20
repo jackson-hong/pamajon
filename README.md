@@ -12,8 +12,8 @@
 - Version Control : [GitHub](https://github.com/jackson-hong/pamajon)
 - FW : SpringBoot / Bootstrap
 - Front-end : HTML5 / CSS3 / Javascript / jQuery / AJAX / JSON 
-- Back-end : Java 
-- WAS : Apache Tomcat
+- Back-end : Java
+- WAS : Tomcat
 - DB : Maria DB
-- Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber 
+- Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber /DataGrip
 - 배포 : 네이버 클라우드 플랫폼, AWS 프리티어

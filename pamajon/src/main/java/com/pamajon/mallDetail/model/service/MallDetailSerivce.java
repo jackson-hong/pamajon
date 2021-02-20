@@ -1,4 +1,4 @@
 package com.pamajon.mallDetail.model.service;
 
-public interface MallDetailInterface {
+public interface MallDetailSerivce {
 }

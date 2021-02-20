@@ -4,11 +4,11 @@
 
 <mapper namespace="member">
 
-    <insert id="memberInsert" parameterType="map">
-
+    <insert id="memberInsert" parameterType="com.pamajon.member.model.vo.Member">
+        INSERT INTO pamajon.MEMBER VALUES ();
     </insert>
 
     <select id="selectOne" parameterType="map" resultType="int">
-        SELECT count(USER_ID) FROM pamajon.MEMBER WHERE USER_ID = '${userId}';
+        SELECT count(USER_ID) FROM pamajon.MEMBER WHERE USER_ID = #{userId};
     </select>
 </mapper>

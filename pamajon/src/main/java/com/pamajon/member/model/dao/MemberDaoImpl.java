@@ -1,5 +1,6 @@
 package com.pamajon.member.model.dao;
 
+import com.pamajon.member.model.vo.Member;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -10,8 +11,8 @@ import java.util.Map;
 @Primary
 public class MemberDaoImpl implements MemberDao{
     @Override
-    public int memberInsert(SqlSession session, Map inputs) {
-        return session.insert("member.memberInsert", inputs);
+    public int memberInsert(SqlSession session, Member member) {
+        return session.insert("member.memberInsert", member);
     }
 
     @Override

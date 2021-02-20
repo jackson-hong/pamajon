@@ -142,7 +142,7 @@
             <tr>
                 <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input type="memPwd" name="user_pw" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
+                    <input type="password" name="user_pw" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
                 </td>
             </tr>
             <tr>
@@ -181,39 +181,22 @@
             <tr>
                 <td class="table-title">주소</td>
                 <td class="table-content address">
-                    <input size="8" name="postal_code" id="postal_code"><button type="button" onclick="fn_postal();" name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
-                    <input size="36" id="user_addr" name="user_addr"><br>
-                    <input size="36" id="user_addr_rest" name="user_addr_rest"><br>
-                    <input type="hidden" size="36" id="addr_info" name="memAddress">
+                    <input size="8" name="addrZipcode" id="postal_code"><button type="button" onclick="fn_postal();" name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
+                    <input size="36" id="user_addr" name="addr"><br>
+                    <input size="36" id="user_addr_rest" name="addrDetail"><br>
                 </td>
             </tr>
             <tr>
-                <td class="table-title">일반전화<ion-icon name="medical"></ion-icon></td>
+                <td class="table-title">휴대전화<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
                     <select class="phone-num" name="phone-num" id="phone_num">
-                        <option value="02">02</option>
-                        <option value="031">031</option>
-                        <option value="032">032</option>
-                        <option value="033">033</option>
-                        <option value="041">041</option>
-                        <option value="042">042</option>
-                        <option value="043">043</option>
-                        <option value="044">044</option>
-                        <option value="051">051</option>
-                        <option value="052">052</option>
-                        <option value="053">053</option>
-                        <option value="054">054</option>
-                        <option value="055">055</option>
-                        <option value="061">061</option>
-                        <option value="062">062</option>
-                        <option value="063">063</option>
-                        <option value="064">064</option>
                         <option value="0502">0502</option>
                         <option value="0503">0503</option>
                         <option value="0504">0504</option>
                         <option value="0505">0505</option>
                         <option value="0506">0506</option>
                         <option value="0507">0507</option>
+                        <option value="0508">0508</option>
                         <option value="070">070</option>
                         <option value="010">010</option>
                         <option value="011">011</option>
@@ -221,10 +204,10 @@
                         <option value="017">017</option>
                         <option value="018">018</option>
                         <option value="019">019</option>
-                        <option value="0508">0508</option>
                     </select>
                     -
                     <input size="8" name="phone_middle" id="phone_middle"> - <input size="8" name="phone_tail" id="phone_tail">
+                    <input type="hidden" name="memPhone" id="mem_phone">
                 </td>
             </tr>
             <tr>
@@ -399,6 +382,13 @@
             document.getElementById("user_email").focus();
             return;
         }
+        let firstNum = document.getElementById("phone_num").value;
+        let middleNum = document.getElementById("phone_middle").value;
+        let lastNum = document.getElementById("phone_tail").value;
+        document.getElementById("mem_phone").value =
+            firstNum + '-' + middleNum + '-' + lastNum;
+
+
     }
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

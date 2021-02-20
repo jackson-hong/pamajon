@@ -18,11 +18,9 @@ public class Member {
     String memPwdcheckA;
     String memName;
     String memAddress;
-    String memTel;
     String memPhone;
     String memEmail;
     String memGrade;
     Date memDate;
     boolean memStatus;
-    String memBirth;
 }
