@@ -1,14 +1,17 @@
 package com.pamajon.order.controller;
 
+import com.pamajon.order.MailHandler;
 import com.pamajon.order.model.service.OrderRestServiceImpl;
 import com.pamajon.order.model.vo.AddressDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -17,6 +20,9 @@ import java.util.List;
 
 @RestController
 public class OrderRestController {
+
+    @Autowired
+    private MailHandler mailHandler;
 
     @Qualifier("orderRestServiceImpl")
     private final OrderRestServiceImpl orderRestService;
@@ -77,5 +83,18 @@ public class OrderRestController {
         }
         return new ResponseEntity<>(orderRestService.modifyAddress(address),HttpStatus.OK);
     }
+
+    @PostMapping("/order/email")
+    public ResponseEntity<Integer> sendEmail(
+             String to,
+             String productName
+    ) throws Exception {
+        System.out.println(to+"  "+productName);
+        mailHandler.sendSimpleMessage(to,productName,"테스트");
+
+        return new ResponseEntity<>(1,HttpStatus.OK);
+    }
+
+
 
 }
