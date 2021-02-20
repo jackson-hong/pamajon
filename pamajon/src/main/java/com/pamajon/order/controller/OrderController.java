@@ -3,6 +3,7 @@ package com.pamajon.order.controller;
 import com.pamajon.order.JSONConvertor;
 import com.pamajon.order.JSONToObject;
 import com.pamajon.order.model.EncryptAddress;
+import com.pamajon.order.model.EncryptOrder;
 import com.pamajon.order.model.service.OrderService;
 import com.pamajon.order.model.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class OrderController {
     private JSONToObject jsonToObject;
     @Autowired
     private EncryptAddress encryptAddress;
+    @Autowired
+    private EncryptOrder encryptOrder;
 
     public OrderController(OrderService orderService){
         this.orderService = orderService;
@@ -78,7 +81,7 @@ public class OrderController {
           addrResult = orderService.createAddress(encryptAddress.encryption(address));
         }
 
-        orderResult = orderService.createOrder(order);
+        orderResult = orderService.createOrder(encryptOrder.encryptOrder(order));
         mileageResult = orderService.insertMileage(usedmileage);
         stackResult = orderService.stackMileage(stackMileage);
 
@@ -89,6 +92,7 @@ public class OrderController {
             soldResult = orderService.modifyOptionStock(soldDtos.getSoldList().get(i));
             soldResult *= soldResult; //하나라도 insert 안되면 0이 리턴됨
         }
+        /*
         //이녀석은 0일수도 있고 아닐수도있음.
         System.out.println(addrResult);
 
@@ -96,7 +100,7 @@ public class OrderController {
         System.out.println(mileageResult);
         System.out.println(soldResult);
         System.out.println(stackResult);
-
+        */
         return new ResponseEntity<>(orderResult*mileageResult*soldResult*stackResult,HttpStatus.OK);
     }
 
