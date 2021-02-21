@@ -63,8 +63,8 @@ function processPurchase(){
 
 
 
-var IMP = window.IMP;
-IMP.init("imp14206910");
+    var IMP = window.IMP;
+    IMP.init("imp14206910");
 
     IMP.request_pay({
         pg : 'inicis', // version 1.1.0부터 지원.
@@ -143,9 +143,9 @@ IMP.init("imp14206910");
                 traditional: true,
                 data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
                 success:function (result){
-                if(result>0){
-                    location.href='/pamajon/member/orderList';
-                     }
+                    if(result>0){
+                        location.href='/pamajon/member/orderList';
+                    }
                 }
             })
         }
@@ -181,7 +181,7 @@ function settingTablePrice(){
         } else if (Number(priceStr)>=10_000_000){
 
             $(`.product_point:eq(${i})`).text((Math.floor(Number(priceStr)/10_000_000)*100_000).toLocaleString());
-         }
+        }
         else {
             $(`.product_point:eq(${i})`).text('0');
         }
@@ -201,7 +201,7 @@ function settingTablePrice(){
     }
 
     if(totalPrice<50000){
-       shipfee = 3000;
+        shipfee = 3000;
     }
 
     for(let i = 0 ; i<tableLength; i++){
@@ -337,11 +337,8 @@ function purchaseTableController(){
 /*
 function debuggingajax(){
     let date = new Date();
-
     let SoldObject = [];
-
     for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
-
         var soldObjectTemp =
             {
                 optionId:$(`input[name='optionId']:eq(${i})`).val(),
@@ -350,7 +347,6 @@ function debuggingajax(){
         SoldObject.push(soldObjectTemp);
     }
     let soldDto = JSON.stringify(SoldObject);
-
     let orderDto = JSON.stringify({
         userId:`${$("input[name='userNo']").val()}`,
         addrId:`${$("input[name='addrId']").val()}`,
@@ -368,7 +364,6 @@ function debuggingajax(){
         orderKey:`${rsp.receipt_url}`,
         orderShipfee:`${removeCommaConvertToNumber($(".product_tfoot_shipfee").text())}`,
     });
-
     let addressDto = JSON.stringify({
         addrId:`${$("input[name='addrId']").val()}`,
         userId:$("input[name='userNo']").val(),
@@ -378,20 +373,15 @@ function debuggingajax(){
         addrDetail:$("input[name='addrDetail']").val(),
         addrReloadCheck:$("input[name='addrReloadCheck']").val(),
         addrCellPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
-
     });
-
     let usedMileageDto = JSON.stringify({
         userId:$("input[name='userNo']").val(),
         mileage:$("input[name='mileage']").val()
     });
-
     let stackMileageDto = JSON.stringify({
         userId:$("input[name='userNo']").val(),
         mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
     });
-
-
     $.ajax({
         url:"/pamajon/order/purchase",
         type:"POST",
@@ -408,9 +398,24 @@ function removeCommaConvertToNumber(number){
 
     let numStr = "";
     for(let i = 0 ; i<number.trim().split(",").length; i++){
-       numStr += number.trim().split(",")[i]
+        numStr += number.trim().split(",")[i]
     }
     return Number(numStr);
+}
+
+function emailTest(){
+
+    $.ajax({
+        url:"/pamajon/order/email",
+        type: "POST",
+        data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+            productName:"aaa"},
+        success:function (){
+            console.log("OK")
+        }
+    })
+
+
 }
 
 
