@@ -142,7 +142,7 @@
             <tr>
                 <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input type="password" name="user_pw" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
+                    <input type="password" name="memPwd" id="user_pw"><span id="user_pw_info">(영문 대소문자/특수문자 6자~20자)</span>
                 </td>
             </tr>
             <tr>
@@ -184,12 +184,19 @@
                     <input size="8" name="addrZipcode" id="postal_code"><button type="button" onclick="fn_postal();" name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
                     <input size="36" id="user_addr" name="addr"><br>
                     <input size="36" id="user_addr_rest" name="addrDetail"><br>
+                    <input type="hidden" id="addr_info">
                 </td>
             </tr>
             <tr>
                 <td class="table-title">휴대전화<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
                     <select class="phone-num" name="phone-num" id="phone_num">
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
                         <option value="0502">0502</option>
                         <option value="0503">0503</option>
                         <option value="0504">0504</option>
@@ -198,12 +205,6 @@
                         <option value="0507">0507</option>
                         <option value="0508">0508</option>
                         <option value="070">070</option>
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
                     </select>
                     -
                     <input size="8" name="phone_middle" id="phone_middle"> - <input size="8" name="phone_tail" id="phone_tail">
@@ -237,7 +238,7 @@
                 dataType : "json",
                 contentType: 'application/json;charset=UTF-8',
                 success: function(data){
-                    if(data > 0) {
+                    if(data.result > 0) {
                         //0보다 클 경우 중복
                         document.getElementById("user_id_info").style.color = 'red';
                         document.getElementById("user_id_info").innerText = '이미 존재하는 아이디입니다.';
@@ -387,7 +388,6 @@
         let lastNum = document.getElementById("phone_tail").value;
         document.getElementById("mem_phone").value =
             firstNum + '-' + middleNum + '-' + lastNum;
-
 
     }
 </script>

@@ -4,6 +4,7 @@ import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
+import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.order.model.vo.AddressDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -53,8 +54,8 @@ public class MemberController {
     }
 
     @GetMapping("/idCheck")
-    public Map idCheck(@RequestParam Map userId){
-        int result = service.selectOne(userId);
+    public Map idCheck(@RequestParam String userId){
+        int result = service.idCheck(userId);
         Map jackson = new HashMap();
         jackson.put("result",result);
         return jackson;
@@ -67,22 +68,39 @@ public class MemberController {
     }
 
     @PostMapping("/insert")
-    public ModelAndView joinEnd(ModelAndView mv, @ModelAttribute Member member, @ModelAttribute AddressDto addr) {
+    public ModelAndView joinEnd(ModelAndView mv, @ModelAttribute Member member, @ModelAttribute MemberAddr addr) {
         logger.info(""+member);
         logger.info(""+addr);
+        //비밀번호 단방향 암호화
         member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
         try {
+            //양방향 암호화
             member.setMemEmail(aes.encrypt(member.getMemEmail()));
             member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
+            member.setMemPhone(aes.encrypt(member.getMemPhone()));
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        service.memberInsert(member);
 
-//        String password = passwordEncoder.encode((String)inputs.get("user_pw"));
-//        inputs.put("user_pw", password);
+        //DB 저장
+        service.memberInsert(member);
+        //세션으로 쓸 멤버 객체 생성
+        Member m = service.selectOneByMemId(member.getMemId());
+
+        //사용자가 주소를 입력했을경우
+        if(!addr.getAddrZipcode().isEmpty()&&!addr.getAddr().isEmpty()&&!addr.getAddrDetail().isEmpty()){
+            addr.setAddrName(member.getMemName());
+            addr.setAddrReceiver(member.getMemName());
+            addr.setAddrPhone(member.getMemPhone());
+            addr.setUserId(m.getUserId());
+            //주소 입력
+            service.addrInsert(addr);
+        }
+
+        //세션 객체
+        mv.addObject("member", m);
         mv.setViewName("member/myPage");
         return mv;
     }
