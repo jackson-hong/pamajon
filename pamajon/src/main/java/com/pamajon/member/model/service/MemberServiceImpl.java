@@ -1,6 +1,8 @@
 package com.pamajon.member.model.service;
 
 import com.pamajon.member.model.dao.MemberDao;
+import com.pamajon.member.model.vo.Member;
+import com.pamajon.member.model.vo.MemberAddr;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,22 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int memberInsert(Map inputs) {
-        return dao.memberInsert(session,inputs);
+    public int memberInsert(Member member) {
+        return dao.memberInsert(session,member);
     }
 
     @Override
-    public int selectOne(Map userId) {
-        return dao.selectOne(session,userId);
+    public int idCheck(String userId) {
+        return dao.idCheck(session,userId);
+    }
+
+    @Override
+    public Member selectOneByMemId(String memId) {
+        return dao.selectOneByMemId(session, memId);
+    }
+
+    @Override
+    public int addrInsert(MemberAddr addr) {
+        return dao.addrInsert(session, addr);
     }
 }

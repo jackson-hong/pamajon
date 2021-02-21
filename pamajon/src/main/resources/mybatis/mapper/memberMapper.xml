@@ -4,11 +4,82 @@
 
 <mapper namespace="member">
 
-    <insert id="memberInsert" parameterType="map">
+    <insert id="memberInsert" parameterType="com.pamajon.member.model.vo.Member">
+        INSERT INTO MEMBER
+        (
+            user_id,
+            mem_id,
+            mem_pwd,
+            mem_pwdcheck_q,
+            mem_pwdcheck_a,
+            mem_name,
+            mem_phone,
+            mem_email,
+            mem_grade,
+            mem_date,
+            mem_status
+        )
+        VALUES (
+                NEXTVAL(SEQ_MEMBER),
+                #{memId},
+                #{memPwd},
+                #{memPwdcheckQ},
+                #{memPwdcheckA},
+                #{memName},
+                #{memPhone},
+                #{memEmail},
+                '일반회원',
+                SYSDATE(),
+                0
+               );
+    </insert>
+
+    <insert id="insertAddr" parameterType="com.pamajon.member.model.vo.MemberAddr">
+        INSERT INTO ADDRESS_LIST(
+            ADDR_ID,
+            USER_ID,
+            ADDR_PHONE,
+            ADDR_NAME,
+            ADDR_RECEIVER,
+            ADDR_ZIPCODE,
+            ADDR,
+            ADDR_DETAIL,
+            ADDR_CELLPHONE,
+            ADDR_STATUS)
+        VALUES (
+                NEXTVAL(SEQ_ADLIST),
+                #{userId},
+                #{addrPhone},
+                #{addrName},
+                #{addrReceiver},
+                #{addrZipcode},
+                #{addr},
+                #{addrDetail},
+                #{addrPhone},
+                0
+               )
 
     </insert>
 
     <select id="selectOne" parameterType="map" resultType="int">
-        SELECT count(USER_ID) FROM pamajon.MEMBER WHERE USER_ID = '${userId}';
+        SELECT count(MEM_ID) FROM MEMBER WHERE MEM_ID = #{MEM_ID};
     </select>
+
+    <select id="selectOneByMemId" parameterType="string" resultMap="selectOneByMemId">
+        SELECT * FROM MEMBER WHERE MEM_ID = #{memId};
+    </select>
+    
+    <resultMap id="selectOneByMemId" type="com.pamajon.member.model.vo.Member">
+        <result property="userId" column="USER_ID"/>
+        <result property="memId" column="MEM_ID"/>
+        <result property="memPwd" column="MEM_PWD"/>
+        <result property="memPwdcheckQ" column="MEM_PWDCHECK_Q"/>
+        <result property="memPwdcheckA" column="MEM_PWDCHECK_A"/>
+        <result property="memName" column="MEM_NAME"/>
+        <result property="memPhone" column="MEM_PHONE"/>
+        <result property="memEmail" column="MEM_EMAIL"/>
+        <result property="memGrade" column="MEM_GRADE"/>
+        <result property="memDate" column="MEM_DATE"/>
+        <result property="memStatus" column="MEM_STATE"/>
+    </resultMap>
 </mapper>
