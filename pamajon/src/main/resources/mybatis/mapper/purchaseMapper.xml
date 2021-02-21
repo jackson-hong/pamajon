@@ -92,7 +92,6 @@
                 ORDER_DELI_STATUS,
                 ORDER_DATE,
                 ORDER_CARDNUM,
-                ORDER_MEM_BIRTH,
                 ORDER_TRANS_NAME,
                 ORDER_METHOD,
                 ORDER_ACCNUM,
@@ -113,14 +112,6 @@
              #{orderDeliveryStatus},
              #{orderDate},
              #{orderCardNum},
-             (
-                 SELECT
-                     MEM_BIRTH
-                 FROM
-                     MEMBER
-                 WHERE
-                     USER_ID =#{userId}
-                 ),
              #{orderTransName},
              #{orderMethod},
              #{orderAccountNum},

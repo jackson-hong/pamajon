@@ -136,7 +136,6 @@ function processPurchase(){
                 mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
             });
 
-
             $.ajax({
                 url:"/pamajon/order/purchase",
                 type:"POST",
@@ -144,7 +143,17 @@ function processPurchase(){
                 data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
                 success:function (result){
                     if(result>0){
-                        location.href='/pamajon/member/orderList';
+                        $.ajax({
+                            url:"/pamajon/order/email",
+                            type: "POST",
+                            data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+                                productName:"aaa"},
+                            success:function (result){
+                                if(result>0){
+                                    location.href='/pamajon/member/orderList';
+                                }
+                            }
+                        })
                     }
                 }
             })
@@ -402,7 +411,7 @@ function removeCommaConvertToNumber(number){
     }
     return Number(numStr);
 }
-
+/*
 function emailTest(){
 
     $.ajax({
@@ -410,13 +419,98 @@ function emailTest(){
         type: "POST",
         data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
             productName:"aaa"},
-        success:function (){
-            console.log("OK")
+        success:function (result){
+            console.log(result);
         }
     })
 
 
 }
+*/
+
+function purchaseTest(){
+
+    let date = new Date();
+
+    let SoldObject = [];
+
+    for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
+
+        var soldObjectTemp =
+            {
+                optionId:$(`input[name='optionId']:eq(${i})`).val(),
+                soldQuantity:$(`.product_quantity:eq(${i})`).text().trim()
+            }
+        SoldObject.push(soldObjectTemp);
+    }
+    let soldDto = JSON.stringify(SoldObject);
+
+    let orderDto = JSON.stringify({
+        userId:`${$("input[name='userNo']").val()}`,
+        addrId:`${$("input[name='addrId']").val()}`,
+        addr:`${$("input[name='addrZipcode']").val()} ${$("input[name='addr']").val()} ${$("input[name='addrDetail']").val()}`,
+        orderStatus:'0',
+        orderPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+        orderEmail:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+        orderPurchase:`200`,
+        orderMessage:`${$("input[name='orderMessage']").val()}`,
+        orderDeliveryStatus:"1",
+        orderDate:`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
+        orderCardNum:`4444****`,
+        orderTransName:`${$("input[name='orderTransName']").val()}`,
+        orderMethod:`card`,
+        orderKey:`test`,
+        orderShipfee:`${removeCommaConvertToNumber($(".product_tfoot_shipfee").text())}`,
+    });
+
+    let addressDto = JSON.stringify({
+        addrId:`${$("input[name='addrId']").val()}`,
+        userId:$("input[name='userNo']").val(),
+        addrReceiver:$("input[name='addrReceiver']").val(),
+        addrZipcode:$("input[name='addrZipcode']").val(),
+        addr:$("input[name='addr']").val(),
+        addrDetail:$("input[name='addrDetail']").val(),
+        addrReloadCheck:$("input[name='addrReloadCheck']").val(),
+        addrCellPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+
+    });
+
+    let usedMileageDto = JSON.stringify({
+        userId:$("input[name='userNo']").val(),
+        mileage:$("input[name='mileage']").val()
+    });
+
+    let stackMileageDto = JSON.stringify({
+        userId:$("input[name='userNo']").val(),
+        mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
+    });
+
+
+
+        $.ajax({
+            url:"/pamajon/order/purchase",
+            type:"POST",
+            traditional: true,
+            data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
+            success:function (result){
+                if(result>0){
+                    $.ajax({
+                        url:"/pamajon/order/email",
+                        type: "POST",
+                        data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+                            productName:"aaa"},
+                        success:function (result){
+                            if(result>0){
+                                location.href='/pamajon/member/orderList';
+                            }
+                        }
+                    })
+                }
+            }
+        })
+
+}
+
 
 
 

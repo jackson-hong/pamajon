@@ -57,7 +57,7 @@ public class OrderController {
             @RequestParam String addressDto,//1
             @RequestParam String usedMileageDto,
             @RequestParam String stackMileageDto){
-        System.out.println(stackMileageDto);
+
         OrderDto order = jsonToObject.converToOrder(jsonConvertor.jsonConvertor(orderDto));
         SoldDto soldDtos = jsonToObject.convertToSoldList(jsonConvertor.jsonArrayConvertor(soldDto));
         AddressDto address = jsonToObject.convertToAddressDto(jsonConvertor.jsonConvertor(addressDto));
@@ -69,13 +69,13 @@ public class OrderController {
         int mileageResult = 0;
         int soldResult = 0;
         int stackResult = 0;
-        /*
+
         System.out.println(order);
         System.out.println(soldDtos);
         System.out.println(address);
         System.out.println(usedmileage);
         System.out.println(stackMileage);
-        */
+
         //주소부터 insert.
         if(address.getAddrReloadCheck().equals("reloaded")){
           addrResult = orderService.createAddress(encryptAddress.encryption(address));
@@ -92,15 +92,14 @@ public class OrderController {
             soldResult = orderService.modifyOptionStock(soldDtos.getSoldList().get(i));
             soldResult *= soldResult; //하나라도 insert 안되면 0이 리턴됨
         }
-        /*
+
         //이녀석은 0일수도 있고 아닐수도있음.
         System.out.println(addrResult);
-
         System.out.println(orderResult);
         System.out.println(mileageResult);
         System.out.println(soldResult);
         System.out.println(stackResult);
-        */
+
         return new ResponseEntity<>(orderResult*mileageResult*soldResult*stackResult,HttpStatus.OK);
     }
 
