@@ -465,7 +465,7 @@ function purchaseTest(){
 
     let addressDto = JSON.stringify({
         addrId:`${$("input[name='addrId']").val()}`,
-        userId:$("input[name='userNo']").val(),
+        userId:`${$("input[name='userNo']").val()}`,
         addrReceiver:$("input[name='addrReceiver']").val(),
         addrZipcode:$("input[name='addrZipcode']").val(),
         addr:$("input[name='addr']").val(),
@@ -484,9 +484,6 @@ function purchaseTest(){
         userId:$("input[name='userNo']").val(),
         mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
     });
-
-
-
         $.ajax({
             url:"/pamajon/order/purchase",
             type:"POST",

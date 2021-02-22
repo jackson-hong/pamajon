@@ -29,7 +29,7 @@ public class EncryptOrder {
             e.printStackTrace();
         }
 
-        return null;
+        return orderDto;
     }
 
     public OrderDto decryptOrder(OrderDto orderDto){
@@ -45,6 +45,6 @@ public class EncryptOrder {
             e.printStackTrace();
         }
 
-        return null;
+        return orderDto;
     }
 }
