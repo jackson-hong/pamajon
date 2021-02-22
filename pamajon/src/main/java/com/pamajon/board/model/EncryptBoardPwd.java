@@ -38,26 +38,4 @@ public class EncryptBoardPwd {
         }
         return qna;
     }
-    public ReviewDto reviewPwdEncryption(ReviewDto review){
-        try{
-            review.setReviewPwd(aes256Util.encrypt(review.getReviewPwd()));
-        }catch (GeneralSecurityException e){
-            e.printStackTrace();
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
-        return review;
-    }
-
-    public ReviewDto reviewPwdDecryption(ReviewDto review){
-        try {
-            review.setReviewPwd(aes256Util.decrypt(review.getReviewPwd()));
-        }catch (GeneralSecurityException e){
-            e.printStackTrace();
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        }
-        return review;
-    }
-
 }
