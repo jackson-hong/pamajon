@@ -10,33 +10,34 @@ import java.util.List;
 @Repository("reviewDaoImpl")
 @Primary
 public class ReviewDaoImpl implements ReviewDao{
+
     @Override
-    public List<ReviewDto> listReview(SqlSession session, List<ReviewDto> list) {
-        return null;
+    public List<ReviewDto> listReview(SqlSession session) {
+        return session.selectList("review.listReview");
     }
 
     @Override
     public int createReview(SqlSession session, ReviewDto reviewDto) {
-        return 0;
+        return session.insert("review.createReview",reviewDto);
     }
 
     @Override
-    public int readReview(SqlSession session, int ReviewId) {
-        return 0;
+    public int readReview(SqlSession session, int reviewId) {
+        return session.selectOne("review.readReview",reviewId);
     }
 
     @Override
     public int updateReview(SqlSession session, ReviewDto reviewDto) {
-        return 0;
+        return session.update("review.updateReview",reviewDto);
     }
 
     @Override
     public int deleteReview(SqlSession session, int reviewId) {
-        return 0;
+        return session.delete("review.deleteReview",reviewId);
     }
 
     @Override
     public int hitPlusReview(SqlSession session, int reviewId) {
-        return 0;
+        return session.update("review.hitPlusReview",reviewId);
     }
 }

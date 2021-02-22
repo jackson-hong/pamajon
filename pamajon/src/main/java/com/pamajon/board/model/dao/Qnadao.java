@@ -6,10 +6,10 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-public interface Qnadao {
+public interface QnaDao {
     /*Qna*/
     // Qna 목록보기
-    List<QnaDto> listQna(SqlSession session, List<QnaDto> list);
+    List<QnaDto> listQna(SqlSession session);
 
     //Qna CRUD
     int createQna(SqlSession session, QnaDto qnaDto);

@@ -9,7 +9,7 @@ import java.util.List;
 public interface QnaService {
     /*Qna*/
     // Qna 목록보기
-    List<QnaDto> listQna(List<QnaDto> list);
+    List<QnaDto> listQna();
     //Qna CRUD
     int createQna(QnaDto qnaDto);
     int readQna(int qnaId);

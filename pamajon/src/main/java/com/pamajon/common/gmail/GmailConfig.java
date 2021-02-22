@@ -51,7 +51,7 @@ public class GmailConfig {
         session.setDebug(true);
 
         MimeMessage msg = new MimeMessage(session);
-        msg.setSubject("[파마존] 주문하신 내역을 화인해 주세요.");
+        msg.setSubject("[파마존] 주문하신 내역을 확인해 주세요.");
 
         Address fromAddr = new InternetAddress(getId());
         msg.setFrom(fromAddr);

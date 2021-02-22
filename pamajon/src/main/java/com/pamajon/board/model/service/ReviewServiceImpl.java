@@ -11,7 +11,6 @@ import java.util.List;
 @Service("reviewServiceImpl")
 public class ReviewServiceImpl implements ReviewService {
 
-
     @Qualifier("reviewDaoImpl")
     private final ReviewDao dao;
     private final SqlSession session;
@@ -22,32 +21,28 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDto> listReview(List<ReviewDto> list) {
-        return null;
-    }
+    public List<ReviewDto> listReview(List<ReviewDto> list) { return dao.listReview(session); }
 
     @Override
-    public int createReview(ReviewDto reviewDto) {
-        return 0;
-    }
+    public int createReview(ReviewDto reviewDto) { return dao.createReview(session, reviewDto); }
 
     @Override
-    public int readReview(int ReviewId) {
-        return 0;
+    public int readReview(int reviewId) {
+        return dao.readReview(session,reviewId);
     }
 
     @Override
     public int updateReview(ReviewDto reviewDto) {
-        return 0;
+        return dao.updateReview(session,reviewDto);
     }
 
     @Override
     public int deleteReview(int reviewId) {
-        return 0;
+        return dao.deleteReview(session,reviewId);
     }
 
     @Override
     public int hitPlusReview(int reviewId) {
-        return 0;
+        return dao.hitPlusReview(session,reviewId);
     }
 }

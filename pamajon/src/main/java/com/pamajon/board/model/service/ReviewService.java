@@ -10,7 +10,7 @@ public interface ReviewService {
     List<ReviewDto> listReview(List<ReviewDto> list);
     //Review CRUD
     int createReview(ReviewDto reviewDto);
-    int readReview(int ReviewId);
+    int readReview(int reviewId);
     int updateReview(ReviewDto reviewDto);
     int deleteReview(int reviewId);
     //Review 조회수

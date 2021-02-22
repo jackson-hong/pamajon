@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ToString
-public class DataBasePropertyDecrypter {
+public class DataBaseConfig {
 
     private  final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 
@@ -20,7 +20,7 @@ public class DataBasePropertyDecrypter {
     @Value("${spring.datasource.password}")
     private String password;
 
-    public DataBasePropertyDecrypter() {
+    public DataBaseConfig() {
         encryptor.setPassword("JEP");
         encryptor.setAlgorithm("PBEWithMD5AndDES");
     }

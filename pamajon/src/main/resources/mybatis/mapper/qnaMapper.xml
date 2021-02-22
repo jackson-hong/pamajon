@@ -4,4 +4,77 @@
 
 <mapper namespace="qnaMapper">
 
+    <resultMap id="review" type="com.pamajon.board.model.vo.QnaDto">
+        <result property="qnaId"         column="REVIEW_ID"/>
+        <result property="productId"     column="PRODUCT_ID"/>
+        <result property="userId"        column="USER_ID"/>
+        <result property="qnaTitle"      column="QNA_TITLE"/>
+        <result property="qnaContent"    column="QNA_CONTENT"/>
+        <result property="qnaDate"       column="QNA_DATE"/>
+        <result property="qnaPwd"        column="QNA_PWD"/>
+        <result property="qnaStatus"     column="QNA_STATUS"/>
+        <result property="qnaHit"        column="QNA_HIT"/>
+    </resultMap>
+
+    <insert id="createReview" parameterType="com.pamajon.board.model.vo.QnaDto">
+        INSERT INTO QNA
+        (
+            REVIEW_ID,
+            PRODUCT_ID,
+            USER_ID,
+            QNA_TITLE,
+            QNA_CONTENT,
+            QNA_DATE,
+            QNA_PWD,
+            QNA_STATUS,
+            QNA_HIT
+        )
+        VALUES(
+                  NEXTVAL(SEQ_REVIEW),
+                  #{qnaId},
+                  #{productId},
+                  #{userid},
+                  #{qnaTitle},
+                  #{qnaContent},
+                  SYSDATE(),
+                  #{qnaPwd},
+                  #{qnaStatus},
+                  0
+              )
+    </insert>
+
+    <select id="readReview" parameterType="com.pamajon.board.model.vo.QnaDto">
+        SELECT * FROM QNA WHERE QNA_ID = #{qnaId}
+    </select>
+
+    <update id="updateReview" parameterType="com.pamajon.board.model.vo.QnaDto">
+        UPDATE
+            QNA_TITLE,
+            QNA_CONTENT,
+            QNA_STATUS
+        SET
+            #{qnaTitle},
+            #{qnaContent},
+            #{qnaStatus},
+        WHERE
+            QNA_ID = #{qnaId}
+
+    </update>
+
+    <delete id="deleteReview" parameterType="hashmap">
+        DELETE
+        FROM QNA
+        WHERE
+            QNA_ID = #{qnaId}
+    </delete>
+
+    <update id="hitPlusReview" parameterType="int">
+        UPDATE
+            QNA_HIT
+        SET
+            QNA_HIT++
+        WHERE
+            QNA_ID = #{qnaId}
+    </update>
+
 </mapper>

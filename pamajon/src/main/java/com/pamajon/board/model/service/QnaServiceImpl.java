@@ -1,6 +1,6 @@
 package com.pamajon.board.model.service;
 
-import com.pamajon.board.model.dao.ReviewDao;
+import com.pamajon.board.model.dao.QnaDao;
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,42 +14,39 @@ import java.util.List;
 public class QnaServiceImpl implements QnaService {
 
     @Qualifier("reviewDaoImpl")
-    ReviewDao dao;
-    SqlSession session;
+    private final QnaDao dao;
+    private final SqlSession session;
 
-
-    public QnaServiceImpl(ReviewDao dao, SqlSession session) {
+    public QnaServiceImpl(QnaDao dao, SqlSession session) {
         this.dao = dao;
         this.session = session;
     }
 
     @Override
-    public List<QnaDto> listQna(List<QnaDto> list) {
-        return null;
-    }
+    public List<QnaDto> listQna() { return dao.listQna(session); }
 
     @Override
     public int createQna(QnaDto qnaDto) {
-        return 0;
+        return dao.createQna(session,qnaDto);
     }
 
     @Override
     public int readQna(int qnaId) {
-        return 0;
+        return dao.readQna(session,qnaId);
     }
 
     @Override
     public int updateQna(QnaDto qnaDto) {
-        return 0;
+        return dao.updateQna(session,qnaDto);
     }
 
     @Override
     public int deleteQna(int qnaId) {
-        return 0;
+        return dao.deleteQna(session,qnaId);
     }
 
     @Override
     public int hitPlusQna(int qnaId) {
-        return 0;
+        return dao.hitPlusQna(session,qnaId);
     }
 }

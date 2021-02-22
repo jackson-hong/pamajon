@@ -8,7 +8,7 @@ import java.util.List;
 public interface ReviewDao {
     /*Review*/
     //Review 목록보기
-    List<ReviewDto> listReview(SqlSession session, List<ReviewDto> list);
+    List<ReviewDto> listReview(SqlSession session);
     //Review CRUD
     int createReview(SqlSession session, ReviewDto reviewDto);
     int readReview(SqlSession session, int ReviewId);
