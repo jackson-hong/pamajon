@@ -21,8 +21,6 @@ public class JSONConvertor {
             orderMap = new ObjectMapper().readValue(json,Map.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return orderMap;
     }
