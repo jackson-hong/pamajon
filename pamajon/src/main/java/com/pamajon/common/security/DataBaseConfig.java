@@ -34,5 +34,4 @@ public class DataBaseConfig {
         return encryptor.decrypt(password);
     }
 
-
 }
