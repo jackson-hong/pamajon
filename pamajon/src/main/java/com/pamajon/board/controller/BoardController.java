@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/board")
-public class boardController {
+public class BoardController {
     //마이페이지
     @RequestMapping("/boardList")
     public ModelAndView listBoard(ModelAndView mv){
