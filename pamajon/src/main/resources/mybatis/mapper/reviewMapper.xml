@@ -1,0 +1,79 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reviewMapper">
+
+    <resultMap id="review" type="com.pamajon.board.model.vo.ReviewDto">
+        <result property="reviewId"         column="REVIEW_ID"/>
+        <result property="productId"        column="PRODUCT_ID"/>
+        <result property="userId"           column="USER_ID"/>
+        <result property="reviewTitle"      column="REVIEW_TITLE"/>
+        <result property="reviewContent"    column="REVIEW_CONTENT"/>
+        <result property="reviewDate"       column="REVIEW_DATE"/>
+        <result property="reviewPwd"        column="REVIEW_PWD"/>
+        <result property="reviewStatus"     column="REVIEW_STATUS"/>
+        <result property="reviewHit"        column="REVIEW_HIT"/>
+    </resultMap>
+
+    <insert id="createReview" parameterType="com.pamajon.board.model.vo.ReviewDto">
+        INSERT INTO REVIEW
+        (
+            REVIEW_ID,
+            PRODUCT_ID,
+            USER_ID,
+            REVIEW_TITLE,
+            REVIEW_CONTENT,
+            REVIEW_DATE,
+            REVIEW_PWD,
+            REVIEW_STATUS,
+            REVIEW_HIT
+        )
+        VALUES(
+               NEXTVAL(SEQ_REVIEW),
+               #{reviewId},
+               #{productId},
+               #{userid},
+               #{reviewTitle},
+               #{reviewContent},
+               SYSDATE(),
+               #{reviewPwd},
+               #{reviewStatus},
+               0
+              )
+    </insert>
+
+    <select id="readReview" parameterType="com.pamajon.board.model.vo.ReviewDto">
+        SELECT * FROM REVIEW WHERE REVIEW_ID = #{reviewId}
+    </select>
+
+    <update id="updateReview" parameterType="com.pamajon.board.model.vo.ReviewDto">
+        UPDATE
+            REVIEW_TITLE,
+            REVIEW_CONTENT,
+            REVIEW_STATUS
+        SET
+            #{reviewTitle},
+            #{reviewContent},
+            #{reviewStatus},
+        WHERE
+         REVIEW_ID = #{reviewId}
+
+    </update>
+
+    <delete id="deleteReview" parameterType="hashmap">
+        DELETE
+        FROM REVIEW
+        WHERE
+         REVIEW_ID = #{reviewId}
+    </delete>
+
+    <update id="hitPlusReview" parameterType="int">
+        UPDATE
+         REVIEW_HIT
+        SET
+         REVIEW_HIT++
+        WHERE
+         REVIEW_ID = #{reviewId}
+    </update>
+</mapper>

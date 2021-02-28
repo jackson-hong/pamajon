@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>PAMAJON Review</title>
+    <title>PAMAJON Q&A</title>
 </head>
 <style>
     body {
@@ -45,16 +45,16 @@
     }
 
 
-    .reviewBlock {
+    .qnaBlock {
         justify-content: center;
         width: 60%;
         margin-left: 25%;
     }
-    .reviewBlock > .titleSection {
+    .qnaBlock > .titleSection {
         border-bottom: 2px solid black;
     }
 
-    .insertReviewTable {
+    .insertQnaTable {
         margin-top:5px ;
         margin-left: 10%;
         width:100%;
@@ -131,19 +131,19 @@
     .btn.btn-info{
         margin-right: 10px;
     }
-    .review--content{
+    .qna--content{
         width: 500px;
         height: 500px;
     }
 
-    .reviewComment{
+    .qnaComment{
         width: 500px;
         height: 15px;
     }
-    .reviewBtn--box{
+    .qnaBtn--box{
         text-align: center;
     }
-    .reviewBtn{
+    .qnaBtn{
         margin: 10px 10px 0 10px;
         width: 80px;
         height: 30px;
@@ -153,12 +153,8 @@
         color: white;
         font-size: inherit;
     }
-    .reviewTextCounterBox{
+    .qnaTextCounterBox{
         margin-left :400px;
-    }
-
-    .insertReviewTable{
-        border: 1px solid silver;
     }
 </style>
 <body>
@@ -173,19 +169,20 @@
         <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
     </div>
 </div>
+
 <div id="wrapper">
     <div id="board-wrapper">
 
             <form method="post">
-                <table class="insertReviewTable">
+                <table class="insertQnaTable">
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">제목</td>
                         <td class="userInput">
-                            <input type="text" class="form-control textType" placeholder="리뷰 제목을 적어주세요.">
+                            <input type="text" class="form-control textType" placeholder="QNA 제목을 적어주세요.">
                         </td>
                     </tr>
                     <tr class="tablefloor">
-                        <td class="explanation_wrapper">*착용 사진</td>
+                        <td class="explanation_wrapper">*질문 사진</td>
                         <td class="userInput">
                             <div class="filebox bs3-primary">
                                 <label for="ex_file2">사진 첨부</label>
@@ -199,28 +196,37 @@
                     </tr>
 
                     <tr class="tablefloor">
-                        <td class="explanation_wrapper">*후기(50자 이상)</td>
+                        <td class="explanation_wrapper">*질문내용</td>
                         <td class="userInput">
-                            <textarea name="reviewContent" class="review--content" style="resize: none"></textarea>
+                            <textarea name="qnaContent" class="qna--content" style="resize: none"></textarea>
                             <div class="reviewTextCounterBox">
-                                <span class="reviewTextCounter" style="color: #aaa;">(0 / 최대 2000자)</span>
+                                <span class="qnaTextCounter" style="color: #aaa;">(0 / 최대 2000자)</span>
                             </div>
                         </td>
                     </tr>
 
                     <tr class="tablefloor">
-                        <td class="explanation_wrapper">한줄평(20자 이상)</td>
+                        <td class="explanation_wrapper">비밀글로 변경</td>
                         <td class="userInput">
-                            <input type="text" class="reviewComment">
+                            <label>전체 공개</label>
+                            <input type="radio" class="qnaNonSecret" name="qnaSecretCheck" value="n">
+                            <label>비밀글</label>
+                            <input type="radio" class="qnaSecret" name="qnaSecretCheck" value="s">
+                        </td>
+                    </tr>
+
+                    <tr class="tablefloor">
+                        <td class="explanation_wrapper">비밀번호 입력</td>
+                        <td class="userInput">
+                            <input type="password" class="qnaPwd" name="qnaPwd">
                         </td>
                     </tr>
 
                 </table>
 
-                <div class="reviewBtn--box">
-                    <button type="submit" class="reviewBtn">업로드</button>
-                    <button type="button" class="reviewBtn" onclick="location.href='review'">취소</button>
-
+                <div class="qnaBtn--box">
+                    <button type="submit" class="qnaBtn">업로드</button>
+                    <button type="button" class="qnaBtn" onclick="location.href='review'">취소</button>
                 </div>
             </form>
     </div>
@@ -229,9 +235,9 @@
 
 <th:block th:replace="common/footer.html"></th:block>
 <script>
-    $('.review--content').keyup(function (e) {
+    $('.qna--content').keyup(function (e) {
         let content = $(this).val();
-        $('.reviewTextCounter').html("(" + content.length + " / 최대 2000자)");
+        $('.qnaTextCounter').html("(" + content.length + " / 최대 2000자)");
     });
 </script>
 </body>

@@ -70,7 +70,7 @@ public class OrderController {
         int soldResult = 0;
         int stackResult = 0;
 
-        System.out.println(order);
+        System.out.println(encryptOrder.encryptOrder(order));
         System.out.println(soldDtos);
         System.out.println(address);
         System.out.println(usedmileage);
