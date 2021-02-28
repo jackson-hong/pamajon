@@ -1,6 +1,6 @@
 package com.pamajon.board.model.service;
 
-import com.pamajon.board.model.dao.QnaDao;
+import com.pamajon.board.model.QnaDao;
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;

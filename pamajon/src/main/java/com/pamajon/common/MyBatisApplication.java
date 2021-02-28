@@ -18,8 +18,12 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.pamajon.mapper")
 public class MyBatisApplication {
 
-    @Autowired
+    final
     DataBaseConfig config;
+
+    public MyBatisApplication(DataBaseConfig config) {
+        this.config = config;
+    }
 
     @Bean
     @Primary
@@ -46,5 +50,4 @@ public class MyBatisApplication {
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
-
 }

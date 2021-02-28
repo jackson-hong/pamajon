@@ -149,12 +149,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- 기능코드의 로그를 위한 디펜던시 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2 -->
-
-
-
-
 		<!-- SQL 쿼리문 로그를 위한 디펜던시시-->
 		<!-- log4jdbc -->
 		<dependency>
