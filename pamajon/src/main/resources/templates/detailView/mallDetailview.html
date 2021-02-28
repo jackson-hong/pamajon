@@ -14,9 +14,9 @@
 <th:block th:replace="common/header.html"></th:block>
 
     <div id="outerTotalWrapper">
+
         <div id="upperArticle">
             <div id="product_carousal">
-
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                       <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -92,12 +92,12 @@
                 <tbody>
                         <tr>
                             <th>옵션선택</th>
-                            <th><select id="productSelector" name="productOption">
+                            <th><select id="productSelector" name="optionId">
                                 <option value="empty">- [필수] 필수 옵션을 선택해주세요 -</option>
                                 <option value="empty">----------------------------------</option>
-                                <option value="M(95~100)">M(95~100)</option>
-                                <option value="L(100~105)">L(100~105)</option>
-                                <option value="XL(105~110)">XL(105~110)</option>
+                                <option value="1">M(95~100)</option>
+                                <option value="2">L(100~105)</option>
+                                <option value="3">XL(105~110)</option>
                             </select>
                             </th>
                         </tr>
@@ -121,19 +121,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-     
                 </tbody>
             </table>
-                </form>
+
             <hr>
             <h3 align="right" id="priceDisplay">Total:0 KRW</h3>
             <hr>
             <div id="optionSelecter">
-                <div style="background-color: royalblue; cursor: pointer">BUY-NOW</div>
+                <div style="background-color: royalblue; cursor: pointer" onclick="submitOption();">BUY-NOW</div>
                 <div style="background-color: rgb(169, 176, 194); cursor: pointer">CART</div>
                 <div style="background-color: rgb(169, 176, 194); cursor: pointer">WISH</div>
             </div>
+                </form>
             </div>  
         </div>
         <div id="middlePolicyInfo">

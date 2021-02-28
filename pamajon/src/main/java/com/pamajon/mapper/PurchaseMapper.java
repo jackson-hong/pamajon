@@ -23,4 +23,7 @@ public interface PurchaseMapper {
     public int modifyOptionStock(SoldDto sold);
 
     public int stackMileage(MileageDto mileageDto);
+
+    public ProductOptionDto getProductOption(ProductOptionDto productOptionDto);
+
 }
