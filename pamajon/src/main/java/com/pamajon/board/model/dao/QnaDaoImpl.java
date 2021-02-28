@@ -1,6 +1,5 @@
 package com.pamajon.board.model.dao;
 
-import com.pamajon.board.model.QnaDao;
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;

@@ -1,4 +1,4 @@
-package com.pamajon.board.model;
+package com.pamajon.board.model.dao;
 
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
