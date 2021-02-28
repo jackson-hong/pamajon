@@ -138,6 +138,12 @@
 			<version>1.2.6.RELEASE</version>
 		</dependency>
 
+		<!--	session manager	-->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-core</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

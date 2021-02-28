@@ -13,12 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
@@ -26,6 +29,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/member")
+@SessionAttributes("loginMember")
 public class MemberController {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
     @Autowired
@@ -68,7 +72,7 @@ public class MemberController {
     }
 
     @PostMapping("/insert")
-    public ModelAndView joinEnd(ModelAndView mv, @ModelAttribute Member member, @ModelAttribute MemberAddr addr) {
+    public ModelAndView joinEnd(ModelAndView mv, Model model, @ModelAttribute Member member, @ModelAttribute MemberAddr addr, HttpSession sess) {
         logger.info(""+member);
         logger.info(""+addr);
         //비밀번호 단방향 암호화
@@ -99,8 +103,7 @@ public class MemberController {
             service.addrInsert(addr);
         }
 
-        //세션 객체
-        mv.addObject("member", m);
+        sess.setAttribute("loginMember", m);
         mv.setViewName("member/myPage");
         return mv;
     }
