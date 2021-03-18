@@ -51,9 +51,22 @@ public class MemberController {
     }
 
     @RequestMapping("/login")
-    public ModelAndView login(ModelAndView mv){
+    public ModelAndView login(ModelAndView mv, @RequestParam Map input){
 
         mv.setViewName("/member/login");
+        return mv;
+    }
+
+    @RequestMapping("loginEnd")
+    public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input){
+
+        Member m = service.selectOneByMemId((String)input.get("loginId"));
+
+        if(m == null){
+            mv.addObject("msg","아이디나 비밀번호가 틀립니다.");
+            mv.addObject("loc","/member/login");
+        }
+
         return mv;
     }
 

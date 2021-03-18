@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    <script th:inline="javascript">
+        var contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
+
+        let msg = [[${msg}]];
+        let loc = [[${loc}]];
+        alert(msg);
+        location.href = contextPath + loc;
+
+    </script>
+
+</body>
+</html>
