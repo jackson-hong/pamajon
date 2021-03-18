@@ -105,23 +105,30 @@
 <div id="login-con">
     <div id="login-con-in">
         <div id="login-title">MEMBER LOGIN</div>
+        <form id="login_frm" method="post" th:action="@{/member/login}">
         <div id="login-content">
             <div id="login-left">
                 <input type="text" name="loginId" id="id-input" placeholder="아이디">
-                <input type="text" name="loginPw" id="password-input" placeholder="비밀번호">
+                <input type="password" name="loginPw" id="password-input" placeholder="비밀번호">
                 <div id="login-left-btns">
                     <button type="button" name="id" class="btnLay btn">find ID</button>
                     <button type="button" name="password" class="btnLay btn">find PW</button>
                 </div>
             </div>
             <div id="login-right">
-                <div id="login-button" class="btn">
+                <div id="login-button" class="btn" onclick="fn_submit()">
                     LOGIN
                 </div>
                 <button type="button" class="btnLay btn">join</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
+<script>
+    function fn_submit(){
+        document.getElementById("login_frm").submit();
+    }
+</script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>

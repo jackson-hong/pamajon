@@ -7,6 +7,9 @@ import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.order.model.vo.AddressDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +24,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
-
+@Log4j2
 @RestController
 @RequestMapping("/member")
 @SessionAttributes("loginMember")
 public class MemberController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -45,28 +48,30 @@ public class MemberController {
     }
 
     @RequestMapping("/myPage")
-    public ModelAndView myPage(ModelAndView mv){
+    public ModelAndView myPage(ModelAndView mv, HttpServletRequest req){
+        HttpSession sess = req.getSession();
+        log.info(sess.getAttribute("loginMember"));
         mv.setViewName("/member/myPage");
         return mv;
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public ModelAndView login(ModelAndView mv, @RequestParam Map input){
-
         mv.setViewName("/member/login");
         return mv;
     }
 
-    @RequestMapping("loginEnd")
+    @PostMapping("/login")
     public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input){
-
         Member m = service.selectOneByMemId((String)input.get("loginId"));
-
         if(m == null){
             mv.addObject("msg","아이디나 비밀번호가 틀립니다.");
             mv.addObject("loc","/member/login");
+            mv.setViewName("/common/msg");
+        }else {
+            mv.addObject("loginMember",m);
+            mv.setViewName("redirect:/member/myPage");
         }
-
         return mv;
     }
 
@@ -86,8 +91,6 @@ public class MemberController {
 
     @PostMapping("/insert")
     public ModelAndView joinEnd(ModelAndView mv, Model model, @ModelAttribute Member member, @ModelAttribute MemberAddr addr, HttpSession sess) {
-        logger.info(""+member);
-        logger.info(""+addr);
         //비밀번호 단방향 암호화
         member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
         try {
