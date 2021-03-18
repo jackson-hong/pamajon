@@ -18,6 +18,16 @@
         <result property="mileageContent" column="MILE_CONTENT"/>
     </resultMap>
 
+    <resultMap id="productOptionDtoResultSet" type="com.pamajon.order.model.vo.ProductOptionDto">
+        <result property="optionId" column="P_OPTION_ID"/>
+        <result property="productId" column="PRODUCT_ID"/>
+        <result property="optionColor" column="P_COLOR"/>
+        <result property="optionSize" column="P_SIZE"/>
+        <result property="optionCode" column="P_CODE"/>
+        <result property="productPrice" column="PRODUCT_PRICE"/>
+        <result property="productName" column="PRODUCT_NAME"/>
+    </resultMap>
+
     <select id="getMember" parameterType="integer" resultMap="memberResultSet">
         SELECT
                USER_ID,
@@ -179,4 +189,20 @@
               WHERE
                    P_OPTION_ID=#{optionId}
     </update>
+    <select id="getProductOption" parameterType="com.pamajon.order.model.vo.ProductOptionDto" resultMap="productOptionDtoResultSet">
+        SELECT
+              P.PRODUCT_ID AS PRODUCT_ID
+             ,P.PRODUCT_NAME AS PRODUCT_NAME
+             ,P_COLOR
+             ,P_SIZE
+             ,P_QUAN
+             ,P_CODE
+             ,PRODUCT_PRICE
+        FROM
+            P_OPTION O
+                INNER JOIN
+            PRODUCT P ON P.PRODUCT_ID = O.PRODUCT_ID
+        WHERE
+            P_OPTION_ID=#{optionId}
+    </select>
 </mapper>    

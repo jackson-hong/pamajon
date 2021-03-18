@@ -5,6 +5,7 @@ import com.pamajon.order.model.vo.*;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("orderServiceImpl")
@@ -60,6 +61,24 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public int stackMileage(MileageDto mileageDto) {
         return purchaseMapper.stackMileage(mileageDto);
+    }
+
+    @Override
+    public List<ProductOptionDto> getProductOption(ProductOptionDto productOptionDto) {
+
+        List<ProductOptionDto> productOptionDtoList = new ArrayList<>();
+        //중간에 삭제하여 null 인경우는 삭제해야함.
+        for (int i = 0 ; i<productOptionDto.getOptionList().size(); i++){
+
+            if(productOptionDto.getOptionList().get(i).getOptionId()==0){
+                productOptionDto.getOptionList().remove(i);
+                i--;
+            }else {
+                productOptionDtoList.add(purchaseMapper.getProductOption(productOptionDto.getOptionList().get(i)));
+                productOptionDtoList.get(i).setOptionQuantity(productOptionDto.getOptionList().get(i).getOptionQuantity());
+            }
+        }
+        return productOptionDtoList;
     }
 
 }

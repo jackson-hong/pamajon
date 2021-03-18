@@ -1,6 +1,7 @@
 package com.pamajon.mapper;
 
 import com.pamajon.order.model.vo.AddressDto;
+import com.pamajon.order.model.vo.ProductOptionDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -24,5 +25,6 @@ public interface OrderMapper {
     public int modifyAddress(AddressDto address);
 
     public AddressDto getRegAddress(int userNo);
+
 
 }
