@@ -14,6 +14,14 @@
 - Front-end : HTML5 / CSS3 / Javascript / jQuery / AJAX / JSON 
 - Back-end : Java
 - WAS : Tomcat
-- DB : Maria DB
+- DB : Maria DB, AWS 프리티어
 - Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber /DataGrip
-- 배포 : 네이버 클라우드 플랫폼, AWS 프리티어
+- CI/CD :Jenkins
+- 배포 : 네이버 클라우드 플랫폼
+- api : 다음길찾기, 네아로, 구글 로그인
+
+## 2. 주요기능
+
+- Web Socket (STOPM) : 채팅기능 구현
+- Social Login 기능
+

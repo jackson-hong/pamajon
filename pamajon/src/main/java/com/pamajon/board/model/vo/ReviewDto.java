@@ -6,9 +6,7 @@ import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
+@Data
 public class ReviewDto {
     private int reviewId;
     private int productId;

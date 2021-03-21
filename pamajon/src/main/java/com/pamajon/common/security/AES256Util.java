@@ -2,7 +2,6 @@ package com.pamajon.common.security;
 
 
 import java.util.Base64;
-import org.junit.Test;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -12,7 +11,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-
 @Component
 public class AES256Util {
 
@@ -32,7 +30,7 @@ public class AES256Util {
         this.keySpec = keySpec;
     }
     /**
-     * AES256 함호화
+     * AES256 암호화
      * @param str 암호화된 문자열 리턴
      * @return
      * @throws NoSuchAlgorithmException

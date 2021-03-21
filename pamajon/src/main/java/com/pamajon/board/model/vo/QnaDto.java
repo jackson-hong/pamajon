@@ -7,9 +7,7 @@ import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
+@Data
 public class QnaDto {
     private int qnaId;
     private int productId;

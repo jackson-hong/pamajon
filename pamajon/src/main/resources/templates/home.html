@@ -290,52 +290,7 @@
     </style>
 </head>
 <body>
-<div id="wrapper">
-    <div id="content">
-        <div id="logo-search">
-            <div id="logo-container">
-                <img id="logo" th:src="@{/images/Logo.png}">
-            </div>
-            <div id="searchbar-container">
-                <div id="searchbar">
-                    <input id="search-input" type="text">
-                    <button id="search-btn" type="button"><ion-icon name="search-outline"></ion-icon></button>
-                </div>
-            </div>
-            <div id="shop-info-container">
-                MON-FRI : 11~9 / SAT : 12~9 / SUN : 12~8<br>
-                555-13 4TH FL. SINSA-DONG, GANGNAM-GU, SEOUL<br>
-                JHLEE1@BLUESMAN.CO.KR / 02-543-7137
-            </div>
-        </div>
-        <div id="menus">
-            <div id="shop-cates">
-                <div class="shop-cate">
-                    HOME
-                </div>
-                <div class="shop-cate">
-                    NEW ARRIVAL
-                </div>
-                <div class="shop-cate">
-                    BRAND
-                </div>
-                <div class="shop-cate">
-                    CATEGORIES
-                </div>
-            </div>
-            <div id="user-cates">
-                <div class="user-cate">
-                    <a th:href="@{/member/join}">JOIN</a>
-                </div>
-                <div class="user-cate">
-                    <a th:href="@{/member/login}">LOGIN</a>
-                </div>
-                <div class="user-cate">
-                    <a th:href="@{/member/myPage}">MYPAGE</a>
-                </div>
-            </div>
-        </div>
-        <hr>
+<th:block th:replace="common/header.html"></th:block>
         <div id="carousel-sales">
             <div id="left-sales">
                 <div class="left-sale" id="left-sale-1">

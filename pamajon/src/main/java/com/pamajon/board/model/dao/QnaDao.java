@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 
 public interface QnaDao {
+    //Q&A
     // Qna 목록보기
     List<QnaDto> listQna(SqlSession session);
 
