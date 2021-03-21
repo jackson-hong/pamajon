@@ -47,10 +47,8 @@ public class MemberController {
         this.service = service;
     }
 
-    @RequestMapping("/myPage")
+    @GetMapping("/myPage")
     public ModelAndView myPage(ModelAndView mv, HttpServletRequest req){
-        HttpSession sess = req.getSession();
-        log.info(sess.getAttribute("loginMember"));
         mv.setViewName("/member/myPage");
         return mv;
     }
@@ -62,16 +60,19 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input){
+    public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input, HttpServletRequest req){
         Member m = service.selectOneByMemId((String)input.get("loginId"));
         if(m == null){
+            log.info("로그인 실패");
             mv.addObject("msg","아이디나 비밀번호가 틀립니다.");
             mv.addObject("loc","/member/login");
             mv.setViewName("/common/msg");
         }else {
-            mv.addObject("loginMember",m);
+            HttpSession sess = req.getSession();
+            sess.setAttribute("loginMember",m);
             mv.setViewName("redirect:/member/myPage");
         }
+
         return mv;
     }
 

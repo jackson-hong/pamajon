@@ -324,13 +324,13 @@
                 </div>
             </div>
             <div id="user-cates">
-                <div class="user-cate">
+                <div th:if="${session.loginMember == null}" class="user-cate">
                     <a th:href="@{/member/join}">JOIN</a>
                 </div>
-                <div class="user-cate">
+                <div th:if="${session.loginMember == null}" class="user-cate">
                     <a th:href="@{/member/login}">LOGIN</a>
                 </div>
-                <div class="user-cate">
+                <div th:if="${session.loginMember != null}" class="user-cate">
                     <a th:href="@{/member/myPage}">MYPAGE</a>
                 </div>
             </div>
