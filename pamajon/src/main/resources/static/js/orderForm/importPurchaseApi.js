@@ -60,9 +60,6 @@ function processPurchase(){
     }
     merchant_name = merchant_name_arr.join(",");
 
-
-
-
     var IMP = window.IMP;
     IMP.init("imp14206910");
 
