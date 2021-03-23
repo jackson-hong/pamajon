@@ -79,7 +79,7 @@
         border-radius: 1px;
         border:1px silver solid;
         width:5em;
-        height: 2em;
+        height: 30px;
         font-size: 12px;
     }
     #login-left-btns {
@@ -92,6 +92,13 @@
     #login-right button {
         margin-top: 0.5em;
         width: 100%;
+    }
+    #kakao_login{
+        border-radius: 5px;
+        width: 60px;
+        height: 30px;
+        background-image: url("../images/kakao_login_small.png");
+        background-position: center;
     }
 </style>
 <div id="title-idx">
@@ -111,8 +118,8 @@
                 <input type="text" name="loginId" id="id-input" placeholder="아이디">
                 <input type="password" name="loginPw" id="password-input" placeholder="비밀번호">
                 <div id="login-left-btns">
-                    <button type="button" name="id" class="btnLay btn">find ID</button>
-                    <button type="button" name="password" class="btnLay btn">find PW</button>
+                    <button id="kakao_login" onclick="fn_kakao();" type="button" name="id" class="btnLay btn"></button>
+<!--                    <button type="button" name="password" class="btnLay btn">find PW</button>-->
                 </div>
             </div>
             <div id="login-right">
@@ -126,8 +133,27 @@
     </div>
 </div>
 <script>
+    Kakao.init('522e9cc1d4e892ad466431b624bcc7e5')
     function fn_submit(){
         document.getElementById("login_frm").submit();
+    }
+    function fn_kakao(){
+        Kakao.Auth.login({
+            success: function(response) {
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    fail: function(error) {
+                        console.log(error);
+                    }
+                });
+            },
+            fail: function(error) {
+                console.log(error);
+            },
+        });
     }
 </script>
 <th:block th:replace="common/footer.html"></th:block>
