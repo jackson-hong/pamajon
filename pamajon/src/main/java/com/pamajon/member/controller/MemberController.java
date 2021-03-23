@@ -53,6 +53,13 @@ public class MemberController {
         return mv;
     }
 
+    @PostMapping("/kakao")
+    public String kakao(@RequestParam Map input){
+        log.info(input);
+
+        return "jackson";
+    }
+
     @GetMapping("/login")
     public ModelAndView login(ModelAndView mv, @RequestParam Map input){
         mv.setViewName("/member/login");

@@ -132,28 +132,52 @@
         </form>
     </div>
 </div>
-<script>
+<script th:inline="javascript">
     Kakao.init('522e9cc1d4e892ad466431b624bcc7e5')
+    var contextPath = $('#contextPathHolder').attr('data-contextPath') ? $('#contextPathHolder').attr('data-contextPath') : '';
     function fn_submit(){
         document.getElementById("login_frm").submit();
     }
     function fn_kakao(){
-        Kakao.Auth.login({
-            success: function(response) {
-                Kakao.API.request({
-                    url: '/v2/user/me',
-                    success: function(response) {
-                        console.log(response);
-                    },
-                    fail: function(error) {
-                        console.log(error);
-                    }
-                });
-            },
-            fail: function(error) {
-                console.log(error);
-            },
-        });
+        new Promise((resolve, reject) => {
+            Kakao.Auth.login({
+                success: function(response) {
+                    resolve(response);
+                },
+                fail: function(error) {
+                    console.log(error);
+                },
+            });
+        }).then((response) => {
+            result = {};
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(res) {
+                    console.log(res)
+                    result = res;
+                },
+                fail: function(error) {
+                    console.log(error);
+                }
+            });
+            return result;
+        }).then(function(res){
+            console.log(res)
+            $.ajax({
+                type:"POST",
+                url: contextPath + "/kakao",
+                data: {"email":response.kakao_account.email,"name":response.properties.nickname,"gender":response.kakao_account.gender,"birthday":response.kakao_account.birthday},
+                dataType:"JSON",
+                success: (data)=>{
+                    return data
+                },
+                error:(error)=>{
+                    console.log(error)
+                }
+            })
+        }).then((response) => {
+            console.log(response)
+        })
     }
 </script>
 <th:block th:replace="common/footer.html"></th:block>
