@@ -35,8 +35,6 @@ public class OrderController {
     @GetMapping("/order/purchase")
     public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto){
 
-        System.out.println(orderService.getProductOption(productOptionDto));
-
         Member m = orderService.getMember(1);
         model.addAttribute("productList",orderService.getProductOption(productOptionDto));
         model.addAttribute("member",m);
@@ -83,7 +81,6 @@ public class OrderController {
         if(address.getAddrReloadCheck().equals("reloaded")){
           addrResult = orderService.createAddress(encryptAddress.encryption(address));
         }
-
         orderResult = orderService.createOrder(encryptOrder.encryptOrder(order));
         mileageResult = orderService.insertMileage(usedmileage);
         stackResult = orderService.stackMileage(stackMileage);
@@ -95,7 +92,6 @@ public class OrderController {
             soldResult = orderService.modifyOptionStock(soldDtos.getSoldList().get(i));
             soldResult *= soldResult; //하나라도 insert 안되면 0이 리턴됨
         }
-
         /*
         //이녀석은 0일수도 있고 아닐수도있음.
         System.out.println(addrResult);
