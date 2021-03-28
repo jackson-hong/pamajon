@@ -6,6 +6,7 @@ import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.order.model.vo.AddressDto;
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -56,8 +58,9 @@ public class MemberController {
     @PostMapping("/kakao")
     public String kakao(@RequestParam Map input){
         log.info(input);
-
-        return "jackson";
+        Map<String, Integer> result = new HashMap();
+        result.put("result",1);
+        return "??";
     }
 
     @GetMapping("/login")
