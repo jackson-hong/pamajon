@@ -6,6 +6,7 @@ import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.order.model.vo.AddressDto;
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
@@ -16,7 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +56,16 @@ public class MemberController {
     public ModelAndView myPage(ModelAndView mv, HttpServletRequest req){
         mv.setViewName("/member/myPage");
         return mv;
+    }
+
+    @PostMapping(value = "/kakao", produces = "application/json; charset=utf-8")
+    public Object kakao(@RequestBody Map input){
+        log.info(input);
+        Map<String, Integer> result = new HashMap();
+        Member m = new Member();
+        m.setMemEmail("Jackson");
+
+        return m;
     }
 
     @GetMapping("/login")
