@@ -157,34 +157,32 @@
                     console.log(error);
                 },
             });
-        }).then(function (response) {
-            console.log(response)
-            return response;
-        }).then(function (res) {
-                console.log(res)
-                $.ajax({
-                    type: "POST",
-                    contentType : 'application/json; charset=utf-8',
-                    url: contextPath + "/member/kakao",
-                    data: {
-                        "email": res.kakao_account.email,
-                        "name": res.properties.nickname,
-                        "gender": res.kakao_account.gender,
-                        "birthday": res.kakao_account.birthday
-                    },
-                    dataType: "text",
-                    success: function(dataFromController){
-                        console.log(dataFromController)
-                        return dataFromController;
-                    },
-                    error: (error) => {
-                        console.log(error)
-                    }
-                })
-            }).then((response) => {
+        }).then(ajaxKakao)
+            .then((response) => {
                 console.log(response)
             })
         }
+function ajaxKakao(res){
+    console.log(res)
+    $.ajax({
+        type: "POST",
+        contentType : 'application/json; charset=utf-8',
+        url: contextPath + "/member/kakao",
+        data: JSON.stringify({
+            "email": res.kakao_account.email,
+            "name": res.properties.nickname,
+            "gender": res.kakao_account.gender,
+            "birthday": res.kakao_account.birthday
+        }),
+        success: function(dataFromController){
+            result = dataFromController
+            console.log(result);
+        },
+        error: (error) => {
+            console.log(error)
+        }
+    })
+}
 </script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>

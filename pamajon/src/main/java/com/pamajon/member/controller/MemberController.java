@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,12 +58,14 @@ public class MemberController {
         return mv;
     }
 
-    @PostMapping("/kakao")
-    public String kakao(@RequestParam Map input){
+    @PostMapping(value = "/kakao", produces = "application/json; charset=utf-8")
+    public Object kakao(@RequestBody Map input){
         log.info(input);
         Map<String, Integer> result = new HashMap();
-        result.put("result",1);
-        return "??";
+        Member m = new Member();
+        m.setMemEmail("Jackson");
+
+        return m;
     }
 
     @GetMapping("/login")
