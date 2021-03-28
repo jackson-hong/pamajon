@@ -38,8 +38,12 @@ public class AdminController {
         return "/admin/insertProduct";
     }
 
+    @GetMapping("/shipment")
+    public String gotoShipmentPage(){
 
 
+        return "/admin/shipping";
+    }
 
 
 }
