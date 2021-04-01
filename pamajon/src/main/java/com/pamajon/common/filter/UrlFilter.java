@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @Slf4j
 public class UrlFilter extends OncePerRequestFilter {
-
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 

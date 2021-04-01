@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>결제 페이지</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/order/order.css" th:href="@{/css/order/order.css}">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 
@@ -26,7 +27,7 @@
                         </div>
                         <div class="user_level floor2">
                             <span>가용적립금 : </span>
-                            <span style="font-weight: bolder; color: #008bcc;" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')+' 원'}">7,000원</span>
+                            <span style="font-weight: bolder; color: #008bcc;" th:text="${mileage.mileage}">7,000원</span>
                         </div>
                     </div>
                 </div>
@@ -39,7 +40,7 @@
                 <table id="product_table">
                     <thead>
                         <tr>
-                            <th style="width:2%;"><input type="checkbox" id="allCheck" onclick="checkAll()"></th>
+                            <th style="width:2%;"><input type="checkbox"></th>
                             <th style="width:8%">이미지</th>
                             <th style="width:40%">상품정보</th>
                             <th style="width:8%">판매가</th>
@@ -58,45 +59,61 @@
                                     <span style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[기본배송]</span>
                                     <div>
                                         <span style="line-height: 40px;">상품구매금액</span>
-                                        <span style="line-height: 40px; font-weight: bolder;" class="product_tfoot_productTotal"></span>
+                                        <span style="line-height: 40px; font-weight: bolder;">239,000</span>
                                         <span style="line-height: 40px;">+ 배송비</span>
-                                        <span style="line-height: 40px;" class="product_tfoot_shipfee"></span>
-                                        <span style="line-height: 40px;">합계:</span>
+                                        <span style="line-height: 40px;">0(무료)</span>
+                                        <span style="line-height: 40px;">합계: </span>
                                         <span style="color: #008bcc; font-weight: bold;">KRW</span>
-                                        <span class="product_tfoot_total"
-                                            style="color: #008bcc; font-size: 1.1rem; font-weight: bolder;"></span>
+                                        <span
+                                            style="color: #008bcc; font-size: 1.1rem; font-weight: bolder;">239,000</span>
                                     </div>
                                 </div>
                                 </th>
                         </tr>
                     </tfoot>
                     <tbody style="border-bottom: 1px solid #d7d5d5;">
-                        <tr th:each="product:${productList}">
-                            <td>
-                                <input type="checkbox" name="deleteProduct" onclick="lengthCheck();">
-                                <input type="hidden" name="optionId" value="1" th:value="${product.optionId}">
-                            </td>
+                        <tr>
+                            <td><input type="checkbox"></td>
                             <td><img src="../../static/images/new4.jpg" th:src="@{/images/new4.jpg}" width="100%" height="100px" alt=""></td>
-                            <td style="padding-left: 8px">
-                                <div style="height: 30px;"><span class="pro_title"
-                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;" th:text="${product.productName}"></span></div>
-                                <div class="pro_option">&nbsp;&nbsp;[옵션:<span
-                                        style="font-size: 0.75rem; line-height: 40px;" th:text="${product.optionSize}">
-                                    5(105~110)</span>]</div>
+                            <td>
+                                <div class="pro_title" style="height: 30px;"><span
+                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">&nbsp;&nbsp;CHAMBRAY
+                                        WORK SHIRTS - BLUE CHAMBRAY</span></div>
+                                <div class="pro_option"><span
+                                        style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[옵션:
+                                        5(105~110)]</span></div>
                             </td>
-                            <td style="text-align: center; font-weight: bold;">KRW <span class="product_price" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}"></span></td>
-                            <td style="text-align: center; "><span class="product_quantity" th:text="${product.optionQuantity}">1</span></td>
-                            <td style="text-align: center; "><span class="product_point"></span>원</td>
+                            <td style="text-align: center; font-weight: bold;">KRW 239,000</td>
+                            <td style="text-align: center; ">1</td>
+                            <td style="text-align: center; ">2,000원</td>
                             <td style="text-align: center; ">기본배송</td>
-                            <td style="text-align: center; ">[<span class="shipfee">무료</span>]</td>
-                            <td style="text-align: center; font-weight: bold;">KRW <span class="product_total"></span></td>
+                            <td style="text-align: center; ">[무료]</td>
+                            <td style="text-align: center; font-weight: bold;">KRW 239,000</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td><img src="../../static/images/new2.jpg" th:src="@{/images/new2.jpg}" width="100%" height="100px" alt=""></td>
+                            <td>
+                                <div class="pro_title" style="height: 30px;"><span
+                                        style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;">&nbsp;&nbsp;CHAMBRAY
+                                        WORK SHIRTS - BLUE CHAMBRAY</span></div>
+                                <div class="pro_option"><span
+                                        style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[옵션:
+                                        5(105~110)]</span></div>
+                            </td>
+                            <td style="text-align: center; font-weight: bold;">KRW 239,000</td>
+                            <td style="text-align: center; ">1</td>
+                            <td style="text-align: center; ">2,000원</td>
+                            <td style="text-align: center; ">기본배송</td>
+                            <td style="text-align: center; ">[무료]</td>
+                            <td style="text-align: center;  font-weight: bold;">KRW 239,000</td>
                         </tr>
                     </tbody>
                 </table>
                 <div style="align-items: center; display: flex;">
                     <span style="font-weight: bold;">선택상품을&nbsp;</span><a href="#none" class="btn_product_delete"><img
                             src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif"
-                            style="margin-top: 3px; cursor: pointer" onclick="deleteProduct();" alt="삭제하기"></a>
+                            style="margin-top: 3px;" alt="삭제하기"></a>
                 </div>
                 <hr style="margin-top: 50px; margin-bottom: 50px; border-bottom: 0px;">
             </div>
@@ -155,8 +172,7 @@
                             <option value="018">018</option>
                             <option value="019">019</option>
                         </select>&nbsp;-&nbsp;<input id="rphone2_2" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
-                            fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text">&nbsp;-&nbsp;
-                        <input
+                            fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text">&nbsp;-&nbsp;<input
                             id="rphone2_3" name="mobile[]" maxlength="4" fw-filter="isNumber&amp;isFill"
                             fw-label="수취자 핸드폰번호" fw-alone="N" fw-msg="" size="4" value="" type="text"></td>
                 </tr>
@@ -187,7 +203,7 @@
                 <tr>
                     <th style="width: 10%;">배송지메세지</th>
                     <td style="padding-top: 7px;">
-                        <textarea id="omessage" name="orderMessage" fw-filter="" fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70" style="margin: 0px; height: 75px; width: 703px; resize: none;"></textarea>	                        <div class="devMessage displaynone">
+                        <textarea id="omessage" name="omessage" fw-filter="" fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70" style="margin: 0px; height: 75px; width: 703px; resize: none;"></textarea>	                        <div class="devMessage displaynone">
                       
                     </div>
                     </td>
@@ -220,20 +236,20 @@
                     <tr>
                         <td class="price">
                             <div class="box txt16">
-                                <strong>KRW <span id="total_order_price_view" class="txt23"></span></strong> <span
+                                <strong>KRW <span id="total_order_price_view" class="txt23">239,000</span></strong> <span
                                     class="displaynone"><span id="total_order_price_ref_view"></span></span>
                             </div>
                         </td>
                         <td class="option ">
                             <div class="box txt16">
-                                <strong>-</strong> <strong>KRW <span id="total_sale_price_view" class="txt23"></span></strong> <span
+                                <strong>-</strong> <strong>KRW <span id="total_sale_price_view" class="txt23">0</span></strong> <span
                                     class="displaynone"><span id="total_sale_price_ref_view"></span></span>
                             </div>
                         </td>
                         <td>
                             <div class="box txtEm txt16">
                                 <strong>=</strong> <strong>KRW <span id="total_order_sale_price_view"
-                                        class="txt23"></span></strong> <span class="displaynone"><span
+                                        class="txt23">239,000</span></strong> <span class="displaynone"><span
                                         id="total_order_sale_price_ref_view"></span></span>
                             </div>
                         </td>
@@ -245,13 +261,13 @@
                     <tbody>
                         <tr class="sum txt14">
                             <th style="height: 40px;"><strong style="font-size: 0.85rem;">총 부가결제금액</strong></th>
-                            <td style="background-color: #f7f6f6;">KRW <strong id="total_addpay_price_view" style="font-size: 1.2rem;">0</strong></td>
+                            <td style="background-color: #f7f6f6;">KRW <strong id="total_addpay_price_view" style="font-size: 1.2rem;">1,000</strong></td>
                         </tr>
                         <tr>
                             <th>적립금</th>
                             <td >
-                                <p> <input id="input_mile" name="mileage"  size="23" value="" type="number" step="1000" min="0"> 원 (총 사용가능 적립금 : <strong
-                                        class="txtWarn" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')}">1,000</strong>원)</p>
+                                <p> <input id="input_mile"  size="23" value="" type="text"> 원 (총 사용가능 적립금 : <strong
+                                        class="txtWarn">1,000</strong>원)</p>
                                 <ul class="info">
                                     <li>적립금은 최소 0 이상일 때 결제가 가능합니다.</li>
                                     <li id="mileage_max_unlimit" class="">최대 사용금액은 제한이 없습니다.</li>
@@ -270,9 +286,9 @@
     <div class="payment">
         <div class="payment_method">
             <span class="ec-base-label"><input id="addr_paymethod0" name="addr_paymethod"
-                    value="cash" type="radio" ><label
+                    value="cash" type="radio" checked="checked"><label
                     for="addr_paymethod0">무통장 입금</label></span>
-            <span class="ec-base-label"><input id="addr_paymethod1" name="addr_paymethod" value="card" type="radio" checked="checked"><label for="addr_paymethod1">카드
+            <span class="ec-base-label"><input id="addr_paymethod1" name="addr_paymethod" value="card" type="radio"><label for="addr_paymethod1">카드
                     결제</label></span>
         </div>
 
@@ -283,11 +299,11 @@
 
         
             <!-- 무통장입금 -->
-            <table summary="" id="payment_input_cash" style="display:none;">
+            <table summary="" id="payment_input_cash" style="display: table;">
                 <tbody>
                     <tr>
                         <th scope="row" style="background-color: #f7f6f6; height: 30px;">입금자명</th>
-                        <td><input id="pname" name="orderTransName" fw-filter="" fw-label="무통장 입금자명" fw-msg=""
+                        <td><input id="pname" name="pname" fw-filter="" fw-label="무통장 입금자명" fw-msg=""
                                 class="inputTypeText" placeholder="" size="15" maxlength="20" value="" type="text"></td>
                     </tr>
                     <tr>
@@ -305,7 +321,7 @@
                     </tr>
                 </tbody>
             </table>   
-            <div id="pg_paymethod_info" class="payHelp" style="display:block;">
+            <div id="pg_paymethod_info" class="payHelp" style="display: none;">
                  <span id="pg_paymethod_info_pg" class="ec-base-help">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</span>
             </div>
     
@@ -318,27 +334,27 @@
 <p class="price1"><span style="color: #008bcc; font-size: 0.9rem;">KRW </span><input id="total_price" name="total_price"
         fw-filter="isFill" fw-label="결제금액" fw-msg="" class="inputTypeText" placeholder=""
         style="text-align:right;ime-mode:disabled;clear:none;border:0px;float:none;background-color: #fafafa;color: #008bcc; font-size: 1.3rem;"
-        size="10" readonly="1" value="24,000" type="text"></p>
+        size="10" readonly="1" value="478000" type="text"></p>
 <p class="paymentAgree" id="chk_purchase_agreement" style="display: none;"><input id="chk_purchase_agreement0"
         name="chk_purchase_agreement" fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T" type="checkbox"
         style="display: none;"><label for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label></p>
 <div class="button"><a href="#none">
-        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" onclick="processPurchase();" style="width: 230px;" id="btn_payment" alt="결제하기"></a>
+        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" style="width: 230px;" id="btn_payment" alt="결제하기"></a>
 </div>
 
 <div class="mileage ">
     <dl class="ec-base-desc gLarge right" style="display: flex; justify-content: space-between;">
         <dt><strong style="font-size: 0.75rem;">총 적립예정금액</strong></dt>
-        <dd id="mAllMileageSum" class="txtWarn" style="display: block; font-size: 0.8rem;"></dd>
+        <dd id="mAllMileageSum" class="txtWarn" style="display: block; font-size: 0.8rem;">4,000원</dd>
     </dl>
     <div class="ec-base-desc gLarge right">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
             <dt style="font-size: 0.75rem;">상품별 적립금</dt>
-            <dd id="mProductMileage" style="font-size: 0.75rem;"></dd>
+            <dd id="mProductMileage" style="font-size: 0.75rem;">4,000원</dd>
         </div>
         <div style="display: flex; justify-content: space-between;">
             <dt style="font-size: 0.75rem;">회원 적립금</dt>
-            <dd id="mMemberMileage" style="font-size: 0.75rem;" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')}"></dd>
+            <dd id="mMemberMileage" style="font-size: 0.75rem;">0원</dd>
         </div>
     </div>
 </div>
@@ -348,15 +364,10 @@
 </div>
 </div>
 <input type="hidden" name="userNo" value="1">
-<input type="hidden" name="addrId" value="">
-<input type="hidden" name="addrReloadCheck" value=""> <!--Reload-->
-
-
-
     <th:block th:replace="common/footer.html"></th:block>
 <script>
     $("input[name='addr_paymethod']").on('change',function(){
-
+        
         if($("input[name='addr_paymethod']:checked").val() == "cash"){
             $("#payment_input_cash").css('display','table');
             $("#pg_paymethod_info").css("display","none");
@@ -366,10 +377,8 @@
         }
     });
 </script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script defer src="../../static/js/orderForm/addressController.js" th:src="@{/js/orderForm/addressController.js}"></script>
 <script defer src="../../static/js/orderForm/importPurchaseApi.js" th:src="@{/js/orderForm/importPurchaseApi.js}"></script>
-
 <script defer th:src="@{/js/orderForm/orderController.js}"></script>
 </body>
 </html>
