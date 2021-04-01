@@ -1,10 +1,14 @@
 package com.pamajon.member.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
+import com.pamajon.member.model.vo.Test;
 import com.pamajon.order.model.vo.AddressDto;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,7 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
@@ -36,7 +41,7 @@ import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 @Log4j2
-@RestController
+@Controller
 @RequestMapping("/member")
 @SessionAttributes("loginMember")
 public class MemberController {
@@ -58,14 +63,21 @@ public class MemberController {
         return mv;
     }
 
-    @PostMapping(value = "/kakao", produces = "application/json; charset=utf-8")
-    public Object kakao(@RequestBody Map input){
+    @RequestMapping(value = "/kakao", method = RequestMethod.POST)
+    @ResponseBody
+    public String kakao(@RequestBody Map input, ModelAndView mv) throws Exception{
         log.info(input);
-        Map<String, Integer> result = new HashMap();
+//        Map<String, Integer> result = new HashMap();
         Member m = new Member();
-        m.setMemEmail("Jackson");
+        m.setMemEmail("JAckson");
 
-        return m;
+//        m.setMemEmail("Jackson");
+//        log.info("여기까지는 오는거니?");
+//        BeanUtils.copyProperties(m, result);
+//        JsonObject ob = new JsonObject();
+//        ob.addProperty("jackson","jackson");
+        mv.setViewName("/member/myPage");
+        return "????";
     }
 
     @GetMapping("/login")

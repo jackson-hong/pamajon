@@ -176,7 +176,7 @@ function ajaxKakao(res){
         }),
         success: function(dataFromController){
             result = dataFromController
-            console.log(result);
+            return dataFromController
         },
         error: (error) => {
             console.log(error)
