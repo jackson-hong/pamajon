@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface MemberService {
     int memberInsert(Member member);
-    int idCheck(String userId);
+    int idCheck(String email);
     Member selectOneByMemId(String memId);
     int addrInsert(MemberAddr addr);
 }

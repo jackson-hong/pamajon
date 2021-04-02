@@ -41,7 +41,7 @@ import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 @Log4j2
-@Controller
+@RestController
 @RequestMapping("/member")
 @SessionAttributes("loginMember")
 public class MemberController {
@@ -67,16 +67,11 @@ public class MemberController {
     @ResponseBody
     public String kakao(@RequestBody Map input, ModelAndView mv) throws Exception{
         log.info(input);
-//        Map<String, Integer> result = new HashMap();
-        Member m = new Member();
-        m.setMemEmail("JAckson");
 
-//        m.setMemEmail("Jackson");
-//        log.info("여기까지는 오는거니?");
-//        BeanUtils.copyProperties(m, result);
-//        JsonObject ob = new JsonObject();
-//        ob.addProperty("jackson","jackson");
-        mv.setViewName("/member/myPage");
+
+
+
+
         return "????";
     }
 
@@ -104,8 +99,9 @@ public class MemberController {
     }
 
     @GetMapping("/idCheck")
-    public Map idCheck(@RequestParam String userId){
-        int result = service.idCheck(userId);
+    public Map idCheck(@RequestParam String email){
+        log.info(email);
+        int result = service.idCheck(email);
         Map jackson = new HashMap();
         jackson.put("result",result);
         return jackson;
@@ -117,38 +113,50 @@ public class MemberController {
         return mv;
     }
 
-    @PostMapping("/insert")
-    public ModelAndView joinEnd(ModelAndView mv, Model model, @ModelAttribute Member member, @ModelAttribute MemberAddr addr, HttpSession sess) {
-        //비밀번호 단방향 암호화
-        member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
-        try {
-            //양방향 암호화
-            member.setMemEmail(aes.encrypt(member.getMemEmail()));
-            member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
-            member.setMemPhone(aes.encrypt(member.getMemPhone()));
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    @PostMapping("/")
+    public ModelAndView joinEnd(ModelAndView mv, Model model, @RequestParam Map input, HttpSession sess) {
 
-        //DB 저장
-        service.memberInsert(member);
-        //세션으로 쓸 멤버 객체 생성
-        Member m = service.selectOneByMemId(member.getMemId());
+        String email = (String)input.get("email");
+        String passwd = (String)input.get("memPwd");
+        String name = (String)input.get("memName");
+        String phone = (String)input.get("memPhone");
 
-        //사용자가 주소를 입력했을경우
-        if(!addr.getAddrZipcode().isEmpty()&&!addr.getAddr().isEmpty()&&!addr.getAddrDetail().isEmpty()){
-            addr.setAddrName(member.getMemName());
-            addr.setAddrReceiver(member.getMemName());
-            addr.setAddrPhone(member.getMemPhone());
-            addr.setUserId(m.getUserId());
-            //주소 입력
-            service.addrInsert(addr);
-        }
+        log.info(input);
 
-        sess.setAttribute("loginMember", m);
-        mv.setViewName("member/myPage");
+
+
+
+
+//        //비밀번호 단방향 암호화
+//        member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
+//        try {
+//            //양방향 암호화
+//            member.setMemEmail(aes.encrypt(member.getMemEmail()));
+//            member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
+//            member.setMemPhone(aes.encrypt(member.getMemPhone()));
+//        } catch (GeneralSecurityException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //DB 저장
+//        service.memberInsert(member);
+//        //세션으로 쓸 멤버 객체 생성
+//        Member m = service.selectOneByMemId(member.getMemId());
+//
+//        //사용자가 주소를 입력했을경우
+//        if(!addr.getAddrZipcode().isEmpty()&&!addr.getAddr().isEmpty()&&!addr.getAddrDetail().isEmpty()){
+//            addr.setAddrName(member.getMemName());
+//            addr.setAddrReceiver(member.getMemName());
+//            addr.setAddrPhone(member.getMemPhone());
+//            addr.setUserId(m.getUserId());
+//            //주소 입력
+//            service.addrInsert(addr);
+//        }
+
+//        sess.setAttribute("loginMember", m);
+//        mv.setViewName("member/myPage");
         return mv;
     }
 

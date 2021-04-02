@@ -31,8 +31,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int idCheck(String userId) {
-        return dao.idCheck(session,userId);
+    public int idCheck(String email) {
+        return dao.idCheck(session,email);
     }
 
     @Override

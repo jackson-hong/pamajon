@@ -61,8 +61,8 @@
 
     </insert>
 
-    <select id="selectOne" parameterType="map" resultType="int">
-        SELECT count(MEM_ID) FROM MEMBER WHERE MEM_ID = #{MEM_ID};
+    <select id="selectOneByEmail" parameterType="map" resultType="int">
+        SELECT count(MEMBER_EMAIL) FROM MEMBER_ID WHERE MEMBER_EMAIL = #{EMAIL};
     </select>
 
     <select id="selectOneByMemId" parameterType="string" resultMap="selectOneByMemId">

@@ -17,8 +17,8 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public int idCheck(SqlSession session, String userId) {
-        return session.selectOne("member.selectOne",userId);
+    public int idCheck(SqlSession session, String email) {
+        return session.selectOne("member.selectOneByEmail",email);
     }
 
     @Override

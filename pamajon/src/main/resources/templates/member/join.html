@@ -124,7 +124,7 @@
         border: black 1px solid;
     }
 
-    #submit {
+    #submitBtn {
         width: 8em;
         height: 2em;
         margin-left: 3px;
@@ -135,7 +135,7 @@
         cursor:pointer;
         transition-duration: 0.15s;
     }
-    #submit:hover {
+    #submitBtn:hover {
         background: white;
         border:1px silver solid;
         color:black;
@@ -143,6 +143,7 @@
     button[name="postal-code"] {
         cursor: pointer;
     }
+
 </style>
 <link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}">
 <div id="title-idx">
@@ -159,12 +160,12 @@
         <div id="description">
             <ion-icon name="medical"></ion-icon>필수입력사항
         </div>
-        <form onsubmit="fn_submit()" id="join-fm" name="join-fm" role="form" th:action="@{/member/insert}" method="POST">
+        <form id="join-fm" name="join-fm" role="form" th:action="@{/member/}" method="POST">
         <table>
             <tr>
                 <td class="table-title">이메일<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="memId" id="user_id"><span id="user_id_info">(영문소문자/숫자, 6~20자)</span>
+                    <input name="email" id="user_id" size="30"><span id="user_id_info"></span>
                 </td>
             </tr>
             <tr>
@@ -248,7 +249,7 @@
         </table>
         <div id="submit-con">
             <button id="kakao_submit" onclick="fn_kakao_submit()"><img width="25px" height="25px" th:src="@{/images/kakaolink_btn_small.png}"> 카카오톡으로 가입</button>
-            <button id="submit" type="submit">회원가입</button>
+            <button id="submitBtn" type="button" onclick="fn_submit()">회원가입</button>
         </div>
         </form>
     </div>
@@ -263,7 +264,7 @@
             $.ajax({
                 url: contextPath + "/member/idCheck",
                 type: "GET",
-                data: {"userId" : id},
+                data: {"email" : id},
                 dataType : "json",
                 contentType: 'application/json;charset=UTF-8',
                 success: function(data){
@@ -287,7 +288,7 @@
             })
         }else {
             document.getElementById("user_id_info").style.color = 'red';
-            document.getElementById("user_id_info").innerText = '(영문소문자/숫자, 4~16자)';
+            document.getElementById("user_id_info").innerText = '올바른 이메일을 입력해주세요';
             id_check = false;
         }
     })
@@ -323,7 +324,7 @@
     })
 
     function fn_id_check(user_id){
-        if(/^[a-z]+[a-z0-9]{5,19}$/g.test(user_id))return true;
+        if(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(user_id))return true;
         else return false;
     }
     function fn_pw_check(pw){
@@ -378,12 +379,10 @@
     //     }).open();
     // }
     function fn_submit(){
-        let pw_ans = document.getElementById("pw_answer").value;
         let user_name = document.getElementById("user_name").value;
         let phone_num = document.getElementById("phone_num").value
         let phone_middle = document.getElementById("phone_middle").value
         let phone_tail = document.getElementById("phone_tail").value;
-        let user_email = document.getElementById("user_email").value;
         if(!id_check){
             alert("아이디를 체크해주세요");
             document.getElementById("user_id").focus();
@@ -391,11 +390,6 @@
         }
         if(!pw_check){
             alert("비밀번호를 체크해주세요.");
-            return;
-        }
-        if(pw_ans == ""){
-            alert("비밀번호 질문에 대한 대답을 체크해주세요.");
-            document.getElementById("pw_answer").focus();
             return;
         }
         if(user_name==""){
@@ -407,17 +401,18 @@
             alert("전화번호를 체크해주세요.");
             return;
         }
-        if(user_email==""){
-            alert("이메일을 체크해주세요");
-            document.getElementById("user_email").focus();
-            return;
-        }
+
         let firstNum = document.getElementById("phone_num").value;
         let middleNum = document.getElementById("phone_middle").value;
         let lastNum = document.getElementById("phone_tail").value;
         document.getElementById("mem_phone").value =
             firstNum + '-' + middleNum + '-' + lastNum;
 
+        let form = document.getElementById('join-fm');
+
+        console.log(form);
+
+        form.submit();
     }
 </script>
 <script th:inline="javascript">
