@@ -10,6 +10,7 @@ import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.member.model.vo.Test;
 import com.pamajon.order.model.vo.AddressDto;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -63,17 +65,45 @@ public class MemberController {
         return mv;
     }
 
-    @RequestMapping(value = "/kakao", method = RequestMethod.POST)
+    @PostMapping(value = "/kakao")
     @ResponseBody
-    public String kakao(@RequestBody Map input, ModelAndView mv) throws Exception{
+    public String kakao(@RequestBody Map input, ModelAndView mv, HttpServletRequest request) throws Exception{
         log.info(input);
 
+        HttpSession sess = request.getSession();
 
+        String email = (String)input.get("email");
+        String name = (String)input.get("name");
 
+        email = aes.encrypt(email);
+        name = aes.encrypt(name);
 
+        Map map = new HashMap();
+        map.put("email", email);
 
-        return "????";
+        //가입된 회원인지 확인
+        Integer usid = service.kakaoSelectUsidByEmailName(map);
+
+        //가입되지 않은 경우
+        if(usid == null || usid == 0){
+
+            return "NONE";
+        }
+
+        //가입된 경우
+        Member loginMember = service.selectMemByUsid(usid);
+        sess.setAttribute("loginMember", loginMember);
+        mv.setViewName("/member/myPage");
+        return "EXIST";
     }
+
+    //TEST용 맵핑
+    @GetMapping("/kakao/join")
+    public ModelAndView kakaoJoin(ModelAndView mv){
+        mv.setViewName("/member/kakaoJoin");
+        return mv;
+    }
+
 
     @GetMapping("/login")
     public ModelAndView login(ModelAndView mv, @RequestParam Map input){
@@ -99,8 +129,9 @@ public class MemberController {
     }
 
     @GetMapping("/idCheck")
-    public Map idCheck(@RequestParam String email){
+    public Map idCheck(@RequestParam String email) throws GeneralSecurityException, UnsupportedEncodingException {
         log.info(email);
+        email = aes.encrypt(email);
         int result = service.idCheck(email);
         Map jackson = new HashMap();
         jackson.put("result",result);
@@ -117,46 +148,71 @@ public class MemberController {
     public ModelAndView joinEnd(ModelAndView mv, Model model, @RequestParam Map input, HttpSession sess) {
 
         String email = (String)input.get("email");
-        String passwd = (String)input.get("memPwd");
-        String name = (String)input.get("memName");
-        String phone = (String)input.get("memPhone");
+        String passwd = (String) input.get("memPwd");
+        String name = (String) input.get("memName");
+        String phone = (String) input.get("memPhone");
 
-        log.info(input);
+        try {
+            email = aes.encrypt(email);
+            passwd = passwordEncoder.encode(passwd);
+            name = aes.encrypt(name);
+            phone = aes.encrypt(phone);
+        } catch (GeneralSecurityException e){
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
 
+        //잘못된 input 처리
+        if(email.isEmpty()||passwd.isEmpty()||name.isEmpty()||phone.isEmpty()){
+            mv.addObject("msg","잘못된 정보가 존재합니다.");
+            mv.addObject("loc","/member/login");
+            mv.setViewName("/common/msg");
+            return mv;
+        }
 
+        //DB에 Member Insert
+        HashMap map = new HashMap();
+        map.put("name", name);
+        map.put("phone", phone);
+        int result = service.memberInsert(map);
 
+        //잘못된 input으로 인한 DB 오류처리
+        if(result == 0){
+            mv.addObject("msg","잘못된 정보가 존재합니다.");
+            mv.addObject("loc","/member/login");
+            mv.setViewName("/common/msg");
+        }
 
+        //Usid 가져오기
+        int usid = service.memberSelectByNamePhone(map);
 
-//        //비밀번호 단방향 암호화
-//        member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
-//        try {
-//            //양방향 암호화
-//            member.setMemEmail(aes.encrypt(member.getMemEmail()));
-//            member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
-//            member.setMemPhone(aes.encrypt(member.getMemPhone()));
-//        } catch (GeneralSecurityException e) {
-//            e.printStackTrace();
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //DB 저장
-//        service.memberInsert(member);
-//        //세션으로 쓸 멤버 객체 생성
-//        Member m = service.selectOneByMemId(member.getMemId());
-//
-//        //사용자가 주소를 입력했을경우
-//        if(!addr.getAddrZipcode().isEmpty()&&!addr.getAddr().isEmpty()&&!addr.getAddrDetail().isEmpty()){
-//            addr.setAddrName(member.getMemName());
-//            addr.setAddrReceiver(member.getMemName());
-//            addr.setAddrPhone(member.getMemPhone());
-//            addr.setUserId(m.getUserId());
-//            //주소 입력
-//            service.addrInsert(addr);
-//        }
+        Map emailMap = new HashMap();
+        emailMap.put("usid", usid);
+        emailMap.put("email", email);
+        emailMap.put("passwd", passwd);
 
-//        sess.setAttribute("loginMember", m);
-//        mv.setViewName("member/myPage");
+        //Usid 와 email, passwd을 Member_id 테이블에 저장하기
+        int emailResult = service.memberEmailInsert(emailMap);
+
+        //잘못된 input 처리
+        if(emailResult == 0){
+            mv.addObject("msg","잘못된 정보가 존재합니다.");
+            mv.addObject("loc","/member/login");
+            mv.setViewName("/common/msg");
+        }
+
+        //세션 생성을 위한 Member 객체 생성
+        Member loginMember = service.selectMemByUsid(usid);
+        loginMember.setMemEmail(email);
+        loginMember.setMemPhone(phone);
+
+        //세션 생성
+        sess.setAttribute("loginMember", loginMember);
+
+        //마이페이지로 이동
+        mv.setViewName("redirect:/member/myPage");
+
         return mv;
     }
 

@@ -26,9 +26,12 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int memberInsert(Member member) {
-        return dao.memberInsert(session,member);
+    public int memberInsert(Map mapForInsert) {
+        return dao.memberInsert(session,mapForInsert);
     }
+
+    @Override
+    public int memberEmailInsert(Map emailMap) { return dao.memberEmailInsert(session, emailMap); }
 
     @Override
     public int idCheck(String email) {
@@ -39,6 +42,19 @@ public class MemberServiceImpl implements MemberService{
     public Member selectOneByMemId(String memId) {
         return dao.selectOneByMemId(session, memId);
     }
+
+    @Override
+    public Member selectMemByUsid(int usid) {
+        return dao.selectMemByUsid(session, usid);
+    }
+
+    @Override
+    public Integer kakaoSelectUsidByEmailName(Map map) {
+        return dao.kakaoSelectUsidByEmailName(session, map);
+    }
+
+    @Override
+    public int memberSelectByNamePhone(Map map){ return dao.memberSelectByNamePhone(session, map);}
 
     @Override
     public int addrInsert(MemberAddr addr) {

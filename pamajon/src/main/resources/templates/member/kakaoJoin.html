@@ -1,0 +1,246 @@
+<th:block th:replace="common/header.html"></th:block>
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    #table-wrapper {
+        margin-top: 2em;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    #description {
+        text-align: right;
+        margin-bottom: 0.5em;
+    }
+    table {
+        min-width: 90em;
+        max-width: 120em;
+        border: 1px silver solid;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    td{
+        border:1px silver solid;
+        height: 34px;
+    }
+    .table-title {
+        width: 12%;
+        text-indent: 15px;
+        font-size: 12px;
+        background: rgb(251,250,250);
+    }
+    .table-content {
+        font-size: 12px;
+        width: 78%;
+        text-indent: 10px;
+    }
+    table input {
+        border:1px rgb(220,220,220) solid;
+        height: 1.5em;
+        margin: 0.5em;
+    }
+    select[name="pw-confirm"] {
+        border:1px rgb(220,220,220) solid;
+        height: 2.2em;
+        width: 25em;
+        margin: 0.5em;
+        font-size: 12px;
+    }
+    select.phone-num{
+        border:1px rgb(220,220,220) solid;
+        height: 2.2em;
+        width: 5em;
+        margin: 0.5em;
+        font-size: 12px;
+    }
+    ion-icon[name="medical"]{
+        color: orangered;
+        font-size: 10px;
+    }
+    button[name="postal-code"]{
+        text-align: center;
+        background: white;
+        border:1px silver solid;
+        height:2em;
+        font-size: 12px;
+        padding-top: 2px;
+    }
+    ion-icon[name="caret-forward-circle-outline"] {
+        vertical-align: middle;
+    }
+    #submit-con {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top:1.5em;
+    }
+
+    #submit-con>*{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 13.3px;
+    }
+
+    #submit-con>button>img{
+        margin-right: 3px;
+    }
+
+    #submit-con>#kakao_submit {
+        background-color: #ffe812;
+        /*background-color: white;*/
+        /*border: #964b00 1.5px solid;*/
+        border: white 1px solid;
+        width: 125px;
+        border-radius: 3px;
+        color: black;
+        font-size: 11.5px;
+        cursor: pointer;
+        transition-duration: 0.15s;
+    }
+    #submit-con>#kakao_submit:hover{
+        border: black 1px solid;
+    }
+
+    button[name="postal-code"] {
+        cursor: pointer;
+    }
+    #kakao-con{
+        width: 88em;
+        border-radius: 1em;
+        background-color: rgba(255, 232, 18, 0.4);
+        padding: 1em;
+        margin-bottom: 1em;
+    }
+
+    #kakao-con-con{
+        margin: 1.5em;
+        display: flex;
+    }
+
+    #kakao-img-con{
+        margin-right: 1.5em;
+    }
+
+    #kakao-desc-con {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+    }
+
+</style>
+<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}">
+<div id="title-idx">
+    <div id="title">
+        JOIN
+    </div>
+    <div id="idx">
+        HOME > JOIN
+    </div>
+</div>
+<div id="wrapper">
+    <div id="table-wrapper">
+        <h2>기본정보</h2>
+        <div id="description">
+            <ion-icon name="medical"></ion-icon>필수입력사항
+        </div>
+        <form id="join-fm" name="join-fm" role="form" th:action="@{/member/}" method="POST">
+        <div id="kakao-con">
+            <div id="kakao-con-con">
+                <div id="kakao-img-con">
+                    <img id="kakao-img-medium" th:src="@{/images/kakaolink_btn_medium.png}">
+                </div>
+                <div id="kakao-desc-con">
+                    <b>홍지운</b>님의 가입을 환영합니다.
+                </div>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input name="memName" id="user_name">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">휴대전화<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <select class="phone-num" name="phone-num" id="phone_num">
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                        <option value="0502">0502</option>
+                        <option value="0503">0503</option>
+                        <option value="0504">0504</option>
+                        <option value="0505">0505</option>
+                        <option value="0506">0506</option>
+                        <option value="0507">0507</option>
+                        <option value="0508">0508</option>
+                        <option value="070">070</option>
+                    </select>
+                    -
+                    <input size="8" name="phone_middle" id="phone_middle"> - <input size="8" name="phone_tail" id="phone_tail">
+                    <input type="hidden" name="memPhone" id="mem_phone">
+                </td>
+            </tr>
+        </table>
+        <div id="submit-con">
+            <button id="kakao_submit" type="button"><img width="25px" height="25px" th:src="@{/images/kakaolink_btn_small.png}">가입완료하기</button>
+        </div>
+        </form>
+    </div>
+</div>
+<script th:inline="javascript">
+    function fn_submit(){
+        let user_name = document.getElementById("user_name").value;
+        let phone_num = document.getElementById("phone_num").value
+        let phone_middle = document.getElementById("phone_middle").value
+        let phone_tail = document.getElementById("phone_tail").value;
+        if(user_name==""){
+            alert("이름을 기입해주세요");
+            document.getElementById("user_name").focus();
+            return;
+        }
+        if(phone_num==""||phone_middle==""||phone_tail==""){
+            alert("전화번호를 체크해주세요.");
+            return;
+        }
+
+        let firstNum = document.getElementById("phone_num").value;
+        let middleNum = document.getElementById("phone_middle").value;
+        let lastNum = document.getElementById("phone_tail").value;
+        document.getElementById("mem_phone").value =
+            firstNum + '-' + middleNum + '-' + lastNum;
+
+        let form = document.getElementById('join-fm');
+
+        console.log(form);
+
+        form.submit();
+    }
+</script>
+<th:block th:replace="common/footer.html"></th:block>
+</html>

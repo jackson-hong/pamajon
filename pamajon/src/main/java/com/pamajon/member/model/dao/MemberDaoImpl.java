@@ -12,8 +12,13 @@ import java.util.Map;
 @Primary
 public class MemberDaoImpl implements MemberDao{
     @Override
-    public int memberInsert(SqlSession session, Member member) {
-        return session.insert("member.memberInsert", member);
+    public int memberInsert(SqlSession session, Map mapForInsert) {
+        return session.insert("member.memberInsert", mapForInsert);
+    }
+
+    @Override
+    public int memberEmailInsert(SqlSession session, Map emailMap) {
+        return session.insert("member.memberEmailInsert",emailMap);
     }
 
     @Override
@@ -24,6 +29,21 @@ public class MemberDaoImpl implements MemberDao{
     @Override
     public Member selectOneByMemId(SqlSession session, String memId) {
         return session.selectOne("member.selectOneByMemId", memId);
+    }
+
+    @Override
+    public Member selectMemByUsid(SqlSession session, int usid) {
+        return session.selectOne("member.selectMemByUsid", usid);
+    }
+
+    @Override
+    public Integer kakaoSelectUsidByEmailName(SqlSession session, Map map) {
+        return session.selectOne("member.kakaoSelectUsidByEmailName", map);
+    }
+
+    @Override
+    public int memberSelectByNamePhone(SqlSession session, Map map){
+        return session.selectOne("member.selectOneByNamePhone", map);
     }
 
     @Override

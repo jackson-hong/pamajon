@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/member**")
                 .excludePathPatterns("/member/")
                 .excludePathPatterns("/member/login")
-                .excludePathPatterns("/member/kakao")
+                .excludePathPatterns("/member/kakao**")
                 .excludePathPatterns("/member/idCheck")
                 .excludePathPatterns("/member/login/**")
                 .excludePathPatterns("/member/join");
