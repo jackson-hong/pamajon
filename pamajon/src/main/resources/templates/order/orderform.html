@@ -58,7 +58,6 @@
                             <span style="font-size: 0.75rem; line-height: 40px;">&nbsp;&nbsp;[기본배송]</span>
                             <div>
                                 <span style="line-height: 40px;">상품구매금액</span>
-                                <span style="line-height: 40px; font-weight: bolder;">239,000</span>
                                 <span style="line-height: 40px; font-weight: bolder;" class="product_tfoot_productTotal"></span>
                                 <span style="line-height: 40px;">+ 배송비</span>
                                 <span style="line-height: 40px;">0(무료)</span>
@@ -66,8 +65,6 @@
                                 <span style="line-height: 40px;" class="product_tfoot_shipfee"></span>
                                 <span style="line-height: 40px;">합계:</span>
                                 <span style="color: #008bcc; font-weight: bold;">KRW</span>
-                                <span
-                                        style="color: #008bcc; font-size: 1.1rem; font-weight: bolder;">239,000</span>
                                 <span class="product_tfoot_total"
                                       style="color: #008bcc; font-size: 1.1rem; font-weight: bolder;"></span>
                             </div>
@@ -353,6 +350,7 @@
     <th:block th:replace="common/footer.html"></th:block>
 
 <script>
+
    $("input[name='addr_paymethod']").on('change',function(){
         if($("input[name='addr_paymethod']:checked").val() == "cash"){
             $("#payment_input_cash").css('display','table');
