@@ -34,15 +34,13 @@ public class OrderController {
 
     @GetMapping("/order/purchase")
     public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto){
+            Member m = orderService.getMember(1);
+            model.addAttribute("productList",orderService.getProductOption(productOptionDto));
+            model.addAttribute("member",m);
+            model.addAttribute("mileage",orderService.getMileage(1));
 
-        Member m = orderService.getMember(1);
-        model.addAttribute("productList",orderService.getProductOption(productOptionDto));
-        model.addAttribute("member",m);
-        model.addAttribute("email",m.getMemberEmail().split("@"));
-        model.addAttribute("mileage",orderService.getMileage(1));
-
-        return "/order/orderform";
-    }
+            return "/order/orderform";
+        }
 
     @RequestMapping("/order/addresslist")
     public String gotoAddress()
