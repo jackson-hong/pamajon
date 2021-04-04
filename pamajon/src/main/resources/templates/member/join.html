@@ -370,7 +370,7 @@
 <script th:inline="javascript">
     Kakao.init('522e9cc1d4e892ad466431b624bcc7e5')
     let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
-    promise = function fn_kakao_submit() {
+    let promise = function fn_kakao_submit() {
         return new Promise((resolve, reject) => {
             Kakao.Auth.login({
                 success: function (response) {
@@ -392,9 +392,9 @@
         })
     }
 
-    promise().then(ajaxKakao).done(test)
 
-    function ajaxKakao(res){
+
+    let ajaxKakao = function(res){
         console.log(res)
         jsonData = {"email": res.kakao_account.email,
             "name": res.properties.nickname}
@@ -419,6 +419,8 @@
     function ajaxRedirect(result){
         console.log(result)
     }
+
+    promise().then(ajaxKakao).then(ajaxRedirect)
 
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
