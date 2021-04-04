@@ -252,6 +252,7 @@
             <button id="submitBtn" type="button" onclick="fn_submit()">회원가입</button>
         </div>
         </form>
+        <form id="kakaoNone" th:action="@{/member/kakao/join}" method="post"></form>
     </div>
 </div>
 <script th:inline="javascript">
@@ -392,32 +393,48 @@
         })
     }
 
-
-
     let ajaxKakao = function(res){
         console.log(res)
-        jsonData = {"email": res.kakao_account.email,
-            "name": res.properties.nickname}
-        let result;
-        $.ajax({
-            type: "POST",
-            contentType : 'application/json; charset=utf-8',
-            url: contextPath + "/member/kakao",
-            data: JSON.stringify(jsonData),
-            success: function(dataFromController){
-                result = dataFromController
-                console.log(result)
-            },
-            error: (error) => {
-                console.log(error)
-            }
+        return new Promise((resolve, reject) => {
+            jsonData = {"email": res.kakao_account.email,
+                "name": res.properties.nickname}
+            let result;
+            $.ajax({
+                type: "POST",
+                contentType : 'application/json; charset=utf-8',
+                url: contextPath + "/member/kakao",
+                data: JSON.stringify(jsonData),
+                success: function(dataFromController){
+                    result = dataFromController
+                    jsonData["result"] = result
+                    resolve(jsonData)
+                },
+                error: (error) => {
+                    console.log(error)
+                }
+            })
         })
-        return new Promise(resolve => {
-            resolve(result)
-        });
     }
+
     function ajaxRedirect(result){
         console.log(result)
+        if(result.result == "NONE"){
+            console.log("COMEHERE")
+            let form = document.getElementById("kakaoNone")
+            let objs = document.createElement('input')
+            objs.setAttribute('type', 'hidden')
+            objs.setAttribute('name', "email")
+            objs.setAttribute('value', result.email)
+            let objs2 = document.createElement('input')
+            objs2.setAttribute('type', 'hidden')
+            objs2.setAttribute('name', "name")
+            objs2.setAttribute('value', result.name)
+            form.appendChild(objs)
+            document.body.appendChild(form)
+            form.submit()
+        }else{
+
+        }
     }
 
     promise().then(ajaxKakao).then(ajaxRedirect)

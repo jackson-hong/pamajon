@@ -97,9 +97,9 @@ public class MemberController {
         return "EXIST";
     }
 
-    //TEST용 맵핑
-    @GetMapping("/kakao/join")
-    public ModelAndView kakaoJoin(ModelAndView mv){
+    @PostMapping(value = "/kakao/join", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
+    public ModelAndView kakaoJoin(ModelAndView mv, @RequestParam Map input){
+        log.info(input);
         mv.setViewName("/member/kakaoJoin");
         return mv;
     }
