@@ -1,10 +1,14 @@
 package com.pamajon.member.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
+import com.pamajon.member.model.vo.Test;
 import com.pamajon.order.model.vo.AddressDto;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,7 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
@@ -58,14 +63,16 @@ public class MemberController {
         return mv;
     }
 
-    @PostMapping(value = "/kakao", produces = "application/json; charset=utf-8")
-    public Object kakao(@RequestBody Map input){
+    @RequestMapping(value = "/kakao", method = RequestMethod.POST)
+    @ResponseBody
+    public String kakao(@RequestBody Map input, ModelAndView mv) throws Exception{
         log.info(input);
-        Map<String, Integer> result = new HashMap();
-        Member m = new Member();
-        m.setMemEmail("Jackson");
 
-        return m;
+
+
+
+
+        return "????";
     }
 
     @GetMapping("/login")
@@ -92,8 +99,9 @@ public class MemberController {
     }
 
     @GetMapping("/idCheck")
-    public Map idCheck(@RequestParam String userId){
-        int result = service.idCheck(userId);
+    public Map idCheck(@RequestParam String email){
+        log.info(email);
+        int result = service.idCheck(email);
         Map jackson = new HashMap();
         jackson.put("result",result);
         return jackson;
@@ -105,38 +113,50 @@ public class MemberController {
         return mv;
     }
 
-    @PostMapping("/insert")
-    public ModelAndView joinEnd(ModelAndView mv, Model model, @ModelAttribute Member member, @ModelAttribute MemberAddr addr, HttpSession sess) {
-        //비밀번호 단방향 암호화
-        member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
-        try {
-            //양방향 암호화
-            member.setMemEmail(aes.encrypt(member.getMemEmail()));
-            member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
-            member.setMemPhone(aes.encrypt(member.getMemPhone()));
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    @PostMapping("/")
+    public ModelAndView joinEnd(ModelAndView mv, Model model, @RequestParam Map input, HttpSession sess) {
 
-        //DB 저장
-        service.memberInsert(member);
-        //세션으로 쓸 멤버 객체 생성
-        Member m = service.selectOneByMemId(member.getMemId());
+        String email = (String)input.get("email");
+        String passwd = (String)input.get("memPwd");
+        String name = (String)input.get("memName");
+        String phone = (String)input.get("memPhone");
 
-        //사용자가 주소를 입력했을경우
-        if(!addr.getAddrZipcode().isEmpty()&&!addr.getAddr().isEmpty()&&!addr.getAddrDetail().isEmpty()){
-            addr.setAddrName(member.getMemName());
-            addr.setAddrReceiver(member.getMemName());
-            addr.setAddrPhone(member.getMemPhone());
-            addr.setUserId(m.getUserId());
-            //주소 입력
-            service.addrInsert(addr);
-        }
+        log.info(input);
 
-        sess.setAttribute("loginMember", m);
-        mv.setViewName("member/myPage");
+
+
+
+
+//        //비밀번호 단방향 암호화
+//        member.setMemPwd(passwordEncoder.encode(member.getMemPwd()));
+//        try {
+//            //양방향 암호화
+//            member.setMemEmail(aes.encrypt(member.getMemEmail()));
+//            member.setMemPwdcheckA(aes.encrypt(member.getMemPwdcheckA()));
+//            member.setMemPhone(aes.encrypt(member.getMemPhone()));
+//        } catch (GeneralSecurityException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //DB 저장
+//        service.memberInsert(member);
+//        //세션으로 쓸 멤버 객체 생성
+//        Member m = service.selectOneByMemId(member.getMemId());
+//
+//        //사용자가 주소를 입력했을경우
+//        if(!addr.getAddrZipcode().isEmpty()&&!addr.getAddr().isEmpty()&&!addr.getAddrDetail().isEmpty()){
+//            addr.setAddrName(member.getMemName());
+//            addr.setAddrReceiver(member.getMemName());
+//            addr.setAddrPhone(member.getMemPhone());
+//            addr.setUserId(m.getUserId());
+//            //주소 입력
+//            service.addrInsert(addr);
+//        }
+
+//        sess.setAttribute("loginMember", m);
+//        mv.setViewName("member/myPage");
         return mv;
     }
 
