@@ -38,7 +38,6 @@ public class OrderController {
         Member m = orderService.getMember(1);
         model.addAttribute("productList",orderService.getProductOption(productOptionDto));
         model.addAttribute("member",m);
-        model.addAttribute("email",m.getMemberEmail().split("@"));
         model.addAttribute("mileage",orderService.getMileage(1));
 
         return "/order/orderform";

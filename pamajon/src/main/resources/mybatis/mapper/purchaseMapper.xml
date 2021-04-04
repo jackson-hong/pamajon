@@ -6,8 +6,6 @@
     <resultMap id="memberResultSet" type="com.pamajon.order.model.vo.Member">
         <result property="userId" column="USER_ID"/>
         <result property="memberName" column="MEM_NAME"/>
-        <result property="memberAddress" column="MEM_ADDRESS"/>
-        <result property="memberEmail" column="MEM_EMAIL"/>
         <result property="memberGrade" column="MEM_GRADE"/>
     </resultMap>
 
@@ -32,8 +30,6 @@
         SELECT
                USER_ID,
                MEM_NAME,
-               MEM_ADDRESS,
-               MEM_EMAIL,
                MEM_GRADE
           FROM
               MEMBER

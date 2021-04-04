@@ -12,7 +12,6 @@
 <th:block th:replace="common/header.html"></th:block>
     <div id=contentWrapper>
         <div id="titlewrapper">
-
         </div>
         <div id="second_layer">
             <!-- 혜택정보 display -->
@@ -23,7 +22,7 @@
                     <div class="user_level">
                         <div class="user_level floor1" style="line-height: 10px;">
                             <!--/*@thymesVar id="memberName" type=""*/-->
-                            <span style="font-weight: bolder;" th:text="${member.memberName}"></span><span> 님은,</span>[<span th:text="${member.memberGrade}"></span>]이십니다.</span>
+                            <span style="font-weight: bolder;" th:text="${member.memberName}"></span><span> 님은 </span>[<span th:text="${member.memberGrade}"></span>]이십니다.</span>
                         </div>
                         <div class="user_level floor2">
                             <span>가용적립금 : </span>
@@ -180,10 +179,10 @@
                     <th style="width: 10%;">이메일<span> *</span></th>
                     <td style="padding-top: 7px;">
                         <input id="oemail1" name="email[]" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg=""
-                            class="mailId" value="" th:value="${email[0]}" type="text">&nbsp;@&nbsp;
+                            class="mailId" value="" type="text">&nbsp;@&nbsp;
                             <input style="margin-right: 3px;" id="oemail2" name="email[]" fw-filter="isFill"
-                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" value="" th:value="${email[1]}" type="text">
-                            <select style="position: relative; top: 0.5px" th:value="${email[1]}"
+                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" value=""  type="text">
+                            <select style="position: relative; top: 0.5px"
                             id="oemail3" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg="">
                             <option value="" selected="selected">- 이메일 선택 -</option>
                             <option value="naver.com">naver.com</option>
@@ -204,13 +203,13 @@
                     <th style="width: 10%;">배송지메세지</th>
                     <td style="padding-top: 7px;">
                         <textarea id="omessage" name="omessage" fw-filter="" fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70" style="margin: 0px; height: 75px; width: 703px; resize: none;"></textarea>	                        <div class="devMessage displaynone">
-                      
+
                     </div>
                     </td>
                 </tr>
             </table>
 
-            
+
             <table id="price_table">
                 <caption style="text-align: left; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px;">결제 예정 금액</caption>
                 <colgroup>
@@ -297,7 +296,7 @@
         <!-- 카드사 직접결제 -->
 
 
-        
+
             <!-- 무통장입금 -->
             <table summary="" id="payment_input_cash" style="display: table;">
                 <tbody>
@@ -316,15 +315,15 @@
                                 <option value="bank_26:110-390-336769:이종헌(딜리버리보이즈컴퍼니):신한은행:www.shinhan.com">
                                     신한은행:110-390-336769 홍지운(파마존회장)</option>
                             </select>
-                       
+
                         </td>
                     </tr>
                 </tbody>
-            </table>   
+            </table>
             <div id="pg_paymethod_info" class="payHelp" style="display: none;">
                  <span id="pg_paymethod_info_pg" class="ec-base-help">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</span>
             </div>
-    
+
     </div>
     <div class="total">
         <h4 align="right" style="margin: 0px;">
@@ -365,9 +364,10 @@
 </div>
 <input type="hidden" name="userNo" value="1">
     <th:block th:replace="common/footer.html"></th:block>
+
 <script>
-    $("input[name='addr_paymethod']").on('change',function(){
-        
+   $("input[name='addr_paymethod']").on('change',function(){
+
         if($("input[name='addr_paymethod']:checked").val() == "cash"){
             $("#payment_input_cash").css('display','table');
             $("#pg_paymethod_info").css("display","none");
