@@ -22,14 +22,10 @@ public class Member implements Serializable {
     private static final long serialVersionUID = 1L;
 
     int userId;
-    String memId;
-    String memPwd;
-    String memPwdcheckQ;
-    String memPwdcheckA;
-    String memName;
-    String memAddress;
-    String memPhone;
     String memEmail;
+    String memPwd;
+    String memName;
+    String memPhone;
     String memGrade;
     Date memDate;
     boolean memStatus;

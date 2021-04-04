@@ -4,34 +4,38 @@
 
 <mapper namespace="member">
 
-    <insert id="memberInsert" parameterType="com.pamajon.member.model.vo.Member">
+    <insert id="memberInsert" parameterType="map">
         INSERT INTO MEMBER
         (
             user_id,
-            mem_id,
-            mem_pwd,
-            mem_pwdcheck_q,
-            mem_pwdcheck_a,
             mem_name,
             mem_phone,
-            mem_email,
             mem_grade,
             mem_date,
             mem_status
         )
         VALUES (
                 NEXTVAL(SEQ_MEMBER),
-                #{memId},
-                #{memPwd},
-                #{memPwdcheckQ},
-                #{memPwdcheckA},
-                #{memName},
-                #{memPhone},
-                #{memEmail},
+                #{name},
+                #{phone},
                 '일반회원',
                 SYSDATE(),
                 0
                );
+    </insert>
+
+    <insert id="memberEmailInsert" parameterType="map">
+        INSERT INTO MEMBER_ID(
+            USER_ID,
+            MEMBER_EMAIL,
+            MEMBER_PASSWD,
+            MEMBER_ISSOCIAL
+        )VALUES (
+            #{usid},
+            #{email},
+            #{passwd},
+            0
+        )
     </insert>
 
     <insert id="insertAddr" parameterType="com.pamajon.member.model.vo.MemberAddr">
@@ -65,21 +69,28 @@
         SELECT count(MEMBER_EMAIL) FROM MEMBER_ID WHERE MEMBER_EMAIL = #{EMAIL};
     </select>
 
-    <select id="selectOneByMemId" parameterType="string" resultMap="selectOneByMemId">
+    <select id="selectMemByUsid" parameterType="int" resultMap="selectMem">
+        SELECT * FROM MEMBER WHERE USER_ID = #{usid}
+    </select>
+
+    <select id="selectOneByMemId" parameterType="string" resultMap="selectMem">
         SELECT * FROM MEMBER WHERE MEM_ID = #{memId};
     </select>
     
-    <resultMap id="selectOneByMemId" type="com.pamajon.member.model.vo.Member">
+    <select id="selectOneByNamePhone" parameterType="map" resultType="int">
+        SELECT user_id FROM MEMBER WHERE mem_name = #{name} AND mem_phone = #{phone}
+    </select>
+
+    <select id="kakaoSelectUsidByEmailName" parameterType="map" resultType="int">
+        SELECT USER_ID FROM MEMBER_ID WHERE MEMBER_EMAIL = #{email}
+    </select>
+    
+    <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>
-        <result property="memId" column="MEM_ID"/>
-        <result property="memPwd" column="MEM_PWD"/>
-        <result property="memPwdcheckQ" column="MEM_PWDCHECK_Q"/>
-        <result property="memPwdcheckA" column="MEM_PWDCHECK_A"/>
         <result property="memName" column="MEM_NAME"/>
         <result property="memPhone" column="MEM_PHONE"/>
-        <result property="memEmail" column="MEM_EMAIL"/>
         <result property="memGrade" column="MEM_GRADE"/>
         <result property="memDate" column="MEM_DATE"/>
-        <result property="memStatus" column="MEM_STATE"/>
+        <result property="memStatus" column="MEM_STATUS"/>
     </resultMap>
 </mapper>

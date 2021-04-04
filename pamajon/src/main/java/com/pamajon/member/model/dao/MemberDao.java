@@ -7,8 +7,12 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.Map;
 
 public interface MemberDao {
-    int memberInsert(SqlSession session, Member member);
+    int memberInsert(SqlSession session, Map mapForInsert);
+    int memberEmailInsert(SqlSession session, Map emailMap);
     int idCheck(SqlSession session, String email);
     Member selectOneByMemId(SqlSession session, String memId);
+    Member selectMemByUsid(SqlSession session, int usid);
+    Integer kakaoSelectUsidByEmailName(SqlSession session, Map map);
+    int memberSelectByNamePhone(SqlSession session, Map map);
     int addrInsert(SqlSession session, MemberAddr addr);
 }
