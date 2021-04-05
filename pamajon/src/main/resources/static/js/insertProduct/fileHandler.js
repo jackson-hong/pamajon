@@ -1,5 +1,4 @@
-'use strict'
-
+"use strict";
 function setThumbnail(event){
     let preview = document.querySelector("div#imgArea");
     let fileCounter = document.getElementById("ex_file2").files.length;

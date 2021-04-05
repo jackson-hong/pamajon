@@ -80,13 +80,8 @@
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*브랜드</td>
                                             <td class="userInput">
-                                                <select class="form-control">
-                                                    <option value="">Pooma</option>
-                                                    <option value="">Balman</option>
-                                                    <option value="">Guchi</option>
-                                                    <option value="">KalvinClein</option>
-                                                </select>
-                                                <button type="button" class="btn btn-info btn-add-brand">브랜드 추가</button>
+                                                 <input type="text" disabled value="브랜드를 선택해주세요" />
+                                                <button type="button" class="btn btn-info btn-add-brand" onclick="setBrand(this)">브랜드지정</button>
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
@@ -194,8 +189,7 @@
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
-                                            <td class="explanation_wrapper" colspan="2" style="padding-top: 10px"
-                                                align="center">
+                                            <td class="explanation_wrapper" colspan="2" style="padding-top: 10px" align="center">
                                                 <button type="button" class="btn btn-primary">옵션추가</button>
                                             </td>
                                         </tr>
@@ -242,6 +236,7 @@
 </div>
 <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/CKEDITOR.js}"></script>
 <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/fileHandler.js}"></script>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/insertProduct.js}"></script>
 <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
 <script>
 
