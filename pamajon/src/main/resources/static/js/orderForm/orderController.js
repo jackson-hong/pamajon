@@ -41,19 +41,24 @@ function getAddress(){
         type:"GET",
         data:{userNo:`${$("input[name='userNo']").val()}`},
         success:function (result){
-            $("input[name='addrId']").val(result.addrId);
-            $("input[name='addrName']").val(result.addrName);
-            $("input[name='addrReceiver']").val(result.addrReceiver);
-            $("input[name='addrZipcode']").val(result.addrZipcode);
-            $("input[name='addr']").val(result.addr);
-            $("input[name='addrDetail']").val(result.addrDetail);
+            if(result==null){
+                alert("기본 배송지가 등록되어있지 않습니다. 주소록 보기를 클릭하여 주소를 등록 해주세요.")
+            } else {
+                $("input[name='addrId']").val(result.addrId);
+                $("input[name='addrName']").val(result.addrName);
+                $("input[name='addrReceiver']").val(result.addrReceiver);
+                $("input[name='addrZipcode']").val(result.addrZipcode);
+                $("input[name='addr']").val(result.addr);
+                $("input[name='addrDetail']").val(result.addrDetail);
 
-            let cellArr = result.addrCellPhone.split("-");
-            document.getElementsByName("mobile[]")[0].value=cellArr[0];
-            document.getElementsByName("mobile[]")[1].value=cellArr[1];
-            document.getElementsByName("mobile[]")[2].value=cellArr[2];
+                let cellArr = result.addrCellPhone.split("-");
+                document.getElementsByName("mobile[]")[0].value=cellArr[0];
+                document.getElementsByName("mobile[]")[1].value=cellArr[1];
+                document.getElementsByName("mobile[]")[2].value=cellArr[2];
+                //
+                $("input[name='addrReloadCheck']").val('basic');
+            }
 
-            $("input[name='addrReloadCheck']").val('basic');
 
         }
     })

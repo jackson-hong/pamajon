@@ -23,6 +23,7 @@ public class OrderRestController {
     @Qualifier("orderRestServiceImpl")
     private final OrderRestServiceImpl orderRestService;
     private static final Logger logger = LoggerFactory.getLogger(OrderRestController.class);
+
     @Autowired
     @Qualifier("gmailConfig")
     GmailConfig gmailConfig;
@@ -66,17 +67,27 @@ public class OrderRestController {
         return new ResponseEntity<>(orderRestService.getAddress(Integer.parseInt(addrNo)),HttpStatus.OK);
     }
 
+    /**
+     * @author YooPatrick
+     * @param userNo
+     * @return
+     */
     @GetMapping("/order/regularAddress")
     public ResponseEntity<AddressDto> getRegularAddress(@RequestParam String userNo){
+        logger.info("==========상품결제 페이지 입장시 기본 배송지 조회============");
 
-        return new ResponseEntity<>(orderRestService.getRegAddress(Integer.parseInt(userNo)),HttpStatus.OK);
+        if(orderRestService.regularAddressCnt(userNo)>0){
+            logger.info("==========기본 배송지가 등록 되어있음.============");
+            return new ResponseEntity<>(orderRestService.getRegAddress(Integer.parseInt(userNo)),HttpStatus.OK);
+        }
+        logger.info("====================== 기본 배송지가 등록 되어있지 않은경우 null 값을 반환.");
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
 
     @PutMapping("/order/address")
     public ResponseEntity<Integer> updateAddress(AddressDto address){
         //기본 배송지로 저장 하겠다 하고 선언했을시 기존에 있는 기본 배송지를 바꿔주어야함.
-
         if(address.getRegularCheck().equals("1")){
             orderRestService.updateAddress(address);
         }

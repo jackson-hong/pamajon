@@ -24,4 +24,6 @@ public interface OrderRestService {
     public int modifyAddress(AddressDto address);
 
     public AddressDto getRegAddress(int userNo);
+
+    int regularAddressCnt(String userNo);
 }

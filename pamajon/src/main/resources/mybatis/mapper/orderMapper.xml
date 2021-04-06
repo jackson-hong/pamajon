@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pamajon.mapper.OrderMapper">
+<mapper namespace="com.pamajon.mapper.AddressMapper">
 
     <resultMap id="order" type="com.pamajon.order.model.vo.AddressDto">
         <result property="addrId" column="ADDR_ID"/>
@@ -148,5 +148,12 @@
             USER_ID =${userNo}
           AND
             ADDR_STATUS='0'
+    </select>
+
+    <select id="regularAddressCnt" parameterType="String" resultType="int">
+        SELECT COUNT(1)
+        from ADDRESS_LIST
+        where USER_ID =#{userNo}
+          and ADDR_STATUS ='0';
     </select>
 </mapper>    

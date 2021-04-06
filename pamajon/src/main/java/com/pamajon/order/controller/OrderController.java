@@ -1,5 +1,6 @@
 package com.pamajon.order.controller;
 
+import com.pamajon.common.security.AES256Util;
 import com.pamajon.order.JSONConvertor;
 import com.pamajon.order.JSONToObject;
 import com.pamajon.order.model.EncryptAddress;
@@ -27,6 +28,8 @@ public class OrderController {
     private EncryptAddress encryptAddress;
     @Autowired
     private EncryptOrder encryptOrder;
+    @Autowired
+    private AES256Util aes256Util;
 
     public OrderController(OrderService orderService){
         this.orderService = orderService;
@@ -34,10 +37,10 @@ public class OrderController {
 
     @GetMapping("/order/purchase")
     public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto){
-            Member m = orderService.getMember(1);
+            Member m = orderService.getMember(2020);
             model.addAttribute("productList",orderService.getProductOption(productOptionDto));
             model.addAttribute("member",m);
-            model.addAttribute("mileage",orderService.getMileage(1));
+            model.addAttribute("mileage",orderService.getMileage(2020));
 
             return "/order/orderform";
         }

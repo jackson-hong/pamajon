@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Mapper
-public interface OrderMapper {
+public interface AddressMapper {
 
     public List<AddressDto> getAddrList(int userNo);
 
@@ -26,5 +26,5 @@ public interface OrderMapper {
 
     public AddressDto getRegAddress(int userNo);
 
-
+    int regularAddressCnt(String userNo);
 }
