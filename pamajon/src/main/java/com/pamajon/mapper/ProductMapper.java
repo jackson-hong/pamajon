@@ -5,9 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+
 @Mapper
 public interface ProductMapper {
-    public List<BrandDto> getBrandList();
-
+    public BrandDto getBrand();
     public int insertBrand(BrandDto brandDto);
+    List<BrandDto> getBrandList();
 }
