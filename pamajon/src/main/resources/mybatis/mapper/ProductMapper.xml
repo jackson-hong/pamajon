@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pamajon.mapper.ProductMapper">
+
+    <!--브랜드 CRUND 용 Mapper -->
+    <resultMap id="brandResultSet" type="com.pamajon.product.model.vo.BrandDto">
+        <result property="proBrand" column="PRO_BRAND"></result>
+        <result property="proBrandName" column="PRO_BRAND_NAME"></result>
+    </resultMap>
+
+    <select id="getBrand" resultType="com.pamajon.product.model.vo.BrandDto">
+        SELECT * FROM PRO_BRAND
+    </select>
+    <select id="getBrandList" resultMap="brandResultSet">
+        SELECT * FROM PRO_BRAND
+    </select>
+
+    <insert id="insertBrand" parameterType="int">
+        INSERT INTO PRO_BRAND(
+                    PRO_BRAND,
+                    PRO_BRAND_NAME
+        )VALUES (
+                 NEXTVAL(SEQ_BRAND),
+                 #{proBrandName}
+        )
+    </insert>
+</mapper>

@@ -2,7 +2,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pamajon.mapper.AddressMapper">
-
     <resultMap id="order" type="com.pamajon.order.model.vo.AddressDto">
         <result property="addrId" column="ADDR_ID"/>
         <result property="userId" column="USER_ID"/>
@@ -49,33 +48,28 @@
     </select>
 
     <insert id="createAddress" parameterType="com.pamajon.order.model.vo.AddressDto">
-        INSERT INTO
-        ADDRESS_LIST
-        (
-        ADDR_ID,
-        USER_ID,
-        ADDR_NAME,
-        ADDR_RECEIVER,
-        ADDR_ZIPCODE,
-        ADDR,
-        ADDR_DETAIL,
-        ADDR_CELLPHONE,
-        ADDR_PHONE,
-        ADDR_STATUS
-        )
-        VALUES
-        (
-        NEXTVAL(SEQ_ADLIST),
-        #{userId},
-        #{addrName},
-        #{addrReceiver},
-        #{addrZipcode},
-        #{addr},
-        #{addrDetail},
-        #{addrCellPhone},
-        #{addrPhone},
-        #{addrStatus}
-        )
+        INSERT INTO ADDRESS_LIST
+        (ADDR_ID,
+         USER_ID,
+         ADDR_NAME,
+         ADDR_RECEIVER,
+         ADDR_ZIPCODE,
+         ADDR,
+         ADDR_DETAIL,
+         ADDR_CELLPHONE,
+         ADDR_PHONE,
+         ADDR_STATUS)
+        VALUES (NEXTVAL(SEQ_ADLIST),
+                #{userId},
+                #{addrName},
+                #{addrReceiver},
+                #{addrZipcode},
+                #{addr},
+                #{addrDetail},
+                #{addrCellPhone},
+                #{addrPhone},
+                #{addrStatus});
+
     </insert>
 
     <delete id="deleteAddress" parameterType="hashmap">
