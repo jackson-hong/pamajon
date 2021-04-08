@@ -20,12 +20,17 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
     <style>
         .btn-add-brand, .btn-add-cat{
             margin: 3px;
         }
+
+        .optionSelector{
+            display: inline;
+        }
+
     </style>
+
 </head>
 
 <body>
@@ -87,7 +92,7 @@
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*대 카테고리</td>
                                             <td class="userInput">
-                                                <select class="form-control">
+                                                <select class="form-control optionSelector">
                                                     <option value="">Top</option>
                                                     <option value="">Bottom</option>
                                                     <option value="">Outer</option>
@@ -97,9 +102,9 @@
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*카테고리</td>
+                                            <td class="explanation_wrapper ">*카테고리</td>
                                             <td class="userInput">
-                                                <select class="form-control">
+                                                <select class="form-control optionSelector">
                                                     <option value="">Hoodie</option>
                                                     <option value="">Jeans</option>
                                                     <option value="">Shoes</option>
@@ -125,11 +130,12 @@
                                             <td class="explanation_wrapper">*상품이미지</td>
                                             <td class="userInput">
                                                 <div class="filebox bs3-primary">
-                                                    <label for="ex_file2">업로드</label>
+                                                    <label for="ex_file2" class="uploadImg" onclick="uploadImg();">업로드</label>
+                                                    <hr>
                                                     <input type="file" id="ex_file2" onchange="setThumbnail(this);"
                                                            multiple>
                                                 </div>
-                                                <div id="imgArea" style="display: flex; margin-bottom: 10px">
+                                                <div id="imgArea" class="pictureNotUploaded" style="display: flex; margin-bottom: 10px">
                                                     <div class="imgBox 1"></div>
                                                     <div class="imgBox 2"></div>
                                                     <div class="imgBox 3"></div>
@@ -168,19 +174,19 @@
                                         </tr>
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*사이즈정보</td>
-                                            <td class="userInput">
-                                                <input type="text" class="form-control textType"
-                                                       placeholder="사이즈 정보를 넣어주세요">
+                                            <td class="explanation_wrapper" colspan="2" style="padding-top: 10px">
+                                                <button type="button" class="btn btn-info sizeSet" value="S size">S</button>
+                                                <button type="button" class="btn btn-info sizeSet" value="M size">M</button>
+                                                <button type="button" class="btn btn-info sizeSet" value="L size">L</button>
+                                                <button type="button" class="btn btn-info sizeSet" value="XL size">XL</button>
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
+                                            <td class="explanation_wrapper">*사이즈별 개수</td>
                                             <td class="explanation_wrapper" colspan="2" style="padding-top: 10px">
-                                                <button type="button" class="btn btn-info">S</button>
-                                                <button type="button" class="btn btn-info">M</button>
-                                                <button type="button" class="btn btn-info">L</button>
-                                                <button type="button" class="btn btn-info">XL</button>
-                                                <button type="button" class="btn btn-info">XXL</button>
+                                                <input type="text" disabled value="" />
                                             </td>
+
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*재고관리코드</td>
                                             <td class="userInput">
