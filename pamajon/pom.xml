@@ -55,11 +55,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-			<!--	<dependency>
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-					<scope>runtime</scope>
-				</dependency>-->
+		<!--	<dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <scope>runtime</scope>
+            </dependency>-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -161,7 +161,7 @@
 			<version>1.16</version>
 		</dependency>
 
-	<!--에러가 나서 하나씩 추가해주는 디팬던시--> 
+		<!--에러가 나서 하나씩 추가해주는 디팬던시-->
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -169,6 +169,13 @@
 			<version>30.1.1-jre</version>
 		</dependency>
 
+		<!-- 자바메일이 가끔 오류가 나니까 그냥 추가해주자!-->
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.2</version>
+		</dependency>
 
 	</dependencies>
 
