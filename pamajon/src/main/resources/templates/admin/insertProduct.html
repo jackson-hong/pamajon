@@ -130,7 +130,7 @@
                                             <td class="explanation_wrapper">*상품이미지</td>
                                             <td class="userInput">
                                                 <div class="filebox bs3-primary">
-                                                    <label for="ex_file2" class="uploadImg" onclick="uploadImg();">업로드</label>
+                                                    <label for="ex_file2" class="uploadImg">업로드</label>
                                                     <hr>
                                                     <input type="file" id="ex_file2" onchange="setThumbnail(this);"
                                                            multiple>
@@ -186,51 +186,40 @@
                                             <td class="explanation_wrapper" colspan="2" style="padding-top: 10px">
                                                 <input type="text" disabled value="" />
                                             </td>
-
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*재고관리코드</td>
-                                            <td class="userInput">
-                                                <input type="text" class="form-control textType"
-                                                       placeholder="상품 관리 코드를넣어주세요">
-                                            </td>
-                                        </tr>
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper" colspan="2" style="padding-top: 10px" align="center">
-                                                <button type="button" class="btn btn-primary">옵션추가</button>
-                                            </td>
-                                        </tr>
                                     </table>
                                 </div>
                                 <div class="insertblock">
-                                    <div class="titleSection">
-                                        <span class="title">배송</span>
-                                    </div>
-                                </div>
-                                <div class="insertblock">
-                                    <div class="titleSection">
-                                        <span class="title">상품정보</span>
-                                    </div>
                                 </div>
                                 <div class="insertblock">
                                     <div class="titleSection">
                                         <span class="title">판매 노출상태</span>
                                     </div>
-                                    <table class="productInfoTable">
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*판매여부 설정</td>
-                                            <td class="userInput">
-                                                <div style="padding-top: 8px;">
-                                                    <input type="checkbox" name="quantity" id="chk-showProduct"
-                                                           value="limited"><label for="limited">고객에게 노출</label>
-                                                </div>
-                                                <input type="number" class="form-control textType"
-                                                       placeholder="수량을 적어주세요"
-                                                       style="margin-bottom:10px; display: none">
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <tr class="tablefloor">
+                                        <table class="productInfoTable">
+                                            <tr class="tablefloor">
+                                                <td class="explanation_wrapper">*판매설정</td>
+                                                <td class="userInput">
+                                                    <div style="padding-top: 8px;">
+                                                        <input type="radio" name="productSale" id="on_sale"
+                                                               value="on_sale"><label for="on_sale">판매함</label>
+                                                        <input type="radio" name="productSale" id="stop_saling"
+                                                               value="stop_saling"><label for="stop_saling">판매중단</label>
+                                                    </div>
+                                                    <input type="number" class="form-control textType"
+                                                           placeholder="수량을 적어주세요"
+                                                           style="margin-bottom:10px; display: none">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </tr>
                                 </div>
                             </div>
+                            <div style="align-items: center">
+                            <button type="submit" class="btn btn-info" value="productInsertConfirm">등록</button>
+                            <button type="button" class="btn btn-info" value="productInsertCancel">취소</button>
+                            </div>
+
+
                         </form>
 
 
