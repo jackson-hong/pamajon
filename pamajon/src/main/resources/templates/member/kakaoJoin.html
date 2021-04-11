@@ -127,7 +127,7 @@
     #kakao-con{
         width: 88em;
         border-radius: 1em;
-        background-color: rgba(255, 232, 18, 0.4);
+        background-color: rgba(255, 232, 18, 0.2);
         padding: 1em;
         margin-bottom: 1em;
     }
@@ -171,7 +171,7 @@
                     <img id="kakao-img-medium" th:src="@{/images/kakaolink_btn_medium.png}">
                 </div>
                 <div id="kakao-desc-con">
-                    <b>홍지운</b>님의 가입을 환영합니다.
+                    <b th:text="${name}"></b>님의 가입을 환영합니다.
                 </div>
             </div>
         </div>
@@ -179,7 +179,8 @@
             <tr>
                 <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input name="memName" id="user_name">
+                    <input th:value="${name}" name="memName" id="user_name">
+                    <input th:value="${email}" type="hidden">
                 </td>
             </tr>
             <tr>

@@ -100,6 +100,8 @@ public class MemberController {
     @PostMapping(value = "/kakao/join", consumes = "application/x-www-form-urlencoded;charset=UTF-8")
     public ModelAndView kakaoJoin(ModelAndView mv, @RequestParam Map input){
         log.info(input);
+        mv.addObject("name",(String)input.get("name"));
+        mv.addObject("email",(String)input.get("email"));
         mv.setViewName("/member/kakaoJoin");
         return mv;
     }
