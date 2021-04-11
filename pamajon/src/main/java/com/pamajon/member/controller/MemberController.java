@@ -59,7 +59,12 @@ public class MemberController {
     }
 
     @GetMapping("/myPage")
-    public ModelAndView myPage(ModelAndView mv, HttpServletRequest req){
+    public ModelAndView myPage(ModelAndView mv, HttpServletRequest req) throws GeneralSecurityException, UnsupportedEncodingException {
+        HttpSession sess = req.getSession();
+        Member m = (Member)sess.getAttribute("loginMember");
+        String name = m.getMemName();
+        name = aes.decrypt(name);
+        mv.addObject("name", name);
         mv.setViewName("/member/myPage");
         return mv;
     }
