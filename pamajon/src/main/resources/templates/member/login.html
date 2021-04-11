@@ -115,10 +115,10 @@
         <form id="login_frm" method="post" th:action="@{/member/login}">
         <div id="login-content">
             <div id="login-left">
-                <input type="text" name="loginId" id="id-input" placeholder="아이디">
-                <input type="password" name="loginPw" id="password-input" placeholder="비밀번호">
+                <input type="text" required name="loginId" id="id-input" placeholder="아이디">
+                <input type="password" required name="loginPw" id="password-input" placeholder="비밀번호">
                 <div id="login-left-btns">
-                    <button id="kakao_login" onclick="fn_kakao();" type="button" name="id" class="btnLay btn"></button>
+                    <button id="kakao_login" onclick="fn_kakao_submit();" type="button" name="id" class="btnLay btn"></button>
 <!--                    <button type="button" name="password" class="btnLay btn">find PW</button>-->
                 </div>
             </div>
@@ -126,7 +126,7 @@
                 <div id="login-button" class="btn" onclick="fn_submit()">
                     LOGIN
                 </div>
-                <button type="button" class="btnLay btn">join</button>
+                <button th:onclick="fn_join()" type="button" class="btnLay btn">join</button>
             </div>
         </div>
         </form>
@@ -138,7 +138,7 @@
     function fn_submit(){
         document.getElementById("login_frm").submit();
     }
-    function fn_kakao() {
+    let promise = function() {
         return new Promise((resolve, reject) => {
             Kakao.Auth.login({
                 success: function (response) {
@@ -157,32 +157,60 @@
                     console.log(error);
                 },
             });
-        }).then(ajaxKakao)
-            .then((response) => {
-                console.log(response)
+        })
+    }
+
+    let ajaxKakao = function(res){
+        console.log(res)
+        return new Promise((resolve, reject) => {
+            jsonData = {"email": res.kakao_account.email,
+                "name": res.properties.nickname}
+            let result;
+            $.ajax({
+                type: "POST",
+                contentType : 'application/json; charset=utf-8',
+                url: contextPath + "/member/kakao",
+                data: JSON.stringify(jsonData),
+                success: function(dataFromController){
+                    result = dataFromController
+                    jsonData["result"] = result
+                    resolve(jsonData)
+                },
+                error: (error) => {
+                    console.log(error)
+                }
             })
+        })
+    }
+
+    function ajaxRedirect(result){
+        console.log(result)
+        if(result.result == "NONE"){
+            let form = document.getElementById("kakaoNone")
+            let objs = document.createElement('input')
+            objs.setAttribute('type', 'hidden')
+            objs.setAttribute('name', "email")
+            objs.setAttribute('value', result.email)
+            let objs2 = document.createElement('input')
+            objs2.setAttribute('type', 'hidden')
+            objs2.setAttribute('name', "name")
+            objs2.setAttribute('value', result.name)
+            form.appendChild(objs)
+            form.appendChild(objs2)
+            document.body.appendChild(form)
+            form.submit()
+        }else{
+            location.href = contextPath + "/member/myPage";
         }
-function ajaxKakao(res){
-    console.log(res)
-    $.ajax({
-        type: "POST",
-        contentType : 'application/json; charset=utf-8',
-        url: contextPath + "/member/kakao",
-        data: JSON.stringify({
-            "email": res.kakao_account.email,
-            "name": res.properties.nickname,
-            "gender": res.kakao_account.gender,
-            "birthday": res.kakao_account.birthday
-        }),
-        success: function(dataFromController){
-            result = dataFromController
-            return dataFromController
-        },
-        error: (error) => {
-            console.log(error)
-        }
-    })
-}
+    }
+
+    function fn_kakao_submit(){
+        promise().then(ajaxKakao).then(ajaxRedirect)
+    }
+
+    function fn_join(){
+        location.href = contextPath + "/member/join"
+    }
 </script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>

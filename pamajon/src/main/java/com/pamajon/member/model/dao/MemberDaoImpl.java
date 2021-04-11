@@ -2,6 +2,7 @@ package com.pamajon.member.model.dao;
 
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
+import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -27,8 +28,8 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public Member selectOneByMemId(SqlSession session, String memId) {
-        return session.selectOne("member.selectOneByMemId", memId);
+    public Map selectOneByMemId(SqlSession session, Map map) {
+        return session.selectOne("member.selectOneByMemId", map);
     }
 
     @Override
@@ -42,8 +43,13 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public int memberSelectByNamePhone(SqlSession session, Map map){
+    public int memberSelectByNamePhone(SqlSession session, Map map) throws TooManyResultsException {
         return session.selectOne("member.selectOneByNamePhone", map);
+    }
+
+    @Override
+    public int countMembersByNamePhone(SqlSession session, Map map) {
+        return session.selectOne("member.countMembersByNamePhone", map);
     }
 
     @Override

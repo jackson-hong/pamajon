@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -86,14 +87,12 @@ public class MemberController {
 
         //가입되지 않은 경우
         if(usid == null || usid == 0){
-
             return "NONE";
         }
 
         //가입된 경우
         Member loginMember = service.selectMemByUsid(usid);
         sess.setAttribute("loginMember", loginMember);
-        mv.setViewName("/member/myPage");
         return "EXIST";
     }
 
@@ -106,7 +105,6 @@ public class MemberController {
         return mv;
     }
 
-
     @GetMapping("/login")
     public ModelAndView login(ModelAndView mv, @RequestParam Map input){
         mv.setViewName("/member/login");
@@ -115,18 +113,60 @@ public class MemberController {
 
     @PostMapping("/login")
     public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input, HttpServletRequest req){
-        Member m = service.selectOneByMemId((String)input.get("loginId"));
-        if(m == null){
-            log.info("로그인 실패");
+        log.info(input);
+        String email = (String)input.get("loginId");
+        String passwd = (String)input.get("loginPw");
+
+        if(email.isEmpty() || passwd.isEmpty()){
+            mv.addObject("msg","잘못된 입력입니다.");
+            mv.addObject("loc","/login");
+            mv.setViewName("/common/msg");
+            return mv;
+        }
+
+        //암호화된 값으로 변환
+        try {
+            email = aes.encrypt(email);
+            passwd = passwordEncoder.encode(passwd);
+        } catch (GeneralSecurityException e){
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+
+        Map mapForService = new HashMap();
+        mapForService.put("email",email);
+        mapForService.put("passwd",passwd);
+
+        Map resultMap = service.selectOneByMemId(mapForService);
+
+        Integer usid;
+        Boolean isSocial;
+
+        usid = (Integer)resultMap.get("usid");
+        isSocial = Boolean.parseBoolean((String)resultMap.get("isSocial"));
+
+        //소셜로그인으로 가입된 아이디일 경우 리디렉
+        if(isSocial){
+            mv.addObject("msg","카카오 ID로 접속해주세요");
+            mv.addObject("loc", "/member/login");
+            mv.setViewName("/common/msg");
+            return mv;
+        }
+
+
+        if(usid == 0 || usid == null){
+            //로그인 실패
             mv.addObject("msg","아이디나 비밀번호가 틀립니다.");
             mv.addObject("loc","/member/login");
             mv.setViewName("/common/msg");
         }else {
+            //로그인 성공
+            Member m = service.selectMemByUsid(usid);
             HttpSession sess = req.getSession();
             sess.setAttribute("loginMember",m);
             mv.setViewName("redirect:/member/myPage");
         }
-
         return mv;
     }
 
@@ -148,15 +188,21 @@ public class MemberController {
 
     @PostMapping("/")
     public ModelAndView joinEnd(ModelAndView mv, Model model, @RequestParam Map input, HttpSession sess) {
-
+        log.info(input);
+        boolean isSocial = Boolean.parseBoolean((String)input.get("isSocial"));
         String email = (String)input.get("email");
-        String passwd = (String) input.get("memPwd");
+        String passwd = null;
         String name = (String) input.get("memName");
         String phone = (String) input.get("memPhone");
+        //소셜로그인이 아닐 경우
+        if(!isSocial) passwd = (String) input.get("memPwd");
 
         try {
             email = aes.encrypt(email);
-            passwd = passwordEncoder.encode(passwd);
+            if(!isSocial){
+                passwd = (String) input.get("memPwd");
+                passwd = passwordEncoder.encode(passwd);
+            }
             name = aes.encrypt(name);
             phone = aes.encrypt(phone);
         } catch (GeneralSecurityException e){
@@ -166,17 +212,26 @@ public class MemberController {
         }
 
         //잘못된 input 처리
-        if(email.isEmpty()||passwd.isEmpty()||name.isEmpty()||phone.isEmpty()){
+        if(email.isEmpty()||name.isEmpty()||phone.isEmpty()){
             mv.addObject("msg","잘못된 정보가 존재합니다.");
             mv.addObject("loc","/member/login");
             mv.setViewName("/common/msg");
             return mv;
         }
 
-        //DB에 Member Insert
+        //중복된 회원 확인
         HashMap map = new HashMap();
         map.put("name", name);
         map.put("phone", phone);
+        int findDuplicate = service.countMembersByNamePhone(map);
+        if(findDuplicate > 0){
+            mv.addObject("msg","이전에 가입된 아이디가 존재합니다");
+            mv.addObject("loc","/member/join");
+            mv.setViewName("/common/msg");
+            return mv;
+        }
+
+        //DB에 Member Insert
         int result = service.memberInsert(map);
 
         //잘못된 input으로 인한 DB 오류처리
@@ -184,15 +239,27 @@ public class MemberController {
             mv.addObject("msg","잘못된 정보가 존재합니다.");
             mv.addObject("loc","/member/login");
             mv.setViewName("/common/msg");
+            return mv;
         }
 
         //Usid 가져오기
-        int usid = service.memberSelectByNamePhone(map);
+        Integer usid = 0;
+        try {
+            usid = service.memberSelectByNamePhone(map);
+        }catch (TooManyResultsException e){
+            //이미 가입한 회원 처리
+            e.printStackTrace();
+            mv.addObject("msg","이전에 가입된 아이디가 존재합니다");
+            mv.addObject("loc","/member/join");
+            mv.setViewName("/common/msg");
+            return mv;
+        }
 
         Map emailMap = new HashMap();
         emailMap.put("usid", usid);
         emailMap.put("email", email);
         emailMap.put("passwd", passwd);
+        emailMap.put("isSocial",isSocial);
 
         //Usid 와 email, passwd을 Member_id 테이블에 저장하기
         int emailResult = service.memberEmailInsert(emailMap);

@@ -10,9 +10,10 @@ public interface MemberDao {
     int memberInsert(SqlSession session, Map mapForInsert);
     int memberEmailInsert(SqlSession session, Map emailMap);
     int idCheck(SqlSession session, String email);
-    Member selectOneByMemId(SqlSession session, String memId);
+    Map selectOneByMemId(SqlSession session, Map map);
     Member selectMemByUsid(SqlSession session, int usid);
     Integer kakaoSelectUsidByEmailName(SqlSession session, Map map);
     int memberSelectByNamePhone(SqlSession session, Map map);
+    int countMembersByNamePhone(SqlSession session, Map map);
     int addrInsert(SqlSession session, MemberAddr addr);
 }

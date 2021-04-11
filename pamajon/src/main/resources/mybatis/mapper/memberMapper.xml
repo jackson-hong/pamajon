@@ -34,7 +34,7 @@
             #{usid},
             #{email},
             #{passwd},
-            0
+            #{isSocial}
         )
     </insert>
 
@@ -73,8 +73,8 @@
         SELECT * FROM MEMBER WHERE USER_ID = #{usid}
     </select>
 
-    <select id="selectOneByMemId" parameterType="string" resultMap="selectMem">
-        SELECT * FROM MEMBER WHERE MEM_ID = #{memId};
+    <select id="selectOneByMemId" parameterType="map" resultMap="loginMap">
+        SELECT USER_ID, MEMBER_ISSOCIAL FROM MEMBER_ID WHERE MEMBER_EMAIL = #{email} AND MEMBER_PASSWD = #{passwd};
     </select>
     
     <select id="selectOneByNamePhone" parameterType="map" resultType="int">
@@ -84,6 +84,10 @@
     <select id="kakaoSelectUsidByEmailName" parameterType="map" resultType="int">
         SELECT USER_ID FROM MEMBER_ID WHERE MEMBER_EMAIL = #{email}
     </select>
+
+    <select id="countMembersByNamePhone" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM MEMBER WHERE mem_name = #{name} AND mem_phone = #{phone}
+    </select>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>
@@ -92,5 +96,10 @@
         <result property="memGrade" column="MEM_GRADE"/>
         <result property="memDate" column="MEM_DATE"/>
         <result property="memStatus" column="MEM_STATUS"/>
+    </resultMap>
+
+    <resultMap id="loginMap" type="HashMap">
+        <result column="USER_ID" property="usid"/>
+        <result column="MEMBER_ISSOCIAL" property="isSocial"/>
     </resultMap>
 </mapper>

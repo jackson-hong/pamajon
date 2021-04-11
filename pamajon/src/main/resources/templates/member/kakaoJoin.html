@@ -180,7 +180,7 @@
                 <td class="table-title">이름<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
                     <input th:value="${name}" name="memName" id="user_name">
-                    <input th:value="${email}" type="hidden">
+                    <input th:value="${email}" name="email" type="hidden">
                 </td>
             </tr>
             <tr>
@@ -205,11 +205,12 @@
                     -
                     <input size="8" name="phone_middle" id="phone_middle"> - <input size="8" name="phone_tail" id="phone_tail">
                     <input type="hidden" name="memPhone" id="mem_phone">
+                    <input type="hidden" name="isSocial" value="TRUE">
                 </td>
             </tr>
         </table>
         <div id="submit-con">
-            <button id="kakao_submit" type="button"><img width="25px" height="25px" th:src="@{/images/kakaolink_btn_small.png}">가입완료하기</button>
+            <button id="kakao_submit" type="submit"><img width="25px" height="25px" th:src="@{/images/kakaolink_btn_small.png}">가입완료하기</button>
         </div>
         </form>
     </div>

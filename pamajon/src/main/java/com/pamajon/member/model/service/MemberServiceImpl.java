@@ -4,6 +4,7 @@ import com.pamajon.member.model.dao.MemberDao;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,8 +40,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Member selectOneByMemId(String memId) {
-        return dao.selectOneByMemId(session, memId);
+    public Map selectOneByMemId(Map map) {
+        return dao.selectOneByMemId(session, map);
     }
 
     @Override
@@ -54,7 +55,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int memberSelectByNamePhone(Map map){ return dao.memberSelectByNamePhone(session, map);}
+    public int countMembersByNamePhone(Map map) {
+        return dao.countMembersByNamePhone(session, map);
+    }
+
+    @Override
+    public int memberSelectByNamePhone(Map map) throws TooManyResultsException { return dao.memberSelectByNamePhone(session, map);}
+
+
 
     @Override
     public int addrInsert(MemberAddr addr) {

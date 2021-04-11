@@ -238,6 +238,7 @@
                     -
                     <input size="8" name="phone_middle" id="phone_middle"> - <input size="8" name="phone_tail" id="phone_tail">
                     <input type="hidden" name="memPhone" id="mem_phone">
+                    <input type="hidden" name="isSocial" value="FALSE">
                 </td>
             </tr>
 <!--            <tr>-->
@@ -371,7 +372,7 @@
 <script th:inline="javascript">
     Kakao.init('522e9cc1d4e892ad466431b624bcc7e5')
     let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
-    let promise = function fn_kakao_submit() {
+    let promise = function() {
         return new Promise((resolve, reject) => {
             Kakao.Auth.login({
                 success: function (response) {
@@ -419,7 +420,6 @@
     function ajaxRedirect(result){
         console.log(result)
         if(result.result == "NONE"){
-            console.log("COMEHERE")
             let form = document.getElementById("kakaoNone")
             let objs = document.createElement('input')
             objs.setAttribute('type', 'hidden')
@@ -434,11 +434,13 @@
             document.body.appendChild(form)
             form.submit()
         }else{
-
+            location.href = contextPath + "/member/myPage";
         }
     }
 
-    promise().then(ajaxKakao).then(ajaxRedirect)
+    function fn_kakao_submit(){
+        promise().then(ajaxKakao).then(ajaxRedirect)
+    }
 
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
