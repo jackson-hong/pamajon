@@ -130,6 +130,7 @@
             </div>
         </div>
         </form>
+        <form id="kakaoNone" th:action="@{/member/kakao/join}" method="post"></form>
     </div>
 </div>
 <script th:inline="javascript">
@@ -211,6 +212,12 @@
     function fn_join(){
         location.href = contextPath + "/member/join"
     }
+
+    document.getElementById('password-input').addEventListener('keypress',function(e){
+        if(e.key === 'Enter'){
+            fn_submit();
+        }
+    })
 </script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>

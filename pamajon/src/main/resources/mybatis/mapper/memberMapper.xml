@@ -74,7 +74,7 @@
     </select>
 
     <select id="selectOneByMemId" parameterType="map" resultMap="loginMap">
-        SELECT USER_ID, MEMBER_ISSOCIAL FROM MEMBER_ID WHERE MEMBER_EMAIL = #{email} AND MEMBER_PASSWD = #{passwd};
+        SELECT USER_ID, MEMBER_ISSOCIAL, MEMBER_PASSWD FROM MEMBER_ID WHERE MEMBER_EMAIL = #{email}
     </select>
     
     <select id="selectOneByNamePhone" parameterType="map" resultType="int">
@@ -101,5 +101,6 @@
     <resultMap id="loginMap" type="HashMap">
         <result column="USER_ID" property="usid"/>
         <result column="MEMBER_ISSOCIAL" property="isSocial"/>
+        <result column="MEMBER_PASSWD" property="passwd"/>
     </resultMap>
 </mapper>

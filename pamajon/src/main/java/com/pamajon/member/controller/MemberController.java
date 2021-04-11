@@ -8,7 +8,6 @@ import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
-import com.pamajon.member.model.vo.Test;
 import com.pamajon.order.model.vo.AddressDto;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import jdk.nashorn.internal.parser.JSONParser;
@@ -46,7 +45,6 @@ import java.util.Map;
 @Log4j2
 @RestController
 @RequestMapping("/member")
-@SessionAttributes("loginMember")
 public class MemberController {
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -106,8 +104,16 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public ModelAndView login(ModelAndView mv, @RequestParam Map input){
+    public ModelAndView login(ModelAndView mv, @RequestParam Map input, HttpServletRequest req){
         mv.setViewName("/member/login");
+        log.info(req.getSession().getAttribute("loginMember"));
+        return mv;
+    }
+    @GetMapping("/logout")
+    public ModelAndView logout(ModelAndView mv, HttpServletRequest req){
+        HttpSession sess = req.getSession();
+        sess.invalidate();
+        mv.setViewName("redirect:/member/login");
         return mv;
     }
 
@@ -118,16 +124,12 @@ public class MemberController {
         String passwd = (String)input.get("loginPw");
 
         if(email.isEmpty() || passwd.isEmpty()){
-            mv.addObject("msg","잘못된 입력입니다.");
-            mv.addObject("loc","/login");
-            mv.setViewName("/common/msg");
-            return mv;
+            return msg(mv, "잘못된 입력입니다.", "member/login");
         }
 
         //암호화된 값으로 변환
         try {
             email = aes.encrypt(email);
-            passwd = passwordEncoder.encode(passwd);
         } catch (GeneralSecurityException e){
             e.printStackTrace();
         } catch (UnsupportedEncodingException e){
@@ -136,37 +138,40 @@ public class MemberController {
 
         Map mapForService = new HashMap();
         mapForService.put("email",email);
-        mapForService.put("passwd",passwd);
+        Map resultMap = new HashMap();
+        try {
+            resultMap = service.selectOneByMemId(mapForService);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
 
-        Map resultMap = service.selectOneByMemId(mapForService);
+        //아이디가 존재하지 않을 경우
+        if(resultMap == null){
+            return msg(mv, "존재하지 않는 아이디입니다.", "/member/login");
+        }
+
+        String passwdFromDB = (String)resultMap.get("passwd");
+
+        if(!passwordEncoder.matches(passwd, passwdFromDB)){
+            return msg(mv, "비밀번호를 확인해주세요","/member/login");
+        }
 
         Integer usid;
-        Boolean isSocial;
-
+        Integer isSocial;
+        log.info(resultMap);
         usid = (Integer)resultMap.get("usid");
-        isSocial = Boolean.parseBoolean((String)resultMap.get("isSocial"));
+        isSocial = (Integer) resultMap.get("isSocial");
 
         //소셜로그인으로 가입된 아이디일 경우 리디렉
-        if(isSocial){
-            mv.addObject("msg","카카오 ID로 접속해주세요");
-            mv.addObject("loc", "/member/login");
-            mv.setViewName("/common/msg");
-            return mv;
+        if(isSocial == 1){
+            return msg(mv, "카카오 ID로 접속해주세요", "/member/login");
         }
 
-
-        if(usid == 0 || usid == null){
-            //로그인 실패
-            mv.addObject("msg","아이디나 비밀번호가 틀립니다.");
-            mv.addObject("loc","/member/login");
-            mv.setViewName("/common/msg");
-        }else {
-            //로그인 성공
-            Member m = service.selectMemByUsid(usid);
-            HttpSession sess = req.getSession();
-            sess.setAttribute("loginMember",m);
-            mv.setViewName("redirect:/member/myPage");
-        }
+        //로그인 성공
+        Member m = service.selectMemByUsid(usid);
+        HttpSession sess = req.getSession();
+        sess.setAttribute("loginMember",m);
+        mv.setViewName("redirect:/member/myPage");
         return mv;
     }
 
@@ -312,6 +317,13 @@ public class MemberController {
     @RequestMapping("/address")
     public ModelAndView address(ModelAndView mv){
         mv.setViewName("/member/address");
+        return mv;
+    }
+
+    private ModelAndView msg(ModelAndView mv, String msg, String loc){
+        mv.addObject("msg",msg);
+        mv.addObject("loc",loc);
+        mv.setViewName("/common/msg");
         return mv;
     }
 }

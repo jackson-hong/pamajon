@@ -139,7 +139,7 @@
 			<version>1.2.6.RELEASE</version>
 		</dependency>
 
-		<!--	session manager	-->
+		<!-- session manager	-->
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
@@ -176,7 +176,5 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-
 	</dependencies>
-
 </project>
