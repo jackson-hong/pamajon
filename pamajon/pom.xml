@@ -161,15 +161,13 @@
 			<version>1.16</version>
 		</dependency>
 
-	<!--에러가 나서 하나씩 추가해주는 디팬던시--> 
+	<!--에러가 나서 하나씩 추가해주는 디팬던시-->
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>30.1.1-jre</version>
 		</dependency>
-
-
 	</dependencies>
 
 </project>
