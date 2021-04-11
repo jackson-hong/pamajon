@@ -6,7 +6,10 @@
     <resultMap id="memberResultSet" type="com.pamajon.order.model.vo.Member">
         <result property="userId" column="USER_ID"/>
         <result property="memberName" column="MEM_NAME"/>
+        <result property="memberPhone" column="MEM_PHONE"/>
         <result property="memberGrade" column="MEM_GRADE"/>
+        <result property="memberDate" column="MEM_DATE"/>
+        <result property="memberStatus" column="MEM_STATUS"/>
     </resultMap>
 
     <resultMap id="mileageResultSet" type="com.pamajon.order.model.vo.MileageDto">
@@ -30,7 +33,10 @@
         SELECT
                USER_ID,
                MEM_NAME,
-               MEM_GRADE
+               MEM_PHONE,
+               MEM_GRADE,
+               MEM_DATE,
+               MEM_STATUS
           FROM
               MEMBER
         WHERE

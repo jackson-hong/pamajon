@@ -23,10 +23,12 @@
                     <div class="user_level floor1" style="line-height: 10px;">
                         <!--/*@thymesVar id="memberName" type=""*/-->
                         <span style="font-weight: bolder;" th:text="${member.memberName}"></span><span> 님은,</span>[<span th:text="${member.memberGrade}"></span>]이십니다.</span>
+                        <!--<span style="font-weight: bolder;"></span><span> 님은,</span>[<span></span>]이십니다.</span>-->
                     </div>
                     <div class="user_level floor2">
                         <span>가용적립금 : </span>
-                        <span style="font-weight: bolder; color: #008bcc;" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')+' 원'}">7,000원</span>
+                       <!-- <span style="font-weight: bolder; color: #008bcc;" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')+' 원'}">7,000원</span>-->
+                        <span style="font-weight: bolder; color: #008bcc;">7,000원</span>
                     </div>
                 </div>
             </div>
@@ -328,16 +330,16 @@
 <div class="mileage ">
     <dl class="ec-base-desc gLarge right" style="display: flex; justify-content: space-between;">
         <dt><strong style="font-size: 0.75rem;">총 적립예정금액</strong></dt>
-        <dd id="mAllMileageSum" class="txtWarn" style="display: block; font-size: 0.8rem;">4,000원</dd>
+        <dd id="mAllMileageSum" class="txtWarn" style="display: block; font-size: 0.8rem;"></dd>
     </dl>
     <div class="ec-base-desc gLarge right">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
             <dt style="font-size: 0.75rem;">상품별 적립금</dt>
-            <dd id="mProductMileage" style="font-size: 0.75rem;">4,000원</dd>
+            <dd id="mProductMileage" style="font-size: 0.75rem;"></dd>
         </div>
         <div style="display: flex; justify-content: space-between;">
             <dt style="font-size: 0.75rem;">회원 적립금</dt>
-            <dd id="mMemberMileage" style="font-size: 0.75rem;">0원</dd>
+            <dd id="mMemberMileage" style="font-size: 0.75rem;"></dd>
         </div>
     </div>
 </div>
@@ -346,7 +348,10 @@
 <br><br><br>
 </div>
 </div>
-<input type="hidden" name="userNo" value="1">
+<input type="hidden" name="userNo" value="2020">
+<input type="hidden" name="addrId" value="">
+<!-- ReloadCheck 주소가 입력되었을시 그 주소가 불러온 주소인지 신규 입력인지에 따라 db 에 업데이트 또는 인서트가 결정됨.-->
+<input type="hidden" name="addrReloadCheck" value="">
     <th:block th:replace="common/footer.html"></th:block>
 
 <script>
