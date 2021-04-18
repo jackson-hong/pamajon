@@ -1,0 +1,13 @@
+*,
+input {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2f588c;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

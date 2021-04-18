@@ -1,10 +1,12 @@
-package com.pamajon.admin.model.service;
+package com.pamajon.mapper;
 
 import com.pamajon.admin.model.vo.AdminUser;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
 
-public interface AdminService {
+@Mapper
+public interface AdminMapper {
 
     public AdminUser getUser(AdminUser adminUser);
 
@@ -12,7 +14,7 @@ public interface AdminService {
 
     public int getFailCount(AdminUser adminUser);
 
-    public void blockAdminUserStatus(AdminUser adminUser);
+    void blockAdminUserStatus(AdminUser adminUser);
 
     void resetFailCount(AdminUser adminUser);
 
