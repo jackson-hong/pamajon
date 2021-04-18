@@ -69,6 +69,7 @@ public class MemberController {
         return mv;
     }
 
+    //kakaologin
     @PostMapping(value = "/kakao")
     @ResponseBody
     public String kakao(@RequestBody Map input, ModelAndView mv, HttpServletRequest request) throws Exception{
@@ -95,6 +96,8 @@ public class MemberController {
 
         //가입된 경우
         Member loginMember = service.selectMemByUsid(usid);
+        loginMember.setMemEmail(email);
+        loginMember.setIsSocial(1);
         sess.setAttribute("loginMember", loginMember);
         return "EXIST";
     }
@@ -174,6 +177,9 @@ public class MemberController {
 
         //로그인 성공
         Member m = service.selectMemByUsid(usid);
+        m.setMemPwd(passwdFromDB);
+        m.setMemEmail(email);
+        m.setIsSocial(isSocial);
         HttpSession sess = req.getSession();
         sess.setAttribute("loginMember",m);
         mv.setViewName("redirect:/member/myPage");
@@ -302,7 +308,14 @@ public class MemberController {
     }
 
     @RequestMapping("/modify")
-    public ModelAndView modify(ModelAndView mv){
+    public ModelAndView modify(ModelAndView mv, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
+        Member loginMember = (Member) sess.getAttribute("loginMember");
+        log.info(loginMember);
+        //소셜 아이디인지 확인
+        String name = aes.decrypt(loginMember.getMemName());
+        String email = aes.decrypt(loginMember.getMemEmail());
+        mv.addObject("name", name);
+        mv.addObject("email",email);
         mv.setViewName("/member/modify");
         return mv;
     }

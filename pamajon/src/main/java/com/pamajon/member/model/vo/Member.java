@@ -29,4 +29,5 @@ public class Member implements Serializable {
     String memGrade;
     Date memDate;
     boolean memStatus;
+    int isSocial;
 }
