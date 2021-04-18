@@ -56,4 +56,9 @@ public class MemberDaoImpl implements MemberDao{
     public int addrInsert(SqlSession session, MemberAddr addr) {
         return session.insert("member.insertAddr", addr);
     }
+
+    @Override
+    public int updatePasswd(SqlSession session, Map map) {
+        return session.update("member.updatePasswd", map);
+    }
 }

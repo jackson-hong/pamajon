@@ -16,4 +16,5 @@ public interface MemberService {
     int countMembersByNamePhone(Map map);
     int memberSelectByNamePhone(Map map);
     int addrInsert(MemberAddr addr);
+    int updatePasswd(Map map);
 }

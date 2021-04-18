@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호변경</title>
+    <style>
+        #wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 2em;
+        }
+        #img-con {
+            display: flex;
+            justify-content: center;
+        }
+        #title {
+            margin-top: 0.5em;
+            display: flex;
+            justify-content: center;
+            font-size: large;
+        }
+        #content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 2em;
+        }
+        #content > input {
+            border: 2px rgb(7,34,66) solid;
+            width: 15em;
+            height: 1.5em;
+            font-size: medium;
+            margin-bottom: 0.5em;
+        }
+        #content > button {
+            border: 0;
+            border-radius: 3px;
+            background-color: rgb(7,34,66);
+            width: 8em;
+            height: 1.5em;
+            color: silver;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="img-con">
+            <img th:src="@{/images/Logo.png}" height="150px" width="150px">
+        </div>
+        <div id="title">
+            새로 사용할 비밀번호를 입력해주세요
+        </div>
+        <form id="passwdFm" th:method="put" th:action="@{/member/changePw}" content='application/x-www-form-urlencoded;charset=UTF-8'>
+        <div id="content">
+            <input id="passwd" name="password" size="20" type="password" placeholder="(영문 대소문자/숫자 6자~20자)">
+            <input id="passwdCheck" size="20" type="password" placeholder="비밀번호 확인">
+            <button type="button" onclick="fn_submit()">입력하기</button>
+        </div>
+        </form>
+    </div>
+    <script>
+
+        document.getElementById('passwdCheck').addEventListener("keypress",function(e){
+            if (e.key === 'Enter'){
+                fn_submit()
+            }
+        })
+
+        function fn_submit() {
+            let passwd = document.getElementById("passwd").value;
+            let passwdCheck = document.getElementById("passwdCheck").value;
+            if(!fn_pw_check(passwd)){
+                alert("영문 대소문자/숫자 6자~20자로 입력해주세요")
+                return false;
+            }
+
+            if (passwd !== passwdCheck) {
+                alert("비밀번호가 일치하지 않습니다.")
+                return false;
+            }
+
+            document.getElementById('passwdFm').submit();
+        }
+        function fn_pw_check(pw){
+            if(/^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/.test(pw))return true;
+            else return false;
+        }
+    </script>
+</body>
+</html>

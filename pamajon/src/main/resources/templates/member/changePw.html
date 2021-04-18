@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호변경</title>
+    <style>
+        #wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 2em;
+        }
+        #img-con {
+            display: flex;
+            justify-content: center;
+        }
+        #title {
+            margin-top: 0.5em;
+            display: flex;
+            justify-content: center;
+            font-size: large;
+        }
+        #content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 2em;
+        }
+        #content > input {
+            border: 2px rgb(7,34,66) solid;
+            width: 15em;
+            height: 1.5em;
+            font-size: large;
+            margin-bottom: 1.5em;
+        }
+        #content > button {
+            border: 0;
+            border-radius: 3px;
+            background-color: rgb(7,34,66);
+            width: 8em;
+            height: 1.5em;
+            color: silver;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="img-con">
+            <img th:src="@{/images/Logo.png}" height="150px" width="150px">
+        </div>
+        <div id="title">
+            현재 비밀번호를 입력해주세요
+        </div>
+        <form method="post" th:action="@{/member/changePw}" content='application/x-www-form-urlencoded;charset=UTF-8'>
+        <div id="content">
+            <input name="password" size="20" type="password">
+            <button type="submit">입력하기</button>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

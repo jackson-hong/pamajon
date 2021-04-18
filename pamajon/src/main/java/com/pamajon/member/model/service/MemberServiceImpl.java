@@ -62,10 +62,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int memberSelectByNamePhone(Map map) throws TooManyResultsException { return dao.memberSelectByNamePhone(session, map);}
 
-
-
     @Override
     public int addrInsert(MemberAddr addr) {
         return dao.addrInsert(session, addr);
     }
+
+    @Override
+    public int updatePasswd(Map map){return dao.updatePasswd(session, map);}
 }

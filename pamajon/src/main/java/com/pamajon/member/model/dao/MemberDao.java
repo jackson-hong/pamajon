@@ -16,4 +16,5 @@ public interface MemberDao {
     int memberSelectByNamePhone(SqlSession session, Map map);
     int countMembersByNamePhone(SqlSession session, Map map);
     int addrInsert(SqlSession session, MemberAddr addr);
+    int updatePasswd(SqlSession session, Map map);
 }

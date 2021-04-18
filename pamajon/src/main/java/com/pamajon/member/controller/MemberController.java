@@ -314,8 +314,14 @@ public class MemberController {
         //소셜 아이디인지 확인
         String name = aes.decrypt(loginMember.getMemName());
         String email = aes.decrypt(loginMember.getMemEmail());
+        String phone = aes.decrypt(loginMember.getMemPhone());
+        String[] phoneFull = phone.split("-");
+
         mv.addObject("name", name);
         mv.addObject("email",email);
+        mv.addObject("frontNum", phoneFull[0]);
+        mv.addObject("midNum", phoneFull[1]);
+        mv.addObject("lastNum", phoneFull[2]);
         mv.setViewName("/member/modify");
         return mv;
     }
@@ -338,9 +344,60 @@ public class MemberController {
         return mv;
     }
 
+    @GetMapping("/changePw")
+    public ModelAndView changePw(ModelAndView mv){
+        mv.setViewName("/member/changePw");
+        return mv;
+    }
+
+    @PostMapping(value = "/changePw")
+    public ModelAndView chagePwMid(ModelAndView mv, @RequestParam Map input, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
+        Member loginMember = (Member)sess.getAttribute("loginMember");
+        String passwd = (String)input.get("password");
+        String email = loginMember.getMemEmail();
+
+        Map inputMap = new HashMap();
+        inputMap.put("email",email);
+        Map resultMap = service.selectOneByMemId(inputMap);
+
+        String passwdFromDb = (String)resultMap.get("passwd");
+
+        if(!passwordEncoder.matches(passwd, passwdFromDb)){
+            String script = "close";
+            return msgWithScr(mv,"유효하지 않은 비밀번호입니다.","",script);
+        }
+        mv.setViewName("/member/changePwEnd");
+        return mv;
+    }
+
+    @PutMapping("/changePw")
+    public ModelAndView changePwLast(ModelAndView mv, @RequestParam Map input, HttpSession sess){
+        Member loginMember = (Member)sess.getAttribute("loginMember");
+        log.info(input);
+        String passwd = (String)input.get("password");
+        passwd = passwordEncoder.encode(passwd);
+        Map inputMap = new HashMap();
+        inputMap.put("passwd", passwd);
+        inputMap.put("email",loginMember.getMemEmail());
+
+        int result = service.updatePasswd(inputMap);
+
+        if(result > 1){
+            return msgWithScr(mv,"에러입니다 관리자에게 문의하세요","","close");
+        }
+        return msgWithScr(mv,"정상적으로 변경되었습니다","","close");
+    }
+
     private ModelAndView msg(ModelAndView mv, String msg, String loc){
         mv.addObject("msg",msg);
         mv.addObject("loc",loc);
+        mv.setViewName("/common/msg");
+        return mv;
+    }
+    private ModelAndView msgWithScr(ModelAndView mv, String msg, String loc, String script){
+        mv.addObject("msg",msg);
+        mv.addObject("loc",loc);
+        mv.addObject("script", script);
         mv.setViewName("/common/msg");
         return mv;
     }

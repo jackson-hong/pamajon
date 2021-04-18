@@ -88,6 +88,10 @@
     <select id="countMembersByNamePhone" parameterType="map" resultType="int">
         SELECT COUNT(*) FROM MEMBER WHERE mem_name = #{name} AND mem_phone = #{phone}
     </select>
+
+    <update id="updatePasswd" parameterType="map">
+        UPDATE MEMBER_ID SET MEMBER_PASSWD = #{passwd} WHERE MEMBER_EMAIL = #{email}
+    </update>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>

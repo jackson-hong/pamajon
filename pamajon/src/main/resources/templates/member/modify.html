@@ -244,36 +244,35 @@
             <tr>
                 <td class="table-title">비밀번호<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <input>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">비밀번호 확인<ion-icon name="medical"></ion-icon></td>
-                <td class="table-content">
-                    <input>
+                    <input type="password" readonly value="12345678">
+                    <button onclick="fn_changePw();" type="button">비밀번호변경</button>
                 </td>
             </tr>
             </th:block>
             <tr>
                 <td class="table-title">휴대전화</td>
                 <td class="table-content">
-                    <select class="phone-num" name="phone-num-2">
-                        <option value="010">010</option>
-                        <option value="011">011</option>
-                        <option value="016">016</option>
-                        <option value="017">017</option>
-                        <option value="018">018</option>
-                        <option value="019">019</option>
+                    <select disabled class="phone-num" name="phone-num-2">
+                        <option th:selected="${frontNum} == '010'" value="010">010</option>
+                        <option th:selected="${frontNum} == '011'" value="011">011</option>
+                        <option th:selected="${frontNum} == '016'" value="016">016</option>
+                        <option th:selected="${frontNum} == '017'" value="017">017</option>
+                        <option th:selected="${frontNum} == '018'" value="018">018</option>
+                        <option th:selected="${frontNum} == '019'" value="019">019</option>
                     </select>
                     -
-                    <input size="8"> - <input size="8">
+                    <input th:value="${midNum}" readonly size="8"> - <input readonly th:value="${lastNum}" size="8">
                 </td>
             </tr>
         </table>
-        <div id="submit-con">
-            <button id="submit" type="submit">정보수정</button>
-        </div>
     </div>
 </div>
+<script>
+    function fn_changePw(){
+        let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
+        let path = contextPath + "/member/changePw";
+        window.open(path, "비밀번호 변경", "top=50, left=50, width=500, height=400, resizable=no")
+    }
+</script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>
