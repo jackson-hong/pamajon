@@ -1,44 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdminLogin</title>
-    <link href="../../../static/css/admin/adminLogin.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="../../../static/css/admin/adminLogin.css" rel="stylesheet" th:href="@{/css/admin/adminLogin.css}">
 </head>
 <body>
+<script th:inline="javascript">
+        if(/*[[${session.alarmMsg}]]*/ != null){
+                alert(/*[[${session.alarmMsg}]]*/);
+        }
+
+</script>
     <div id="loginbox_wrapper">
         <div id="img_area">
-            <img id="logoImg" src="../../../static/images/LogowithoutSideSpace.JPG" width="100%" height="80px" alt="">
+            <img id="logoImg" src="../../../static/images/LogowithoutSideSpace.JPG" th:src="@{/images/LogowithoutSideSpace.JPG}" width="100%" height="80px" alt="">
         </div>
-        <form action="#">
+        <form actuin="" method="" id="adminLogin">
             <h1 align="center" style="margin-bottom: 15px;">파마존 관리자 페이지</h1>
             <div class="titleArea">
                 <div class="fontArea">
-                <div class="font userId">Username <img src="../../../static/images/Free_Blue_Star.jpg" width="9px" height="9px" alt=""></div>
+                <div class="font userId">Username <img src="../../../static/images/Free_Blue_Star.jpg" th:src="@{/images/Free_Blue_Star.jpg}" width="9px" height="9px" alt=""></div>
             </div>
-                <input type="text" name="userId" id="userId">
+                <input type="text" name="adminLoginId" id="userId">
             </div>
             <div id="passwordInputField">
                 <div class="titleArea">
                     <div class="fontArea">
-                    <div class="font userId">Password <img src="../../../static/images/Free_Blue_Star.jpg" width="9px" height="9px" alt=""></div>
+                    <div class="font userId">Password <img src="../../../static/images/Free_Blue_Star.jpg" th:src="@{/images/Free_Blue_Star.jpg}" width="9px" height="9px" alt=""></div>
                 </div>
-                <input type="password" name="userPwd" id="userPwd">
+                <input type="password" name="adminLoginPwd" id="userPwd">
             </div>
-        </div> 
+        </div>
         <div id="infoDisplayField">
             <div id="pwdReminder">
-        <input type="checkbox" name="rememberPwd" id="rememberPwd"> <label>비밀번호 저장</label>
+        <input type="checkbox" name="rememberPwd" id="rememberPwd" value="Y"> <label>비밀번호 저장</label>
     </div>
     <div id="passwordFinder">
         <a href="" id="pwdFinder">비밀번호 찾기</a>
     </div>
     </div>
-    <div id="submitButtonWrapper">     
-    <img src="../../../static/images/board/LoginButton.JPG" id="submitButton" width="85px" height="85px" alt="로그인">
-</div>
-        </form>
+        <div id="submitButtonWrapper">
+        <img src="../../../static/images/board/LoginButton.JPG" id="submitButton" th:src="@{/images/board/LoginButton.JPG}" width="85px" height="85px" alt="로그인">
+        </div>
+    </form>
+        <script th:src="@{/js/adminLogin/adminLogin.js}"></script>
 </body>
 </html>

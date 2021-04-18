@@ -19,6 +19,11 @@
 </head>
 
 <body>
+<script th:inline="javascript">
+    if(/*[[${session.alarm}]]*/ != null){
+        alert(/*[[${session.alarm}]]*/);
+    }
+</script>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->

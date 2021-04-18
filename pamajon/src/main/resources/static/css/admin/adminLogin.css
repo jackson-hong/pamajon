@@ -98,6 +98,9 @@ body {
     display: flex;
     justify-content: center;
 }
+#submitButton{
+    cursor: pointer;
+}
 
 #submitButton:hover {
     width: 90px;

@@ -1,0 +1,99 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pamajon.mapper.AdminMapper">
+
+    <resultMap id="adminUser" type="com.pamajon.admin.model.vo.AdminUser">
+        <result property="adminId" column="ADMIN_ID"/>
+        <result property="authId" column="AUTH_ID"/>
+        <result property="deptCd" column="DEPT_CD"/>
+        <result property="adminLoginId" column="ADMIN_LOGIN_ID"/>
+        <result property="adminLoginPwd" column="ADMIN_LOGIN_PWD"/>
+        <result property="adminTelFdigit" column="ADMIN_TEL_FDIGIT"/>
+        <result property="adminTelSdigit" column="ADMIN_TEL_SDIGIT"/>
+        <result property="adminTelTdigit" column="ADMIN_TEL_TDIGIT"/>
+        <result property="adminBirth" column="ADMIN_BIRTH"/>
+        <result property="adminEmail" column="ADMIN_EMAIL"/>
+        <result property="adminDomain" column="ADMIN_EMAIL_DOMAIN"/>
+        <result property="adminToken" column="ADMIN_TOKEN"/>
+        <result property="adminDate" column="ADMIN_DATE"/>
+        <result property="adminCurrDate" column="ADMIN_CURR_DATE"/>
+        <result property="adminApprStatus" column="ADMIN_APPR_STATUS"/>
+        <result property="adminFailCount" column="ADMIN_FAIL_COUNT"/>
+        <result property="sessionKey" column="SESSIONKEY"/>
+        <result property="sessionLimit" column="SESSIONLIMIT"/>
+    </resultMap>
+
+    <select id="getUser" parameterType="com.pamajon.admin.model.vo.AdminUser" resultMap="adminUser">
+        SELECT
+             ADMIN_ID
+            ,AUTH_ID
+            ,DEPT_CD
+            ,ADMIN_LOGIN_ID
+            ,ADMIN_LOGIN_PWD
+            ,ADMIN_TEL_FDIGIT
+            ,ADMIN_TEL_SDIGIT
+            ,ADMIN_TEL_TDIGIT
+            ,ADMIN_BIRTH
+            ,ADMIN_EMAIL
+            ,ADMIN_EMAIL_DOMAIN
+            ,ADMIN_TOKEN
+            ,ADMIN_DATE
+            ,ADMIN_CURR_DATE
+            ,ADMIN_APPR_STATUS
+            ,ADMIN_FAIL_COUNT
+        FROM
+            ADMIN
+        WHERE
+            ADMIN_LOGIN_ID=#{adminLoginId}
+    </select>
+
+    <update id="increaseFailCount" parameterType="com.pamajon.admin.model.vo.AdminUser">
+        UPDATE
+              ADMIN
+          SET
+              ADMIN_FAIL_COUNT = ADMIN_FAIL_COUNT + 1
+        WHERE
+              ADMIN_LOGIN_ID=#{adminLoginId}
+    </update>
+
+    <select id="getFailCount" parameterType="com.pamajon.admin.model.vo.AdminUser" resultType="integer">
+        SELECT
+              ADMIN_FAIL_COUNT
+         FROM
+             ADMIN
+        WHERE
+            ADMIN_LOGIN_ID=#{adminLoginId}
+    </select>
+
+    <update id="blockAdminUserStatus" parameterType="com.pamajon.admin.model.vo.AdminUser">
+        UPDATE
+            ADMIN
+        SET
+            ADMIN_APPR_STATUS = 'BLK'
+        WHERE
+            ADMIN_LOGIN_ID=#{adminLoginId}
+    </update>
+    <update id="resetFailCount" parameterType="com.pamajon.admin.model.vo.AdminUser">
+        UPDATE
+            ADMIN
+        SET
+            ADMIN_APPR_STATUS = 'APP'
+           ,ADMIN_FAIL_COUNT ='0'
+           ,ADMIN_CURR_DATE = NOW()
+        WHERE
+            ADMIN_LOGIN_ID=#{adminLoginId}
+    </update>
+    <update id="saveSessionInfo" parameterType="map">
+        UPDATE
+              ADMIN
+          SET
+              SESSIONKEY=#{sessionId}
+            SESSIONLIMIT=#{expiryDate}
+        WHERE
+            ADMIN_LOGIN_ID=#{userId}
+    </update>
+
+
+
+</mapper>    
