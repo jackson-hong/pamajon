@@ -17,4 +17,9 @@ public interface AdminService {
     void resetFailCount(AdminUser adminUser);
 
     void saveSessionInfo(Map<String, Object> map);
+
+    public AdminUser checkUserWithSessionKey(String sessionId);
+
+
+    void expireSessionInfo(AdminUser loginUser);
 }

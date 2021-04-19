@@ -88,10 +88,46 @@
         UPDATE
               ADMIN
           SET
-              SESSIONKEY=#{sessionId}
-            SESSIONLIMIT=#{expiryDate}
+               SESSIONKEY=#{sessionId}
+              ,SESSIONLIMIT=DATE_ADD(NOW(), INTERVAL 7 DAY)
         WHERE
             ADMIN_LOGIN_ID=#{userId}
+    </update>
+
+    <select id="getUserbyCookieId" parameterType="String" resultMap="adminUser">
+        SELECT
+            ADMIN_ID
+             ,AUTH_ID
+             ,DEPT_CD
+             ,ADMIN_LOGIN_ID
+             ,ADMIN_LOGIN_PWD
+             ,ADMIN_TEL_FDIGIT
+             ,ADMIN_TEL_SDIGIT
+             ,ADMIN_TEL_TDIGIT
+             ,ADMIN_BIRTH
+             ,ADMIN_EMAIL
+             ,ADMIN_EMAIL_DOMAIN
+             ,ADMIN_TOKEN
+             ,ADMIN_DATE
+             ,ADMIN_CURR_DATE
+             ,ADMIN_APPR_STATUS
+             ,ADMIN_FAIL_COUNT
+        FROM
+            ADMIN
+        WHERE
+            SESSIONKEY=#{sessionKey}
+        AND
+           (DATE_FORMAT(SESSIONLIMIT,'%Y%m%d')-DATE_FORMAT(NOW(),'%Y%m%d'))>-1
+    </select>
+
+    <update id="expireSessionInfo" parameterType="com.pamajon.admin.model.vo.AdminUser">
+        UPDATE
+            ADMIN
+        SET
+            SESSIONKEY='NONE'
+          ,SESSIONLIMIT=NULL
+        WHERE
+            ADMIN_LOGIN_ID=#{adminLoginId}
     </update>
 
 
