@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Service("memberServiceImpl")
@@ -69,4 +71,14 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public int updatePasswd(Map map){return dao.updatePasswd(session, map);}
+
+    @Override
+    public int mileageInsert(Map map) {
+        return dao.mileageInsert(session, map);
+    }
+
+    @Override
+    public List mileageSelect(int usid) {
+        return dao.mileageSelect(session, usid);
+    }
 }

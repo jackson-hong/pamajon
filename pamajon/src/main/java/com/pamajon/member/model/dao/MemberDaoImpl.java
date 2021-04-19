@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Repository("memberDaoImpl")
@@ -60,5 +62,15 @@ public class MemberDaoImpl implements MemberDao{
     @Override
     public int updatePasswd(SqlSession session, Map map) {
         return session.update("member.updatePasswd", map);
+    }
+
+    @Override
+    public int mileageInsert(SqlSession session, Map map) {
+        return session.insert("member.mileageInsert", map);
+    }
+
+    @Override
+    public List mileageSelect(SqlSession session, int usid) {
+        return session.selectList("member.mileageSelect", usid);
     }
 }

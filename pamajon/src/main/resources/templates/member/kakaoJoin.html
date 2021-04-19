@@ -188,7 +188,7 @@
             <tr>
                 <td class="table-title">휴대전화<ion-icon name="medical"></ion-icon></td>
                 <td class="table-content">
-                    <select class="phone-num" name="phone-num" id="phone_num">
+                    <select class="phone_num" name="phone_num" id="phone_num">
                         <option value="010">010</option>
                         <option value="011">011</option>
                         <option value="016">016</option>
@@ -212,7 +212,7 @@
             </tr>
         </table>
         <div id="submit-con">
-            <button id="kakao_submit" type="submit"><img width="25px" height="25px" th:src="@{/images/kakaolink_btn_small.png}">가입완료하기</button>
+            <button id="kakao_submit" type="button" onclick="fn_submit()"><img width="25px" height="25px" th:src="@{/images/kakaolink_btn_small.png}">가입완료하기</button>
         </div>
         </form>
     </div>

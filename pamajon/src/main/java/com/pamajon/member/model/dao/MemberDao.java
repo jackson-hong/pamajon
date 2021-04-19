@@ -4,6 +4,8 @@ import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public interface MemberDao {
@@ -17,4 +19,6 @@ public interface MemberDao {
     int countMembersByNamePhone(SqlSession session, Map map);
     int addrInsert(SqlSession session, MemberAddr addr);
     int updatePasswd(SqlSession session, Map map);
+    int mileageInsert(SqlSession session, Map map);
+    List mileageSelect(SqlSession session, int usid);
 }

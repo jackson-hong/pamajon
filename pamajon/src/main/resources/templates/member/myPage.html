@@ -77,7 +77,7 @@
         #mileage-con {
             width: 100%;
             margin-top:1.5em;
-            height: 12em;
+            height: 9.5em;
             border: 1px rgb(232,232,232) solid;
             -webkit-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
             -moz-box-shadow:inset 0px 0px 0px 4px rgb(232,232,232);
@@ -237,20 +237,18 @@
                 <div id="mileage-left">
                     <div id="mileage-left-in">
                         <div class="mileage-left-ele">
-                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp가용적립금</div><div class="mileage"><span class="blue-text"> 1,000원</span></div>
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp가용적립금</div><div class="mileage"><span th:text="${plusMile} + 원"  class="blue-text"> 1,000원</span></div>
                         </div>
                         <div class="mileage-left-ele">
-                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp사용적립금</div><div class="mileage">0원</div>
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp사용적립금</div><div th:text="${minusMile} + 원" class="mileage">0원</div>
                         </div>
-                        <div class="mileage-left-ele">
-                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp쿠폰</div><div class="mileage">6</div>개
-                        </div>
+
                     </div>
                 </div>
                 <div id="mileage-right">
                     <div id="mileage-right-in">
                         <div class="mileage-right-ele">
-                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp총적립금</div><div class="mileage">1,000원</div>
+                            <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp총적립금</div><div th:text="${usableMile} + 원" class="mileage">1,000원</div>
                         </div>
                         <div class="mileage-right-ele">
                             <div class="mileage-name"><ion-icon name="caret-forward-outline"></ion-icon>&nbsp&nbsp총 주문</div><div class="mileage">KRW 0(0회)</div>

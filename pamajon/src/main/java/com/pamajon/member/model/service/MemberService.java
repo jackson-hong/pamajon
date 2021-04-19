@@ -4,6 +4,8 @@ import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import org.springframework.data.relational.core.sql.In;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public interface MemberService {
@@ -17,4 +19,6 @@ public interface MemberService {
     int memberSelectByNamePhone(Map map);
     int addrInsert(MemberAddr addr);
     int updatePasswd(Map map);
+    int mileageInsert(Map map);
+    List mileageSelect(int usid);
 }

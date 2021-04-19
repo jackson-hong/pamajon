@@ -92,6 +92,14 @@
     <update id="updatePasswd" parameterType="map">
         UPDATE MEMBER_ID SET MEMBER_PASSWD = #{passwd} WHERE MEMBER_EMAIL = #{email}
     </update>
+
+    <insert id="mileageInsert" parameterType="map">
+        INSERT INTO MILEAGE VALUES (NEXTVAL(SEQ_MILEAGE), #{usid}, #{amount}, #{content}, #{type}, SYSDATE())
+    </insert>
+
+    <select id="mileageSelect" parameterType="int" resultMap="mileageSelect">
+        SELECT * from MILEAGE WHERE USER_ID = #{usid} ORDER BY MILE_ID
+    </select>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>
@@ -106,5 +114,13 @@
         <result column="USER_ID" property="usid"/>
         <result column="MEMBER_ISSOCIAL" property="isSocial"/>
         <result column="MEMBER_PASSWD" property="passwd"/>
+    </resultMap>
+
+    <resultMap id="mileageSelect" type="com.pamajon.member.model.vo.Mileage">
+        <result property="usid" column="USER_ID"/>
+        <result property="amount" column="MILE"/>
+        <result property="content" column="MILE_CONTENT"/>
+        <result property="type" column="MILE_TYPE"/>
+        <result property="date" column="MILE_DATE"/>
     </resultMap>
 </mapper>

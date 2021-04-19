@@ -3,11 +3,13 @@ package com.pamajon.member.controller;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.pamajon.common.page.PageFactory;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
+import com.pamajon.member.model.vo.Mileage;
 import com.pamajon.order.model.vo.AddressDto;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import jdk.nashorn.internal.parser.JSONParser;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -40,8 +43,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
+
 @Log4j2
 @RestController
 @RequestMapping("/member")
@@ -62,8 +66,33 @@ public class MemberController {
     public ModelAndView myPage(ModelAndView mv, HttpServletRequest req) throws GeneralSecurityException, UnsupportedEncodingException {
         HttpSession sess = req.getSession();
         Member m = (Member)sess.getAttribute("loginMember");
+
+        //마일리지 가져오기
+        Collection<Mileage> mileageList = mileageSelect(m.getUserId());
+
+        //총적립금
+        int plusMile = mileageList.stream()
+                .filter(mile -> mile.getType().charAt(0) == '+')
+                .mapToInt(Mileage::getAmount)
+                .sum();
+
+        //사용적립금
+        int minusMile = mileageList.stream()
+                .filter(mile -> mile.getType().charAt(0) == '-')
+                .mapToInt(Mileage::getAmount)
+                .sum();
+
+        //가용적립금
+        int usableMile = plusMile - minusMile;
+
+        mv.addObject("plusMile",plusMile);
+        mv.addObject("minusMile",minusMile);
+        mv.addObject("usableMile",usableMile);
+
+        //이름 출력
         String name = m.getMemName();
         name = aes.decrypt(name);
+
         mv.addObject("name", name);
         mv.setViewName("/member/myPage");
         return mv;
@@ -292,6 +321,9 @@ public class MemberController {
         loginMember.setMemEmail(email);
         loginMember.setMemPhone(phone);
 
+        //웰컴 마일리지 생성
+        mileageInsert(loginMember.getUserId(), 1000, "웰컴마일리지", "+");
+
         //세션 생성
         sess.setAttribute("loginMember", loginMember);
 
@@ -311,11 +343,14 @@ public class MemberController {
     public ModelAndView modify(ModelAndView mv, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
         Member loginMember = (Member) sess.getAttribute("loginMember");
         log.info(loginMember);
-        //소셜 아이디인지 확인
+        String test = loginMember.getMemPhone();
+        String test2 = aes.decrypt(test);
         String name = aes.decrypt(loginMember.getMemName());
         String email = aes.decrypt(loginMember.getMemEmail());
         String phone = aes.decrypt(loginMember.getMemPhone());
         String[] phoneFull = phone.split("-");
+
+        log.info(test + " : " +test2);
 
         mv.addObject("name", name);
         mv.addObject("email",email);
@@ -333,7 +368,41 @@ public class MemberController {
     }
 
     @RequestMapping("/mileage")
-    public ModelAndView mileage(ModelAndView mv){
+    public ModelAndView mileage(ModelAndView mv, HttpSession session, HttpServletRequest req, @RequestParam(defaultValue = "1") int cPage){
+
+        log.info("cPage : " + cPage);
+
+        String context = req.getContextPath();
+
+        Member m = (Member)session.getAttribute("loginMember");
+        //마일리지 가져오기
+        List<Mileage> mileageList = mileageSelect(m.getUserId());
+        int leng = mileageList.size();
+
+        //총적립금
+        int plusMile = mileageList.stream()
+                .filter(mile -> mile.getType().charAt(0) == '+')
+                .mapToInt(Mileage::getAmount)
+                .sum();
+
+        //사용적립금
+        int minusMile = mileageList.stream()
+                .filter(mile -> mile.getType().charAt(0) == '-')
+                .mapToInt(Mileage::getAmount)
+                .sum();
+
+        //가용적립금
+        int usableMile = plusMile - minusMile;
+
+        mileageList = mileageList.subList((cPage-1)*5, cPage*5 > leng ? leng : cPage*5);
+
+        String pageBar = PageFactory.getPageBar(leng,cPage,5, context);
+
+        mv.addObject("pageBar", pageBar);
+        mv.addObject("plusMile",plusMile);
+        mv.addObject("minusMile",minusMile);
+        mv.addObject("usableMile",usableMile);
+        mv.addObject("mileageList", mileageList);
         mv.setViewName("/member/mileage");
         return mv;
     }
@@ -388,6 +457,13 @@ public class MemberController {
         return msgWithScr(mv,"정상적으로 변경되었습니다","","close");
     }
 
+    @GetMapping("/address/insert")
+    private ModelAndView goToAddress(ModelAndView mv){
+
+        mv.setViewName("/order/addressInput");
+        return mv;
+    }
+
     private ModelAndView msg(ModelAndView mv, String msg, String loc){
         mv.addObject("msg",msg);
         mv.addObject("loc",loc);
@@ -400,5 +476,26 @@ public class MemberController {
         mv.addObject("script", script);
         mv.setViewName("/common/msg");
         return mv;
+    }
+
+    public int mileageInsert(int usid, int amount, String content, String type){
+
+        Map map = new HashMap();
+        map.put("usid", usid);
+        map.put("amount", amount);
+        map.put("content", content);
+        map.put("type", type);
+
+        int result = service.mileageInsert(map);
+
+        return result;
+    }
+
+    public List mileageSelect(int usid){
+        List result = new ArrayList<Mileage>();
+
+        result = service.mileageSelect(usid);
+
+        return result;
     }
 }
