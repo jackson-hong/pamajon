@@ -138,3 +138,21 @@ th {
     float: right;
     margin-top: 10px;
 }
+
+#buyBtn {
+    cursor: pointer;
+    background-color: rgb(7,34,66);
+    color: whitesmoke;
+}
+
+#cartBtn {
+    cursor: pointer;
+    background-color: whitesmoke;
+    border: 1px silver solid;
+}
+
+#wishBtn {
+    cursor: pointer;
+    background-color: whitesmoke;
+    border: 1px silver solid;
+}

@@ -149,13 +149,14 @@ public class MemberController {
         log.info(req.getSession().getAttribute("loginMember"));
         return mv;
     }
-    @GetMapping("/logout")
-    public ModelAndView logout(ModelAndView mv, HttpServletRequest req){
-        HttpSession sess = req.getSession();
-        sess.invalidate();
-        mv.setViewName("redirect:/member/login");
-        return mv;
-    }
+//    @GetMapping("/logout")
+//    public ModelAndView logout(ModelAndView mv, HttpServletRequest req){
+//        HttpSession sess = req.getSession();
+//        sess.removeAttribute("loginMember");
+//        sess.invalidate();
+//        mv.setViewName("redirect:/member/login");
+//        return mv;
+//    }
 
     @PostMapping("/login")
     public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input, HttpServletRequest req){
@@ -235,7 +236,7 @@ public class MemberController {
     }
 
     @PostMapping("/")
-    public ModelAndView joinEnd(ModelAndView mv, Model model, @RequestParam Map input, HttpSession sess) {
+    public ModelAndView joinEnd(ModelAndView mv, @RequestParam Map input, HttpSession sess) {
         log.info(input);
         boolean isSocial = Boolean.parseBoolean((String)input.get("isSocial"));
         String email = (String)input.get("email");
@@ -318,11 +319,14 @@ public class MemberController {
             mv.addObject("loc","/member/login");
             mv.setViewName("/common/msg");
         }
-
+        log.info("phone: " + phone);
         //세션 생성을 위한 Member 객체 생성
         Member loginMember = service.selectMemByUsid(usid);
         loginMember.setMemEmail(email);
         loginMember.setMemPhone(phone);
+
+
+        log.info("loginMember: " + loginMember);
 
         //웰컴 마일리지 생성
         mileageInsert(loginMember.getUserId(), 1000, "웰컴마일리지", "+");
@@ -345,7 +349,7 @@ public class MemberController {
     @RequestMapping("/modify")
     public ModelAndView modify(ModelAndView mv, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
         Member loginMember = (Member) sess.getAttribute("loginMember");
-//        log.info(loginMember);
+        log.info(loginMember);
 //        String test = loginMember.getMemPhone();
 //        String test2 = aes.decrypt(test);
         String name = aes.decrypt(loginMember.getMemName());
