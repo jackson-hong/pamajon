@@ -16,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -168,7 +169,7 @@ public class AdminController {
                 Map<String,Object> map = new HashMap<String,Object>();
                 map.put("userId",selectUser.getAdminLoginId());
                 map.put("sessionId",session.getId());
-                map.put("expiryDate",System.currentTimeMillis()+(1000*60*60*24*7));
+                map.put("expiryDate",new Date(System.currentTimeMillis()+(1000*60*60*24*7)));
 
                 adminService.saveSessionInfo(map);
 
@@ -188,6 +189,23 @@ public class AdminController {
         md.addAttribute("loc","/admin/signin");
 
         return "/common/msg";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        LOGGER.info(" "+(AdminUser)request.getSession().getAttribute("adminUser"));
+        //sessionId 와 session 만료일 삭제
+        adminService.expireSessionInfo((AdminUser)request.getSession().getAttribute("adminUser"));
+
+        request.getSession().invalidate();
+        Cookie cookie = new Cookie("loginCookie",null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/pamajon/admin/signin");
+        response.addCookie(cookie);
+
+
+
+        return "redirect:/admin/signin";
     }
 
 

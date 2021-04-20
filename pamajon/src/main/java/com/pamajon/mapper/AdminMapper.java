@@ -19,4 +19,8 @@ public interface AdminMapper {
     void resetFailCount(AdminUser adminUser);
 
     void saveSessionInfo(Map<String, Object> map);
+
+    AdminUser getUserbyCookieId(String sessionKey);
+
+    void expireSessionInfo(AdminUser loginUser);
 }

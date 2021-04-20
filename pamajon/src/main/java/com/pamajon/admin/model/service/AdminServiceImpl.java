@@ -44,4 +44,15 @@ public class AdminServiceImpl implements AdminService{
     public void saveSessionInfo(Map<String, Object> map) {
         adminMapper.saveSessionInfo(map);
     }
+
+    @Override
+    public AdminUser checkUserWithSessionKey(String sessionId) {
+        return adminMapper.getUserbyCookieId(sessionId);
+    }
+
+    @Override
+    public void expireSessionInfo(AdminUser loginUser) {
+        adminMapper.expireSessionInfo(loginUser);
+    }
+
 }
