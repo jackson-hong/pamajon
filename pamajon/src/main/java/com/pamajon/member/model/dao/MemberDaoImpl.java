@@ -60,6 +60,31 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
+    public int countAddr(SqlSession session, int addrId) {
+        return session.selectOne("member.countAddr", addrId);
+    }
+
+    @Override
+    public int addrUpdate(SqlSession session, MemberAddr addr) {
+        return session.update("member.addrUpdate", addr);
+    }
+
+    @Override
+    public int addrDelete(SqlSession session, String addrId) {
+        return session.delete("member.addrDelete", addrId);
+    }
+
+    @Override
+    public MemberAddr selectAddr(SqlSession session, int addrId) {
+        return session.selectOne("member.selectAddr", addrId);
+    }
+
+    @Override
+    public List<MemberAddr> selectAddrList(SqlSession session, int usid) {
+        return session.selectList("member.selectAddrList", usid);
+    }
+
+    @Override
     public int updatePasswd(SqlSession session, Map map) {
         return session.update("member.updatePasswd", map);
     }

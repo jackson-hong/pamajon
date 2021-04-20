@@ -46,7 +46,7 @@
 
 ## 2. 주요기능
 
-- Web Socket (STOPM) : 채팅기능 구현
+- Web Socket (STOMP) : 채팅기능 구현
 - Social Login 기능
 
 

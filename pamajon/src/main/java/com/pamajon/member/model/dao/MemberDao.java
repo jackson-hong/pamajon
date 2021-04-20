@@ -18,6 +18,11 @@ public interface MemberDao {
     int memberSelectByNamePhone(SqlSession session, Map map);
     int countMembersByNamePhone(SqlSession session, Map map);
     int addrInsert(SqlSession session, MemberAddr addr);
+    int countAddr(SqlSession session, int addrId);
+    int addrUpdate(SqlSession session, MemberAddr addr);
+    int addrDelete(SqlSession session, String addrId);
+    MemberAddr selectAddr(SqlSession session, int addrId);
+    List<MemberAddr> selectAddrList(SqlSession session, int usid);
     int updatePasswd(SqlSession session, Map map);
     int mileageInsert(SqlSession session, Map map);
     List mileageSelect(SqlSession session, int usid);

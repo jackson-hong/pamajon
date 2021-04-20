@@ -60,7 +60,7 @@
                 #{addr},
                 #{addrDetail},
                 #{addrPhone},
-                0
+                #{addrStatus}
                )
 
     </insert>
@@ -89,6 +89,18 @@
         SELECT COUNT(*) FROM MEMBER WHERE mem_name = #{name} AND mem_phone = #{phone}
     </select>
 
+    <select id="countAddr" parameterType="int" resultType="int">
+        SELECT count(*) from ADDRESS_LIST WHERE USER_ID = #{usid}
+    </select>
+
+    <select id="selectAddrList" parameterType="int" resultMap="selectAddrList">
+        SELECT * from ADDRESS_LIST WHERE USER_ID = #{usid}
+    </select>
+
+    <select id="selectAddr" parameterType="int" resultMap="selectAddrList">
+        SELECT * from ADDRESS_LIST WHERE ADDR_ID = #{addrId}
+    </select>
+
     <update id="updatePasswd" parameterType="map">
         UPDATE MEMBER_ID SET MEMBER_PASSWD = #{passwd} WHERE MEMBER_EMAIL = #{email}
     </update>
@@ -100,6 +112,21 @@
     <select id="mileageSelect" parameterType="int" resultMap="mileageSelect">
         SELECT * from MILEAGE WHERE USER_ID = #{usid} ORDER BY MILE_ID
     </select>
+
+    <update id="addrUpdate" parameterType="com.pamajon.member.model.vo.MemberAddr">
+        UPDATE ADDRESS_LIST SET ADDR_PHONE = #{addrPhone},
+                                ADDR_NAME = #{addrName},
+                                ADDR_RECEIVER = #{addrReceiver},
+                                ADDR_ZIPCODE = #{addrZipcode},
+                                ADDR = #{addr},
+                                ADDR_DETAIL = #{addrDetail},
+                                ADDR_CELLPHONE = #{addrCellPhone}
+                            WHERE ADDR_ID = #{addrId}
+    </update>
+
+    <delete id="addrDelete" parameterType="string">
+        DELETE FROM ADDRESS_LIST WHERE ADDR_ID = #{addrId}
+    </delete>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>
@@ -108,6 +135,18 @@
         <result property="memGrade" column="MEM_GRADE"/>
         <result property="memDate" column="MEM_DATE"/>
         <result property="memStatus" column="MEM_STATUS"/>
+    </resultMap>
+
+    <resultMap id="selectAddrList" type="com.pamajon.member.model.vo.MemberAddr">
+        <result property="addrId" column="ADDR_ID"/>
+        <result property="addrCellPhone" column="ADDR_PHONE"/>
+        <result property="addrName" column="ADDR_NAME"/>
+        <result property="addrReceiver" column="ADDR_RECEIVER"/>
+        <result property="addrZipcode" column="ADDR_ZIPCODE"/>
+        <result property="addr" column="ADDR"/>
+        <result property="addrDetail" column="ADDR_DETAIL"/>
+        <result property="addrPhone" column="ADDR_CELLPHONE"/>
+        <result property="addrStatus" column="ADDR_STATUS"/>
     </resultMap>
 
     <resultMap id="loginMap" type="HashMap">

@@ -1,0 +1,401 @@
+<th:block th:replace="common/header.html"></th:block>
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    #table-wrapper {
+        margin-top: 2em;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    #description {
+        text-align: right;
+        margin-bottom: 0.5em;
+    }
+    table {
+        min-width: 90em;
+        max-width: 120em;
+        border: 1px silver solid;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    th {
+        background: rgb(251,250,250);
+        color:rgb(40,40,40);
+        font-weight: lighter;
+        -webkit-font-smoothing: antialiased;
+        height:2.5em;
+    }
+    td{
+        border:1px silver solid;
+        height: 34px;
+    }
+    .table-title {
+        width: 12%;
+        text-indent: 15px;
+        font-size: 12px;
+        background: rgb(251,250,250);
+    }
+    .table-content {
+        font-size: 12px;
+        width: 78%;
+        text-indent: 10px;
+    }
+    table input {
+        border:1px rgb(220,220,220) solid;
+        height: 1.5em;
+        margin: 0.5em;
+    }
+    select[name="pw-confirm"] {
+        border:1px rgb(220,220,220) solid;
+        height: 2.2em;
+        width: 25em;
+        margin: 0.5em;
+        font-size: 12px;
+    }
+    select.phone-num{
+        border:1px rgb(220,220,220) solid;
+        height: 2.2em;
+        width: 5em;
+        margin: 0.5em;
+        font-size: 12px;
+    }
+    .address {
+        text-indent: 0;
+        padding-left: 10px;
+    }
+    ion-icon[name="medical"]{
+        color: orangered;
+        font-size: 10px;
+    }
+    button[name="postal-code"]{
+        text-align: center;
+        background: white;
+        border:1px silver solid;
+        height:2em;
+        font-size: 12px;
+        padding-top: 2px;
+    }
+    ion-icon[name="caret-forward-circle-outline"] {
+        vertical-align: middle;
+    }
+    #submit-con {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top:1.5em;
+        margin-bottom: 2em;
+    }
+
+    #submit-con>*{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 13.3px;
+    }
+
+    #submit-con>button>img{
+        margin-right: 3px;
+    }
+
+    #submit-con>#kakao_submit {
+        background-color: #ffe812;
+        /*background-color: white;*/
+        /*border: #964b00 1.5px solid;*/
+        border: white 1px solid;
+        border-radius: 3px;
+        color: black;
+        font-size: 11.5px;
+        cursor: pointer;
+        transition-duration: 0.15s;
+    }
+    #submit-con>#kakao_submit:hover{
+        border: black 1px solid;
+    }
+
+    .submitBtn {
+        width: 8em;
+        height: 2em;
+        margin-left: 3px;
+        background: rgba(7,34,66,0.8);
+        border:0px silver solid;
+        border-radius: 3px;
+        color: white;
+        cursor:pointer;
+        transition-duration: 0.15s;
+    }
+    .submitBtn:hover {
+        background: white;
+        border:1px silver solid;
+        color:black;
+    }
+
+    .whiteBtn {
+        color: black;
+        border:1px silver solid;
+        background-color: whitesmoke;
+    }
+    button[name="postal-code"] {
+        cursor: pointer;
+    }
+
+    #present-con {
+        display: flex;
+        padding-right: 3px;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    #tbl-cau {
+        text-align: left;
+    }
+
+    #tbl-cau th {
+        text-indent: 8px;
+        font-weight: bold;
+    }
+    .fa-li {
+        font-size: 14px;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    li {
+        margin-bottom: 0.5em;
+    }
+</style>
+<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}">
+<div id="title-idx">
+    <div id="title">
+        ADDRESS
+    </div>
+    <div id="idx">
+        HOME > ADDRESS
+    </div>
+</div>
+<div id="wrapper">
+    <div id="table-wrapper">
+        <h2>기본정보</h2>
+        <div id="description">
+            <ion-icon name="medical"></ion-icon>필수입력사항
+        </div>
+        <form id="addr-fm" name="addr-fm" role="form" th:action="@{/member/address}" th:method="PUT">
+        <table>
+            <tr>
+                <td class="table-title">배송지명<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input th:value="${addr.getAddrName()}" name="addrTitle" id="addrTitle">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">성명<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <input th:value="${addr.getAddrReceiver()}" name="addrName" id="addrName">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">주소</td>
+                <td class="table-content address">
+                    <input size="8" th:value="${addr.getAddrZipcode()}" name="addrZipcode" id="postal_code"><button type="button" onclick="fn_postal();" name="postal-code">우편번호 <ion-icon name="caret-forward-circle-outline"></ion-icon></button><br>
+                    <input size="36" th:value="${addr.getAddr()}" id="user_addr" name="addr"><br>
+                    <input size="36" th:value="${addr.getAddrDetail()}" id="user_addr_rest" name="addrDetail"><br>
+                    <input type="hidden" id="addr_info">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">일반전화</td>
+                <td class="table-content">
+                    <select class="phone-num" name="phone-num-reg" id="phone-num-reg">
+                        <option th:selected="${phone[0]} == '010'" value="010">010</option>
+                        <option th:selected="${phone[0]} == '011'" value="011">011</option>
+                        <option th:selected="${phone[0]} == '016'" value="016">016</option>
+                        <option th:selected="${phone[0]} == '017'" value="017">017</option>
+                        <option th:selected="${phone[0]} == '018'" value="018">018</option>
+                        <option th:selected="${phone[0]} == '019'" value="019">019</option>
+                        <option th:selected="${phone[0]} == '0502'" value="0502">0502</option>
+                        <option th:selected="${phone[0]} == '0503'" value="0503">0503</option>
+                        <option th:selected="${phone[0]} == '0504'" value="0504">0504</option>
+                        <option th:selected="${phone[0]} == '0505'" value="0505">0505</option>
+                        <option th:selected="${phone[0]} == '0506'" value="0506">0506</option>
+                        <option th:selected="${phone[0]} == '0507'" value="0507">0507</option>
+                        <option th:selected="${phone[0]} == '0508'" value="0508">0508</option>
+                        <option th:selected="${phone[0]} == '02'" value="02">02</option>
+                        <option th:selected="${phone[0]} == '051'" value="051">051</option>
+                        <option th:selected="${phone[0]} == '053'" value="053">053</option>
+                        <option th:selected="${phone[0]} == '032'" value="032">032</option>
+                        <option th:selected="${phone[0]} == '062'" value="062">062</option>
+                        <option th:selected="${phone[0]} == '042'" value="042">042</option>
+                        <option th:selected="${phone[0]} == '052'" value="052">052</option>
+                        <option th:selected="${phone[0]} == '044'" value="044">044</option>
+                        <option th:selected="${phone[0]} == '031'" value="031">031</option>
+                        <option th:selected="${phone[0]} == '033'" value="033">033</option>
+                        <option th:selected="${phone[0]} == '043'" value="043">043</option>
+                        <option th:selected="${phone[0]} == '041'" value="041">041</option>
+                        <option th:selected="${phone[0]} == '063'" value="063">063</option>
+                        <option th:selected="${phone[0]} == '061'" value="061">061</option>
+                        <option th:selected="${phone[0]} == '054'" value="054">054</option>
+                        <option th:selected="${phone[0]} == '055'" value="055">055</option>
+                        <option th:selected="${phone[0]} == '064'" value="064">064</option>
+                    </select>
+                    -
+                    <input th:value="${phone[1]}" size="8" name="phone-middle-reg" id="phone-middle-reg"> - <input th:value="${phone[2]}" size="8" name="phone-tail-reg" id="phone-tail-reg">
+                </td>
+            </tr>
+            <tr>
+                <td class="table-title">휴대전화<ion-icon name="medical"></ion-icon></td>
+                <td class="table-content">
+                    <select class="phone-num" name="phone-num" id="phone_num">
+                        <option th:selected="${cellPhone[0]} == '010'" value="010">010</option>
+                        <option th:selected="${cellPhone[0]} == '011'" value="011">011</option>
+                        <option th:selected="${cellPhone[0]} == '016'" value="016">016</option>
+                        <option th:selected="${cellPhone[0]} == '017'" value="017">017</option>
+                        <option th:selected="${cellPhone[0]} == '018'" value="018">018</option>
+                        <option th:selected="${cellPhone[0]} == '019'" value="019">019</option>
+                        <option th:selected="${cellPhone[0]} == '0502'" value="0502">0502</option>
+                        <option th:selected="${cellPhone[0]} == '0503'" value="0503">0503</option>
+                        <option th:selected="${cellPhone[0]} == '0504'" value="0504">0504</option>
+                        <option th:selected="${cellPhone[0]} == '0505'" value="0505">0505</option>
+                        <option th:selected="${cellPhone[0]} == '0506'" value="0506">0506</option>
+                        <option th:selected="${cellPhone[0]} == '0507'" value="0507">0507</option>
+                        <option th:selected="${cellPhone[0]} == '0508'" value="0508">0508</option>
+                        <option th:selected="${cellPhone[0]} == '070'" value="070">070</option>
+                    </select>
+                    -
+                    <input size="8" th:value="${cellPhone[1]}" name="phone_middle" id="phone_middle"> - <input th:value="${cellPhone[2]}" size="8" name="phone_tail" id="phone_tail">
+                    <input type="hidden" name="memPhone" id="mem_phone">
+                    <input type="hidden" name="memPhoneReg" id="mem-phone-reg">
+                    <input type="hidden" name="addrId" th:value="${addr.getAddrId()}">
+                </td>
+            </tr>
+        </table>
+        <div id="submit-con">
+            <button class="submitBtn" type="button" onclick="fn_submit();">수정하기</button>
+            <button class="submitBtn whiteBtn" type="button" onclick="">취소하기</button>
+        </div>
+        </form>
+        <table id="tbl-cau" border="1">
+            <tr>
+                <th>
+                    배송주소록 유의사항
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <ol class="fa-ul">
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>배송 주소록은 최대 10개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>자동 업데이트를 원하지 않을 경우 주소록 고정 선택을 선택하시면 선택된 주소록은 업데이트 대상에서 제외됩니다.</li>
+                        <li><span class="fa-li"><i class="far fa-check-square"></i></span>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script th:inline="javascript">
+    function fn_postal(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("addr_info").value = extraAddr;
+                } else {
+                    document.getElementById("addr_info").value = '';
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postal_code').value = data.zonecode;
+                document.getElementById("user_addr").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("user_addr_rest").focus();
+            }
+        }).open();
+    }
+
+    function fn_submit(){
+        let phone_num = document.getElementById("phone_num").value
+        let phone_middle = document.getElementById("phone_middle").value
+        let phone_tail = document.getElementById("phone_tail").value;
+        let addr_title = document.getElementById("addrTitle").value;
+        let addr_name = document.getElementById("addrName").value;
+
+        if(!addr_title){
+            alert("배송지명을 입력해주세요");
+            return false;
+        }
+
+        if(!addr_name){
+            alert("이름을 입력해주세요");
+            return false;
+        }
+
+        if(phone_num==""||phone_middle==""||phone_tail==""){
+            alert("전화번호를 체크해주세요.");
+            return;
+        }
+
+        let firstNum = document.getElementById("phone_num").value;
+        let middleNum = document.getElementById("phone_middle").value;
+        let lastNum = document.getElementById("phone_tail").value;
+        document.getElementById("mem_phone").value =
+            firstNum + '-' + middleNum + '-' + lastNum;
+        let firstNumReg = document.getElementById("phone-num-reg").value;
+        let middleNumReg = document.getElementById("phone-middle-reg").value;
+        let lastNumReg = document.getElementById("phone-tail-reg").value;
+        document.getElementById("mem-phone-reg").value =
+            firstNumReg + '-' + middleNumReg + '-' + lastNumReg;
+
+        let form = document.getElementById('addr-fm');
+
+        console.log(form);
+
+        form.submit();
+    }
+</script>
+<script th:inline="javascript">
+
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<th:block th:replace="common/footer.html"></th:block>
+</html>

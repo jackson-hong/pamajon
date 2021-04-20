@@ -70,6 +70,31 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public int countAddr(int usid) {
+        return dao.countAddr(session,usid);
+    }
+
+    @Override
+    public List<MemberAddr> selectAddrList(int usid) {
+        return dao.selectAddrList(session,usid);
+    }
+
+    @Override
+    public MemberAddr selectAddr(int addrId) {
+        return dao.selectAddr(session,addrId);
+    }
+
+    @Override
+    public int addrUpdate(MemberAddr addr) {
+        return dao.addrUpdate(session, addr);
+    }
+
+    @Override
+    public int addrDelete(String addrId) {
+        return dao.addrDelete(session, addrId);
+    }
+
+    @Override
     public int updatePasswd(Map map){return dao.updatePasswd(session, map);}
 
     @Override

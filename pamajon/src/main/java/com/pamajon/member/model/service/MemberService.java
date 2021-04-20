@@ -18,6 +18,11 @@ public interface MemberService {
     int countMembersByNamePhone(Map map);
     int memberSelectByNamePhone(Map map);
     int addrInsert(MemberAddr addr);
+    int countAddr(int usid);
+    List<MemberAddr> selectAddrList(int usid);
+    MemberAddr selectAddr(int addrId);
+    int addrUpdate(MemberAddr addr);
+    int addrDelete(String addrId);
     int updatePasswd(Map map);
     int mileageInsert(Map map);
     List mileageSelect(int usid);

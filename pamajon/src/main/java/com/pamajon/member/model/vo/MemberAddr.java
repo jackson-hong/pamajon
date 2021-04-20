@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class MemberAddr {
     private int addrId;
+    private String addrCellPhone;
     private int userId;
     private String addrName;
     private String addrReceiver;
@@ -16,5 +17,5 @@ public class MemberAddr {
     private String addr;
     private String addrDetail;
     private String addrPhone;
-    private String addrStatus;
+    private boolean addrStatus;
 }

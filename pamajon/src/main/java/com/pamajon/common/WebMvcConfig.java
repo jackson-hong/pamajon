@@ -24,6 +24,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/member/kakao**")
                 .excludePathPatterns("/member/idCheck")
                 .excludePathPatterns("/member/login/**")
-                .excludePathPatterns("/member/join");
+                .excludePathPatterns("/member/join")
+                .excludePathPatterns("/member/address")
+                .excludePathPatterns("/member/address*");
     }
 }

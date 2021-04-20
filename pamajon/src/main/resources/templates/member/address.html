@@ -25,7 +25,7 @@
     }
     #addr-wrapper {
         margin-top: 2.5em;
-        min-width: 110em;
+        min-width: 90em;
         max-width: 130em;
     }
     table {
@@ -180,6 +180,9 @@
     li {
         margin-bottom: 0.5em;
     }
+    button {
+        cursor: pointer;
+    }
 </style>
 <div id="title-idx">
     <div id="title">
@@ -194,7 +197,7 @@
         <table border="1">
             <tr>
                 <th class="addr-select"><input type="checkbox"></th>
-                <th class="addr-fix">주소록 고정</th>
+                <th class="addr-fix">대표주소</th>
                 <th class="addr-name">배송지명</th>
                 <th class="addr-receiver">수령인</th>
                 <th class="addr-tel">일반전화</th>
@@ -202,39 +205,34 @@
                 <th class="addr-address">주소</th>
                 <th class="addr-modify">수정</th>
             </tr>
-            <tr>
+            <tr th:each="addr : ${addrList}">
                 <td>
-                    <input type="checkbox">
+                    <input class="addrCheck" th:value="${addr.getAddrId()}" type="checkbox">
                 </td>
                 <td>
                     <button class="addr-sm-btn">해제</button>
                 </td>
-                <td>
-                    미지정
+                <td th:text="${addr.getAddrName()}">
+                </td>
+                <td th:text="${addr.getAddrReceiver()}">
+                </td>
+                <td th:text="${addr.getAddrPhone()}">
+                </td>
+                <td th:text="${addr.getAddrCellPhone()}">
+                </td>
+                <td th:text="|(${addr.getAddrZipcode()}) ${addr.getAddr()} ${addr.getAddrDetail()}|">
                 </td>
                 <td>
-                    홍지운
-                </td>
-                <td>
-                    82-
-                </td>
-                <td>
-                    010-7474-9884
-                </td>
-                <td>
-                    (12807)경기도 광주시 초월읍 산이리 18-1 코아루햇빛마을아파트 101-1003
-                </td>
-                <td>
-                    <button class="addr-btn">수정<ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <button th:onclick="fn_location('/member/address/[[${addr.getAddrId()}]]/modify')" class="addr-btn">수정<ion-icon name="chevron-forward-outline"></ion-icon></button>
                 </td>
             </tr>
         </table>
         <div id="select-btns">
             <div id="select-left-btns">
-                <button class="select-left-btn">선택 주소록 삭제</button>
+                <button onclick="fn_delete();" class="select-left-btn">선택 주소록 삭제</button>
             </div>
             <div id="select-right-btns">
-                <button class="select-right-btn submit">배송지등록</button>
+                <button onclick="fn_location('/member/address/insert');" class="select-right-btn submit">배송지등록</button>
             </div>
         </div>
         <table id="tbl-cau" border="1">
@@ -255,5 +253,40 @@
         </table>
     </div>
 </div>
+<script>
+    function fn_delete(){
+        let input = {};
+        let checks = document.getElementsByClassName('addrCheck');
+        for(let i = 0; i < checks.length; i++){
+            if(checks[i].checked === true){
+                input[i] = checks[i].value;
+            }
+        }
+
+        if(input.length === 0){
+            alert('삭제 할 게시물을 선택해주세요.')
+            return;
+        }
+
+        console.log(JSON.stringify(input))
+
+        $.ajax({
+            type:"DELETE",
+            url: contextPath + "/member/address/" + JSON.stringify(input),
+            contentType:'application/json; charset=utf-8',
+            success: (data) => {
+                if(data === 'success'){
+                    alert('정상적으로 삭제되었습니다.');
+                    location.reload();
+                    return false;
+                }
+                alert('삭제에 실패하였습니다. 관리자에게 문의해주세요.')
+            },
+            error : (error) => {
+                console.log(error)
+            }
+        })
+    }
+</script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>

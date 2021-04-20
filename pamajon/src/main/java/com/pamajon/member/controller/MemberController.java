@@ -1,6 +1,8 @@
 package com.pamajon.member.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pamajon.common.page.PageFactory;
@@ -49,6 +51,7 @@ import java.util.stream.Stream;
 @Log4j2
 @RestController
 @RequestMapping("/member")
+@SessionAttributes("loginMember")
 public class MemberController {
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -342,15 +345,15 @@ public class MemberController {
     @RequestMapping("/modify")
     public ModelAndView modify(ModelAndView mv, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
         Member loginMember = (Member) sess.getAttribute("loginMember");
-        log.info(loginMember);
-        String test = loginMember.getMemPhone();
-        String test2 = aes.decrypt(test);
+//        log.info(loginMember);
+//        String test = loginMember.getMemPhone();
+//        String test2 = aes.decrypt(test);
         String name = aes.decrypt(loginMember.getMemName());
         String email = aes.decrypt(loginMember.getMemEmail());
         String phone = aes.decrypt(loginMember.getMemPhone());
         String[] phoneFull = phone.split("-");
 
-        log.info(test + " : " +test2);
+//        log.info(test + " : " +test2);
 
         mv.addObject("name", name);
         mv.addObject("email",email);
@@ -407,11 +410,7 @@ public class MemberController {
         return mv;
     }
 
-    @RequestMapping("/address")
-    public ModelAndView address(ModelAndView mv){
-        mv.setViewName("/member/address");
-        return mv;
-    }
+
 
     @GetMapping("/changePw")
     public ModelAndView changePw(ModelAndView mv){
@@ -457,10 +456,181 @@ public class MemberController {
         return msgWithScr(mv,"정상적으로 변경되었습니다","","close");
     }
 
-    @GetMapping("/address/insert")
-    private ModelAndView goToAddress(ModelAndView mv){
+    @GetMapping("/address")
+    public ModelAndView address(ModelAndView mv, @ModelAttribute("loginMember") Member m){
+        List<MemberAddr> resultList = service.selectAddrList(m.getUserId());
+        log.info(resultList);
+        resultList.stream().forEach(addr -> {
+            try {
+                addr.setAddrPhone(aes.decrypt(addr.getAddrPhone()));
+                addr.setAddrCellPhone(aes.decrypt(addr.getAddrCellPhone()));
+                addr.setAddrReceiver(aes.decrypt(addr.getAddrReceiver()));
+                addr.setAddrZipcode(aes.decrypt(addr.getAddrZipcode()));
+                addr.setAddr(aes.decrypt(addr.getAddr()));
+                addr.setAddrDetail(aes.decrypt(addr.getAddrDetail()));
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        });
+        log.info(resultList);
+        mv.addObject("addrList", resultList);
+        mv.setViewName("/member/address");
+        return mv;
+    }
 
-        mv.setViewName("/order/addressInput");
+    @DeleteMapping("/address/{input}")
+    public String address(@PathVariable("input") String input){
+        log.info(input);
+
+        //JSON -> Map
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = new HashMap<>();
+        try {
+            map = mapper.readValue(input, Map.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        //맵에서 밸류만 가져오기
+        Collection<String> list = map.values();
+
+        //삭제
+
+        int result = 0;
+        for(String val : list){
+           result += service.addrDelete(val);
+        }
+
+        if(result == 0) return "error";
+
+        return "success";
+    }
+
+    @GetMapping("/address/insert")
+    public ModelAndView goToAddressInsert(ModelAndView mv, @ModelAttribute("loginMember") Member m){
+        int result = service.countAddr(m.getUserId());
+        if(result>10)return msg(mv, "주소는 10개까지 등록이 가능합니다","/member/address");
+        mv.setViewName("/member/addressInsert");
+        return mv;
+    }
+
+    @GetMapping("/address/{addrId}/modify")
+    public ModelAndView goToAddressModify(ModelAndView mv, @PathVariable("addrId") int addrId){
+        MemberAddr addr = service.selectAddr(addrId);
+
+        try {
+            addr.setAddrPhone(aes.decrypt(addr.getAddrPhone()));
+            addr.setAddrCellPhone(aes.decrypt(addr.getAddrCellPhone()));
+            addr.setAddrReceiver(aes.decrypt(addr.getAddrReceiver()));
+            addr.setAddrZipcode(aes.decrypt(addr.getAddrZipcode()));
+            addr.setAddr(aes.decrypt(addr.getAddr()));
+            addr.setAddrDetail(aes.decrypt(addr.getAddrDetail()));
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String[] phone = addr.getAddrPhone().split("-");
+        String[] cellPhone = addr.getAddrCellPhone().split("-");
+
+        mv.addObject("phone",phone);
+        mv.addObject("cellPhone",cellPhone);
+        mv.addObject("addr", addr);
+        mv.setViewName("/member/addressModify");
+        return mv;
+    }
+
+    @PostMapping("/address")
+    public ModelAndView addressInsert(ModelAndView mv,@ModelAttribute("loginMember") Member m, @RequestParam Map map) throws GeneralSecurityException, UnsupportedEncodingException {
+
+        log.info(map);
+        //insert에 필요한 데이터
+        int usid = m.getUserId();
+        String addrPhone = (String)map.get("memPhoneReg");
+        String addrCellPhone = (String)map.get("memPhone");
+        String addrTitle = (String)map.get("addrTitle");
+        String addrReceiver = (String)map.get("addrName");
+        String addrZipcode = (String)map.get("addrZipcode");
+        String addr = (String)map.get("addr");
+        String addrDetail = (String)map.get("addrDetail");
+        boolean isDefault = false;
+        if((String)map.get("isDefault") != null && (String)map.get("isDefault") == "on")isDefault = true;
+
+        //암호화
+        addrPhone = aes.encrypt(addrPhone);
+        addrCellPhone = aes.encrypt(addrCellPhone);
+        addrReceiver = aes.encrypt(addrReceiver);
+        addrZipcode = aes.encrypt(addrZipcode);
+        addr = aes.encrypt(addr);
+        addrDetail = aes.encrypt(addrDetail);
+
+        //객체 생성
+        MemberAddr memberAddr = new MemberAddr();
+        memberAddr.setUserId(usid);
+        memberAddr.setAddrPhone(addrPhone);
+        memberAddr.setAddrCellPhone(addrCellPhone);
+        memberAddr.setAddrName(addrTitle);
+        memberAddr.setAddrReceiver(addrReceiver);
+        memberAddr.setAddrZipcode(addrZipcode);
+        memberAddr.setAddr(addr);
+        memberAddr.setAddrDetail(addrDetail);
+        memberAddr.setAddrStatus(isDefault);
+
+        int result = service.addrInsert(memberAddr);
+
+        if(result == 0) return msg(mv,"관리자에게 문의하세요","/member/myPage");
+
+        return msg(mv,"정상적으로 등록되었습니다","/member/address");
+    }
+
+    @PutMapping("/address")
+    private ModelAndView addressModify(ModelAndView mv, @ModelAttribute("loginMember") Member m, @RequestParam Map map){
+
+        log.info(map);
+        log.info("addressModify");
+        //insert에 필요한 데이터
+        int usid = m.getUserId();
+        String addrPhone = (String)map.get("memPhoneReg");
+        String addrCellPhone = (String)map.get("memPhone");
+        String addrTitle = (String)map.get("addrTitle");
+        String addrReceiver = (String)map.get("addrName");
+        String addrZipcode = (String)map.get("addrZipcode");
+        String addr = (String)map.get("addr");
+        String addrDetail = (String)map.get("addrDetail");
+        Integer addrId = Integer.parseInt((String)map.get("addrId"));
+
+        //암호화
+        try {
+            addrPhone = aes.encrypt(addrPhone);
+            addrCellPhone = aes.encrypt(addrCellPhone);
+            addrReceiver = aes.encrypt(addrReceiver);
+            addrZipcode = aes.encrypt(addrZipcode);
+            addr = aes.encrypt(addr);
+            addrDetail = aes.encrypt(addrDetail);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        log.info("after security");
+        //객체 생성
+        MemberAddr memberAddr = new MemberAddr();
+        memberAddr.setAddrId(addrId);
+        memberAddr.setUserId(usid);
+        memberAddr.setAddrPhone(addrPhone);
+        memberAddr.setAddrCellPhone(addrCellPhone);
+        memberAddr.setAddrName(addrTitle);
+        memberAddr.setAddrReceiver(addrReceiver);
+        memberAddr.setAddrZipcode(addrZipcode);
+        memberAddr.setAddr(addr);
+        memberAddr.setAddrDetail(addrDetail);
+
+        int result = service.addrUpdate(memberAddr);
+        log.info(result);
+        mv.setViewName("redirect:/member/address");
         return mv;
     }
 
