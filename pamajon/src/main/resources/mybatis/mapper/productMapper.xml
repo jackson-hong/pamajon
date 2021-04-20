@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pamajon.mapper.ProductMapper">
+<mapper namespace="product">
 
     <!--브랜드 CRUND 용 Mapper -->
     <resultMap id="brandResultSet" type="com.pamajon.product.model.vo.BrandDto">
@@ -15,6 +15,17 @@
     </select>
     <select id="getBrandList" resultMap="brandResultSet">
         SELECT * FROM PRO_BRAND
+    </select>
+
+    <select id="homeBoard" resultType="map">
+        SELECT *
+        FROM PRODUCT
+            left join PRO_IMAGE PI
+                on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
+            left join PRO_BRAND PB
+                on PRODUCT.PRO_BRAND = PB.PRO_BRAND
+        WHERE PRO_IMG_ISDEFAULT = 1
+        ORDER BY PRODUCT.PRODUCT_ID DESC LIMIT 20
     </select>
 
     <insert id="insertBrand" parameterType="int">

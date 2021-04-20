@@ -287,6 +287,9 @@
         #footer-info3 {
             width: 27%;
         }
+        .item {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -378,163 +381,21 @@
         </div>
         <div class="separator">NEW ARRIVAL</div>
         <div id="new-arrival">
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
+            <div class="item" th:each="item : ${resultList}">
+                <div class="forClick" th:onclick="|window.location.href='/board/${item.get('PRODUCT_ID')}'|">
+                    <div class="item-img-con">
+                        <img th:src="@{/images/new1.jpg}">
                     </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="item-img-con">
-                    <img th:src="@{/images/new1.jpg}">
-                </div>
-                <div class="item-description">
-                    <div class="item-brand">
-                        [BARNS OUTFITTERS]
-                    </div>
-                    <div class="item-name">
-                        GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                    </div>
-                    <div class="item-price">
-                        KRW 179,000
+                    <div class="item-description">
+                        <div th:text="${item.get('PRO_BRAND_NAME')}" class="item-brand">
+                            [BARNS OUTFITTERS]
+                        </div>
+                        <div th:text="${item.get('PRODUCT_NAME')}" class="item-name">
+                            GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
+                        </div>
+                        <div th:text="${item.get('PRODUCT_PRICE')}" class="item-price">
+                            KRW 179,000
+                        </div>
                     </div>
                 </div>
             </div>
