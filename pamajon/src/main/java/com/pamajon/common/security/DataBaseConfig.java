@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Configuration;
 @ToString
 public class DataBaseConfig {
 
-    private  final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+    private final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 
-    @Value("${spring.datasource.driverClassName}")
+    @Value("org.mariadb.jdbc.Driver")
     private String driverClassName;
     @Value("${spring.datasource.url}")
     private String url;
@@ -25,13 +25,22 @@ public class DataBaseConfig {
         encryptor.setAlgorithm("PBEWithMD5AndDES");
     }
 
+//    public String getDriverClassName() { return driverClassName; }
+//    public String getUrl() { return encryptor.decrypt(url); }
+//    public String getUsername() {
+//        return encryptor.decrypt(username);
+//    }
+//    public String getPassword() {
+//        return encryptor.decrypt(password);
+//    }
+
     public String getDriverClassName() { return driverClassName; }
-    public String getUrl() { return encryptor.decrypt(url); }
+    public String getUrl() { return url; }
     public String getUsername() {
-        return encryptor.decrypt(username);
+        return username;
     }
     public String getPassword() {
-        return encryptor.decrypt(password);
+        return password;
     }
 
 }

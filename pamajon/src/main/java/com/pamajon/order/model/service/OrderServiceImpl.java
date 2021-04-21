@@ -2,6 +2,7 @@ package com.pamajon.order.model.service;
 
 import com.pamajon.mapper.PurchaseMapper;
 import com.pamajon.order.model.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Primary
 public class OrderServiceImpl implements OrderService{
 
+    @Autowired
     private final PurchaseMapper purchaseMapper;
 
     public OrderServiceImpl(PurchaseMapper purchaseMapper){

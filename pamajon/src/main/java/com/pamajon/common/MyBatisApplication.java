@@ -38,10 +38,10 @@ public class MyBatisApplication {
                 .build();
     }
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource customDataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
 
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(customDataSource);
+        sessionFactory.setDataSource(customDataSource());
         Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*.xml");
         sessionFactory.setMapperLocations(res);
         return sessionFactory.getObject();
