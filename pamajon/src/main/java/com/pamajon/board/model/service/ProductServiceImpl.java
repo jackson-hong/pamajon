@@ -2,6 +2,7 @@ package com.pamajon.board.model.service;
 
 import com.pamajon.board.model.dao.ProductDao;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;

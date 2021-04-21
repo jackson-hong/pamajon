@@ -14,7 +14,6 @@ import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.member.model.vo.Mileage;
 import com.pamajon.order.model.vo.AddressDto;
 import com.sun.org.apache.xpath.internal.operations.Mod;
-import jdk.nashorn.internal.parser.JSONParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
