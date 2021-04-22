@@ -108,7 +108,18 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<Map> wishlist(int usid) {
+    public List<Integer> wishlist(int usid) {
         return dao.wishlist(session, usid);
     }
+
+    @Override
+    public List<Map> selectProductsForWish(List<Integer> wishList) {
+        return dao.selectProductsForWish(session, wishList);
+    }
+
+    @Override
+    public int wishDelete(Map map) {
+        return dao.wishDelete(session, map);
+    }
+
 }

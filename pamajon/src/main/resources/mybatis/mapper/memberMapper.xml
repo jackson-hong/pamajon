@@ -113,8 +113,15 @@
         SELECT * from MILEAGE WHERE USER_ID = #{usid} ORDER BY MILE_ID
     </select>
 
-    <select id="wishlist" parameterType="int" resultType="map">
-        SELECT * FROM WISHLIST WHERE USER_ID = #{usid}
+    <select id="wishlist" parameterType="int" resultType="int">
+        SELECT PRODUCT_ID FROM WISHLIST WHERE USER_ID = #{usid}
+    </select>
+
+    <select id="selectProductsForWish" resultType="map">
+        SELECT * FROM PRODUCT WHERE PRODUCT_ID IN
+        <foreach collection="wishList" item="item" open="(" close=")" separator=",">
+            #{item, jdbcType=INTEGER}
+        </foreach>
     </select>
 
     <update id="addrUpdate" parameterType="com.pamajon.member.model.vo.MemberAddr">
@@ -130,6 +137,10 @@
 
     <delete id="addrDelete" parameterType="string">
         DELETE FROM ADDRESS_LIST WHERE ADDR_ID = #{addrId}
+    </delete>
+
+    <delete id="wishDelete" parameterType="map">
+        DELETE FROM WISHLIST WHERE
     </delete>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
