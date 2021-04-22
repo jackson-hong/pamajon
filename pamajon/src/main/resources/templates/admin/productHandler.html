@@ -102,7 +102,10 @@
                         <div class="white-box">
                             <div style="display: flex; justify-content: space-between;">
                             <h3 class="box-title">상품관리 테이블</h3>
+                                <div>
+                                <button type="button" class="btn btn-outline-primary" id="insertProduct">상품등록</button>
                                 <button type="button" class="btn btn-outline-danger">삭제하기</button>
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table" style="text-align: center; align-items: center;" >
@@ -205,11 +208,10 @@
                     $("#codeInput").css('display','flex');
                 }
             });
-
-
         })
 
     </script>
+    <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/productInsertForward.js}"></script>
     <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
 </body>
 

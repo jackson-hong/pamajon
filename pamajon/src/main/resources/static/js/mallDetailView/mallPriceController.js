@@ -84,7 +84,7 @@ function submitOption(){
         alert("필수 옵션을 선택해주세요");
         $("input[name='productId']").focus();
     } else {
-        $("#sendProductOption").attr("action","/pamajon/order/purchase");
+        $("#sendProductOption").attr("action","/order/purchase");
         $("#sendProductOption").attr("method","GET");
         $("#sendProductOption").submit();
     }

@@ -134,20 +134,20 @@ function processPurchase(){
             });
 
             $.ajax({
-                url:"/pamajon/order/purchase",
+                url:"/order/purchase",
                 type:"POST",
                 traditional: true,
                 data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
                 success:function (result){
                     if(result>0){
                         $.ajax({
-                            url:"/pamajon/order/email",
+                            url:"/order/email",
                             type: "POST",
                             data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
                                 productName:"aaa"},
                             success:function (result){
                                 if(result>0){
-                                    location.href='/pamajon/member/orderList';
+                                    location.href='/member/orderList';
                                 }
                             }
                         })
@@ -267,7 +267,7 @@ function checkRemainProduct(){
 
     if($("#product_table > tbody > tr").length==0){
         alert("모든 상품을 삭제 하였습니다 메인페이지로 이동합니다.")
-        location.href="/pamajon";
+        location.href="/";
     } else {
         settingTablePrice();
         purchaseTableController();
@@ -482,20 +482,20 @@ function purchaseTest(){
         mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
     });
         $.ajax({
-            url:"/pamajon/order/purchase",
+            url:"/order/purchase",
             type:"POST",
             traditional: true,
             data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
             success:function (result){
                 if(result>0){
                     $.ajax({
-                        url:"/pamajon/order/email",
+                        url:"/order/email",
                         type: "POST",
                         data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
                             productName:"aaa"},
                         success:function (result){
                             if(result>0){
-                                location.href='/pamajon/member/orderList';
+                                location.href='/member/orderList';
                             }
                         }
                     })

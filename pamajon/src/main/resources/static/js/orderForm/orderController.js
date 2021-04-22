@@ -1,7 +1,7 @@
 'use strict'
 
 $("#btn_shipp_addr").on('click',function (){
-    window.open( "/pamajon/order/addresslist",
+    window.open( "/order/addresslist",
                "주소입력창",
              "width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes",
              "_blank" );
@@ -22,7 +22,7 @@ $("input[name='shippingAddr']").on('click',function(){
         document.getElementsByName("mobile[]")[2].value='';
 
         $.ajax({
-            url:"/pamajon/order/addressId",
+            url:"/addressId",
             type: "GET",
             success:function (result){
                 console.log(result);
@@ -37,7 +37,7 @@ getAddress();
 function getAddress(){
 
     $.ajax({
-        url:"/pamajon/order/regularAddress",
+        url:"/order/regularAddress",
         type:"GET",
         data:{userNo:`${$("input[name='userNo']").val()}`},
         success:function (result){

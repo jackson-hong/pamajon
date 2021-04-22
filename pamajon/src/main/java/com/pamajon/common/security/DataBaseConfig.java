@@ -24,17 +24,17 @@ public class DataBaseConfig {
         encryptor.setPassword("JEP");
         encryptor.setAlgorithm("PBEWithMD5AndDES");
     }
-
-//    public String getDriverClassName() { return driverClassName; }
-//    public String getUrl() { return encryptor.decrypt(url); }
-//    public String getUsername() {
-//        return encryptor.decrypt(username);
-//    }
-//    public String getPassword() {
-//        return encryptor.decrypt(password);
-//    }
-
     public String getDriverClassName() { return driverClassName; }
+    public String getUrl() { return encryptor.decrypt(url); }
+    public String getUsername() {
+        return encryptor.decrypt(username);
+    }
+    public String getPassword() {
+        return encryptor.decrypt(password);
+    }
+
+    /*
+   public String getDriverClassName() { return driverClassName; }
     public String getUrl() { return url; }
     public String getUsername() {
         return username;
@@ -42,5 +42,7 @@ public class DataBaseConfig {
     public String getPassword() {
         return password;
     }
+
+     */
 
 }

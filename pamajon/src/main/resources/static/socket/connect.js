@@ -24,10 +24,10 @@ function connect() {
     if(userName!="운영자"){
         selectedUser="운영자";
     }
-    $.post('/pamajon/chat/user-connect',
+    $.post('/chat/user-connect',
         { username: userName },
         function (remoteAddr, status, xhr) {
-            var socket = new SockJS('/pamajon/chat');
+            var socket = new SockJS('/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({ username: userName, userId: "test" }, function () {
                 stompClient.subscribe('/topic/active', function () {
@@ -82,7 +82,7 @@ function connect() {
 
 function disconnect() {
     if (stompClient != null) {
-        $.post('/pamajon/chat/user-disconnect',
+        $.post('/chat/user-disconnect',
             { username: userName },
             function () {
                 sendConnection(' disconnected from server');
@@ -248,7 +248,7 @@ function updateUsers(userName) {
         let activeUserSpan = $(".inbox_chat");
         let index;
         activeUserSpan.html('');
-        let url = '/pamajon/chat/active-user-except/' + userName;
+        let url = '/chat/active-user-except/' + userName;
 
         $.ajax({
             type: 'GET',

@@ -22,7 +22,7 @@ public class OrderRestController {
 
     @Qualifier("orderRestServiceImpl")
     private final OrderRestServiceImpl orderRestService;
-    private static final Logger logger = LoggerFactory.getLogger(OrderRestController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderRestController.class);
 
     @Autowired
     @Qualifier("gmailConfig")
@@ -74,13 +74,13 @@ public class OrderRestController {
      */
     @GetMapping("/order/regularAddress")
     public ResponseEntity<AddressDto> getRegularAddress(@RequestParam String userNo){
-        logger.info("==========상품결제 페이지 입장시 기본 배송지 조회============");
+        LOGGER.info("==========상품결제 페이지 입장시 기본 배송지 조회============");
 
         if(orderRestService.regularAddressCnt(userNo)>0){
-            logger.info("==========기본 배송지가 등록 되어있음.============");
+            LOGGER.info("==========기본 배송지가 등록 되어있음.============");
             return new ResponseEntity<>(orderRestService.getRegAddress(Integer.parseInt(userNo)),HttpStatus.OK);
         }
-        logger.info("====================== 기본 배송지가 등록 되어있지 않은경우 null 값을 반환.");
+        LOGGER.info("====================== 기본 배송지가 등록 되어있지 않은경우 null 값을 반환.");
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
