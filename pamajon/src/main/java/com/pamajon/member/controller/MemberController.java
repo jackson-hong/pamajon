@@ -98,7 +98,7 @@ public class MemberController {
         name = aes.decrypt(name);
 
         mv.addObject("name", name);
-        mv.setViewName("/member/myPage");
+        mv.setViewName("member/myPage");
         return mv;
     }
 
@@ -141,13 +141,13 @@ public class MemberController {
         log.info(input);
         mv.addObject("name",(String)input.get("name"));
         mv.addObject("email",(String)input.get("email"));
-        mv.setViewName("/member/kakaoJoin");
+        mv.setViewName("member/kakaoJoin");
         return mv;
     }
 
     @GetMapping("/login")
     public ModelAndView login(ModelAndView mv){
-        mv.setViewName("/member/login");
+        mv.setViewName("member/login");
         return mv;
     }
 //    @GetMapping("/logout")
@@ -232,7 +232,7 @@ public class MemberController {
 
     @GetMapping("/join")
     public ModelAndView join(ModelAndView mv){
-        mv.setViewName("/member/join");
+        mv.setViewName("member/join");
         return mv;
     }
 
@@ -265,7 +265,7 @@ public class MemberController {
         if(email.isEmpty()||name.isEmpty()||phone.isEmpty()){
             mv.addObject("msg","잘못된 정보가 존재합니다.");
             mv.addObject("loc","/member/login");
-            mv.setViewName("/common/msg");
+            mv.setViewName("common/msg");
             return mv;
         }
 
@@ -277,7 +277,7 @@ public class MemberController {
         if(findDuplicate > 0){
             mv.addObject("msg","이전에 가입된 아이디가 존재합니다");
             mv.addObject("loc","/member/join");
-            mv.setViewName("/common/msg");
+            mv.setViewName("common/msg");
             return mv;
         }
 
@@ -288,7 +288,7 @@ public class MemberController {
         if(result == 0){
             mv.addObject("msg","잘못된 정보가 존재합니다.");
             mv.addObject("loc","/member/login");
-            mv.setViewName("/common/msg");
+            mv.setViewName("common/msg");
             return mv;
         }
 
@@ -301,7 +301,7 @@ public class MemberController {
             e.printStackTrace();
             mv.addObject("msg","이전에 가입된 아이디가 존재합니다");
             mv.addObject("loc","/member/join");
-            mv.setViewName("/common/msg");
+            mv.setViewName("common/msg");
             return mv;
         }
 
@@ -318,7 +318,7 @@ public class MemberController {
         if(emailResult == 0){
             mv.addObject("msg","잘못된 정보가 존재합니다.");
             mv.addObject("loc","/member/login");
-            mv.setViewName("/common/msg");
+            mv.setViewName("common/msg");
         }
         log.info("phone: " + phone);
         //세션 생성을 위한 Member 객체 생성
@@ -343,7 +343,7 @@ public class MemberController {
 
     @RequestMapping("/orderList")
     public ModelAndView orderList(ModelAndView mv) {
-        mv.setViewName("/member/orderList");
+        mv.setViewName("member/orderList");
         return mv;
     }
 
@@ -360,18 +360,18 @@ public class MemberController {
         mv.addObject("frontNum", phoneFull[0]);
         mv.addObject("midNum", phoneFull[1]);
         mv.addObject("lastNum", phoneFull[2]);
-        mv.setViewName("/member/modify");
+        mv.setViewName("member/modify");
         return mv;
     }
 
-    @RequestMapping("/wishList")
-    public ModelAndView wishList(ModelAndView mv){
-        mv.setViewName("/member/wishList");
-        return mv;
-    }
+//    @GetMapping("/wishList")
+//    public ModelAndView wishList(ModelAndView mv){
+//        mv.setViewName("/member/wishList");
+//        return mv;
+//    }
 
     @RequestMapping("/mileage")
-    public ModelAndView mileage(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, HttpSession session, HttpServletRequest req, @RequestParam(defaultValue = "1") int cPage){
+    public ModelAndView mileage(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, HttpServletRequest req, @RequestParam(defaultValue = "1") int cPage){
 
         log.info("cPage : " + cPage);
 
@@ -405,7 +405,7 @@ public class MemberController {
         mv.addObject("minusMile",minusMile);
         mv.addObject("usableMile",usableMile);
         mv.addObject("mileageList", mileageList);
-        mv.setViewName("/member/mileage");
+        mv.setViewName("member/mileage");
         return mv;
     }
 
@@ -413,7 +413,7 @@ public class MemberController {
 
     @GetMapping("/changePw")
     public ModelAndView changePw(ModelAndView mv){
-        mv.setViewName("/member/changePw");
+        mv.setViewName("member/changePw");
         return mv;
     }
 
@@ -432,7 +432,7 @@ public class MemberController {
             String script = "close";
             return msgWithScr(mv,"유효하지 않은 비밀번호입니다.","",script);
         }
-        mv.setViewName("/member/changePwEnd");
+        mv.setViewName("member/changePwEnd");
         return mv;
     }
 
@@ -473,7 +473,7 @@ public class MemberController {
             }
         });
         mv.addObject("addrList", resultList);
-        mv.setViewName("/member/address");
+        mv.setViewName("member/address");
         return mv;
     }
 
@@ -509,7 +509,7 @@ public class MemberController {
     public ModelAndView goToAddressInsert(ModelAndView mv, @ModelAttribute("loginMember") Member m){
         int result = service.countAddr(m.getUserId());
         if(result>10)return msg(mv, "주소는 10개까지 등록이 가능합니다","/member/address");
-        mv.setViewName("/member/addressInsert");
+        mv.setViewName("member/addressInsert");
         return mv;
     }
 
@@ -536,7 +536,7 @@ public class MemberController {
         mv.addObject("phone",phone);
         mv.addObject("cellPhone",cellPhone);
         mv.addObject("addr", addr);
-        mv.setViewName("/member/addressModify");
+        mv.setViewName("member/addressModify");
         return mv;
     }
 
@@ -637,7 +637,7 @@ public class MemberController {
         List<Map> wishlist = service.wishlist(loginMember.getUserId());
         log.info(wishlist);
         mv.addObject("wishlist", wishlist);
-        mv.setViewName("/member/wishList");
+        mv.setViewName("member/wishList");
         return mv;
     }
     public int mileageInsert(int usid, int amount, String content, String type){
@@ -664,7 +664,7 @@ public class MemberController {
     private ModelAndView msg(ModelAndView mv, String msg, String loc){
         mv.addObject("msg",msg);
         mv.addObject("loc",loc);
-        mv.setViewName("/common/msg");
+        mv.setViewName("common/msg");
         return mv;
     }
 
@@ -672,7 +672,7 @@ public class MemberController {
         mv.addObject("msg",msg);
         mv.addObject("loc",loc);
         mv.addObject("script", script);
-        mv.setViewName("/common/msg");
+        mv.setViewName("common/msg");
         return mv;
     }
 }

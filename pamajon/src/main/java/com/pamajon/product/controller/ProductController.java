@@ -24,7 +24,7 @@ public class ProductController {
     @GetMapping("/{product_id}")
     public ModelAndView productDetail(ModelAndView mv, @PathVariable("product_id") int productId){
         mv.addObject("productId", productId);
-        mv.setViewName("/detailView/mallDetailview");
+        mv.setViewName("detailView/mallDetailview");
         return mv;
     }
 
@@ -54,14 +54,14 @@ public class ProductController {
     private ModelAndView msg(ModelAndView mv, String msg, String loc){
         mv.addObject("msg",msg);
         mv.addObject("loc",loc);
-        mv.setViewName("/common/msg");
+        mv.setViewName("common/msg");
         return mv;
     }
     private ModelAndView msgWithScr(ModelAndView mv, String msg, String loc, String script){
         mv.addObject("msg",msg);
         mv.addObject("loc",loc);
         mv.addObject("script", script);
-        mv.setViewName("/common/msg");
+        mv.setViewName("common/msg");
         return mv;
     }
 }
