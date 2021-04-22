@@ -3,7 +3,7 @@
     getAddrList();
     function getAddrList() {
         $.ajax({
-            url: '/pamajon/order/addressinput',
+            url: '/order/addressinput',
             type: 'GET',
             data: {"userNo": `${$("input[name='userNo']").val()}`},
             dataType: 'json',
@@ -115,7 +115,7 @@
             const promise = new Promise((resolve, reject)=>{
 
                 $.ajax({
-                    url:"/pamajon/order/regular",
+                    url:"/order/regular",
                     type:"GET",
                     contentType : "application/json;charset=UTF-8",
                     data:{'userNo':`${$("input[name='userNo']").val()}`},
@@ -133,7 +133,7 @@
                 }
 
                 $.ajax({
-                    url:"/pamajon/order/address",
+                    url:"/order/address",
                     type: "POST",
                     data:{
                         "addrName":$("input[name='addrName']").val(),
@@ -173,7 +173,7 @@
             const promise = new Promise((resolve, reject)=>{
 
                 $.ajax({
-                    url:"/pamajon/order/regular",
+                    url:"/order/regular",
                     type:"GET",
                     contentType : "application/json;charset=UTF-8",
                     data:{'userNo':`${$("input[name='userNo']").val()}`},
@@ -192,7 +192,7 @@
                 }
 
                 $.ajax({
-                    url:"/pamajon/order/address",
+                    url:"/order/address",
                     type: "PUT",
                     data:{
                         "addrId":$("input[name='addrId']").val(),
@@ -282,7 +282,7 @@ function deleteAddress(){
     if(confirm("체크된 주소를 삭제 하시겠습니까?")){
 
         $.ajax({
-            url:"/pamajon/order/address",
+            url:"/order/address",
             type:"DELETE",
             data:{"addrIdList":checkedList
                  ,"userNo":`${$("input[name='userNo']").val()}`},
@@ -325,7 +325,7 @@ function injectAddress(inject){
 
     $("input[name='addrId']").val(inject.parentNode.parentNode.childNodes[1].innerHTML);
     $.ajax({
-        url:"/pamajon/order/address",
+        url:"/order/address",
         type:"GET",
         data:{addrNo:`${inject.parentNode.parentNode.childNodes[1].innerHTML}`},
         success:function (result){
@@ -352,7 +352,7 @@ function modifyAddress(target){
         $("input[name='addrId']").val(target.parentNode.parentNode.childNodes[1].innerHTML);
 
         $.ajax({
-            url:"/pamajon/order/address",
+            url:"/order/address",
             type:"GET",
             data:{addrNo:`${target.parentNode.parentNode.childNodes[1].innerHTML}`},
             success:function (result){

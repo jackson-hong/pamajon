@@ -37,10 +37,10 @@ public class OrderController {
 
     @GetMapping("/order/purchase")
     public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto){
-            Member m = orderService.getMember(2020);
-            model.addAttribute("productList",orderService.getProductOption(productOptionDto));
+            Member m = orderService.getMember(2056);
+           // model.addAttribute("productList",orderService.getProductOption(productOptionDto));
             model.addAttribute("member",m);
-            model.addAttribute("mileage",orderService.getMileage(2020));
+            model.addAttribute("mileage",orderService.getMileage(2056));
 
             return "/order/orderform";
         }

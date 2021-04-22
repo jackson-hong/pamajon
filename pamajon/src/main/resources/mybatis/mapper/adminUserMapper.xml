@@ -130,6 +130,4 @@
             ADMIN_LOGIN_ID=#{adminLoginId}
     </update>
 
-
-
 </mapper>    
