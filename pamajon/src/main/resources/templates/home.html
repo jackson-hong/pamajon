@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/glider.css}">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
+    <link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>₩
     <script th:src="@{/js/glider.js}"></script>
     <style>
         body {
@@ -382,7 +383,7 @@
         <div class="separator">NEW ARRIVAL</div>
         <div id="new-arrival">
             <div class="item" th:each="item : ${resultList}">
-                <div class="forClick" th:onclick="|window.location.href='/board/${item.get('PRODUCT_ID')}'|">
+                <div class="forClick" th:onclick="|fn_location('/product/${item.get('PRODUCT_ID')}')|">
                     <div class="item-img-con">
                         <img th:src="@{/images/new1.jpg}">
                     </div>
@@ -451,6 +452,12 @@
         }
     });
 
+</script>
+<script>
+    let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
+    function fn_location(loc){
+        location.href = contextPath + loc;
+    }
 </script>
 </body>
 </html>

@@ -130,7 +130,7 @@
             <div id="optionSelecter">
                 <div id="buyBtn" onclick="submitOption();">BUY-NOW</div>
                 <div id="cartBtn" onclick="">CART</div>
-                <div id="wishBtn" onclick="">WISH</div>
+                <div id="wishBtn" th:onclick="|fn_wishInsert('${productId}');|">WISH</div>
             </div>
                 </form>
             </div>  
@@ -203,10 +203,26 @@
             </div>
         </div>
     </div>
+<script>
+    function fn_wishInsert(proId){
+        let productId = proId;
+        $.ajax({
+            type:"POST",
+            contentType : 'application/json; charset=utf-8',
+            url: contextPath + "/product/wishlist",
+            data : JSON.stringify({"productId" : productId}),
+            success: (data) => {
+                if(data === 'SUCCESS')alert("위시리스트에 추가되었습니다");
+                if(data === 'FAIL')alert("실패하였습니다. 관리자에게 문의하세요.");
+                if(data === 'DUPLICATE')alert("이미 위시리스트에 추가되었습니다.");
+            },error: (msg) => {
+                console.log(msg)
+            }
+        })
+    }
+</script>
 
 <th:block th:replace="common/footer.html"></th:block>
-
-
     <script defer th:src="@{/js/mallDetailView/mallPriceController.js}"></script>
 </body>
 </html>

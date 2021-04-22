@@ -26,4 +26,5 @@ public interface MemberService {
     int updatePasswd(Map map);
     int mileageInsert(Map map);
     List mileageSelect(int usid);
+    List<Map> wishlist(int usid);
 }

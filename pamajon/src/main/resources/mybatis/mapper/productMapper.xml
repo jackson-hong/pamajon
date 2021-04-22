@@ -28,6 +28,26 @@
         ORDER BY PRODUCT.PRODUCT_ID DESC LIMIT 20
     </select>
 
+    <select id="wishDuplicate" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM WISHLIST
+        WHERE PRODUCT_ID = #{productId} AND USER_ID = #{usid}
+    </select>
+
+    <insert id="wishInsert" parameterType="map">
+        INSERT INTO WISHLIST(
+                             WL_LIST,
+                             PRODUCT_ID,
+                             USER_ID,
+                             WL_STATUS
+        )VALUES(
+                NEXTVAL(SEQ_WISHLIST),
+                #{productId},
+                #{usid},
+                0
+                       )
+    </insert>
+
     <insert id="insertBrand" parameterType="int">
         INSERT INTO PRO_BRAND(
                     PRO_BRAND,

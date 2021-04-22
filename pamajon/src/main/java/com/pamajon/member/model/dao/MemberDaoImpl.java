@@ -98,4 +98,9 @@ public class MemberDaoImpl implements MemberDao{
     public List mileageSelect(SqlSession session, int usid) {
         return session.selectList("member.mileageSelect", usid);
     }
+
+    @Override
+    public List<Map> wishlist(SqlSession session, int usid) {
+        return session.selectList("member.wishlist", usid);
+    }
 }

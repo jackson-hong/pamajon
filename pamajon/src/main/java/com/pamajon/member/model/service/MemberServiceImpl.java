@@ -106,4 +106,9 @@ public class MemberServiceImpl implements MemberService{
     public List mileageSelect(int usid) {
         return dao.mileageSelect(session, usid);
     }
+
+    @Override
+    public List<Map> wishlist(int usid) {
+        return dao.wishlist(session, usid);
+    }
 }

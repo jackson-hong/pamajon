@@ -13,6 +13,7 @@ import com.pamajon.member.model.vo.Member;
 import com.pamajon.member.model.vo.MemberAddr;
 import com.pamajon.member.model.vo.Mileage;
 import com.pamajon.order.model.vo.AddressDto;
+import com.pamajon.product.model.service.ProductService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -59,18 +60,19 @@ public class MemberController {
 
     @Qualifier("memberServiceImpl")
     private final MemberService service;
+    @Qualifier("productServiceImpl")
+    private final ProductService productService;
 
-    public MemberController(MemberService service) {
+    public MemberController(MemberService service, ProductService productService) {
         this.service = service;
+        this.productService = productService;
     }
 
     @GetMapping("/myPage")
-    public ModelAndView myPage(ModelAndView mv, HttpServletRequest req) throws GeneralSecurityException, UnsupportedEncodingException {
-        HttpSession sess = req.getSession();
-        Member m = (Member)sess.getAttribute("loginMember");
+    public ModelAndView myPage(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, HttpServletRequest req) throws GeneralSecurityException, UnsupportedEncodingException {
 
         //마일리지 가져오기
-        Collection<Mileage> mileageList = mileageSelect(m.getUserId());
+        Collection<Mileage> mileageList = mileageSelect(loginMember.getUserId());
 
         //총적립금
         int plusMile = mileageList.stream()
@@ -92,7 +94,7 @@ public class MemberController {
         mv.addObject("usableMile",usableMile);
 
         //이름 출력
-        String name = m.getMemName();
+        String name = loginMember.getMemName();
         name = aes.decrypt(name);
 
         mv.addObject("name", name);
@@ -102,7 +104,6 @@ public class MemberController {
 
     //kakaologin
     @PostMapping(value = "/kakao")
-    @ResponseBody
     public String kakao(@RequestBody Map input, ModelAndView mv, HttpServletRequest request) throws Exception{
         log.info(input);
 
@@ -129,6 +130,8 @@ public class MemberController {
         Member loginMember = service.selectMemByUsid(usid);
         loginMember.setMemEmail(email);
         loginMember.setIsSocial(1);
+        log.info("*****KAKAOLOGIN*****: " + loginMember);
+
         sess.setAttribute("loginMember", loginMember);
         return "EXIST";
     }
@@ -143,9 +146,8 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public ModelAndView login(ModelAndView mv, @RequestParam Map input, HttpServletRequest req){
+    public ModelAndView login(ModelAndView mv){
         mv.setViewName("/member/login");
-        log.info(req.getSession().getAttribute("loginMember"));
         return mv;
     }
 //    @GetMapping("/logout")
@@ -346,17 +348,12 @@ public class MemberController {
     }
 
     @RequestMapping("/modify")
-    public ModelAndView modify(ModelAndView mv, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
-        Member loginMember = (Member) sess.getAttribute("loginMember");
+    public ModelAndView modify(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
         log.info(loginMember);
-//        String test = loginMember.getMemPhone();
-//        String test2 = aes.decrypt(test);
         String name = aes.decrypt(loginMember.getMemName());
         String email = aes.decrypt(loginMember.getMemEmail());
         String phone = aes.decrypt(loginMember.getMemPhone());
         String[] phoneFull = phone.split("-");
-
-//        log.info(test + " : " +test2);
 
         mv.addObject("name", name);
         mv.addObject("email",email);
@@ -374,15 +371,14 @@ public class MemberController {
     }
 
     @RequestMapping("/mileage")
-    public ModelAndView mileage(ModelAndView mv, HttpSession session, HttpServletRequest req, @RequestParam(defaultValue = "1") int cPage){
+    public ModelAndView mileage(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, HttpSession session, HttpServletRequest req, @RequestParam(defaultValue = "1") int cPage){
 
         log.info("cPage : " + cPage);
 
         String context = req.getContextPath();
 
-        Member m = (Member)session.getAttribute("loginMember");
         //마일리지 가져오기
-        List<Mileage> mileageList = mileageSelect(m.getUserId());
+        List<Mileage> mileageList = mileageSelect(loginMember.getUserId());
         int leng = mileageList.size();
 
         //총적립금
@@ -422,8 +418,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/changePw")
-    public ModelAndView chagePwMid(ModelAndView mv, @RequestParam Map input, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
-        Member loginMember = (Member)sess.getAttribute("loginMember");
+    public ModelAndView chagePwMid(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, @RequestParam Map input, HttpSession sess) throws GeneralSecurityException, UnsupportedEncodingException {
         String passwd = (String)input.get("password");
         String email = loginMember.getMemEmail();
 
@@ -442,8 +437,7 @@ public class MemberController {
     }
 
     @PutMapping("/changePw")
-    public ModelAndView changePwLast(ModelAndView mv, @RequestParam Map input, HttpSession sess){
-        Member loginMember = (Member)sess.getAttribute("loginMember");
+    public ModelAndView changePwLast(ModelAndView mv,@ModelAttribute("loginMember") Member loginMember, @RequestParam Map input, HttpSession sess){
         log.info(input);
         String passwd = (String)input.get("password");
         passwd = passwordEncoder.encode(passwd);
@@ -461,6 +455,7 @@ public class MemberController {
 
     @GetMapping("/address")
     public ModelAndView address(ModelAndView mv, @ModelAttribute("loginMember") Member m){
+        log.info(m);
         List<MemberAddr> resultList = service.selectAddrList(m.getUserId());
         log.info(resultList);
         resultList.stream().forEach(addr -> {
@@ -477,7 +472,6 @@ public class MemberController {
                 e.printStackTrace();
             }
         });
-        log.info(resultList);
         mv.addObject("addrList", resultList);
         mv.setViewName("/member/address");
         return mv;
@@ -637,20 +631,15 @@ public class MemberController {
         return mv;
     }
 
-    private ModelAndView msg(ModelAndView mv, String msg, String loc){
-        mv.addObject("msg",msg);
-        mv.addObject("loc",loc);
-        mv.setViewName("/common/msg");
-        return mv;
-    }
-    private ModelAndView msgWithScr(ModelAndView mv, String msg, String loc, String script){
-        mv.addObject("msg",msg);
-        mv.addObject("loc",loc);
-        mv.addObject("script", script);
-        mv.setViewName("/common/msg");
-        return mv;
-    }
+    @GetMapping("/wishList")
+    public ModelAndView wishlist(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember){
 
+        List<Map> wishlist = service.wishlist(loginMember.getUserId());
+        log.info(wishlist);
+        mv.addObject("wishlist", wishlist);
+        mv.setViewName("/member/wishList");
+        return mv;
+    }
     public int mileageInsert(int usid, int amount, String content, String type){
 
         Map map = new HashMap();
@@ -665,10 +654,25 @@ public class MemberController {
     }
 
     public List mileageSelect(int usid){
-        List result = new ArrayList<Mileage>();
+        List result;
 
         result = service.mileageSelect(usid);
 
         return result;
+    }
+
+    private ModelAndView msg(ModelAndView mv, String msg, String loc){
+        mv.addObject("msg",msg);
+        mv.addObject("loc",loc);
+        mv.setViewName("/common/msg");
+        return mv;
+    }
+
+    private ModelAndView msgWithScr(ModelAndView mv, String msg, String loc, String script){
+        mv.addObject("msg",msg);
+        mv.addObject("loc",loc);
+        mv.addObject("script", script);
+        mv.setViewName("/common/msg");
+        return mv;
     }
 }

@@ -113,6 +113,10 @@
         SELECT * from MILEAGE WHERE USER_ID = #{usid} ORDER BY MILE_ID
     </select>
 
+    <select id="wishlist" parameterType="int" resultType="map">
+        SELECT * FROM WISHLIST WHERE USER_ID = #{usid}
+    </select>
+
     <update id="addrUpdate" parameterType="com.pamajon.member.model.vo.MemberAddr">
         UPDATE ADDRESS_LIST SET ADDR_PHONE = #{addrPhone},
                                 ADDR_NAME = #{addrName},

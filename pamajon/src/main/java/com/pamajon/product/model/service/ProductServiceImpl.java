@@ -1,8 +1,7 @@
-package com.pamajon.board.model.service;
+package com.pamajon.product.model.service;
 
-import com.pamajon.board.model.dao.ProductDao;
+import com.pamajon.product.model.dao.ProductDao;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -10,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
-@Service("boardServiceImpl")
+@Service("productServiceImpl")
 @Primary
 public class ProductServiceImpl implements ProductService {
 
-    @Qualifier("boardDaoImpl")
+    @Qualifier("productDaoImpl")
     private final ProductDao dao;
     private final SqlSession session;
 
@@ -26,5 +25,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<HashMap> homeBoard() {
         return dao.homeBoard(session);
+    }
+
+    @Override
+    public int wishInsert(HashMap map) {
+        return dao.wishInsert(session, map);
+    }
+
+    @Override
+    public int wishDuplicate(HashMap map) {
+        return dao.wishDuplicate(session, map);
     }
 }

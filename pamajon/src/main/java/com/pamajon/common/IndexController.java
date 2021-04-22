@@ -1,6 +1,6 @@
 package com.pamajon.common;
 
-import com.pamajon.board.model.service.ProductService;
+import com.pamajon.product.model.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

@@ -26,4 +26,5 @@ public interface MemberDao {
     int updatePasswd(SqlSession session, Map map);
     int mileageInsert(SqlSession session, Map map);
     List mileageSelect(SqlSession session, int usid);
+    List<Map> wishlist(SqlSession session, int usid);
 }
