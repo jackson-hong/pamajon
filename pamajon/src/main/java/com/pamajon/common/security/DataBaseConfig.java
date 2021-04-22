@@ -11,7 +11,7 @@ public class DataBaseConfig {
 
     private final StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 
-    @Value("org.mariadb.jdbc.Driver")
+    @Value("${spring.datasource.driverClassName}")
     private String driverClassName;
     @Value("${spring.datasource.url}")
     private String url;
