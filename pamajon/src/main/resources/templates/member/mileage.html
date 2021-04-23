@@ -238,7 +238,7 @@
             <tr th:each="mile : ${mileageList}">
                 <td th:text="${#calendars.format(mile.getDate(), 'yyyy-MM-dd')}">
                 </td>
-                <td th:text="${mile.getAmount()} + 원">
+                <td th:text="${#numbers.formatCurrency(mile.getAmount())} + 원">
                 </td>
                 <td>
                 </td>

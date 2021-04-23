@@ -1,7 +1,7 @@
 package com.pamajon.common.page;
 
 public class PageFactory {
-    public static String getPageBar(int totalData, int cPage, int numPerPage, String uri) {
+    public static String getPageBar(int totalData, int cPage, int numPerPage) {
 
         String pageBar = "";
 

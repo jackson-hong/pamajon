@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 @Log4j2
 @RestController
@@ -25,8 +26,32 @@ public class IndexController {
     @GetMapping("/")
     public ModelAndView index(ModelAndView mv){
         List<HashMap> resultList = service.homeBoard();
-        log.info(resultList);
+
+        List<HashMap> bigCateList = service.bigCateList();
+
+        List<HashMap> smallCateList = service.smallCateList();
+
+        List<List<HashMap>> cateResult = new ArrayList<>();
+        IntStream.range(0, bigCateList.size()).forEach(index -> {
+            List<HashMap> temp = new ArrayList<HashMap>();
+            temp.add(bigCateList.get(index));
+            cateResult.add(index, temp);
+        });
+
+        smallCateList.stream().forEach(smallCate -> {
+            Integer bigCateId = (Integer)smallCate.get("PRO_CAT_WRAPPER_ID");
+            cateResult.stream().forEach(ele -> {
+                Integer temp = (Integer) ele.get(0).get("PRO_CAT_WRAPPER_ID");
+                if(temp.equals(bigCateId)){
+                    ele.add(smallCate);
+                }
+            });
+        });
+
+        log.info("CATERESULT: "+cateResult);
+
         mv.setViewName("home");
+        mv.addObject("cateResult",cateResult);
         mv.addObject("resultList", resultList);
         mv.addObject("appName",appName);
         return mv;

@@ -46,6 +46,7 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Log4j2
@@ -398,7 +399,7 @@ public class MemberController {
 
         mileageList = mileageList.subList((cPage-1)*5, cPage*5 > leng ? leng : cPage*5);
 
-        String pageBar = PageFactory.getPageBar(leng,cPage,5, context);
+        String pageBar = PageFactory.getPageBar(leng,cPage,5);
 
         mv.addObject("pageBar", pageBar);
         mv.addObject("plusMile",plusMile);
@@ -632,14 +633,72 @@ public class MemberController {
     }
 
     @GetMapping("/wishList")
-    public ModelAndView wishlist(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember){
+    public ModelAndView wishlist(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, @RequestParam(defaultValue = "1") int cPage){
 
-        List<Map> wishlist = service.wishlist(loginMember.getUserId());
+        List<Integer> wishlist = service.wishlist(loginMember.getUserId());
         log.info(wishlist);
-        mv.addObject("wishlist", wishlist);
+        List<Map> productList = service.selectProductsForWish(wishlist);
+
+        productList.stream().map(product -> {
+            int productPrice = (Integer)product.get("PRODUCT_PRICE");
+            int mileage = productPrice/100;
+            int deliveryFee;
+            if(productPrice > 50000) deliveryFee = 0;
+            else deliveryFee = 3000;
+            int totalPrice = productPrice + deliveryFee;
+            product.put("mileage", mileage);
+            product.put("deliveryFee",deliveryFee);
+            product.put("totalPrice", totalPrice);
+            return product;
+        }).collect(Collectors.toList());
+
+        log.info(productList);
+
+        int leng = productList.size();
+
+        productList = productList.subList((cPage-1)*5, cPage*5 > leng ? leng : cPage*5);
+
+        String pageBar = PageFactory.getPageBar(leng,cPage,5);
+
+        mv.addObject("pageBar", pageBar);
+        mv.addObject("productList", productList);
         mv.setViewName("member/wishList");
         return mv;
     }
+
+    @DeleteMapping("/wishList/{input}")
+    public String wishListDelete(@PathVariable("input") String input, @ModelAttribute("loginMember") Member loginMember){
+        log.info(input);
+
+        //JSON -> Map
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = new HashMap<>();
+        try {
+            map = mapper.readValue(input, Map.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        //맵에서 밸류만 가져오기
+        Collection<String> list = map.values();
+
+        //user id
+        int usid = loginMember.getUserId();
+
+        //삭제
+        int result = 0;
+        for(String val : list){
+            HashMap wishMap = new HashMap();
+            wishMap.put("usid", usid);
+            wishMap.put("proId", val);
+            result += service.wishDelete(wishMap);
+        }
+
+        if(result == 0) return "error";
+
+        return "success";
+    }
+
     public int mileageInsert(int usid, int amount, String content, String type){
 
         Map map = new HashMap();

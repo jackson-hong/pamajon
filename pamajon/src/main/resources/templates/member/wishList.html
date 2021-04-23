@@ -66,7 +66,7 @@
         border:1px silver solid;
         border-radius: 3px;
         color: black;
-        width: 5.5em;
+        width: 6em;
         height: 1.75em;
         margin: 0.1em;
         text-align: left;
@@ -180,6 +180,25 @@
         color: white;
         border:black;
     }
+    .page-btn {
+        cursor: pointer;
+    }
+    .selected {
+        cursor: auto;
+    }
+    .disable {
+        cursor: auto;
+    }
+    
+    button {
+        cursor: pointer;
+    }
+
+    .deleteBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 <div id="title-idx">
     <div id="title">
@@ -203,42 +222,42 @@
                 <th class="product-total-price">합계</th>
                 <th class="product-recall">선택</th>
             </tr>
-            <tr>
+            <tr th:each="pro : ${productList}">
                 <td class="product-select-content">
-                    <input type="checkbox">
+                    <input class="proCheck" th:value="${pro.get('PRODUCT_ID')}" type="checkbox">
                 </td>
                 <td>
                     <img class="product-img-content" th:src="@{/images/new6.jpg}">
                 </td>
                 <td class="product-info-content">
-                    <b>REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)</b></b><br><br>
+                    <b th:text="${pro.get('PRODUCT_NAME')}">REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)</b></b><br><br>
                 </td>
                 <td class="product-price-content">
-                    <b>KRW 229,000</b>
+                    <b th:text="|KRW ${#numbers.formatInteger(pro.get('PRODUCT_PRICE'),3,'COMMA')}|">KRW 229,000</b>
                 </td>
-                <td>
+                <td th:text="|${#numbers.formatInteger(pro.get('mileage'),3,'COMMA')}원|">
                     2,000원
                 </td>
                 <td>
                     기본배송
                 </td>
-                <td>
+                <td th:text="|KRW ${#numbers.formatInteger(pro.get('deliveryFee'),3,'COMMA')}|">
                     KRW 3,000<br>조건
                 </td>
-                <td>
+                <td th:text="|KRW ${#numbers.formatInteger(pro.get('totalPrice'),3,'COMMA')}|">
                     KRW 285,500
                 </td>
                 <td>
                     <button class="product-date-btn submit">주문하기 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button class="product-date-btn">주문취소 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button class="product-date-btn">교환신청 <ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <button class="product-date-btn">장바구니로</button><br>
+                    <button th:onclick="|fn_delete('${pro.get('PRODUCT_ID')}')|" class="product-date-btn deleteBtn"><ion-icon name="close-outline"></ion-icon> 삭제</button>
                 </td>
             </tr>
         </table>
         <div id="select-btns">
             <div id="select-left-btns">
                 선택상품을
-                <button class="select-left-btn delete"><ion-icon name="close"></ion-icon>삭제하기</button>
+                <button onclick="fn_delete()" class="select-left-btn delete"><ion-icon name="close"></ion-icon>삭제하기</button>
                 <button class="select-left-btn">장바구니 담기</button>
             </div>
             <div id="select-right-btns">
@@ -246,14 +265,56 @@
                 <button class="select-right-btn submit">전체상품주문</button>
             </div>
         </div>
-        <div id="pagination">
-            <button class="page-btn" id="big-left"><<</button>
-            <button class="page-btn" id="left"><</button>
-            <button class="page-btn selected" id="num-page">1</button>
-            <button class="page-btn" id="right">></button>
-            <button class="page-btn" id="big-right">>></button>
-        </div>
+<!--        <div id="pagination">-->
+<!--            <button class="page-btn" id="big-left"><<</button>-->
+<!--            <button class="page-btn" id="left"><</button>-->
+<!--            <button class="page-btn selected" id="num-page">1</button>-->
+<!--            <button class="page-btn" id="right">></button>-->
+<!--            <button class="page-btn" id="big-right">>></button>-->
+<!--        </div>-->
+        <th:block th:utext="${pageBar}"></th:block>
     </div>
 </div>
+<script>
+    function fn_paging(cPage){location.href='/member/wishList?cPage='+cPage;}
+</script>
+<script>
+    function fn_delete(proId){
+        let input = {};
+        console.log(proId);
+        if(proId === undefined) {
+            let checks = document.getElementsByClassName('proCheck');
+            for (let i = 0; i < checks.length; i++) {
+                if (checks[i].checked === true) {
+                    input[i] = checks[i].value;
+                }
+            }
+
+            if (input.length === 0) {
+                alert('삭제 할 게시물을 선택해주세요.')
+                return;
+            }
+        }else {
+            input[0] = proId;
+        }
+
+        $.ajax({
+            type:"DELETE",
+            url: contextPath + "/member/wishList/" + JSON.stringify(input),
+            contentType:'application/json; charset=utf-8',
+            success: (data) => {
+                if(data === 'success'){
+                    alert('정상적으로 삭제되었습니다.');
+                    location.reload();
+                    return false;
+                }
+                alert('삭제에 실패하였습니다. 관리자에게 문의해주세요.')
+            },
+            error : (error) => {
+                console.log(error)
+            }
+        })
+    }
+</script>
 <th:block th:replace="common/footer.html"></th:block>
 </html>

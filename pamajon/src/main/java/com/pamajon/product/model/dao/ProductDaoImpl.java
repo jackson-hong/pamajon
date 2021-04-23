@@ -24,4 +24,14 @@ public class ProductDaoImpl implements ProductDao {
     public int wishDuplicate(SqlSession session, HashMap map) {
         return session.selectOne("product.wishDuplicate", map);
     }
+
+    @Override
+    public List<HashMap> bigCateList(SqlSession session) {
+        return session.selectList("product.bigCateList");
+    }
+
+    @Override
+    public List<HashMap> smallCateList(SqlSession session) {
+        return session.selectList("product.smallCateList");
+    }
 }

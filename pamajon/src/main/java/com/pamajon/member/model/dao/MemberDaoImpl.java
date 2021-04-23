@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +101,19 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public List<Map> wishlist(SqlSession session, int usid) {
+    public List<Integer> wishlist(SqlSession session, int usid) {
         return session.selectList("member.wishlist", usid);
+    }
+
+    @Override
+    public List<Map> selectProductsForWish(SqlSession session, List<Integer> wishList) {
+        HashMap map = new HashMap();
+        map.put("wishList", wishList);
+        return session.selectList("member.selectProductsForWish", map);
+    }
+
+    @Override
+    public int wishDelete(SqlSession session, Map map) {
+        return session.delete("member.wishDelete",map);
     }
 }

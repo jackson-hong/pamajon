@@ -7,4 +7,6 @@ public interface ProductService {
     List<HashMap> homeBoard();
     int wishInsert(HashMap map);
     int wishDuplicate(HashMap map);
+    List<HashMap> bigCateList();
+    List<HashMap> smallCateList();
 }

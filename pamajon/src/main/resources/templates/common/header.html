@@ -9,106 +9,36 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script async type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script async th:src="@{/js/glider.js}"></script>
-    <script async th:src="@{/js/vue.js}"></script>
+    <script th:src="@{/js/glider.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}"/>
     <style>
-        body {
-            /*border:1px red solid;*/
-            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
-            color: #353535;
-            -webkit-font-smoothing: antialiased;
+        #cate-con {
+            margin-top: 1.75em;
+            height: 0;
+            visibility: hidden;
+            transition-duration: 100ms;
         }
-        #wrapper {
+        #cate-con-con {
             display: flex;
-            justify-content: center;
-            padding-top: 1.5em;
+            height: 100%;
         }
-        #content {
-            width:86%;
-            height: 100em;
-        }
-        #logo-search{
-            display: flex;
-            font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
-            font-family: "Gill Sans";
-            color: #353535;
-            -webkit-font-smoothing: antialiased;
-        }
-        #logo-container{
-            display: flex;
-            align-items: center;
-            width:30%;
-        }
-        #searchbar-container{
-            width:40%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        #searchbar {
-            display: flex;
-            align-items: center;
-        }
-        #search-input{
-            border: 2px rgb(7,34,66) solid;
-            height:3em;
-            width: 34em;
-        }
-        #search-input:focus{
-            outline: none;
-        }
-        #search-btn {
-            border: 2px rgb(7,34,66) solid;
-            background-color: rgb(7,34,66);
-        }
-        ion-icon[name="search-outline"]{
-            font-size: 2.76em;
-            color: white;
-        }
-        #shop-info-container{
-            width:30%;
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            font-size: 11px;
-        }
-        #logo{
-            width:100px;
-            height:100px;
-        }
-        #menus {
-            display: flex;
-        }
-        #shop-cates {
-            width:80%;
-            display: flex;
-        }
-        #user-cates{
-            width:20%;
-            display: flex;
-            justify-content: flex-end;
-        }
-        .shop-cate{
-            margin-right: 5em;
-            height: 3.5em;
-            display: flex;
-            align-items: center;
-            font-size: 12px;
-            font-weight: bold;
-            border:0;
-        }
-        .user-cate{
+        .cate-small {
+            width: 14%;
             margin-right: 1em;
-            display: flex;
-            align-items: center;
-            font-size: small;
-            border:0;
         }
-        a {
-            color: #353535;
-            text-decoration: none;
+        hr.cate-hr {
+            margin: 1em 1em 1em 0;
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            background-color: black; /* Modern Browsers */
+        }
+        .cate-small-sub {
+            margin-top: 0.5em;
+            color: rgba(0,0,0,0.7);
+        }
+        #cateClick {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -145,7 +75,7 @@
                     <a th:href="@{/}">BRAND</a>
                 </div>
                 <div class="shop-cate">
-                    <a th:href="@{/}">CATEGORIES</a>
+                    <p id="cateClick">CATEGORIES</p>
                 </div>
             </div>
             <div id="user-cates">
@@ -164,6 +94,38 @@
             </div>
         </div>
         <hr>
+        <div id="cate-con">
+            <div id="cate-con-con">
+                <div th:each="item : ${cateResult}" class="cate-small">
+                    <th:block th:each="subItem : ${item}">
+                        <th:block th:if="${subItemStat.index == 0}">
+                        <a th:href="|@{/product/list/}${subItem.get('PRO_CAT_WRAPPER_ID')}|">
+                            <b th:text="${subItem.get('PRO_CAT_WRAPPER_NAME')}">
+                                OUTERWEAR
+                            </b>
+                        </a>
+                        <hr class="cate-hr">
+                        </th:block>
+                        <div class="cate-small-sub">
+                            <a th:href="|@{/product/list/}${subItem.get('PRO_CAT_ID')}|" th:text="${subItem.get('PRO_CAT_NAME')}"></a>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <hr>
+        </div>
         <script>
             let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
+            document.getElementById('cateClick').addEventListener('click', function(){
+                let cateCon = document.getElementById('cate-con');
+                console.log(cateCon.style.height)
+                if(cateCon.style.height === '0px' || cateCon.style.height === '') {
+                    cateCon.style.height = '20em';
+                    cateCon.style.visibility = 'visible';
+                }
+                else {
+                    cateCon.style.height = '0';
+                    cateCon.style.visibility = 'hidden';
+                }
+            })
         </script>

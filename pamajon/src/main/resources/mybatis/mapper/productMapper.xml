@@ -57,4 +57,12 @@
                  #{proBrandName}
         )
     </insert>
+
+    <select id="bigCateList" resultType="map">
+        SELECT * FROM WRAPPER_CAT
+    </select>
+
+    <select id="smallCateList" resultType="map">
+        SELECT * FROM PRO_CAT
+    </select>
 </mapper>
