@@ -9,6 +9,19 @@ document.getElementById('submitButton').addEventListener('click',function(){
 
 })
 
+window.addEventListener('keypress',function(e){
+
+    if(e.key == 'Enter'){
+
+        const submitForm = document.getElementById("adminLogin")
+        submitForm.action = '/admin/login';
+        submitForm.method = 'POST';
+        submitForm.submit();
+
+    }
+
+})
+
 document.getElementById("rememberPwd").addEventListener('change',function(){
 
     if(document.querySelector("#rememberPwd:checked")){

@@ -103,3 +103,40 @@ cursor: pointer;
 .btn.btn-info{
     margin-right: 10px;
 }
+.btn-add-brand, .btn-add-cat{
+    margin: 3px;
+}
+
+.optionSelector{
+    display: inline;
+}
+.table_list table td.scroll{padding:0;vertical-align:top;}
+
+.table_list table td.scroll .scroll_list{height:270px;overflow-y:scroll;}
+
+.table_list table td.scroll .scroll_list ul li{border-top:1px solid #e2e2e2; list-style: none}
+
+.table_list table td.scroll .scroll_list ul li:first-child{border-top:0}
+
+.table_list table td.scroll .scroll_list ul li a{display:block;font-size:14px;color:#777;padding:15px 0;text-align:center; cursor: pointer}
+
+.table_list table td.scroll .scroll_list ul li a:hover{background:#002171;color:#fff;font-weight:600;margin-top: 5px; border-radius: 2px 2px 2px 2px;}
+
+.optionList_5 {
+    padding: 0px;
+}
+.scroll_list {
+    padding: 0px;
+}
+#theadPart {
+    height: 50px;
+    border: 1px solid #002171;
+    background-color:#002171;
+    box-sizing: border-box;
+    color: white;
+}
+
+#categorySelector {
+    border: 1px solid #002171;
+    box-sizing: border-box;
+}
