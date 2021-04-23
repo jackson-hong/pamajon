@@ -140,7 +140,7 @@
     </delete>
 
     <delete id="wishDelete" parameterType="map">
-        DELETE FROM WISHLIST WHERE
+        DELETE FROM WISHLIST WHERE PRODUCT_ID = #{proId} AND USER_ID = #{usid}
     </delete>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">

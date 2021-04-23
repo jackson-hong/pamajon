@@ -66,7 +66,7 @@
         border:1px silver solid;
         border-radius: 3px;
         color: black;
-        width: 5.5em;
+        width: 6em;
         height: 1.75em;
         margin: 0.1em;
         text-align: left;
@@ -189,6 +189,16 @@
     .disable {
         cursor: auto;
     }
+    
+    button {
+        cursor: pointer;
+    }
+
+    .deleteBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 <div id="title-idx">
     <div id="title">
@@ -239,8 +249,8 @@
                 </td>
                 <td>
                     <button class="product-date-btn submit">주문하기 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button class="product-date-btn">주문취소 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button class="product-date-btn">교환신청 <ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <button class="product-date-btn">장바구니로</button><br>
+                    <button th:onclick="|fn_delete('${pro.get('PRODUCT_ID')}')|" class="product-date-btn deleteBtn"><ion-icon name="close-outline"></ion-icon> 삭제</button>
                 </td>
             </tr>
         </table>
@@ -269,21 +279,24 @@
     function fn_paging(cPage){location.href='/member/wishList?cPage='+cPage;}
 </script>
 <script>
-    function fn_delete(){
+    function fn_delete(proId){
         let input = {};
-        let checks = document.getElementsByClassName('proCheck');
-        for(let i = 0; i < checks.length; i++){
-            if(checks[i].checked === true){
-                input[i] = checks[i].value;
+        console.log(proId);
+        if(proId === undefined) {
+            let checks = document.getElementsByClassName('proCheck');
+            for (let i = 0; i < checks.length; i++) {
+                if (checks[i].checked === true) {
+                    input[i] = checks[i].value;
+                }
             }
-        }
 
-        if(input.length === 0){
-            alert('삭제 할 게시물을 선택해주세요.')
-            return;
+            if (input.length === 0) {
+                alert('삭제 할 게시물을 선택해주세요.')
+                return;
+            }
+        }else {
+            input[0] = proId;
         }
-
-        console.log(JSON.stringify(input))
 
         $.ajax({
             type:"DELETE",

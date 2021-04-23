@@ -36,4 +36,14 @@ public class ProductServiceImpl implements ProductService {
     public int wishDuplicate(HashMap map) {
         return dao.wishDuplicate(session, map);
     }
+
+    @Override
+    public List<HashMap> bigCateList() {
+        return dao.bigCateList(session);
+    }
+
+    @Override
+    public List<HashMap> smallCateList() {
+        return dao.smallCateList(session);
+    }
 }

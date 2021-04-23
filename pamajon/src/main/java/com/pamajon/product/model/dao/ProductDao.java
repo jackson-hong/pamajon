@@ -9,4 +9,6 @@ public interface ProductDao {
     List<HashMap> homeBoard(SqlSession session);
     int wishInsert(SqlSession session, HashMap map);
     int wishDuplicate(SqlSession session, HashMap map);
+    List<HashMap> bigCateList(SqlSession session);
+    List<HashMap> smallCateList(SqlSession session);
 }
