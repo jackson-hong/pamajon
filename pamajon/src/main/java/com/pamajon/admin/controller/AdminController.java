@@ -175,7 +175,7 @@ public class AdminController {
 
                 Cookie cookie = new Cookie("loginCookie",session.getId());
 
-                cookie.setPath("/pamajon/admin/signin");
+                cookie.setPath("/admin/signin");
                 //쿠키설정완료
                 cookie.setMaxAge(60*60*24*7);
                 response.addCookie(cookie);
@@ -200,7 +200,7 @@ public class AdminController {
         request.getSession().invalidate();
         Cookie cookie = new Cookie("loginCookie",null);
         cookie.setMaxAge(0);
-        cookie.setPath("/pamajon/admin/signin");
+        cookie.setPath("/admin/signin");
         response.addCookie(cookie);
 
 

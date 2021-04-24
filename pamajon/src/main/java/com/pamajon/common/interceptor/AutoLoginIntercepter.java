@@ -46,7 +46,7 @@ public class AutoLoginIntercepter implements HandlerInterceptor {
                     // 저장되어있는 쿠키와 디비에 들어있는 쿠키가 일치함.
                     // 자동로그인 프로세스가 실행되어 자동로그인 하여 admin 메인페이지로 토스
                     session.setAttribute("adminUser",adminUser);
-                    response.sendRedirect("/pamajon/admin/mainPage");
+                    response.sendRedirect("/admin/mainPage");
                     return false;
                 }
 
@@ -59,7 +59,7 @@ public class AutoLoginIntercepter implements HandlerInterceptor {
         //로그인 돼있는상태임.
         if(session.getAttribute("adminUser") != null){
 
-            response.sendRedirect("/pamajon/admin/mainPage");
+            response.sendRedirect("/admin/mainPage");
             return false;
 
         }

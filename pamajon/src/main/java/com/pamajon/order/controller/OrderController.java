@@ -7,6 +7,8 @@ import com.pamajon.order.model.EncryptAddress;
 import com.pamajon.order.model.EncryptOrder;
 import com.pamajon.order.model.service.OrderService;
 import com.pamajon.order.model.vo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 
 @Controller
 public class OrderController {
@@ -30,16 +35,21 @@ public class OrderController {
     private EncryptOrder encryptOrder;
     @Autowired
     private AES256Util aes256Util;
+    @Autowired
+    private EncryptMember encryptMember;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     public OrderController(OrderService orderService){
         this.orderService = orderService;
     }
 
     @GetMapping("/order/purchase")
-    public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto){
+    public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto) throws GeneralSecurityException, UnsupportedEncodingException {
             Member m = orderService.getMember(2056);
            // model.addAttribute("productList",orderService.getProductOption(productOptionDto));
-            model.addAttribute("member",m);
+         LOGGER.info("조회 후 member" + m.toString());
+            model.addAttribute("member",encryptMember.decryptMember(m));
             model.addAttribute("mileage",orderService.getMileage(2056));
 
             return "/order/orderform";

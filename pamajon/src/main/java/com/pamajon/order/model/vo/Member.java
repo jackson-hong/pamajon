@@ -9,9 +9,9 @@ import java.security.GeneralSecurityException;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Setter
 @Getter
+@ToString
 public class Member {
 
     private int userId;
@@ -20,4 +20,7 @@ public class Member {
     private String memberGrade;
     private String memberDate;
     private String memberStatus;
-}
+    private AES256Util aes256Util;
+
+    }
+

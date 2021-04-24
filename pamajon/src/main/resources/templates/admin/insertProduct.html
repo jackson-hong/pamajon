@@ -10,44 +10,18 @@
 
     <!-- Custom CSS -->
     <link href="../../static/css/style.min.css" rel="stylesheet" th:href="@{/css/admin/projectInsert.css}">
+    <link href="../../static/css/style.min.css" rel="stylesheet" th:href="@{/css/admin/projectOptionSection.css}">
     <link href="../../static/adminTemplateResources/css/style.min.css" rel="stylesheet"
           th:href="@{/adminTemplateResources/css/style.min.css}">
     <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/ckeditor/ckeditor.js}"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <style>
-        .btn-add-brand, .btn-add-cat{
-            margin: 3px;
-        }
-
-        .optionSelector{
-            display: inline;
-        }
-        .table_list table td.scroll{padding:0;vertical-align:top;}
-
-        .table_list table td.scroll .scroll_list{height:300px;overflow-y:scroll;padding:0 20px;}
-
-        .table_list table td.scroll .scroll_list ul li{border-top:1px solid #e2e2e2;}
-
-        .table_list table td.scroll .scroll_list ul li:first-child{border-top:0}
-
-        .table_list table td.scroll .scroll_list ul li a{display:block;font-size:14px;color:#777;padding:15px 0;text-align:center;}
-
-        .table_list table td.scroll .scroll_list ul li a:hover{background:#249642;color:#fff;font-weight:600;}
-
-        .table_list table td.scroll .scroll_list ul li a.on{background:#249642;color:#fff;font-weight:600;}
-
-        .table_list table td.left{text-align:left;padding-left:15px;}
-
-    </style>
-
 </head>
-
 <body>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -97,74 +71,48 @@
                                         <span class="title">기본</span>
                                     </div>
 
-                                    <div class="table_list" style="border: 1px solid blue; margin-top: 20px;">
-                                        <table style="width: 100%">
-                                            <caption class="hide"></caption>
+                                    <div class="table_list" style="margin-top: 20px">
+                                        <table style="width: 70%;">
                                             <colgroup>
                                                 <col style="width:25.67%" />
                                                 <col style="width:25.67%" />
                                                 <col style="width:25.67%" />
-                                                <col style="width:25.67%" />
                                             </colgroup>
-                                            <thead align="center" style="border: 1px solid black; height: 40px;">
-                                            <th scope="col">브랜드</th>
-                                            <th scope="col">대카테고리</th>
-                                            <th scope="col">소카테고리</th>
-                                            </thead>
-                                            <tr>
-                                                <td class="scroll">
-                                                    <div class="scroll_list">
-                                                        <ul class="optionList_5" id="listB">
-
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                <td class="scroll">
-                                                    <div class="scroll_list">
-                                                        <ul class="optionList_5" id="itemB">
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                <td class="scroll">
-                                                    <div class="scroll_list">
-                                                        <ul class="optionList_5" id="detailB">
-                                                        </ul>
-                                                    </div>
-                                                </td>
+                                            <thead align="center">
+                                            <tr id="theadPart">
+                                                <th scope="col">브랜드</th>
+                                                <th scope="col">대카테고리</th>
+                                                <th scope="col">소카테고리</th>
                                             </tr>
+                                            </thead>
+                                            <tbody id="categorySelector">
+                                                <tr>
+                                                    <td class="scroll">
+                                                        <div class="scroll_list">
+                                                            <ul class="optionList_5" id="listB">
+                                                                <li>
+                                                                    <a>CalvinKlien</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="scroll">
+                                                        <div class="scroll_list">
+                                                            <ul class="optionList_5" id="itemB">
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="scroll">
+                                                        <div class="scroll_list">
+                                                            <ul class="optionList_5" id="detailB">
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                     <table class="productInfoTable">
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*브랜드</td>
-                                            <td class="userInput">
-                                                 <input type="text" disabled value="브랜드를 선택해주세요" />
-                                                <button type="button" class="btn btn-info btn-add-brand" onclick="setBrand(this)">브랜드지정</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*대 카테고리</td>
-                                            <td class="userInput">
-                                                <select class="form-control optionSelector">
-                                                    <option value="">Top</option>
-                                                    <option value="">Bottom</option>
-                                                    <option value="">Outer</option>
-                                                    <option value="">Shoes</option>
-                                                </select>
-                                                <button type="button" class="btn btn-info btn-add-cat">대 카테고리 추가</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper ">*카테고리</td>
-                                            <td class="userInput">
-                                                <select class="form-control optionSelector">
-                                                    <option value="">Hoodie</option>
-                                                    <option value="">Jeans</option>
-                                                    <option value="">Shoes</option>
-                                                </select>
-                                                <button type="button" class="btn btn-info btn-add-cat">카테고리 추가</button>
-                                            </td>
-                                        </tr>
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*상품명</td>
                                             <td class="userInput">
@@ -177,6 +125,22 @@
                                             <td class="userInput">
                                                 <input type="number" class="form-control textType"
                                                        placeholder="가격을 적어주세요">
+                                            </td>
+                                        </tr>
+                                        <tr class="tablefloor">
+                                            <td class="explanation_wrapper">*원산지 입력</td>
+                                            <td class="userInput">
+                                                <select id="CountryOfOrigin" name="countryOfOrigin" class="form-control selectType">
+
+                                                </select>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="tablefloor">
+                                            <td class="explanation_wrapper">*원료 입력</td>
+                                            <td class="userInput">
+                                                <input type="number" class="form-control textType"
+                                                       placeholder="원료를 넣어주세요">
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
@@ -206,43 +170,66 @@
 
                                     </table>
                                 </div>
-                                <div class="insertblock">
-                                    <div class="titleSection">
-                                        <span class="title">상품옵션</span>
-                                    </div>
-                                    <table class="productInfoTable">
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*재고수량</td>
-                                            <td class="userInput">
-                                                <div style="padding-top: 8px;">
-                                                    <input type="radio" name="quantity" id="unlimited"
-                                                           value="unlimited"><label for="unlimited">수량제한 없음</label>
-                                                    <input type="radio" name="quantity" id="limited"
-                                                           value="limited"><label for="limited">수량설정</label>
-                                                </div>
-                                                <input type="number" class="form-control textType"
-                                                       placeholder="수량을 적어주세요"
-                                                       style="margin-bottom:10px; display: none">
-                                            </td>
-                                        </tr>
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*사이즈정보</td>
-                                            <td class="explanation_wrapper" colspan="2" style="padding-top: 10px">
-                                                <button type="button" class="btn btn-info sizeSet" value="S size">S</button>
-                                                <button type="button" class="btn btn-info sizeSet" value="M size">M</button>
-                                                <button type="button" class="btn btn-info sizeSet" value="L size">L</button>
-                                                <button type="button" class="btn btn-info sizeSet" value="XL size">XL</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="tablefloor">
-                                            <td class="explanation_wrapper">*사이즈별 개수</td>
-                                            <td class="explanation_wrapper" colspan="2" style="padding-top: 10px">
-                                                <input type="text" disabled value="" />
-                                            </td>
-                                    </table>
+                                </table>
+                            </div>
+                            <div class="insertblock">
+                                <div class="titleSection">
+                                    <span class="title">상품옵션</span>
                                 </div>
-                                <div class="insertblock">
-                                </div>
+                                <table class="productInfoTable">
+                                    <tr class="tablefloor">
+                                        <td class="explanation_wrapper">*재고수량</td>
+                                        <td class="userInput">
+                                            <div style="padding-top: 8px;">
+                                                <input type="radio" name="quantity" id="unlimited"
+                                                       value="unlimited"><label for="unlimited">수량제한 없음</label>
+                                                <input type="radio" name="quantity" id="limited"
+                                                       value="limited"><label for="limited">수량설정</label>
+                                            </div>
+                                            <input type="number" class="form-control textType"
+                                                   placeholder="수량을 적어주세요"
+                                                   style="margin-bottom:10px; display: none">
+                                        </td>
+                                    </tr>
+                                    <tr class="tablefloor">
+                                        <td class="explanation_wrapper">*사이즈정보</td>
+                                        <td class="userInput">
+                                            <div id="sizeDevider">
+                                                <span>사이즈 종류: &nbsp;&nbsp;</span>
+                                                <select id="sizeCategory" name="sizeCategory" class="form-control selectType" style="width: 180px; margin-right: 15px">
+                                                    <option value="COMSIZE01">일반분류</option>
+                                                </select>
+
+                                                <span>상세 사이즈: &nbsp;&nbsp;</span>
+                                                <select id="sizeDetail" name="optionSize" class="form-control selectType" style="width: 180px">
+                                                    <option value="">XXS</option>
+                                                </select>
+                                            </div>
+                                    </tr>
+
+                                    <tr class="tablefloor">
+                                        <td class="explanation_wrapper">*등록된 옵션</td>
+                                        <td class="userInput">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">등록 옵션 1</button>
+                                            <button type="button" class="btn btn-info">등록 옵션 2</button>
+                                            <button type="button" class="btn btn-info">등록 옵션 3</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="tablefloor">
+                                        <td class="explanation_wrapper">*등록 상세정보</td>
+                                        <td class="userInput">
+                                            <table>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr class="tablefloor">
+                                        <td class="explanation_wrapper" colspan="2" style="padding-top: 10px" align="center">
+                                            <button type="button" class="btn btn-primary">옵션추가</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                                 <div class="insertblock">
                                     <div class="titleSection">
                                         <span class="title">판매 노출상태</span>
@@ -254,9 +241,11 @@
                                                 <td class="userInput">
                                                     <div style="padding-top: 8px;">
                                                         <input type="radio" name="productSale" id="on_sale"
-                                                               value="on_sale"><label for="on_sale">판매함</label>
-                                                        <input type="radio" name="productSale" id="stop_saling"
-                                                               value="stop_saling"><label for="stop_saling">판매중단</label>
+                                                               value="on_sale"><label for="on_sale">즉시 판매</label>
+                                                        <input type="radio" name="productSale" id="on_save"
+                                                               value="on_sale"><label for="on_sale">판매 준비</label>
+                                                        <input type="radio" name="productSale" id="on_discount"
+                                                               value="on_sale"><label for="on_sale">세일 판매</label>
                                                     </div>
                                                     <input type="number" class="form-control textType"
                                                            placeholder="수량을 적어주세요"
@@ -266,29 +255,24 @@
                                         </table>
                                     </tr>
                                 </div>
-                            </div>
                             <div style="align-items: center">
-                            <button type="submit" class="btn btn-info" value="productInsertConfirm">등록</button>
-                            <button type="button" class="btn btn-info" value="productInsertCancel">취소</button>
+                                <button type="submit" class="btn btn-info" value="productInsertConfirm">등록</button>
+                                <button type="button" class="btn btn-info" value="productInsertCancel">취소</button>
                             </div>
                         </form>
-
-
+                        <div class="optionModal 1" id="optionModal1"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/CKEDITOR.js}"></script>
 <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/fileHandler.js}"></script>
 <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/insertProduct/insertProduct.js}"></script>
 <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
-<script>
-
-
-</script>
-
 </body>
-
 </html>

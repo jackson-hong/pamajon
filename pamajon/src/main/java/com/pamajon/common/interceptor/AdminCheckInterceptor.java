@@ -22,7 +22,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
 
         if(request.getHeader("REFERER") == null && request.getSession().getAttribute("adminUser") == null){
             LOGGER.info("관리자 권한이 아닌 사람이 url 직접접근시 메인페이지로 redirect");
-            response.sendRedirect("/pamajon/warning");
+            response.sendRedirect("/warning");
             return false;
         }
         if(request.getHeader("REFERER") == null && request.getSession().getAttribute("adminUser") != null){
@@ -31,13 +31,13 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
             HttpSession session = request.getSession();
             session.setAttribute("alarm","잘못된 접근 방법입니다.");
             session.setMaxInactiveInterval(5);
-            response.sendRedirect("/pamajon/admin/mainPage");
+            response.sendRedirect("/admin/mainPage");
             return false;
         }
         if(request.getHeader("REFERER") != null && request.getSession().getAttribute("adminUser") != null){
             return true;
         }
-        response.sendRedirect("/pamajon/warning");
+        response.sendRedirect("/warning");
         return false;
     }
 

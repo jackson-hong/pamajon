@@ -1,0 +1,12 @@
+.optionDetail
+{
+    display: flex;
+}
+
+#sizeDevider{
+    display: flex;
+    align-items: center;
+}
+option{
+    height: 60px;
+}
