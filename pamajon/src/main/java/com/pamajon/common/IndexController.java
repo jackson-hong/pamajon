@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -24,7 +25,7 @@ public class IndexController {
     public IndexController(ProductService service){this.service = service;}
 
     @GetMapping("/")
-    public ModelAndView index(ModelAndView mv){
+    public ModelAndView index(ModelAndView mv, HttpSession sess){
         List<HashMap> resultList = service.homeBoard();
 
         List<HashMap> bigCateList = service.bigCateList();
@@ -50,8 +51,9 @@ public class IndexController {
 
         log.info("CATERESULT: "+cateResult);
 
+
         mv.setViewName("home");
-        mv.addObject("cateResult",cateResult);
+        sess.setAttribute("cateResult", cateResult);
         mv.addObject("resultList", resultList);
         mv.addObject("appName",appName);
         return mv;

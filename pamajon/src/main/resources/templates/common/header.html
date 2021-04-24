@@ -96,10 +96,10 @@
         <hr>
         <div id="cate-con">
             <div id="cate-con-con">
-                <div th:each="item : ${cateResult}" class="cate-small">
+                <div th:each="item : ${session.cateResult}" class="cate-small">
                     <th:block th:each="subItem : ${item}">
                         <th:block th:if="${subItemStat.index == 0}">
-                        <a th:href="|@{/product/list/}${subItem.get('PRO_CAT_WRAPPER_ID')}|">
+                        <a th:href="|@{/product/list/big-cate/}${subItem.get('PRO_CAT_WRAPPER_ID')}|">
                             <b th:text="${subItem.get('PRO_CAT_WRAPPER_NAME')}">
                                 OUTERWEAR
                             </b>
@@ -107,7 +107,7 @@
                         <hr class="cate-hr">
                         </th:block>
                         <div class="cate-small-sub">
-                            <a th:href="|@{/product/list/}${subItem.get('PRO_CAT_ID')}|" th:text="${subItem.get('PRO_CAT_NAME')}"></a>
+                            <a th:href="|@{/product/list/small-cate/}${subItem.get('PRO_CAT_ID')}|" th:text="${subItem.get('PRO_CAT_NAME')}"></a>
                         </div>
                     </th:block>
                 </div>

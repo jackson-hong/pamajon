@@ -3,10 +3,12 @@ package com.pamajon.product.controller;
 
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.product.model.service.ProductService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.*;
 
 import java.util.HashMap;
 
@@ -49,6 +51,32 @@ public class ProductController {
         if(result == 0)return "FAIL";
 
         return "SUCCESS";
+    }
+
+    @GetMapping("/list/big-cate/{cateId}")
+    public ModelAndView cateList(ModelAndView mv, @PathVariable("cateId") int cateId){
+
+        List<HashMap> resultList = service.selectProductByBig(cateId);
+
+        String title = service.selectBigCateName(cateId);
+
+        mv.addObject("title", title);
+        mv.addObject("resultList", resultList);
+        mv.setViewName("board/cateList");
+        return mv;
+    }
+
+    @GetMapping("/list/small-cate/{cateId}")
+    public ModelAndView cateSmallList(ModelAndView mv, @PathVariable("cateId") int cateId){
+
+        List<HashMap> resultList = service.selectProductByBig(cateId);
+
+        String title = service.selectBigCateName(cateId);
+
+        mv.addObject("title", title);
+        mv.addObject("resultList", resultList);
+        mv.setViewName("board/cateList");
+        return mv;
     }
 
     private ModelAndView msg(ModelAndView mv, String msg, String loc){

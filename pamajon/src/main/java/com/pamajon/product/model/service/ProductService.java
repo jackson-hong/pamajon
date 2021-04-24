@@ -9,4 +9,6 @@ public interface ProductService {
     int wishDuplicate(HashMap map);
     List<HashMap> bigCateList();
     List<HashMap> smallCateList();
+    List<HashMap> selectProductByBig(int cateId);
+    String selectBigCateName(int cateId);
 }

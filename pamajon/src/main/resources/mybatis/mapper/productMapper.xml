@@ -65,4 +65,19 @@
     <select id="smallCateList" resultType="map">
         SELECT * FROM PRO_CAT
     </select>
+
+    <select id="selectProductByBig" parameterType="int" resultType="map">
+        SELECT *
+        FROM PRODUCT
+                 left join PRO_IMAGE PI
+                           on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
+                 left join PRO_BRAND PB
+                           on PRODUCT.PRO_BRAND = PB.PRO_BRAND
+        WHERE PRO_BIG_CAT_ID = #{cateId}
+        ORDER BY PRODUCT.PRODUCT_ID DESC
+    </select>
+
+    <select id="selectBigCateName" parameterType="int" resultType="string">
+        SELECT PRO_CAT_WRAPPER_NAME FROM WRAPPER_CAT WHERE PRO_CAT_WRAPPER_ID = #{cateId};
+    </select>
 </mapper>

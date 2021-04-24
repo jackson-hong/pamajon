@@ -11,4 +11,6 @@ public interface ProductDao {
     int wishDuplicate(SqlSession session, HashMap map);
     List<HashMap> bigCateList(SqlSession session);
     List<HashMap> smallCateList(SqlSession session);
+    List<HashMap> selectProductByBig(SqlSession session, int cateId);
+    String selectBigCateName(SqlSession session, int cateId);
 }

@@ -1,5 +1,6 @@
 package com.pamajon.common;
 
+import com.pamajon.common.interceptor.HeaderInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Qualifier(value = "loginCheckInterceptor")
     private HandlerInterceptor interceptor;
 
+    @Autowired
+    @Qualifier(value = "HeaderInterceptor")
+    private HeaderInterceptor headerInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(interceptor)
@@ -27,5 +32,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/member/join")
                 .excludePathPatterns("/member/address")
                 .excludePathPatterns("/member/address*");
+        registry.addInterceptor(headerInterceptor)
+                .addPathPatterns("/")
+                .addPathPatterns("/*")
+                .addPathPatterns("/**");
     }
 }
