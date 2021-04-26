@@ -149,7 +149,7 @@ window.onload = function (){
 
     }
 // 수량 변경.
-    const quantityRadio = document.getElementsByName('quantity');
+    const quantityRadio = document.getElementsByName('optionQuantityStatus');
 
     quantityRadio.forEach((element)=>{
 
@@ -235,7 +235,7 @@ function brandSelector(e,node){
 
     function addOption(){
         //상품 수량 제한이 있지만 상품 수량을 입력 안한경우 return;
-        if(document.querySelector('input[name="quantity"]:checked').value == 'limited'
+        if(document.querySelector('input[name="optionQuantityStatus"]:checked').value == 'limited'
          &&document.querySelector('input[name="inputProductQuantity"]').value==''){
 
             alert("상품 수량을 입력해주세요");
@@ -272,10 +272,10 @@ function brandSelector(e,node){
                               .split(" ")[1]) + 1;
         }
         //동적으로 Modal 생성.
-        if(document.getElementsByName("quantity").value == 'unlimited'){
+        if(document.getElementsByName("optionQuantityStatus").value == 'unlimited'){
             const quantityValue = -1;
         }
-        if(document.getElementsByName("quantity").value == 'limited'){
+        if(document.getElementsByName("optionQuantityStatus").value == 'limited'){
             const quantityValue = document.getElementById("inputProductQuantity").value;
         }
 
@@ -413,13 +413,9 @@ function brandSelector(e,node){
             insertForm.action="/adminProduct/product"
             insertForm.submit();
 
-
         } else {
             return;
         }
-
-
-
 
 
     }
