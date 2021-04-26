@@ -56,4 +56,14 @@ public class ProductServiceImpl implements ProductService {
     public String selectBigCateName(int cateId) {
         return dao.selectBigCateName(session, cateId);
     }
+
+    @Override
+    public List<HashMap> selectProductBySmall(int cateId) {
+        return dao.selectProductBySmall(session, cateId);
+    }
+
+    @Override
+    public String selectSmallCateName(int cateId) {
+        return dao.selectSmallCateName(session, cateId);
+    }
 }

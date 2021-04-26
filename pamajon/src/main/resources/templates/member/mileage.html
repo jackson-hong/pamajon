@@ -225,8 +225,8 @@
         </div>
         <div id="order-top-btns">
             <div class="order-top-btn top-select">적립내역보기</div>
-            <div class="order-top-btn">미가용적립내역보기</div>
-            <div class="order-top-btn">미가용쿠폰/회원등급적립내역</div>
+<!--            <div class="order-top-btn">미가용적립내역보기</div>-->
+<!--            <div class="order-top-btn">미가용쿠폰/회원등급적립내역</div>-->
         </div>
         <table border="1">
             <tr>
@@ -238,7 +238,7 @@
             <tr th:each="mile : ${mileageList}">
                 <td th:text="${#calendars.format(mile.getDate(), 'yyyy-MM-dd')}">
                 </td>
-                <td th:text="${#numbers.formatCurrency(mile.getAmount())} + 원">
+                <td th:text="${#numbers.formatInteger(mile.getAmount(),3,'COMMA')} + 원">
                 </td>
                 <td>
                 </td>

@@ -13,4 +13,6 @@ public interface ProductDao {
     List<HashMap> smallCateList(SqlSession session);
     List<HashMap> selectProductByBig(SqlSession session, int cateId);
     String selectBigCateName(SqlSession session, int cateId);
+    List<HashMap> selectProductBySmall(SqlSession session, int cateId);
+    String selectSmallCateName(SqlSession session, int cateId);
 }

@@ -46,4 +46,12 @@
         </div>
     </div>
 </div>
+<th:block th:utext="${pageBar}"></th:block>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let cate = /*[[ ${cate} ]]*/;
+    let cateId = /*[[ ${cateId} ]]*/;
+    function fn_paging(cPage){location.href='/product/list/'+cate+'/'+ cateId +'?cPage='+cPage;}
+    /*]]>*/
+</script>
 <th:block th:replace="common/footer.html"></th:block>

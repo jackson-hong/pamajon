@@ -1,6 +1,7 @@
 package com.pamajon.product.controller;
 
 
+import com.pamajon.common.page.PageFactory;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.product.model.service.ProductService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -54,26 +55,50 @@ public class ProductController {
     }
 
     @GetMapping("/list/big-cate/{cateId}")
-    public ModelAndView cateList(ModelAndView mv, @PathVariable("cateId") int cateId){
+    public ModelAndView cateList(ModelAndView mv,
+                                 @PathVariable("cateId") int cateId,
+                                 @RequestParam(defaultValue = "1") int cPage){
 
+        //타이틀 받아오기.
+        String title = service.selectBigCateName(cateId);
+        //리스트 받아오기
         List<HashMap> resultList = service.selectProductByBig(cateId);
 
-        String title = service.selectBigCateName(cateId);
+        int leng = resultList.size();
+        String cate = "big-cate";
+
+        resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
+
+        String pageBar = PageFactory.getPageBar(leng,cPage,10);
 
         mv.addObject("title", title);
+        mv.addObject("pageBar", pageBar);
+        mv.addObject("cateId", cateId);
+        mv.addObject("cate", cate);
         mv.addObject("resultList", resultList);
         mv.setViewName("board/cateList");
         return mv;
     }
 
     @GetMapping("/list/small-cate/{cateId}")
-    public ModelAndView cateSmallList(ModelAndView mv, @PathVariable("cateId") int cateId){
+    public ModelAndView cateSmallList(ModelAndView mv,
+                                      @PathVariable("cateId") int cateId,
+                                      @RequestParam(defaultValue = "1") int cPage){
 
-        List<HashMap> resultList = service.selectProductByBig(cateId);
+        String title = service.selectSmallCateName(cateId);
+        List<HashMap> resultList = service.selectProductBySmall(cateId);
 
-        String title = service.selectBigCateName(cateId);
+        int leng = resultList.size();
+        String cate = "small-cate";
+
+        resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
+
+        String pageBar = PageFactory.getPageBar(leng,cPage,10);
 
         mv.addObject("title", title);
+        mv.addObject("pageBar", pageBar);
+        mv.addObject("cateId", cateId);
+        mv.addObject("cate", cate);
         mv.addObject("resultList", resultList);
         mv.setViewName("board/cateList");
         return mv;

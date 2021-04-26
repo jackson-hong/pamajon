@@ -44,4 +44,16 @@ public class ProductDaoImpl implements ProductDao {
     public String selectBigCateName(SqlSession session, int cateId) {
         return session.selectOne("product.selectBigCateName", cateId);
     }
+
+    @Override
+    public List<HashMap> selectProductBySmall(SqlSession session, int cateId) {
+        return session.selectList("product.selectProductBySmall", cateId);
+    }
+
+    @Override
+    public String selectSmallCateName(SqlSession session, int cateId) {
+        return session.selectOne("product.selectSmallCateName", cateId);
+    }
+
+
 }
