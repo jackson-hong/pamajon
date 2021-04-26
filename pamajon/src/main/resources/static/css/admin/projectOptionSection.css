@@ -7,6 +7,43 @@
     display: flex;
     align-items: center;
 }
+
 option{
-    height: 60px;
+    font-size: 1.0rem;
+}
+
+.optionModal
+{
+    display: none;
+    width: 500px;
+    min-height: 150px;
+    position: fixed;
+    margin: auto;
+    top:25%;
+    left: 25%;
+    overflow: auto;
+    background: whitesmoke;
+    border: 1px solid black;
+    padding: 15px 15px 5px 15px;
+}
+
+.optionQuantitiy{
+    width: 100px;
+
+}
+
+.optionButtonBox{
+    display: flex;
+    justify-content: center;
+    height: 55px;
+}
+
+.optionQuantitiyDisplay{
+    display: flex;
+    align-items: center;
+    height: 55px;
+}
+
+#quantityModify{
+    margin-left: 10px;
 }

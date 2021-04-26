@@ -1,0 +1,151 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pamajon.mapper.ProductInsertMapper">
+
+    <resultMap id="brandSet" type="com.pamajon.admin.productInsert.insertModel.vo.BrandDto">
+        <result property="brandId" column="PRO_BRAND"/>
+        <result property="brandName" column="PRO_BRAND_NAME"/>
+    </resultMap>
+
+    <resultMap id="wrapperCategorySet" type="com.pamajon.admin.productInsert.insertModel.vo.WrapperCategory">
+        <result property="wrapperCategoryId" column="PRO_CAT_WRAPPER_ID"/>
+        <result property="wrapperCategoryName" column="PRO_CAT_WRAPPER_NAME"/>
+    </resultMap>
+
+    <resultMap id="CategorySet" type="com.pamajon.admin.productInsert.insertModel.vo.ProductCategory">
+        <result property="productCategoryId" column="PRO_CAT_ID"/>
+        <result property="productCategoryName" column="PRO_CAT_NAME"/>
+    </resultMap>
+
+    <resultMap id="CommonCodeSet" type="com.pamajon.common.vo.CommonCodeDto">
+        <result property="commonCodeId" column="CCODE_ID"/>
+        <result property="commonCode" column="CCODE"/>
+        <result property="commonCodeName" column="CCODE_NM"/>
+        <result property="commonCodeStatus" column="CCODE_STATUS"/>
+    </resultMap>
+
+    <select id="getBrand" resultMap="brandSet">
+        SELECT
+             PRO_BRAND
+            ,PRO_BRAND_NAME
+        FROM
+            PRO_BRAND
+    </select>
+
+    <select id="getWrapperCategory" resultMap="wrapperCategorySet">
+        SELECT
+             PRO_CAT_WRAPPER_ID
+            ,PRO_CAT_WRAPPER_NAME
+        FROM
+             WRAPPER_CAT
+    </select>
+    <select id="getCategory" resultMap="CategorySet" parameterType="int">
+        SELECT
+             PRO_CAT_ID
+            ,PRO_CAT_NAME
+        FROM
+            PRO_CAT
+        WHERE
+        PRO_CAT_WRAPPER_ID=#{wrapperId}
+    </select>
+    <select id="getOrigin" resultMap="CommonCodeSet">
+        SELECT
+              CCODE
+             ,CCODE_NM
+        FROM
+             COMMONCODE
+        WHERE
+             1=1
+          AND
+             CCODE_ID='ORIGIN01'
+          AND
+             CCODE_STATUS='Y'
+        ORDER BY CCODE_NM ASC
+    </select>
+
+    <select id="getSizeOption" resultMap="CommonCodeSet" parameterType="string">
+        SELECT
+             CCODE
+            ,CCODE_NM
+        FROM
+            COMMONCODE
+        WHERE
+             1=1
+        AND
+            CCODE_ID=#{sizeOption}
+        AND
+            CCODE_STATUS='Y'
+    </select>
+    <insert id="insertProduct" parameterType="com.pamajon.admin.productInsert.insertModel.vo.ProductDto">
+        INSERT INTO
+                PRODUCT
+                (
+                    PRODUCT_ID
+                    ,PRO_BRAND
+                    ,PRO_CAT_ID
+                    ,PRODUCT_NAME
+                    ,PRODUCT_PRICE
+                    ,PRODUCT_CONTENT
+                    ,PRODUCT_COLOR
+                    ,PRODUCT_SALE
+                    ,PRODUCT_FROM
+                    ,PRODUCT_MATERIAL
+                    ,PRODUCT_STATUS
+                    ,PRO_DATE
+                    ,PRO_BIG_CAT_ID
+                )
+                VALUES
+                (
+                     NEXTVAL(SEQ_PRODUCT),
+                    #{productBrand},
+                    #{productCategory},
+                    #{productName},
+                    #{productPrice},
+                    #{productContent},
+                    #{productColor},
+                    #{productSale},
+                    #{productOrigin},
+                    #{productMaterial},
+                    #{productStatus},
+                    NOW(),
+                    #{productBigCateId}
+        )
+    </insert>
+    <insert id="optionInsert" parameterType="com.pamajon.admin.productInsert.insertModel.vo.ProductOptionDto">
+        INSERT INTO
+        P_OPTION
+        (
+            P_OPTION_ID
+            ,PRODUCT_ID
+            ,P_SIZE
+            ,P_QUAN
+        )
+        VALUES
+        (
+            NEXTVAL(SEQ_POPTION)
+            ,LASTVAL(SEQ_PRODUCT)
+            ,#{optionSize}
+            ,#{optionQuantity}
+        )
+    </insert>
+    <insert id="insertProductImages" parameterType="map">
+        INSERT INTO
+        PRO_IMAGE
+        (
+             PRO_IMG_ID
+            ,PRODUCT_ID
+            ,PRO_IMG_NAME
+            ,PRO_IMG_ISDEFAULT
+        )
+        VALUES
+        (
+             NEXTVAL(SEQ_IMG)
+            ,LASTVAL(SEQ_PRODUCT)
+            ,#{fileName}
+            ,#{fileStatus}
+        )
+    </insert>
+
+
+</mapper>    

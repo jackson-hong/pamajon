@@ -9,7 +9,7 @@
     <!-- Favicon icon -->
 
     <!-- Custom CSS -->
-    <link href="../../static/css/style.min.css" rel="stylesheet" th:href="@{/css/admin/projectInsert.css}">
+    <link href="../../static/css/style.min.css" rel="stylesheet" th:href="@{/css/admin/productInsert.css}">
     <link href="../../static/css/style.min.css" rel="stylesheet" th:href="@{/css/admin/projectOptionSection.css}">
     <link href="../../static/adminTemplateResources/css/style.min.css" rel="stylesheet"
           th:href="@{/adminTemplateResources/css/style.min.css}">
@@ -64,7 +64,7 @@
                 <div class="col-md-12">
                     <div class="white-box">
                         <h3 class="box-title" style="font-size: 1.5rem; font-weight: bold">상품등록</h3>
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="" enctype="multipart/form-data" id="productInsert">
                             <div id="insertWrapper">
                                 <div class="insertblock">
                                     <div class="titleSection">
@@ -89,22 +89,27 @@
                                                 <tr>
                                                     <td class="scroll">
                                                         <div class="scroll_list">
-                                                            <ul class="optionList_5" id="listB">
+                                                            <ul class="optionList_5" id="brandB">
                                                                 <li>
-                                                                    <a>CalvinKlien</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </td>
                                                     <td class="scroll">
                                                         <div class="scroll_list">
-                                                            <ul class="optionList_5" id="itemB">
+                                                            <ul class="optionList_5" id="wrapcategory">
+                                                                <li>
+
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </td>
                                                     <td class="scroll">
                                                         <div class="scroll_list">
-                                                            <ul class="optionList_5" id="detailB">
+                                                            <ul class="optionList_5" id="categoryDetail">
+                                                                <li>
+
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -117,30 +122,36 @@
                                             <td class="explanation_wrapper">*상품명</td>
                                             <td class="userInput">
                                                 <input type="text" class="form-control textType"
-                                                       placeholder="상품명을 적어주세요">
+                                                       placeholder="상품명을 적어주세요" name="productName">
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*가격</td>
                                             <td class="userInput">
                                                 <input type="number" class="form-control textType"
-                                                       placeholder="가격을 적어주세요">
+                                                       placeholder="가격을 적어주세요" name="productPrice">
+                                            </td>
+                                        </tr>
+                                        <tr class="tablefloor">
+                                            <td class="explanation_wrapper">*색상</td>
+                                            <td class="userInput">
+                                                <input type="text" class="form-control textType"
+                                                       placeholder="색상을 입력해 주세요." name="productColor">
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*원산지 입력</td>
                                             <td class="userInput">
-                                                <select id="CountryOfOrigin" name="countryOfOrigin" class="form-control selectType">
+                                                <select id="CountryOfOrigin" name="productOrigin" class="form-control selectType">
 
                                                 </select>
-
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*원료 입력</td>
                                             <td class="userInput">
-                                                <input type="number" class="form-control textType"
-                                                       placeholder="원료를 넣어주세요">
+                                                <input type="text" class="form-control textType"
+                                                       placeholder="원료를 넣어주세요 여러가지일 경우 ,(컴마)로 구분" name="productMaterial">
                                             </td>
                                         </tr>
                                         <tr class="tablefloor">
@@ -148,8 +159,7 @@
                                             <td class="userInput">
                                                 <div class="filebox bs3-primary">
                                                     <label for="ex_file2" class="uploadImg">업로드</label>
-                                                    <hr>
-                                                    <input type="file" id="ex_file2" onchange="setThumbnail(this);"
+                                                    <input type="file" id="ex_file2" name="productImages" onchange="setThumbnail(this);"
                                                            multiple>
                                                 </div>
                                                 <div id="imgArea" class="pictureNotUploaded" style="display: flex; margin-bottom: 10px">
@@ -164,7 +174,7 @@
                                         <tr class="tablefloor">
                                             <td class="explanation_wrapper">*상품설명</td>
                                             <td class="userInput">
-                                                <textarea name="projectContent" id="editor1"></textarea>
+                                                <textarea name="productContent" id="editor1"></textarea>
                                             </td>
                                         </tr>
 
@@ -182,13 +192,16 @@
                                         <td class="userInput">
                                             <div style="padding-top: 8px;">
                                                 <input type="radio" name="quantity" id="unlimited"
-                                                       value="unlimited"><label for="unlimited">수량제한 없음</label>
+                                                       value="unlimited" checked><label for="unlimited">수량제한 없음</label>
                                                 <input type="radio" name="quantity" id="limited"
                                                        value="limited"><label for="limited">수량설정</label>
                                             </div>
                                             <input type="number" class="form-control textType"
                                                    placeholder="수량을 적어주세요"
-                                                   style="margin-bottom:10px; display: none">
+                                                   name="inputProductQuantity"
+                                                   id="inputProductQuantity"
+                                                   value=""
+                                                   style="margin-bottom:10px; display: none" >
                                         </td>
                                     </tr>
                                     <tr class="tablefloor">
@@ -198,34 +211,27 @@
                                                 <span>사이즈 종류: &nbsp;&nbsp;</span>
                                                 <select id="sizeCategory" name="sizeCategory" class="form-control selectType" style="width: 180px; margin-right: 15px">
                                                     <option value="COMSIZE01">일반분류</option>
+                                                    <option value="BOTSIZE01">하의</option>
+                                                    <option value="FREESI01">프리사이즈</option>
                                                 </select>
 
                                                 <span>상세 사이즈: &nbsp;&nbsp;</span>
                                                 <select id="sizeDetail" name="optionSize" class="form-control selectType" style="width: 180px">
-                                                    <option value="">XXS</option>
+
                                                 </select>
                                             </div>
                                     </tr>
 
                                     <tr class="tablefloor">
                                         <td class="explanation_wrapper">*등록된 옵션</td>
-                                        <td class="userInput">
-                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">등록 옵션 1</button>
-                                            <button type="button" class="btn btn-info">등록 옵션 2</button>
-                                            <button type="button" class="btn btn-info">등록 옵션 3</button>
+                                        <td class="userInput" id="userInputButton">
                                         </td>
                                     </tr>
-                                    <tr class="tablefloor">
-                                        <td class="explanation_wrapper">*등록 상세정보</td>
-                                        <td class="userInput">
-                                            <table>
 
-                                            </table>
-                                        </td>
-                                    </tr>
                                     <tr class="tablefloor">
                                         <td class="explanation_wrapper" colspan="2" style="padding-top: 10px" align="center">
-                                            <button type="button" class="btn btn-primary">옵션추가</button>
+                                            <button type="button" class="btn btn-primary" onclick="addOption()">옵션추가</button>
+                                            <button type="button" class="btn btn-danger" onclick="deleteAll()">옵션 일괄삭제</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -240,12 +246,12 @@
                                                 <td class="explanation_wrapper">*판매설정</td>
                                                 <td class="userInput">
                                                     <div style="padding-top: 8px;">
-                                                        <input type="radio" name="productSale" id="on_sale"
-                                                               value="on_sale"><label for="on_sale">즉시 판매</label>
-                                                        <input type="radio" name="productSale" id="on_save"
-                                                               value="on_sale"><label for="on_sale">판매 준비</label>
-                                                        <input type="radio" name="productSale" id="on_discount"
-                                                               value="on_sale"><label for="on_sale">세일 판매</label>
+                                                        <input type="radio" name="productStatus" id="on_sale"
+                                                               value="0" checked><label for="on_sale">즉시 판매</label>
+                                                        <input type="radio" name="productStatus" id="on_save"
+                                                               value="2"><label for="on_sale">판매 준비</label>
+                                                        <input type="radio" name="productStatus" id="on_discount"
+                                                               value="1"><label for="on_sale">세일 판매</label>
                                                     </div>
                                                     <input type="number" class="form-control textType"
                                                            placeholder="수량을 적어주세요"
@@ -256,11 +262,48 @@
                                     </tr>
                                 </div>
                             <div style="align-items: center">
-                                <button type="submit" class="btn btn-info" value="productInsertConfirm">등록</button>
+                                <button type="button" class="btn btn-info" value="productInsertConfirm" onclick="productInsert();">등록</button>
                                 <button type="button" class="btn btn-info" value="productInsertCancel">취소</button>
                             </div>
+
+                            <div id="modalDisplayArea">
+                            <!-- 모달 디스플레이 -->
+                           <!-- <div class="optionModal 0" id="optionModal0">
+                                <h3 align="center" style="font-weight: bold">등록 옵션</h3>
+                                <hr>
+                                <table style="margin-bottom: 10px">
+                                    <tbody>
+                                        <tr>
+                                            <td class="optionQuantitiy">상세사이즈:</td>
+                                            <td class="optionQuantitiyDisplay"><input type="text" class="form-control" value="XXL" readonly style="width: 100px;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="optionQuantitiy">재고수량:</td>
+                                            <td class="optionQuantitiyDisplay">
+                                                <input type="number" class="form-control" readonly style="width: 100px;">
+                                                <input type="checkbox" id="quantityModify" onclick="modifyQuantityFromModal(this)">
+                                                <label for="quantityModify" style="margin: 0px">&nbsp;&nbsp;재고 수량 수정하기</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="optionButtonBox">
+                                    <div class="buttonWrapper">
+                                    <button type="button" class="btn btn-info" id="optionModify" onclick="saveProductOption(this)">저장</button>
+                                    <button type="button" class="btn btn-info" id="optionDelete" onclick="optionDelete(this)">삭제</button>
+                                    </div>
+                                </div>
+                            </div>-->
+                            </div>
+                            <!-- 모달 디스플레이 -->
+
+                            <!-- 히든파라미터 영역 -->
+                        <input type="hidden" value="" name="productBrand">
+                        <input type="hidden" value="" name="productBigCateId">
+                        <input type="hidden" value="" name="productCategory">
+
                         </form>
-                        <div class="optionModal 1" id="optionModal1"></div>
+
                     </div>
                 </div>
             </div>
