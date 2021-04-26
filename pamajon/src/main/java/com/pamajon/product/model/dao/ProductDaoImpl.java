@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,6 +59,26 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<HashMap<String,String>> brandList(SqlSession session) {
         return session.selectList("product.brandList");
+    }
+
+    @Override
+    public String selectBrandName(SqlSession session, int cateId) {
+        return session.selectOne("product.selectBrandName", cateId);
+    }
+
+    @Override
+    public List<HashMap> selectBrand(SqlSession session, int cateId) {
+        return session.selectList("product.selectBrand", cateId);
+    }
+
+    @Override
+    public List<HashMap> newArrival(SqlSession session) {
+        return session.selectList("product.newArrival");
+    }
+
+    @Override
+    public List<HashMap> productSearch(SqlSession session, String key) {
+        return session.selectList("product.productSearch", key);
     }
 
 

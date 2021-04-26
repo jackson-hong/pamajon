@@ -1,5 +1,6 @@
 package com.pamajon.product.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface ProductService {
     List<HashMap> selectProductBySmall(int cateId);
     String selectSmallCateName(int cateId);
     List<HashMap<String,String>> brandList();
+    String selectBrandName(int cateId);
+    List<HashMap> selectBrand(int cateId);
+    List<HashMap> newArrival();
+    List<HashMap> productSearch(String key);
 }

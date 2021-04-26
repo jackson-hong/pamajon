@@ -28,16 +28,16 @@ public class IndexController {
     public ModelAndView index(ModelAndView mv, HttpSession sess){
         List<HashMap> resultList = service.homeBoard();
 
-        List<HashMap<String,String>> brandList = service.brandList();
+//        List<HashMap<String,String>> brandList = service.brandList();
 
-        BrandComparator comp = new BrandComparator("PRO_BRAND_NAME");
-        Collections.sort(brandList, comp);
-        ArrayList<Character> brandChar = new ArrayList<>();
-        for(char i = 65; i < 91; i++){
-            brandChar.add(i);
-        }
-        mv.addObject("brandList",brandList);
-        mv.addObject("brandChar", brandChar);
+//        BrandComparator comp = new BrandComparator("PRO_BRAND_NAME");
+//        Collections.sort(brandList, comp);
+//        ArrayList<Character> brandChar = new ArrayList<>();
+//        for(char i = 65; i < 91; i++){
+//            brandChar.add(i);
+//        }
+//        mv.addObject("brandList",brandList);
+//        mv.addObject("brandChar", brandChar);
 
         mv.setViewName("home");
         mv.addObject("resultList", resultList);

@@ -1,0 +1,57 @@
+<th:block th:replace="common/header.html"></th:block>
+<style>
+    #title-idx {
+        margin-top:2.5em;
+        display: flex;
+    }
+    #title {
+        width: 50%;
+        font-size:22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans','Sans-serif'!important;
+        -webkit-font-smoothing: antialiased;
+    }
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+</style>
+<div id="title-idx">
+    <div th:text="${title}" id="title">
+
+    </div>
+    <div th:text="|HOME > CATEGORIES > ${title}|" id="idx">
+
+    </div>
+</div>
+<div id="new-arrival">
+    <div class="item" th:each="item : ${resultList}">
+        <div class="forClick" th:onclick="|fn_location('/product/${item.get('PRODUCT_ID')}')|">
+            <div class="item-img-con">
+                <img th:src="@{/images/new1.jpg}">
+            </div>
+            <div class="item-description">
+                <div th:text="${item.get('PRO_BRAND_NAME')}" class="item-brand">
+                    [BARNS OUTFITTERS]
+                </div>
+                <div th:text="${item.get('PRODUCT_NAME')}" class="item-name">
+                    GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
+                </div>
+                <div th:text="${#numbers.formatInteger(item.get('PRODUCT_PRICE'),3,'COMMA')}" class="item-price">
+                    KRW 179,000
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:utext="${pageBar}"></th:block>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let cate = /*[[ ${cate} ]]*/;
+    let cateId = /*[[ ${cateId} ]]*/;
+    function fn_paging(cPage){location.href='/product/list/'+cate+'/'+ cateId +'?cPage='+cPage;}
+    /*]]>*/
+</script>
+<th:block th:replace="common/footer.html"></th:block>

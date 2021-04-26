@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 import java.util.HashMap;
@@ -55,7 +57,7 @@ public class ProductController {
         return "SUCCESS";
     }
 
-    @GetMapping("/list/{cateClass}/{cateId}")
+    @GetMapping("/{cateClass}/{cateId}")
     public ModelAndView cateList(ModelAndView mv,
                                  @PathVariable("cateClass") String cateClass,
                                  @PathVariable("cateId") int cateId,
@@ -74,6 +76,17 @@ public class ProductController {
             case "small-cate":{
                 title = service.selectSmallCateName(cateId);
                 resultList = service.selectProductBySmall(cateId);
+                break;
+            }
+            case "brand":{
+                title = service.selectBrandName(cateId);
+                resultList = service.selectBrand(cateId);
+                break;
+            }
+            case "new-arrival":{
+                title = "NEW ARRIVAL";
+                resultList = service.newArrival();
+                break;
             }
         }
 
@@ -88,33 +101,29 @@ public class ProductController {
         mv.addObject("cateId", cateId);
         mv.addObject("cate", cateClass);
         mv.addObject("resultList", resultList);
-        mv.setViewName("board/cateList");
+        mv.setViewName("product/cateList");
         return mv;
     }
 
-//    @GetMapping("/list/small-cate/{cateId}")
-//    public ModelAndView cateSmallList(ModelAndView mv,
-//                                      @PathVariable("cateId") int cateId,
-//                                      @RequestParam(defaultValue = "1") int cPage){
-//
-//        String title = service.selectSmallCateName(cateId);
-//        List<HashMap> resultList = service.selectProductBySmall(cateId);
-//
-//        int leng = resultList.size();
-//        String cate = "small-cate";
-//
-//        resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
-//
-//        String pageBar = PageFactory.getPageBar(leng,cPage,10);
-//
-//        mv.addObject("title", title);
-//        mv.addObject("pageBar", pageBar);
-//        mv.addObject("cateId", cateId);
-//        mv.addObject("cate", cate);
-//        mv.addObject("resultList", resultList);
-//        mv.setViewName("board/cateList");
-//        return mv;
-//    }
+    @GetMapping("/search")
+    public ModelAndView productSearch(ModelAndView mv, @RequestParam("keyword") String key, @RequestParam(defaultValue = "1") int cPage){
+
+        List<HashMap> resultList = service.productSearch(key);
+        String title = key;
+
+        int leng = resultList.size();
+        resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
+
+        String pageBar = PageFactory.getPageBar(leng,cPage,10);
+
+        mv.addObject("title", title);
+        mv.addObject("pageBar", pageBar);
+        mv.addObject("resultList", resultList);
+        mv.addObject("keyword",key);
+        mv.setViewName("product/searchList");
+
+        return mv;
+    }
 
     private ModelAndView msg(ModelAndView mv, String msg, String loc){
         mv.addObject("msg",msg);

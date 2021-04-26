@@ -2,6 +2,7 @@ package com.pamajon.product.model.dao;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface ProductDao {
     List<HashMap> selectProductBySmall(SqlSession session, int cateId);
     String selectSmallCateName(SqlSession session, int cateId);
     List<HashMap<String,String>> brandList(SqlSession session);
+    String selectBrandName(SqlSession session, int cateId);
+    List<HashMap> selectBrand(SqlSession session, int cateId);
+    List<HashMap> newArrival(SqlSession session);
+    List<HashMap> productSearch(SqlSession session, String key);
 }

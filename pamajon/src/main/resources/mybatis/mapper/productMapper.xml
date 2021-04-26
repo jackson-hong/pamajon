@@ -73,7 +73,7 @@
                            on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
                  left join PRO_BRAND PB
                            on PRODUCT.PRO_BRAND = PB.PRO_BRAND
-        WHERE PRO_CAT_ID = #{cateId}
+        WHERE PRO_CAT_ID = #{cateId} AND PRO_IMG_ISDEFAULT = 1
         ORDER BY PRODUCT.PRODUCT_ID DESC
     </select>
 
@@ -84,7 +84,7 @@
                            on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
                  left join PRO_BRAND PB
                            on PRODUCT.PRO_BRAND = PB.PRO_BRAND
-        WHERE PRO_BIG_CAT_ID = #{cateId}
+        WHERE PRO_BIG_CAT_ID = #{cateId} AND PRO_IMG_ISDEFAULT = 1
         ORDER BY PRODUCT.PRODUCT_ID DESC
     </select>
 
@@ -98,6 +98,45 @@
 
     <select id="brandList" resultType="map">
         SELECT * FROM PRO_BRAND
+    </select>
+
+    <select id="selectBrandName" resultType="string" parameterType="int">
+        SELECT PRO_BRAND_NAME FROM PRO_BRAND WHERE PRO_BRAND = #{cateId}
+    </select>
+
+    <select id="selectBrand" resultType="map" parameterType="int">
+        SELECT *
+        FROM PRODUCT
+                 left join PRO_IMAGE PI
+                           on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
+                 left join PRO_BRAND PB
+                           on PRODUCT.PRO_BRAND = PB.PRO_BRAND
+        WHERE PB.PRO_BRAND = #{cateId} AND PRO_IMG_ISDEFAULT = 1
+        ORDER BY PRODUCT.PRODUCT_ID DESC
+    </select>
+
+    <select id="newArrival" resultType="map">
+        SELECT *
+        FROM PRODUCT
+                 left join PRO_IMAGE PI
+                           on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
+                 left join PRO_BRAND PB
+                           on PRODUCT.PRO_BRAND = PB.PRO_BRAND
+        WHERE PRO_IMG_ISDEFAULT = 1
+        ORDER BY PRODUCT.PRODUCT_ID DESC
+    </select>
+
+    <select id="productSearch" resultType="map">
+        SELECT *
+        FROM PRODUCT
+                 left join PRO_IMAGE PI
+                           on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
+                 left join PRO_BRAND PB
+                           on PRODUCT.PRO_BRAND = PB.PRO_BRAND
+        WHERE PRO_IMG_ISDEFAULT = 1
+            AND PRODUCT_NAME LIKE CONCAT('%',#{key},'%')
+           OR PRO_BRAND_NAME LIKE CONCAT('%',#{key}, '%')
+        ORDER BY PRODUCT.PRODUCT_ID DESC
     </select>
 
 </mapper>

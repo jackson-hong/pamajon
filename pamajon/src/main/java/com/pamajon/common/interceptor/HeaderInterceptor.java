@@ -60,13 +60,17 @@ public class HeaderInterceptor implements HandlerInterceptor {
             });
             sess.setAttribute("cateResult", cateResult);
         }
-
         if(brandList == null) {
             brandList = service.brandList();
-
+            log.info(brandList);
             BrandComparator comp = new BrandComparator("PRO_BRAND_NAME");
             Collections.sort(brandList, comp);
 
+            ArrayList<Character> brandChar = new ArrayList<>();
+            for(char i = 65; i < 91; i++){
+                brandChar.add(i);
+            }
+            sess.setAttribute("brandChar", brandChar);
             sess.setAttribute("brandList",brandList);
         }
 

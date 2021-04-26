@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,4 +72,26 @@ public class ProductServiceImpl implements ProductService {
     public List<HashMap<String,String>> brandList() {
         return dao.brandList(session);
     }
+
+    @Override
+    public String selectBrandName(int cateId) {
+        return dao.selectBrandName(session,cateId);
+    }
+
+    @Override
+    public List<HashMap> selectBrand(int cateId) {
+        return dao.selectBrand(session,cateId);
+    }
+
+    @Override
+    public List<HashMap> newArrival() {
+        return dao.newArrival(session);
+    }
+
+    @Override
+    public List<HashMap> productSearch(String key) {
+        return dao.productSearch(session, key);
+    }
+
+
 }
