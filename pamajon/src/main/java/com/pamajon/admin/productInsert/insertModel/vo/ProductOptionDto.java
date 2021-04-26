@@ -18,6 +18,7 @@ public class ProductOptionDto {
     private String optionColor;
     private String optionSize;
     private int optionQuantity;
+    private String optionQuantityStatus;
     private String optionCode;
     private String productPrice;
     private ArrayList<ProductOptionDto> optionList;

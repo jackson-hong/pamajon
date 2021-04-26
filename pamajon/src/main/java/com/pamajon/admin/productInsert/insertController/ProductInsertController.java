@@ -100,7 +100,7 @@ public class ProductInsertController {
             String fileName = fileRenameStringType.fileRenameString(productImages.get(i).getOriginalFilename());
 
             fileMap.put("fileName",fileName);
-            fileMap.put("fileStatus","0");
+            fileMap.put("fileStatus","1");
             //파일 저장.
             productImages.get(i).transferTo(new File(filePath+fileName));
 
@@ -111,7 +111,7 @@ public class ProductInsertController {
             String fileName = fileRenameStringType.fileRenameString(productImages.get(i).getOriginalFilename());
 
             fileMap.put("fileName",fileName);
-            fileMap.put("fileStatus","1");
+            fileMap.put("fileStatus","0");
             productImages.get(i).transferTo(new File(filePath+fileName));
 
             productInsertService.insertProductImages(fileMap);
