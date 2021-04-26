@@ -195,10 +195,8 @@
         SELECT
               P.PRODUCT_ID AS PRODUCT_ID
              ,P.PRODUCT_NAME AS PRODUCT_NAME
-             ,P_COLOR
              ,P_SIZE
              ,P_QUAN
-             ,P_CODE
              ,PRODUCT_PRICE
         FROM
             P_OPTION O

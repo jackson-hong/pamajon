@@ -18,7 +18,7 @@ public class UrlFilter extends OncePerRequestFilter {
         if(httpServletRequest.getHeader("REFERER") != null){
             filterChain.doFilter(httpServletRequest,httpServletResponse);
         } else {
-            httpServletResponse.sendRedirect("/pamajon/warning");
+            httpServletResponse.sendRedirect("/warning");
         }
     }
 }
