@@ -30,7 +30,12 @@
     <div class="item" th:each="item : ${resultList}">
         <div class="forClick" th:onclick="|fn_location('/product/${item.get('PRODUCT_ID')}')|">
             <div class="item-img-con">
-                <img th:src="@{/images/new1.jpg}">
+                <th:block th:if="${item.get('PRO_IMG_NAME') == 'TEST'}">
+                    <img th:src="@{/images/new1.jpg}">
+                </th:block>
+                <th:block th:if="${item.get('PRO_IMG_NAME') != 'TEST'}">
+                    <img th:src="|@{/images/productImages/}${item.get('PRO_IMG_NAME')}|">
+                </th:block>
             </div>
             <div class="item-description">
                 <div th:text="${item.get('PRO_BRAND_NAME')}" class="item-brand">

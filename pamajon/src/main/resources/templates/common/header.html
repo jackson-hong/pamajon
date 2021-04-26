@@ -123,11 +123,11 @@
                     </b>
                     <hr class="cate-hr">
                     <th:block th:each="brand : ${session.brandList}">
-                        <th:bloc th:if="${brand.get('PRO_BRAND_NAME').charAt(0) == item}">
+                        <th:block th:if="${brand.get('PRO_BRAND_NAME').charAt(0) == item}">
                             <div class="cate-small-sub">
                                 <a th:href="|@{/product/brand/}${brand.get('PRO_BRAND')}|" th:text="${brand.get('PRO_BRAND_NAME')}"></a>
                             </div>
-                        </th:bloc>
+                        </th:block>
                     </th:block>
                 </div>
             </div>
