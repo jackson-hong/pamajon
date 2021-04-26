@@ -38,8 +38,9 @@ body {
 }
 #search-input{
     border: 2px rgb(7,34,66) solid;
-    height:3em;
-    width: 34em;
+    height:1.82em;
+    /*width: 34em;*/
+    font-size: 22px;
 }
 #search-input:focus{
     outline: none;
@@ -49,7 +50,7 @@ body {
     background-color: rgb(7,34,66);
 }
 ion-icon[name="search-outline"]{
-    font-size: 2.76em;
+    font-size: 2.8em;
     color: white;
 }
 #shop-info-container{

@@ -118,10 +118,16 @@
     </select>
 
     <select id="selectProductsForWish" resultType="map">
-        SELECT * FROM PRODUCT WHERE PRODUCT_ID IN
-        <foreach collection="wishList" item="item" open="(" close=")" separator=",">
-            #{item, jdbcType=INTEGER}
-        </foreach>
+        SELECT * FROM PRODUCT
+        <if test="wishList.size != 0">
+            WHERE PRODUCT_ID IN
+            <foreach collection="wishList" item="item" open="(" close=")" separator=",">
+                #{item, jdbcType=INTEGER}
+            </foreach>
+        </if>
+        <if test="wishList.size == 0">
+            WHERE PRODUCT_ID = NULL
+        </if>
     </select>
 
     <update id="addrUpdate" parameterType="com.pamajon.member.model.vo.MemberAddr">

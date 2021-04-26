@@ -58,17 +58,19 @@
             </div>
         </div>
 <script>
-    new Glider(document.querySelector('.glider'), {
+    var glider = new Glider(document.querySelector('.glider'), {
         slidesToShow: 1,
         dots: '.dots',
-        scrollLock:true,
+        // scrollLock:true,
         rewind:true,
-        duration:0.5,
+        // duration:0.5,
         arrows: {
             prev: '.glider-prev',
             next: '.glider-next'
         }
     });
+
+    // glider.refresh(true);
     setInterval(function(){
         let obj = document.getElementsByClassName('glider-next')[0];
         obj.click();
