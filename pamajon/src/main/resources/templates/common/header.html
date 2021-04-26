@@ -12,19 +12,21 @@
     <script th:src="@{/js/glider.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}"/>
     <style>
-        #cate-con {
-            margin-top: 1.75em;
+        .header-cate-con {
             height: 0;
             visibility: hidden;
             transition-duration: 100ms;
         }
-        #cate-con-con {
+        .header-cate-con-con {
+            margin-top: 1em;
             display: flex;
+            flex-wrap: wrap;
             height: 100%;
         }
         .cate-small {
-            width: 14%;
+            width: 13em;
             margin-right: 1em;
+            height: 15em;
         }
         hr.cate-hr {
             margin: 1em 1em 1em 0;
@@ -37,9 +39,10 @@
             margin-top: 0.5em;
             color: rgba(0,0,0,0.7);
         }
-        #cateClick {
+        .cate-click {
             cursor: pointer;
         }
+
     </style>
 </head>
 <body>
@@ -72,10 +75,10 @@
                     <a th:href="@{/}">NEW ARRIVAL</a>
                 </div>
                 <div class="shop-cate">
-                    <a th:href="@{/}">BRAND</a>
+                    <p onclick="fn_header_drop('brand');" class="cate-click">BRAND</p>
                 </div>
                 <div class="shop-cate">
-                    <p id="cateClick">CATEGORIES</p>
+                    <p onclick="fn_header_drop('categories');" class="cate-click">CATEGORIES</p>
                 </div>
             </div>
             <div id="user-cates">
@@ -94,8 +97,8 @@
             </div>
         </div>
         <hr>
-        <div id="cate-con">
-            <div id="cate-con-con">
+        <div id="cate-con" class="header-cate-con">
+            <div id="cate-con-con" class="header-cate-con-con">
                 <div th:each="item : ${session.cateResult}" class="cate-small">
                     <th:block th:each="subItem : ${item}">
                         <th:block th:if="${subItemStat.index == 0}">
@@ -113,18 +116,63 @@
             </div>
             <hr>
         </div>
+        <div id="brand-con" class="header-cate-con">
+            <div id="brand-con-con" class="header-cate-con-con">
+                <div th:each="item : ${brandChar}" class="cate-small">
+                    <b th:text="${item}">
+                    </b>
+                    <hr class="cate-hr">
+                    <th:block th:each="brand : ${brandList}">
+                        <th:bloc th:if="${brand.get('PRO_BRAND_NAME').charAt(0) == item}">
+                            <div class="cate-small-sub">
+                                <a th:href="|@{/product/list/brand/}${brand.get('PRO_BRAND_ID')}|" th:text="${brand.get('PRO_BRAND_NAME')}"></a>
+                            </div>
+                        </th:bloc>
+                    </th:block>
+                </div>
+            </div>
+            <hr>
+        </div>
         <script>
             let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
-            document.getElementById('cateClick').addEventListener('click', function(){
-                let cateCon = document.getElementById('cate-con');
-                console.log(cateCon.style.height)
+            // document.getElementById('cateClick').addEventListener('click', function(){
+            //     let cateCon = document.getElementById('cate-con');
+            //     console.log(cateCon.style.height)
+            //     if(cateCon.style.height === '0px' || cateCon.style.height === '') {
+            //         cateCon.style.height = '20em';
+            //         cateCon.style.visibility = 'visible';
+            //     }
+            //     else {
+            //         cateCon.style.height = '0';
+            //         cateCon.style.visibility = 'hidden';
+            //     }
+            // })
+
+            function fn_header_drop(cate){
+                let cateCon;
+                if(cate === 'brand'){
+                    cateCon = document.getElementById('brand-con');
+                }else {
+                    cateCon = document.getElementById('cate-con');
+                }
+                console.log(cateCon);
+                console.log(cate);
                 if(cateCon.style.height === '0px' || cateCon.style.height === '') {
-                    cateCon.style.height = '20em';
+                    if(cate === 'brand') {
+                        cateCon.style.height = '80em';
+                        document.getElementById('cate-con').style.height = '0px';
+                        document.getElementById('cate-con').style.visibility = 'hidden';
+                    }
+                    else {
+                        cateCon.style.height = '20em';
+                        document.getElementById('brand-con').style.height = '0px';
+                        document.getElementById('brand-con').style.visibility = 'hidden';
+                    };
                     cateCon.style.visibility = 'visible';
                 }
                 else {
                     cateCon.style.height = '0';
                     cateCon.style.visibility = 'hidden';
                 }
-            })
+            }
         </script>

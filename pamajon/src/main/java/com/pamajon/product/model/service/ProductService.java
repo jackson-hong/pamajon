@@ -13,4 +13,5 @@ public interface ProductService {
     String selectBigCateName(int cateId);
     List<HashMap> selectProductBySmall(int cateId);
     String selectSmallCateName(int cateId);
+    List<HashMap<String,String>> brandList();
 }

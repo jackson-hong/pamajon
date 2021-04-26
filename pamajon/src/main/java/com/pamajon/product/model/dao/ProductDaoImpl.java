@@ -55,5 +55,10 @@ public class ProductDaoImpl implements ProductDao {
         return session.selectOne("product.selectSmallCateName", cateId);
     }
 
+    @Override
+    public List<HashMap<String,String>> brandList(SqlSession session) {
+        return session.selectList("product.brandList");
+    }
+
 
 }

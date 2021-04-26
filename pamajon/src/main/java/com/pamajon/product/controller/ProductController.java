@@ -7,6 +7,7 @@ import com.pamajon.product.model.service.ProductService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
@@ -54,19 +55,30 @@ public class ProductController {
         return "SUCCESS";
     }
 
-    @GetMapping("/list/big-cate/{cateId}")
+    @GetMapping("/list/{cateClass}/{cateId}")
     public ModelAndView cateList(ModelAndView mv,
+                                 @PathVariable("cateClass") String cateClass,
                                  @PathVariable("cateId") int cateId,
                                  @RequestParam(defaultValue = "1") int cPage){
 
-        //타이틀 받아오기.
-        String title = service.selectBigCateName(cateId);
-        //리스트 받아오기
-        List<HashMap> resultList = service.selectProductByBig(cateId);
+        String title = "";
+        List<HashMap> resultList = new ArrayList<>();
+        switch (cateClass){
+            case "big-cate":{
+                //타이틀 받아오기.
+                title = service.selectBigCateName(cateId);
+                //리스트 받아오기
+                resultList = service.selectProductByBig(cateId);
+                break;
+            }
+            case "small-cate":{
+                title = service.selectSmallCateName(cateId);
+                resultList = service.selectProductBySmall(cateId);
+            }
+        }
+
 
         int leng = resultList.size();
-        String cate = "big-cate";
-
         resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
 
         String pageBar = PageFactory.getPageBar(leng,cPage,10);
@@ -74,35 +86,35 @@ public class ProductController {
         mv.addObject("title", title);
         mv.addObject("pageBar", pageBar);
         mv.addObject("cateId", cateId);
-        mv.addObject("cate", cate);
+        mv.addObject("cate", cateClass);
         mv.addObject("resultList", resultList);
         mv.setViewName("board/cateList");
         return mv;
     }
 
-    @GetMapping("/list/small-cate/{cateId}")
-    public ModelAndView cateSmallList(ModelAndView mv,
-                                      @PathVariable("cateId") int cateId,
-                                      @RequestParam(defaultValue = "1") int cPage){
-
-        String title = service.selectSmallCateName(cateId);
-        List<HashMap> resultList = service.selectProductBySmall(cateId);
-
-        int leng = resultList.size();
-        String cate = "small-cate";
-
-        resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
-
-        String pageBar = PageFactory.getPageBar(leng,cPage,10);
-
-        mv.addObject("title", title);
-        mv.addObject("pageBar", pageBar);
-        mv.addObject("cateId", cateId);
-        mv.addObject("cate", cate);
-        mv.addObject("resultList", resultList);
-        mv.setViewName("board/cateList");
-        return mv;
-    }
+//    @GetMapping("/list/small-cate/{cateId}")
+//    public ModelAndView cateSmallList(ModelAndView mv,
+//                                      @PathVariable("cateId") int cateId,
+//                                      @RequestParam(defaultValue = "1") int cPage){
+//
+//        String title = service.selectSmallCateName(cateId);
+//        List<HashMap> resultList = service.selectProductBySmall(cateId);
+//
+//        int leng = resultList.size();
+//        String cate = "small-cate";
+//
+//        resultList = resultList.subList((cPage-1)*10, cPage*10 > leng ? leng : cPage*10);
+//
+//        String pageBar = PageFactory.getPageBar(leng,cPage,10);
+//
+//        mv.addObject("title", title);
+//        mv.addObject("pageBar", pageBar);
+//        mv.addObject("cateId", cateId);
+//        mv.addObject("cate", cate);
+//        mv.addObject("resultList", resultList);
+//        mv.setViewName("board/cateList");
+//        return mv;
+//    }
 
     private ModelAndView msg(ModelAndView mv, String msg, String loc){
         mv.addObject("msg",msg);

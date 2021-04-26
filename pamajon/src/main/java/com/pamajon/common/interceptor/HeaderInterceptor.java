@@ -1,5 +1,6 @@
 package com.pamajon.common.interceptor;
 
+import com.pamajon.common.comparators.BrandComparator;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.product.model.service.ProductService;
 import lombok.extern.log4j.Log4j2;
@@ -34,9 +35,9 @@ public class HeaderInterceptor implements HandlerInterceptor {
 
         List<List<HashMap>> cateList = (List<List<HashMap>>)sess.getAttribute("cateResult");
 
-        if(cateList == null) {
-            List<HashMap> resultList = service.homeBoard();
+        List<HashMap<String,String>> brandList = (List<HashMap<String, String>>) sess.getAttribute("brandList");
 
+        if(cateList == null) {
             List<HashMap> bigCateList = service.bigCateList();
 
             List<HashMap> smallCateList = service.smallCateList();
@@ -57,8 +58,16 @@ public class HeaderInterceptor implements HandlerInterceptor {
                     }
                 });
             });
-
             sess.setAttribute("cateResult", cateResult);
+        }
+
+        if(brandList == null) {
+            brandList = service.brandList();
+
+            BrandComparator comp = new BrandComparator("PRO_BRAND_NAME");
+            Collections.sort(brandList, comp);
+
+            sess.setAttribute("brandList",brandList);
         }
 
         return true;

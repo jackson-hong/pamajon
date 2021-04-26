@@ -96,4 +96,8 @@
         SELECT PRO_CAT_NAME FROM PRO_CAT WHERE PRO_CAT_ID = #{cateId};
     </select>
 
+    <select id="brandList" resultType="map">
+        SELECT * FROM PRO_BRAND
+    </select>
+
 </mapper>

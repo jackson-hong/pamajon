@@ -1,5 +1,6 @@
 package com.pamajon.common;
 
+import com.pamajon.common.comparators.BrandComparator;
 import com.pamajon.product.model.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Log4j2
 @RestController
@@ -19,7 +19,7 @@ public class IndexController {
     @Value("${spring.application.name}")
     String appName;
 
-    @Qualifier("boardServiceImpl")
+    @Qualifier("productServiceImpl")
     private final ProductService service;
 
     public IndexController(ProductService service){this.service = service;}
@@ -28,34 +28,22 @@ public class IndexController {
     public ModelAndView index(ModelAndView mv, HttpSession sess){
         List<HashMap> resultList = service.homeBoard();
 
-        List<HashMap> bigCateList = service.bigCateList();
+        List<HashMap<String,String>> brandList = service.brandList();
 
-        List<HashMap> smallCateList = service.smallCateList();
-
-        List<List<HashMap>> cateResult = new ArrayList<>();
-        IntStream.range(0, bigCateList.size()).forEach(index -> {
-            List<HashMap> temp = new ArrayList<HashMap>();
-            temp.add(bigCateList.get(index));
-            cateResult.add(index, temp);
-        });
-
-        smallCateList.stream().forEach(smallCate -> {
-            Integer bigCateId = (Integer)smallCate.get("PRO_CAT_WRAPPER_ID");
-            cateResult.stream().forEach(ele -> {
-                Integer temp = (Integer) ele.get(0).get("PRO_CAT_WRAPPER_ID");
-                if(temp.equals(bigCateId)){
-                    ele.add(smallCate);
-                }
-            });
-        });
-
-        log.info("CATERESULT: "+cateResult);
-
+        BrandComparator comp = new BrandComparator("PRO_BRAND_NAME");
+        Collections.sort(brandList, comp);
+        ArrayList<Character> brandChar = new ArrayList<>();
+        for(char i = 65; i < 91; i++){
+            brandChar.add(i);
+        }
+        mv.addObject("brandList",brandList);
+        mv.addObject("brandChar", brandChar);
 
         mv.setViewName("home");
-        sess.setAttribute("cateResult", cateResult);
         mv.addObject("resultList", resultList);
         mv.addObject("appName",appName);
         return mv;
     }
+
+
 }
