@@ -20,6 +20,7 @@ import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.TooManyResultsException;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -54,17 +55,15 @@ import java.util.stream.Stream;
 @RequestMapping("/member")
 @SessionAttributes("loginMember")
 public class MemberController {
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private AES256Util aes;
-
-    @Qualifier("memberServiceImpl")
     private final MemberService service;
-    @Qualifier("productServiceImpl")
     private final ProductService productService;
 
-    public MemberController(MemberService service, ProductService productService) {
+    @Autowired
+    public MemberController(PasswordEncoder passwordEncoder, AES256Util aes, MemberService service, ProductService productService) {
+        this.passwordEncoder = passwordEncoder;
+        this.aes = aes;
         this.service = service;
         this.productService = productService;
     }
@@ -151,14 +150,6 @@ public class MemberController {
         mv.setViewName("member/login");
         return mv;
     }
-//    @GetMapping("/logout")
-//    public ModelAndView logout(ModelAndView mv, HttpServletRequest req){
-//        HttpSession sess = req.getSession();
-//        sess.removeAttribute("loginMember");
-//        sess.invalidate();
-//        mv.setViewName("redirect:/member/login");
-//        return mv;
-//    }
 
     @PostMapping("/login")
     public ModelAndView loginEnd(ModelAndView mv, @RequestParam Map input, HttpServletRequest req){
@@ -245,6 +236,7 @@ public class MemberController {
         String passwd = null;
         String name = (String) input.get("memName");
         String phone = (String) input.get("memPhone");
+
         //소셜로그인이 아닐 경우
         if(!isSocial) passwd = (String) input.get("memPwd");
 
@@ -365,11 +357,6 @@ public class MemberController {
         return mv;
     }
 
-//    @GetMapping("/wishList")
-//    public ModelAndView wishList(ModelAndView mv){
-//        mv.setViewName("/member/wishList");
-//        return mv;
-//    }
 
     @RequestMapping("/mileage")
     public ModelAndView mileage(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, HttpServletRequest req, @RequestParam(defaultValue = "1") int cPage){
