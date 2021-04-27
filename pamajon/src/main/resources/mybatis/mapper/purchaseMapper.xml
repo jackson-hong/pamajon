@@ -22,11 +22,10 @@
     <resultMap id="productOptionDtoResultSet" type="com.pamajon.order.model.vo.ProductOptionDto">
         <result property="optionId" column="P_OPTION_ID"/>
         <result property="productId" column="PRODUCT_ID"/>
-        <result property="optionColor" column="P_COLOR"/>
         <result property="optionSize" column="P_SIZE"/>
-        <result property="optionCode" column="P_CODE"/>
         <result property="productPrice" column="PRODUCT_PRICE"/>
         <result property="productName" column="PRODUCT_NAME"/>
+        <result property="productThumbnailImage" column="PRO_IMG_NAME"/>
     </resultMap>
 
     <select id="getMember" parameterType="integer" resultMap="memberResultSet">
@@ -193,16 +192,25 @@
     </update>
     <select id="getProductOption" parameterType="com.pamajon.order.model.vo.ProductOptionDto" resultMap="productOptionDtoResultSet">
         SELECT
-              P.PRODUCT_ID AS PRODUCT_ID
-             ,P.PRODUCT_NAME AS PRODUCT_NAME
-             ,P_SIZE
-             ,P_QUAN
-             ,PRODUCT_PRICE
+                P.PRODUCT_ID AS PRODUCT_ID
+                ,P.PRODUCT_NAME AS PRODUCT_NAME
+                ,P_SIZE
+                ,P_QUAN
+                ,PRODUCT_PRICE
+                ,PRO_IMG_NAME
         FROM
-            P_OPTION O
-                INNER JOIN
-            PRODUCT P ON P.PRODUCT_ID = O.PRODUCT_ID
+                P_OPTION PO,
+                PRODUCT P,
+                PRO_IMAGE PIG
         WHERE
-            P_OPTION_ID=#{optionId}
+                1=1
+        AND
+                PO.PRODUCT_ID = PIG.PRODUCT_ID
+        AND
+                P.PRODUCT_ID = PO.PRODUCT_ID
+        AND
+                PIG.PRO_IMG_ISDEFAULT ='1'
+        AND
+                 PO.P_OPTION_ID=${optionId}
     </select>
 </mapper>    

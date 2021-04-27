@@ -1,5 +1,6 @@
-'use strict'
 
+'use strict'
+/*
 $("select[name='productOption']").on('change', function () {
 
 
@@ -26,11 +27,15 @@ $("select[name='productOption']").on('change', function () {
         }
         productOption +=
             `<tr class="purchaseInfoDisplay">
-            <th style="width:50%">${$("select[name='productOption']").val()}<input type="hidden"  name="productSize[${parseInt(arrayNum)}]" value="${$("select[name='productOption']").val()}">
+            <th style="width:50%">${$("select[name='productOption']").val()}
+                <input type="hidden"  name="productSize[${parseInt(arrayNum)}]" value="${$("select[name='productOption']").val()}">
             </th>
             <th style="display: flex; padding-top: 5px;" >
-            <input type="number" value="1" min="1" onchange="priceCal(event);" name="quantity[${parseInt(arrayNum)}]" style="width:80px" >
-            <div onclick="optionDelete(this)" style="cursor:pointer;">&nbsp;x</div></th>
+                <input type="number" value="1" min="1" onchange="priceCal(event);" name="quantity[${parseInt(arrayNum)}]" style="width:80px" >
+                <div onclick="optionDelete(this)" style="cursor:pointer;">&nbsp;
+                    <img src="//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif" alt="삭제" id="option_box1_del" class="option_box_del">
+                </div>
+            </th>
             <th align="center">89000</th>
                 </tr>`;
 
@@ -75,3 +80,4 @@ function optionListCount() {
 
     $("#priceDisplay").html(`Total:${result} KRW`);
 }
+*/

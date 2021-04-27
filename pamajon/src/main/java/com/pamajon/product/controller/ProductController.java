@@ -1,6 +1,7 @@
 package com.pamajon.product.controller;
 
 
+import com.pamajon.admin.productInsert.insertModel.vo.ProductImageDto;
 import com.pamajon.common.page.PageFactory;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.product.model.service.ProductService;
@@ -30,6 +31,12 @@ public class ProductController {
     @GetMapping("/{product_id}")
     public ModelAndView productDetail(ModelAndView mv, @PathVariable("product_id") int productId){
         mv.addObject("productId", productId);
+        //썸네일 사진 가져옴.
+        mv.addObject("thumbNailImage",service.getThumbImg(productId));
+        //썸네일이 아닌 사진 가져옴.
+        mv.addObject("product",service.getProduct(productId));
+        mv.addObject("productImages",service.getImage(productId));
+        mv.addObject("productOption",service.getOption(productId));
         mv.setViewName("detailView/mallDetailview");
         return mv;
     }

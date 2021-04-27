@@ -1,5 +1,8 @@
 package com.pamajon.product.model.service;
 
+import com.pamajon.admin.productInsert.insertModel.vo.ProductDto;
+import com.pamajon.admin.productInsert.insertModel.vo.ProductImageDto;
+import com.pamajon.admin.productInsert.insertModel.vo.ProductOptionDto;
 import com.pamajon.product.model.dao.ProductDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -91,6 +94,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<HashMap> productSearch(String key) {
         return dao.productSearch(session, key);
+    }
+
+    @Override
+    public List<ProductImageDto> getImage(int productId) {
+        return dao.getImage(session,productId);
+    }
+
+    @Override
+    public List<ProductOptionDto> getOption(int productId) {
+        return dao.getOption(session,productId);
+    }
+
+    @Override
+    public ProductImageDto getThumbImg(int productId) {
+        return dao.getThumbImg(session,productId);
+    }
+
+    @Override
+    public ProductDto getProduct(int productId) {
+        return dao.getProduct(session,productId);
     }
 
 

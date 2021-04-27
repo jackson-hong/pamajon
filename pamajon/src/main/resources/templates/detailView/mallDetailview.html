@@ -15,117 +15,116 @@
 
     <div id="outerTotalWrapper">
 
-        <div id="upperArticle">
-            <div id="product_carousal">
+        <div id="upperArticle" >
+            <div id="product_carousal" >
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                       <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <th:block th:if="${productImages !=  null}">
+                            <th:block th:each="imageList , index : ${productImages}">
+                      <li data-target="#carousel-example-generic" th:data-slide-to="${index.index+1}"></li>
+                            </th:block>
+                        </th:block>
                     </ol>
                     <div class="carousel-inner" role="listbox">
-                      <div class="carousel-item active">
-                         
-                        <img src="http://kclui.com/IVEST/ITP4208/images/BS4Carousel/carousel-1.jpg" >
-                      </div>
-                      <div class="carousel-item">
-                     
-                        <img src="http://kclui.com/IVEST/ITP4208/images/BS4Carousel/carousel-2.jpg" >
-                      </div>
-                      <div class="carousel-item">
-                      
-                        <img src="http://kclui.com/IVEST/ITP4208/images/BS4Carousel/carousel-3.jpg" >
-                      </div>
+                         <th:block th:if="${thumbNailImage !=  null}">
+                           <div class="carousel-item active">
+                            <img th:src="|@{/images/productImages/}${thumbNailImage.getProductFileName()}|" src="http://kclui.com/IVEST/ITP4208/images/BS4Carousel/carousel-1.jpg">
+                           </div>
+                        </th:block>
+
+                        <th:block th:if="${productImages !=  null}">
+                            <th:block th:each="imageList : ${productImages}">
+                          <div class="carousel-item">
+                                <img th:src="|@{/images/productImages/}${imageList.getProductFileName()}|">
+                          </div>
+                            </th:block>
+                        </th:block>
                     </div>
-
                     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                      <span class="icon-prev" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
+                          <span class="icon-prev" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
                     </a>
-                    
+
                     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                      <span class="icon-next" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
+                          <span class="icon-next" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
                     </a>
-                  </div>
-
+                </div>
             </div>
-            <div id="product_info">
-                <div id="productTitle">SPECTATOR SPORT PRINTED SWEAT HOODIE - BLACK (BR8534)<br><br></div>
-                <div id="prodictinfo">
-                    <span style="font-size: 0.7rem;">  BARNS OUTFITTERS SPECTATOR SPORT PRINTED SWEAT HOODIE - BLACK (BR8534)<br><br>
+            <div id="product_info" >
+                <div id="productTitle" th:text="${product.productName}"><br><br></div>
+                <br>
+                <div id="prodictinfo" th:utext="${product.productContent}">
 
-                    - 100% COTTON LOOPWHEELED JERSEY <br>
-                    - MADE IN JAPAN <br>
-                        <br>
-                    SIZE <br>
-                    2 (어깨/가슴/총장/소매) : 46.5/56/69/64<br><br>
 
-                    * CM 기준, 재는 방법에 따라 1~2CM 오차가 발생 할 수 있습니다.<br>
-                    *제품 및 사이즈 문의<br>
-                    - Q&A<br>
-                    - 02 543 7137<br>
-                    - jhlee1@bluesman.co.kr<br><br>
-                    *BLUESMAN OUTLET (할인율 50%이상) 제품은 교환/환불이 불가 합니다.<br>
-                </span>
                 </div>
                 <hr>
-                <table>
+                <table style="width: 100%">
                     <tbody class="feeDisplayTable">
                         <tr>
-                            <td>판매가</td>
-                            <th>&nbsp;&nbsp;&nbsp;89,000</th>
+                            <td class="infoTitle">판매가</td>
+                          <th class="infoContent" id="productPrice" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}"></th>
                         </tr>
                         <tr>
-                            <td>배송방법</td>
-                            <th>&nbsp;&nbsp;&nbsp;택배</th>
+                            <td class="infoTitle">배송방법</td>
+                            <th class="infoContent">택배</th>
                         </tr>
                         <tr>
-                            <td>배송비</td>
-                            <th>&nbsp;&nbsp;&nbsp;9천만원</th>
+                            <td class="infoTitle">적립금</td>
+                            <th class="infoContent">1%</th>
+                        </tr>
+                        <tr>
+                            <td class="infoTitle">배송비</td>
+                            <th class="infoContent">KRW 3,000 (KRW 50,000 이상 구매 시 무료)</th>
                         </tr>
     
                 </tbody>
             </table>    
-            <hr>
-            <table>
+            <hr >
+            <table style="width: 100%">
                 <tbody>
                         <tr>
-                            <th>옵션선택</th>
+                            <th style="width: 27%">SIZE</th>
                             <th><select id="productSelector" name="optionId">
                                 <option value="empty">- [필수] 필수 옵션을 선택해주세요 -</option>
                                 <option value="empty">----------------------------------</option>
-                                <option value="1">M(95~100)</option>
-                                <option value="2">L(100~105)</option>
-                                <option value="3">XL(105~110)</option>
+                                <option th:each="optionList : ${productOption}"
+                                        th:value="${optionList.productOptionId}"
+                                        th:text="${optionList.productOptionSize}"></option>
                             </select>
                             </th>
                         </tr>
                     </tbody>
                 </table>
-                <hr>
-                <table> 
+                <hr style="margin-bottom: 8px">
+                <table style="margin-bottom: 20px;">
                 <tbody>
                     <tr>
-                        <th colspan="2">(최소주문수량 1개 이상)</th>
+                        <th colspan="2" style="color: #6d6d6d">(최소주문수량 1개 이상)</th>
                     </tr>
                 </tbody>
             </table>
                 <form id="sendProductOption">
             <table style="width:100%" id="productOptionDisplay">
-                <thead class="productOptionHead">
-                    <tr>
-                        <th style="width:50%">option</th>
-                        <th style="width:20%">quantity</th>
-                        <th style="width:30%">price</th>
+                <thead class="productOptionHead" >
+                    <tr >
+                        <th style="width:50%; background: white">option</th>
+                        <th style="width:20%; background: white">quantity</th>
+                        <th style="width:30%; background: white">price</th>
                     </tr>
                 </thead>
                 <tbody>
+
                 </tbody>
             </table>
 
-            <hr>
-            <h3 align="right" id="priceDisplay">Total:0 KRW</h3>
+            <hr style="margin: 0px 0px 5px 0px">
+            <span id="priceDisplay" style="display: block; text-align: right">
+                <strong style="font-weight: bold; font-size: 1.0rem">Total:</strong>
+                <span id="productTotalPrice" style="font-size: 1.2rem; font-weight: bold">0 KRW</span>
+                <span id="totalQuantityDisplay">(0개)</span>
+            </span>
             <hr>
             <div id="optionSelecter">
                 <div id="buyBtn" onclick="submitOption();">BUY-NOW</div>

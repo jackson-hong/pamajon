@@ -1,5 +1,8 @@
 package com.pamajon.product.model.dao;
 
+import com.pamajon.admin.productInsert.insertModel.vo.ProductDto;
+import com.pamajon.admin.productInsert.insertModel.vo.ProductImageDto;
+import com.pamajon.admin.productInsert.insertModel.vo.ProductOptionDto;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
@@ -21,4 +24,8 @@ public interface ProductDao {
     List<HashMap> selectBrand(SqlSession session, int cateId);
     List<HashMap> newArrival(SqlSession session);
     List<HashMap> productSearch(SqlSession session, String key);
+    List<ProductImageDto> getImage(SqlSession session, int productId);
+    List<ProductOptionDto> getOption(SqlSession session, int productId);
+    ProductImageDto getThumbImg(SqlSession session, int productId);
+    ProductDto getProduct(SqlSession session, int productId);
 }

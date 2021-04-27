@@ -1,5 +1,8 @@
 package com.pamajon.product.model.dao;
 
+import com.pamajon.admin.productInsert.insertModel.vo.ProductDto;
+import com.pamajon.admin.productInsert.insertModel.vo.ProductImageDto;
+import com.pamajon.admin.productInsert.insertModel.vo.ProductOptionDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -79,6 +82,26 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<HashMap> productSearch(SqlSession session, String key) {
         return session.selectList("product.productSearch", key);
+    }
+
+    @Override
+    public List<ProductImageDto> getImage(SqlSession session, int productId) {
+        return session.selectList("product.getImage",productId);
+    }
+
+    @Override
+    public List<ProductOptionDto> getOption(SqlSession session, int productId) {
+        return session.selectList("product.getOption",productId);
+    }
+
+    @Override
+    public ProductImageDto getThumbImg(SqlSession session, int productId) {
+        return session.selectOne("product.getThumbImg",productId);
+    }
+
+    @Override
+    public ProductDto getProduct(SqlSession session, int productId) {
+        return session.selectOne("product.getProduct",productId);
     }
 
 
