@@ -223,19 +223,13 @@
 
 <th:block th:replace="common/footer.html"></th:block>
 <script>
-    $('.qna--content').keyup(function (e) {
+    $('.qna--content').keyup(function(e) {
         let content = $(this).val();
         $('.qnaTextCounter').html("(" + content.length + " / 최대 2000자)");
     });
 
     function submitForm(){
-        let qnaTitle = document.getElementById('qnaTitle').value;
-        let qnaContent = document.getElementById('qnaContent').value;
-        let qnaSecretCheck = $('input[name="qnaSecretCheck"]:checked').val();
-        let qnaPwd = document.getElementById('pwd').value;
         let form = document.getElementById('qna-fm');
-
-        console.log(form);
         form.submit();
     }
 </script>
