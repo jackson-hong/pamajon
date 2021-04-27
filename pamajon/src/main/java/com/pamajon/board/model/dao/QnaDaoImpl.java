@@ -14,9 +14,7 @@ public class QnaDaoImpl implements QnaDao {
     public List<QnaDto> listQna(SqlSession session) { return session.selectList("qna.listQna"); }
 
     @Override
-    public int createQna(SqlSession session, QnaDto qnaDto) {
-        return session.insert("qna.createQna" , qnaDto);
-    }
+    public int createQna(SqlSession session, QnaDto qnaDto) {return session.insert("qna.createQna" , qnaDto); }
 
     @Override
     public int readQna(SqlSession session, int qnaId) {
@@ -31,10 +29,5 @@ public class QnaDaoImpl implements QnaDao {
     @Override
     public int deleteQna(SqlSession session, int qnaId) {
         return session.delete("qna.deleteQna",qnaId);
-    }
-
-    @Override
-    public int hitPlusQna(SqlSession session, int qnaId) {
-        return session.update("qna.hitPlusQna",qnaId);
     }
 }

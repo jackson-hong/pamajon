@@ -16,7 +16,4 @@ public interface QnaDao {
     int readQna(SqlSession session, int qnaId);
     int updateQna(SqlSession session, QnaDto qnaDto);
     int deleteQna(SqlSession session, int qnaId);
-
-    // Qna 조회수
-    int hitPlusQna(SqlSession session, int qnaId);
 }

@@ -173,32 +173,20 @@
 <div id="wrapper">
     <div id="board-wrapper">
 
-            <form method="post">
+            <form method="POST" id="qna-fm" th:action="@{/qna/write/}">
                 <table class="insertQnaTable">
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">제목</td>
                         <td class="userInput">
-                            <input type="text" class="form-control textType" placeholder="QNA 제목을 적어주세요.">
+                            <input type="text" class="form-control textType" id="qnaTitle" name="qnaTitle" placeholder="QNA 제목을 적어주세요.">
                         </td>
                     </tr>
-                    <tr class="tablefloor">
-                        <td class="explanation_wrapper">*질문 사진</td>
-                        <td class="userInput">
-                            <div class="filebox bs3-primary">
-                                <label for="ex_file2">사진 첨부</label>
-                                <input type="file" id="ex_file2" onchange="" multiple>
-                            </div>
-                            <div id="imgArea" style="display: flex; margin-bottom: 10px">
-                                <div class="imgBox 1"></div>
-                                <div class="imgBox 2"></div>
-                            </div>
-                        </td>
-                    </tr>
+
 
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">*질문내용</td>
                         <td class="userInput">
-                            <textarea name="qnaContent" class="qna--content" style="resize: none"></textarea>
+                            <textarea name="qnaContent" class="qna--content" id="qnaContent"></textarea>
                             <div class="reviewTextCounterBox">
                                 <span class="qnaTextCounter" style="color: #aaa;">(0 / 최대 2000자)</span>
                             </div>
@@ -209,24 +197,24 @@
                         <td class="explanation_wrapper">비밀글로 변경</td>
                         <td class="userInput">
                             <label>전체 공개</label>
-                            <input type="radio" class="qnaNonSecret" name="qnaSecretCheck" value="n">
+                            <input type="radio" name="qnaSecretCheck" value="n">
                             <label>비밀글</label>
-                            <input type="radio" class="qnaSecret" name="qnaSecretCheck" value="s">
+                            <input type="radio" name="qnaSecretCheck" value="s">
                         </td>
                     </tr>
 
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">비밀번호 입력</td>
                         <td class="userInput">
-                            <input type="password" class="qnaPwd" name="qnaPwd">
+                            <input type="password" class="qnaPwd" name="qnaPwd" id="pwd">
                         </td>
                     </tr>
 
                 </table>
 
                 <div class="qnaBtn--box">
-                    <button type="submit" class="qnaBtn">업로드</button>
-                    <button type="button" class="qnaBtn" onclick="location.href='review'">취소</button>
+                    <button type="button" class="qnaBtn" id="upload" onclick="submitForm()">업로드</button>
+                    <button type="button" class="qnaBtn" onclick="location.href='qna'">취소</button>
                 </div>
             </form>
     </div>
@@ -239,6 +227,17 @@
         let content = $(this).val();
         $('.qnaTextCounter').html("(" + content.length + " / 최대 2000자)");
     });
+
+    function submitForm(){
+        let qnaTitle = document.getElementById('qnaTitle').value;
+        let qnaContent = document.getElementById('qnaContent').value;
+        let qnaSecretCheck = $('input[name="qnaSecretCheck"]:checked').val();
+        let qnaPwd = document.getElementById('pwd').value;
+        let form = document.getElementById('qna-fm');
+
+        console.log(form);
+        form.submit();
+    }
 </script>
 </body>
 </html>

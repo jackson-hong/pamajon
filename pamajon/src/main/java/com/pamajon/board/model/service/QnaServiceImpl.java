@@ -26,9 +26,7 @@ public class QnaServiceImpl implements QnaService {
     public List<QnaDto> listQna() { return dao.listQna(session); }
 
     @Override
-    public int createQna(QnaDto qnaDto) {
-        return dao.createQna(session,qnaDto);
-    }
+    public int createQna(QnaDto qnaDto) { return dao.createQna(session,qnaDto); }
 
     @Override
     public int readQna(int qnaId) {
@@ -43,10 +41,5 @@ public class QnaServiceImpl implements QnaService {
     @Override
     public int deleteQna(int qnaId) {
         return dao.deleteQna(session,qnaId);
-    }
-
-    @Override
-    public int hitPlusQna(int qnaId) {
-        return dao.hitPlusQna(session,qnaId);
     }
 }
