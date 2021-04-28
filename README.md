@@ -37,10 +37,10 @@
 - Front-end : HTML5 / CSS3 / Javascript / jQuery / AJAX / JSON 
 - Back-end : Java
 - WAS : Tomcat
-- DB : Maria DB, AWS 프리티어
-- Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber /DataGrip
+- DB : Maria DB, AWS RDS 
+- Developer Tools : Intelli J / VS Code / SqlDeveloper / DBeaber / DataGrip
 - CI/CD :Jenkins
-- 배포 : 네이버 클라우드 플랫폼
+- 배포 : AWS EC2, Docker 
 - api : 다음길찾기, 네아로, 구글 로그인
 
 
@@ -53,9 +53,7 @@
 
 ## 3. TodoList
 
-1. LifeTime Sale , AverageOrder
-2. 쿠폰, 카탈로그, shipment
-3. 최근 주문 확인하기
-4. 최근 검색(검색 무엇을 했는지) -로그남기기
-4. 제일 많이 본 상품
-
+1. 테스트 코드 작성
+2. Optional & Stream API 적용
+3. Maven -> Gradle
+4. MyBatis -> JPA
