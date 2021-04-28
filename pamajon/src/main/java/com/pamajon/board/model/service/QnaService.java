@@ -10,11 +10,13 @@ public interface QnaService {
     /*Qna*/
     // Qna 목록보기
     List<QnaDto> listQna();
+
     //Qna CRUD
     int createQna(QnaDto qnaDto);
+
     int readQna(int qnaId);
+
     int updateQna(QnaDto qnaDto);
+
     int deleteQna(int qnaId);
-    // Qna 조회수
-    int hitPlusQna(int qnaId);
 }

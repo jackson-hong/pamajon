@@ -9,11 +9,12 @@ import java.sql.Date;
 @Data
 public class ReviewDto {
     private int reviewId;
-    private int productId;
-    private int userId;
+    private String productId;
+    private String userId;
     private String reviewTitle;
     private String reviewContent;
     private Date reviewDate;
+    private Date reviewModifyDate;
     private String reviewPwd;
     private int reviewStatus;
     private int reviewHit;
