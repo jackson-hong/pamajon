@@ -169,11 +169,11 @@ function settingTablePrice(){
         for(let j = 0 ; j < $(`.product_price:eq(${i})`).text().trim().split(",").length ; j++){
             priceStr +=  $(`.product_price:eq(${i})`).text().trim().split(",")[j];
         }
-        priceStr =""+Number(priceStr*$(`.product_quantity:eq(${i})`).text());
+        priceStr =""+Number(priceStr);
 
 
         //적립금 Display
-        if(Number(priceStr)>=1_0000 && Number(priceStr) < 100_000) {
+        if(Number(priceStr)>=5_0000 && Number(priceStr) < 100_000) {
 
             $(`.product_point:eq(${i})`).text((Math.floor(Number(priceStr)/10_000)*100).toLocaleString());
             //10만단위
@@ -198,9 +198,9 @@ function settingTablePrice(){
         }
         point += Number(pointStr);
 
-        $(`.product_total:eq(${i})`).text(Number(priceStr).toLocaleString());
+        $(`.product_total:eq(${i})`).text(Number(priceStr*$(`.product_quantity:eq(${i})`).text()).toLocaleString());
 
-        totalPrice += Number(priceStr);
+        totalPrice += Number(priceStr*$(`.product_quantity:eq(${i})`).text());
         priceStr="";
         pointStr = "";
 

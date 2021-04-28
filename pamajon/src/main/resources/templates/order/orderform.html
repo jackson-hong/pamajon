@@ -75,7 +75,7 @@
                 </tr>
                 </tfoot>
                     <tbody style="border-bottom: 1px solid #d7d5d5;">
-                    <tr th:each="product:${productList}">
+                    <tr th:each="product,listIndex:${productList}">
                         <td>
                             <input type="checkbox" name="deleteProduct" onclick="lengthCheck();">
                             <input type="hidden" name="optionId" value="1" th:value="${product.optionId}">
@@ -86,15 +86,14 @@
                                                              style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;" th:text="${product.productName}"></span></div>
                             <div class="pro_option">&nbsp;&nbsp;[옵션:<span
                                     style="font-size: 0.75rem; line-height: 40px;" th:text="${product.optionSize}">
-                                        style="font-size: 0.75rem; line-height: 40px;">
-                                    5(105~110)</span>]</div>
+                                       </span>]</div>
                           </td>
-                        <td style="text-align: center; font-weight: bold;">KRW <span class="product_price" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}"></span></td>
-                        <td style="text-align: center; "><span class="product_quantity" th:text="${product.optionQuantity}">1</span></td>
-                        <td style="text-align: center; "><span class="product_point"></span>원</td>
+                        <td style="text-align: center; font-weight: bold;">KRW <span th:class="${'product_price '+listIndex.index}" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}"></span></td>
+                        <td style="text-align: center; "><span th:class="${'product_quantity '+listIndex.index}" th:text="${product.optionQuantity}"></span></td>
+                        <td style="text-align: center; "><span th:class="${'product_point '+listIndex.index}"></span>원</td>
                         <td style="text-align: center; ">기본배송</td>
                         <td style="text-align: center; ">[<span class="shipfee">무료</span>]</td>
-                        <td style="text-align: center; font-weight: bold;">KRW <span class="product_total"></span></td>
+                        <td style="text-align: center; font-weight: bold;">KRW <span th:class="${'product_total '+listIndex.index}"></span></td>
                     </tr>
                     </tbody>
                 </table>
