@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cart">
+    <insert id="cartInsert" parameterType="com.pamajon.order.model.vo.CartDto">
+        INSERT INTO SHOPPINGBAG VALUES(
+                                          NEXTVAL(SEQ_CART),
+                                          #{pOptionId},
+                                          #{userId},
+                                          #{productQuantity}
+                                      )
+    </insert>
+
+    <select id="cartList" parameterType="int" resultMap="cartList">
+        SELECT * FROM SHOPPINGBAG LEFT JOIN P_OPTION PO on PO.P_OPTION_ID = SHOPPINGBAG.P_OPTION_ID
+                                  LEFT JOIN PRODUCT P on P.PRODUCT_ID = PO.PRODUCT_ID
+                                  left join PRO_IMAGE PI on P.PRODUCT_ID = PI.PRODUCT_ID
+        WHERE PRO_IMG_ISDEFAULT = 1 AND USER_ID = #{userId} ORDER BY SB_ID;
+    </select>
+
+    <resultMap id="cartList" type="com.pamajon.order.model.vo.CartListDto">
+        <result column="SB_ID" property="sbId"/>
+        <result column="P_OPTION_ID" property="optionId"/>
+        <result column="PRODUCT_ID" property="productId"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="PRODUCT_COLOR" property="optionColor"/>
+        <result column="P_SIZE" property="optionSize"/>
+        <result column="SB_QUANTITY" property="optionQuantity"/>
+        <result column="PRO_IMG_NAME" property="productThumbnailImage"/>
+        <result column="P_OPTION_STATUS" property="optionCode"/>
+        <result column="PRODUCT_PRICE" property="productPrice"/>
+    </resultMap>
+</mapper>

@@ -27,7 +27,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         RedirectAttributes attr = new RedirectAttributesModelMap();
         String contextPath = request.getContextPath();
         if(login==null) {
-            String msg = URLEncoder.encode("잘못된 접근입니다.","utf-8");
+            String msg = URLEncoder.encode("로그인이 필요합니다.","utf-8");
             String loc = URLEncoder.encode("/member/login","utf-8");
             response.sendRedirect(contextPath + "/common/msg?msg=" + msg + "&loc=" + loc);
             return false;

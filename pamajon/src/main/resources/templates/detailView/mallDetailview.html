@@ -116,7 +116,7 @@
             <hr>
             <div id="optionSelecter">
                 <div id="buyBtn" onclick="submitOption();">BUY-NOW</div>
-                <div id="cartBtn" onclick="">CART</div>
+                <div id="cartBtn" onclick="cartSubmit()">CART</div>
                 <div id="wishBtn" th:onclick="|fn_wishInsert('${productId}');|">WISH</div>
             </div>
                 </form>
@@ -202,6 +202,42 @@
                 if(data === 'SUCCESS')alert("위시리스트에 추가되었습니다");
                 if(data === 'FAIL')alert("실패하였습니다. 관리자에게 문의하세요.");
                 if(data === 'DUPLICATE')alert("이미 위시리스트에 추가되었습니다.");
+            },error: (msg) => {
+                console.log(msg)
+            }
+        })
+    }
+
+    function cartSubmit(){
+        let optionArr = [];
+        document.querySelectorAll('.optionArr').forEach(function(ele){
+            optionArr.push({"optionId": ele.value});
+        })
+
+        document.querySelectorAll('.optionQuantity').forEach(function(ele, index){
+            optionArr[index]["optionQuantity"] = ele.value;
+        })
+
+        if(optionArr.length === 0) {
+            alert("옵션을 선택해주세요.")
+            return;
+        }
+
+        $.ajax({
+            type:"POST",
+            contentType : 'application/json; charset=utf-8',
+            url: contextPath + "/order/cart",
+            data : JSON.stringify({"optionArr" : optionArr}),
+            success: (data) => {
+                if(data === 'SUCCESS'){
+                    if(confirm("장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?")) {
+                        location.href = '/order/cart'
+                    }
+                }
+                if(data === 'LOGINNEED'){
+                    alert("로그인이 필요합니다.");
+                    location.href = contextPath + '/member/login';
+                }
             },error: (msg) => {
                 console.log(msg)
             }
