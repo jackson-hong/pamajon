@@ -17,7 +17,7 @@ select {
 
 input[type="text"],
 input[type="password"] {
-    height: 18px;
+    height: 24px;
     line-height: 20px;
     padding: 2px 4px;
     border: 1px solid #d5d5d5;
@@ -177,6 +177,7 @@ input[type="password"] {
 #price_table > thead {
     background-color: #f6f6f6;
     border-bottom: 1px solid #d7d5d5;
+
 }
 
 #price_table > thead > tr {
@@ -214,9 +215,7 @@ input[type="password"] {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 50px;
-    border-right: 1px solid #d7d5d5;
-    border-left: 1px solid #d7d5d5;
-    border-bottom: 1px solid #d7d5d5;
+    border: 1px solid #d7d5d5;
 }
 
 #discount_table > tbody > tr > th {
@@ -228,6 +227,7 @@ input[type="password"] {
 #discount_table > tbody > tr > td {
     padding-left: 10px;
     border-bottom: 1px solid #d7d5d5;
+    padding-top: 5px;
 }
 
 .txtWarn {

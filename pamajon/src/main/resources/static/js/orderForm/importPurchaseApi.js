@@ -10,7 +10,6 @@ purchaseTableController();
 
 function processPurchase(){
 
-
     if($("input[name='addrReceiver']").val().trim() == ""){
         alert("수취인을 입력해주세요");
         $("input[name='addrReceiver']").focus();
@@ -84,7 +83,7 @@ function processPurchase(){
 
             for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
 
-                var soldObjectTemp =
+                let soldObjectTemp =
                     {
                         optionId:$(`input[name='optionId']:eq(${i})`).val(),
                         soldQuantity:$(`.product_quantity:eq(${i})`).text().trim()
@@ -92,6 +91,19 @@ function processPurchase(){
                 SoldObject.push(soldObjectTemp);
             }
             let soldDto = JSON.stringify(SoldObject);
+
+            let optionObject = [];
+
+            for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
+
+                let optionDtoTemp =
+                    {
+                        optionId:$(`input[name='optionId']:eq(${i})`).val(),
+                        optionQuantity:$(`.product_quantity:eq(${i})`).text().trim()
+                    }
+                optionObject.push(optionDtoTemp);
+            }
+            let optionDto = JSON.stringify(optionObject);
 
             let orderDto = JSON.stringify({
                 userId:`${$("input[name='userNo']").val()}`,
@@ -137,7 +149,7 @@ function processPurchase(){
                 url:"/order/purchase",
                 type:"POST",
                 traditional: true,
-                data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
+                data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto,optionDto},
                 success:function (result){
                     if(result>0){
                         $.ajax({
@@ -424,87 +436,132 @@ function emailTest(){
 
 }
 */
+//결제하기 디버길할때 쓰는 메소드.
+function processPurchaseTest(){
 
-function purchaseTest(){
-
-    let date = new Date();
-
-    let SoldObject = [];
+    let merchant_name_arr = [];
+    let merchant_name ="";
 
     for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
-
-        var soldObjectTemp =
-            {
-                optionId:$(`input[name='optionId']:eq(${i})`).val(),
-                soldQuantity:$(`.product_quantity:eq(${i})`).text().trim()
-            }
-        SoldObject.push(soldObjectTemp);
+        merchant_name_arr.push($(`span.pro_title:eq(${i})`).text().trim());
     }
-    let soldDto = JSON.stringify(SoldObject);
+    merchant_name = merchant_name_arr.join(",");
 
-    let orderDto = JSON.stringify({
-        userId:`${$("input[name='userNo']").val()}`,
-        addrId:`${$("input[name='addrId']").val()}`,
-        addr:`${$("input[name='addrZipcode']").val()} ${$("input[name='addr']").val()} ${$("input[name='addrDetail']").val()}`,
-        orderStatus:'0',
-        orderPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
-        orderEmail:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
-        orderPurchase:`200`,
-        orderMessage:`${$("input[name='orderMessage']").val()}`,
-        orderDeliveryStatus:"1",
-        orderDate:`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
-        orderCardNum:`4444****`,
-        orderTransName:`${$("input[name='orderTransName']").val()}`,
-        orderMethod:`card`,
-        orderKey:`test`,
-        orderShipfee:`${removeCommaConvertToNumber($(".product_tfoot_shipfee").text())}`,
-    });
+            let date = new Date();
 
-    let addressDto = JSON.stringify({
-        addrId:`${$("input[name='addrId']").val()}`,
-        userId:`${$("input[name='userNo']").val()}`,
-        addrReceiver:$("input[name='addrReceiver']").val(),
-        addrZipcode:$("input[name='addrZipcode']").val(),
-        addr:$("input[name='addr']").val(),
-        addrDetail:$("input[name='addrDetail']").val(),
-        addrReloadCheck:$("input[name='addrReloadCheck']").val(),
-        addrCellPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+            let SoldObject = [];
 
-    });
+            for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
 
-    let usedMileageDto = JSON.stringify({
-        userId:$("input[name='userNo']").val(),
-        mileage:$("input[name='mileage']").val()
-    });
-
-    let stackMileageDto = JSON.stringify({
-        userId:$("input[name='userNo']").val(),
-        mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
-    });
-        $.ajax({
-            url:"/order/purchase",
-            type:"POST",
-            traditional: true,
-            data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
-            success:function (result){
-                if(result>0){
-                    $.ajax({
-                        url:"/order/email",
-                        type: "POST",
-                        data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
-                            productName:"aaa"},
-                        success:function (result){
-                            if(result>0){
-                                location.href='/member/orderList';
-                            }
-                        }
-                    })
-                }
+                var soldObjectTemp =
+                    {
+                        optionId:$(`input[name='optionId']:eq(${i})`).val(),
+                        soldQuantity:$(`.product_quantity:eq(${i})`).text().trim()
+                    }
+                SoldObject.push(soldObjectTemp);
             }
-        })
+            let soldDto = JSON.stringify(SoldObject);
 
+            let optionObject = [];
+
+            for(let i = 0 ; i<$("#product_table > tbody > tr").length; i++){
+
+                let optionDtoTemp =
+                    {
+                        optionId:$(`input[name='optionId']:eq(${i})`).val(),
+                        optionQuantity:$(`.product_quantity:eq(${i})`).text().trim()
+                    }
+                optionObject.push(optionDtoTemp);
+            }
+            let optionDto = JSON.stringify(optionObject);
+
+            let orderDto = JSON.stringify({
+                userId:`${$("input[name='userNo']").val()}`,
+                addrId:`${$("input[name='addrId']").val()}`,
+                addr:`${$("input[name='addrZipcode']").val()} ${$("input[name='addr']").val()} ${$("input[name='addrDetail']").val()}`,
+                orderStatus:'0',
+                orderPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+                orderEmail:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+                orderPurchase:`100`,
+                orderMessage:`${$("input[name='orderMessage']").val()}`,
+                orderDeliveryStatus:"1",
+                orderDate:`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
+            //    orderCardNum:`${rsp.card_number}`,
+            //    orderTransName:`${$("input[name='orderTransName']").val()}`,
+            //    orderMethod:`${rsp.pay_method}`,
+            //    orderKey:`${rsp.receipt_url}`,
+                orderShipfee:`${removeCommaConvertToNumber($(".product_tfoot_shipfee").text())}`,
+            });
+
+            let addressDto = JSON.stringify({
+                addrId:`${$("input[name='addrId']").val()}`,
+                userId:$("input[name='userNo']").val(),
+                addrReceiver:$("input[name='addrReceiver']").val(),
+                addrZipcode:$("input[name='addrZipcode']").val(),
+                addr:$("input[name='addr']").val(),
+                addrDetail:$("input[name='addrDetail']").val(),
+                addrReloadCheck:$("input[name='addrReloadCheck']").val(),
+                addrCellPhone:`${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
+
+            });
+
+            let usedMileageDto = JSON.stringify({
+                userId:$("input[name='userNo']").val(),
+                mileage:$("input[name='mileage']").val()
+            });
+
+            let stackMileageDto = JSON.stringify({
+                userId:$("input[name='userNo']").val(),
+                mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
+            });
+
+            $.ajax({
+                url:"/order/purchase",
+                type:"POST",
+                traditional: true,
+                data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto,optionDto},
+                success:function (result){
+                    if(result>0){
+                        $.ajax({
+                            url:"/order/email",
+                            type: "POST",
+                            data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+                                productName:"aaa"},
+                            success:function (result){
+                                if(result>0){
+
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+
+
+
+    /* $.ajax({
+         url:"/order/purchase",
+         type:"POST",
+         traditional: true,
+         data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto},
+         success:function (result){
+             if(result>0){
+                 $.ajax({
+                     url:"/order/email",
+                     type: "POST",
+                     data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
+                         productName:"aaa"},
+                     success:function (result){
+                         if(result>0){
+                             location.href='/member/orderList';
+                         }
+                     }
+                 })
+             }
+         }
+     })*/
 }
-
 
 
 

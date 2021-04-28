@@ -55,9 +55,10 @@ public class OrderServiceImpl implements OrderService{
         return purchaseMapper.insertSold(sold);
     }
 
+    //사용하지 않음.
     @Override
-    public int modifyOptionStock(SoldDto sold) {
-        return purchaseMapper.modifyOptionStock(sold);
+    public int modifyOptionStock(ProductOptionDto productOptionDto) {
+        return purchaseMapper.modifyOptionStock(productOptionDto);
     }
 
     @Override
@@ -81,6 +82,11 @@ public class OrderServiceImpl implements OrderService{
             }
         }
         return productOptionDtoList;
+    }
+
+    @Override
+    public String getUserEmail(int userId) {
+        return purchaseMapper.getUserEmail(userId);
     }
 
 }

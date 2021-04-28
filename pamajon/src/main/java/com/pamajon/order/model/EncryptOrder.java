@@ -21,7 +21,7 @@ public class EncryptOrder {
         try {
             orderDto.setOrderAddr(aes256Util.encrypt(orderDto.getOrderAddr()));
             orderDto.setOrderPhone(aes256Util.encrypt(orderDto.getOrderPhone()));
-            orderDto.setOrderCardNum(aes256Util.encrypt(orderDto.getOrderCardNum()));
+        //    orderDto.setOrderCardNum(aes256Util.encrypt(orderDto.getOrderCardNum()));
 
         } catch (GeneralSecurityException e) {
             e.printStackTrace();

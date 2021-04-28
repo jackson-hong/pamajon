@@ -22,7 +22,7 @@
                 <div class="user_level">
                     <div class="user_level floor1" style="line-height: 10px;">
                         <!--/*@thymesVar id="memberName" type=""*/-->
-                        <span style="font-weight: bolder;" th:text="${member.memberName}"></span><span> 님은,</span>[<span th:text="${member.memberGrade}"></span>]이십니다.</span>
+                        <span style="font-weight: bolder;" th:text="${member.memName}"></span><span> 님은,</span>[<span th:text="${member.memGrade}"></span>]이십니다.</span>
                         <!--<span style="font-weight: bolder;"></span><span> 님은,</span>[<span></span>]이십니다.</span>-->
                     </div>
                     <div class="user_level floor2">
@@ -124,23 +124,23 @@
                         <span>새로운배송지</span>
                         <a href="#none" id="btn_shipp_addr" class="" style="">
                             <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_address.gif"
-                                style="position: relative; top:6px;" alt="주소록 보기">
+                                 alt="주소록 보기">
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th style="width: 10%;">받으시는 분<span> *</span></th>
-                    <td><input type="text" name="addrReceiver"></td>
+                    <td><input type="text" name="addrReceiver" ></td>
                 </tr>
                 <tr>
                     <th style="width: 10%;">주소<span> *</span></th>
-                    <td>
+                    <td style="padding-top: 5px">
                         <input style="margin-bottom: 4px;" id="address_zip1" name="addrZipcode"
                             class="inputTypeText" placeholder="" size="6" maxlength="6" readonly="1" value=""
                             type="text">
                         <img
                                 src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_zipcode.gif"
-                                style="position: relative; top:8px" alt="우편번호" onclick="inputAddress()"><br>
+                                 alt="우편번호" onclick="inputAddress()"><br>
                         <input style="margin-bottom: 4px;" id="address_addr1" name="addr"
                             class="inputTypeText" placeholder="" size="40" readonly="1" value="" type="text"> <span
                             class="grid">기본주소</span><br>
@@ -167,9 +167,9 @@
                     <th style="width: 10%;">이메일<span> *</span></th>
                     <td style="padding-top: 7px;">
                         <input id="oemail1" name="email[]" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg=""
-                            class="mailId" value="" type="text">&nbsp;@&nbsp;
+                            class="mailId" th:value="${emailAddr}" type="text">&nbsp;@&nbsp;
                             <input style="margin-right: 3px;" id="oemail2" name="email[]" fw-filter="isFill"
-                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" value=""  type="text">
+                            fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailAddress" th:value="${emailUrl}"  type="text">
                             <select style="position: relative; top: 0.5px"
                             id="oemail3" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg="">
                             <option value="" selected="selected">- 이메일 선택 -</option>
@@ -209,7 +209,7 @@
                     <tr>
                         <th scope="col">
                             <strong>총 주문 금액</strong> <a href="#none"
-                                class="more"><img style="position: relative; top:6px; left: 5px;"
+                                class="more"><img style="position: relative; left: 5px;"
                                     src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_list.gif" alt="내역보기"></a>
                         </th>
                         <th scope="col" class="">
@@ -253,8 +253,8 @@
                         <tr>
                             <th>적립금</th>
                             <td >
-                                <p> <input id="input_mile"  size="23" value="" type="text"> 원 (총 사용가능 적립금 : <strong
-                                        class="txtWarn">1,000</strong>원)</p>
+                                <p> <input id="input_mile" name="mileage"  size="23" value="0" type="number" step="1000" min="0"> 원 (총 사용가능 적립금 : <strong
+                                        class="txtWarn" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')}">1,000</strong>원)</p>
                                 <ul class="info">
                                     <li>적립금은 최소 0 이상일 때 결제가 가능합니다.</li>
                                     <li id="mileage_max_unlimit" class="">최대 사용금액은 제한이 없습니다.</li>
@@ -350,7 +350,7 @@
 <br><br><br>
 </div>
 </div>
-<input type="hidden" name="userNo" value="2056">
+<input type="hidden" name="userNo" th:value="${member.userId}">
 <input type="hidden" name="addrId" value="">
 <!-- ReloadCheck 주소가 입력되었을시 그 주소가 불러온 주소인지 신규 입력인지에 따라 db 에 업데이트 또는 인서트가 결정됨.-->
 <input type="hidden" name="addrReloadCheck" value="">

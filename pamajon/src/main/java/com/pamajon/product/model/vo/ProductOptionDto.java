@@ -2,6 +2,8 @@ package com.pamajon.product.model.vo;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -13,4 +15,7 @@ public class ProductOptionDto {
     private String productId;
     private String productOptionSize;
     private String productOptionQuantity;
+    private String productOptionSalesRate;
+    private String productOptionStatus;
+    private List<ProductOptionDto> optionDtoList;
 }
