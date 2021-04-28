@@ -15,6 +15,7 @@ public class QnaDto {
     private String qnaTitle;
     private String qnaContent;
     private Date qnaDate;
+    private Date qnaModifyDate;
     private String qnaPwd;
     private int qnaStatus;
 }

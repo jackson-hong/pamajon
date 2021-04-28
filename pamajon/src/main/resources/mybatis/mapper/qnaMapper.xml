@@ -1,25 +1,50 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pamajon.">
+<mapper namespace="com.pamajon.mapper.QnaMapper">
 
-    <resultMap id="review" type="com.pamajon.board.model.vo.QnaDto">
+    <resultMap id="qna" type="com.pamajon.board.model.vo.QnaDto">
         <result property="qnaId"         column="REVIEW_ID"/>
         <result property="productId"     column="PRODUCT_ID"/>
         <result property="userId"        column="USER_ID"/>
         <result property="qnaTitle"      column="QNA_TITLE"/>
         <result property="qnaContent"    column="QNA_CONTENT"/>
         <result property="qnaDate"       column="QNA_DATE"/>
+        <result property="qnaModifyDate" column="QNA_MODIFY_DATE"/>
         <result property="qnaPwd"        column="QNA_PWD"/>
         <result property="qnaStatus"     column="QNA_STATUS"/>
     </resultMap>
 
-    <insert id="createReview" parameterType="com.pamajon.board.model.vo.QnaDto">
+    <resultMap id="review" type="com.pamajon.board.model.vo.ReviewDto">
+        <result property="reviewId"         column="REVIEW_ID"/>
+        <result property="productId"        column="PRODUCT_ID"/>
+        <result property="userId"           column="USER_ID"/>
+        <result property="reviewTitle"      column="REVIEW_TITLE"/>
+        <result property="reviewContent"    column="REVIEW_CONTENT"/>
+        <result property="reviewDate"       column="REVIEW_DATE"/>
+        <result property="reviewModifyDate" column="REVIEW_MODIFY_DATE"/>
+        <result property="reviewPwd"        column="REVIEW_PWD"/>
+        <result property="reviewStatus"     column="REVIEW_STATUS"/>
+        <result property="reviewHit"        column="REVIEW_HIT"/>
+    </resultMap>
+
+
+    <resultMap id="member" type="com.pamajon.order.model.vo.Member">
+        <result property="userId" column="USER_ID"/>
+        <result property="memberName" column="MEM_NAME"/>
+        <result property="memberPhone" column="MEM_PHONE"/>
+        <result property="memberGrade" column="MEM_GRADE"/>
+        <result property="memberDate" column="MEM_DATE"/>
+        <result property="memberStatus" column="MEM_STATUS"/>
+    </resultMap>
+
+
+    <insert id="insertQna" parameterType="com.pamajon.board.model.vo.QnaDto">
         INSERT INTO QNA
         (
             QNA_ID,
-            PRODUCT_ID,
-            USER_ID,
+            PRODUCT_NAME,
+            MEM_NAME,
             QNA_TITLE,
             QNA_CONTENT,
             QNA_DATE,
@@ -40,38 +65,50 @@
               )
     </insert>
 
-    <select id="readReview" parameterType="com.pamajon.board.model.vo.QnaDto">
-        SELECT * FROM QNA WHERE QNA_ID = #{qnaId}
+    <select id="readQna" parameterType="long" resultMap="qna">
+        SELECT(
+               QNA_ID,
+               PRODUCT_NAME,
+               MEM_NAME,
+               QNA_TITLE,
+               QNA_CONTENT,
+               QNA_DATE,
+               QNA_PWD,
+               QNA_STATUS
+                  )
+        FROM QNA Q
+                 JOIN
+             MEMBER M,
+             PRODUCT P
+        where
+            Q.USER_ID = M.USER_ID AND
+            Q.PRODUCT_ID = P.PRODUCT_ID
+          and
+            Q.QNA_ID = #{qnaId}
     </select>
 
-    <update id="updateReview" parameterType="com.pamajon.board.model.vo.QnaDto">
+    <update id="updateQna" parameterType="integer">
         UPDATE
+            QNA
+        SET
+            QNA_TITLE  = #{qnaTitle},
+            QNA_CONTENT= #{qnaContent},
+            QNA_STATUS = #{qnaStatus},
+            QNA_MODIFY_DATE = SYSDATE()
+        WHERE
             QNA_TITLE,
             QNA_CONTENT,
             QNA_STATUS
-        SET
-            #{qnaTitle},
-            #{qnaContent},
-            #{qnaStatus},
         WHERE
             QNA_ID = #{qnaId}
 
     </update>
 
-    <delete id="deleteReview" parameterType="hashmap">
+    <delete id="deleteQna" parameterType="hashmap">
         DELETE
         FROM QNA
         WHERE
             QNA_ID = #{qnaId}
     </delete>
-
-    <update id="hitPlusReview" parameterType="int">
-        UPDATE
-            QNA_HIT
-        SET
-            QNA_HIT++
-        WHERE
-            QNA_ID = #{qnaId}
-    </update>
 
 </mapper>
