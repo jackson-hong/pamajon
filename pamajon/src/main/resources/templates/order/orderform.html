@@ -74,10 +74,13 @@
                     </th>
                 </tr>
                 </tfoot>
-                    <!--<tbody style="border-bottom: 1px solid #d7d5d5;">
+                    <tbody style="border-bottom: 1px solid #d7d5d5;">
                     <tr th:each="product:${productList}">
-                        <td><input type="checkbox"></td>
-                        <td><img src="../../static/images/new4.jpg" th:src="@{/images/new4.jpg}" width="100%" height="100px" alt=""></td>
+                        <td>
+                            <input type="checkbox" name="deleteProduct" onclick="lengthCheck();">
+                            <input type="hidden" name="optionId" value="1" th:value="${product.optionId}">
+                        </td>
+                        <td><img src="../../static/images/new4.jpg" th:src="|@{/images/productImages/}${product.productThumbnailImage}|" width="100%" height="100px" alt=""></td>
                         <td style="padding-left: 8px">
                             <div style="height: 30px;"><span class="pro_title"
                                                              style="font-size: 0.75rem; font-weight: bolder; line-height: 40px;" th:text="${product.productName}"></span></div>
@@ -93,12 +96,12 @@
                         <td style="text-align: center; ">[<span class="shipfee">무료</span>]</td>
                         <td style="text-align: center; font-weight: bold;">KRW <span class="product_total"></span></td>
                     </tr>
-                    </tbody>-->
+                    </tbody>
                 </table>
                 <div style="align-items: center; display: flex;">
                     <span style="font-weight: bold;">선택상품을&nbsp;</span><a href="#none" class="btn_product_delete"><img
-                            src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif"
-                            style="margin-top: 3px;" alt="삭제하기"></a>
+                        src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif"
+                        style="margin-top: 3px; cursor: pointer" onclick="deleteProduct();" alt="삭제하기"></a>
                 </div>
                 <hr style="margin-top: 50px; margin-bottom: 50px; border-bottom: 0px;">
             </div>
@@ -323,9 +326,9 @@
 <p class="paymentAgree" id="chk_purchase_agreement" style="display: none;"><input id="chk_purchase_agreement0"
         name="chk_purchase_agreement" fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T" type="checkbox"
         style="display: none;"><label for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label></p>
-<div class="button"><a href="#none">
-        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" style="width: 230px;" id="btn_payment" alt="결제하기"></a>
-</div>
+        <div class="button"><a href="#none">
+            <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" onclick="processPurchase();" style="width: 230px;" id="btn_payment" alt="결제하기"></a>
+        </div>
 
 <div class="mileage ">
     <dl class="ec-base-desc gLarge right" style="display: flex; justify-content: space-between;">

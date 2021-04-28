@@ -46,9 +46,10 @@ public class OrderController {
 
     @GetMapping("/order/purchase")
     public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto) throws GeneralSecurityException, UnsupportedEncodingException {
+
             Member m = orderService.getMember(2056);
-           // model.addAttribute("productList",orderService.getProductOption(productOptionDto));
-         LOGGER.info("조회 후 member" + m.toString());
+            model.addAttribute("productList",orderService.getProductOption(productOptionDto));
+            LOGGER.info("조회 후 member" + m.toString());
             model.addAttribute("member",encryptMember.decryptMember(m));
             model.addAttribute("mileage",orderService.getMileage(2056));
 

@@ -10,6 +10,41 @@
         <result property="proBrandName" column="PRO_BRAND_NAME"></result>
     </resultMap>
 
+    <!--이미지 CRUD 용 Mapper -->
+    <resultMap id="imageResultSet" type="com.pamajon.admin.productInsert.insertModel.vo.ProductImageDto">
+        <result property="productImageId" column="PRO_IMG_ID"></result>
+        <result property="productId" column="PRODUCT_ID"></result>
+        <result property="productFileName" column="PRO_IMG_NAME"></result>
+        <result property="productImageDefaultValue" column="PRO_IMG_ISDEFAULT"></result>
+    </resultMap>
+
+    <!--옵션 CRUD 용 Mapper -->
+    <resultMap id="optionResultSet" type="com.pamajon.product.model.vo.ProductOptionDto">
+        <result property="productOptionId" column="P_OPTION_ID"></result>
+        <result property="productId" column="PRODUCT_ID"></result>
+        <result property="productOptionSize" column="P_SIZE"></result>
+        <result property="productOptionQuantity" column="P_QUAN"></result>
+    </resultMap>
+
+    <!--제품 CRUD 용 Mapper -->
+    <resultMap id="productResultSet" type="com.pamajon.admin.productInsert.insertModel.vo.ProductDto">
+        <result property="productId" column="PRODUCT_ID"></result>
+        <result property="productBrand" column="PRO_BRAND"></result>
+        <result property="productCategory" column="PRO_CAT_ID"></result>
+        <result property="productName" column="PRODUCT_NAME"></result>
+        <result property="productPrice" column="PRODUCT_PRICE"></result>
+        <result property="productContent" column="PRODUCT_CONTENT"></result>
+        <result property="productSale" column="PRODUCT_SALE"></result>
+        <result property="productFrom" column="PRODUCT_FROM"></result>
+        <result property="productMaterial" column="PRODUCT_MATERIAL"></result>
+        <result property="productStatus" column="PRODUCT_STATUS"></result>
+        <result property="productDate" column="PRO_DATE"></result>
+        <result property="productBigCateId" column="PRO_BIG_CAT_ID"></result>
+        <result property="productColor" column="PRODUCT_COLOR"></result>
+    </resultMap>
+
+
+
     <select id="getBrand" resultType="com.pamajon.product.model.vo.BrandDto">
         SELECT * FROM PRO_BRAND
     </select>
@@ -138,5 +173,73 @@
            OR PRO_BRAND_NAME LIKE CONCAT('%',#{key}, '%')
         ORDER BY PRODUCT.PRODUCT_ID DESC
     </select>
+    <select id="getOption" resultMap="optionResultSet" parameterType="int">
+        SELECT
+            P_OPTION_ID
+            ,PRODUCT_ID
+            ,P_SIZE
+            ,P_QUAN
+        FROM
+            P_OPTION
+        WHERE
+            PRODUCT_ID =#{productId}
+    </select>
+
+    <select id="getImage" resultMap="imageResultSet" parameterType="int">
+        SELECT
+            PRO_IMG_ID
+             ,PRODUCT_ID
+             ,PRO_IMG_NAME
+             ,PRO_IMG_ISDEFAULT
+        FROM
+            PRO_IMAGE
+        WHERE
+            1=1
+          AND
+            PRODUCT_ID =#{productId}
+          AND
+            PRO_IMG_ISDEFAULT='0'
+    </select>
+
+    <!--썸네일 가져오는 쿼리문-->
+    <select id="getThumbImg" resultMap="imageResultSet" parameterType="int">
+        SELECT
+            PRO_IMG_ID
+             ,PRODUCT_ID
+             ,PRO_IMG_NAME
+             ,PRO_IMG_ISDEFAULT
+        FROM
+            PRO_IMAGE
+        WHERE
+            1=1
+         AND
+            PRODUCT_ID =#{productId}
+         AND
+            PRO_IMG_ISDEFAULT='1'
+    </select>
+
+    <select id="getProduct" resultMap="productResultSet" parameterType="int">
+        SELECT
+            PRODUCT_ID
+            ,PRO_BRAND
+            ,PRO_CAT_ID
+            ,PRODUCT_NAME
+            ,PRODUCT_PRICE
+            ,PRODUCT_CONTENT
+            ,PRODUCT_SALE
+            ,PRODUCT_FROM
+            ,PRODUCT_MATERIAL
+            ,PRODUCT_STATUS
+            ,PRO_DATE
+            ,PRO_BIG_CAT_ID
+            ,PRODUCT_COLOR
+        FROM
+             PRODUCT
+        WHERE
+              1=1
+        AND
+               PRODUCT_ID=#{productId}
+    </select>
+
 
 </mapper>

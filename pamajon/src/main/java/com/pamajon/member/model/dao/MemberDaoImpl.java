@@ -12,8 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository("memberDaoImpl")
-@Primary
+@Repository
 public class MemberDaoImpl implements MemberDao{
     @Override
     public int memberInsert(SqlSession session, Map mapForInsert) {

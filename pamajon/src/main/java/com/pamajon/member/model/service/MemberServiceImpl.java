@@ -15,14 +15,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-@Service("memberServiceImpl")
-@Primary
+@Service
 public class MemberServiceImpl implements MemberService{
 
-    @Qualifier("memberDaoImpl")
     private final MemberDao dao;
     private final SqlSession session;
 
+    @Autowired
     public MemberServiceImpl(MemberDao dao, SqlSession session) {
         this.dao = dao;
         this.session = session;

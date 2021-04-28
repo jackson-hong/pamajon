@@ -41,7 +41,9 @@ function getAddress(){
         type:"GET",
         data:{userNo:`${$("input[name='userNo']").val()}`},
         success:function (result){
-            if(result==null){
+            console.log(result);
+            if(result==''){
+
                 alert("기본 배송지가 등록되어있지 않습니다. 주소록 보기를 클릭하여 주소를 등록 해주세요.")
             } else {
                 $("input[name='addrId']").val(result.addrId);
