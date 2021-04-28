@@ -40,16 +40,22 @@
 
     <select id="getMember" parameterType="integer" resultMap="memberResultSet">
         SELECT
-               USER_ID,
-               MEM_NAME,
-               MEM_PHONE,
-               MEM_GRADE,
-               MEM_DATE,
-               MEM_STATUS
-          FROM
-              MEMBER
+              M.USER_ID AS USER_ID
+             ,M.MEM_NAME  AS MEM_NAME
+             ,M.MEM_GRADE AS MEM_GRADE
+             ,M.MEM_PHONE AS MEM_PHONE
+             ,MI.MEMBER_EMAIL AS MEMBER_EMAIL
+        FROM
+             `MEMBER` M,
+             `MEMBER_ID` MI
         WHERE
-             USER_ID=#{memNo}
+             1=1
+          AND
+              M.USER_ID = MI.USER_ID
+          AND
+             M.USER_ID=#{memNo}
+
+
     </select>
 
     <select id="getMileage" parameterType="integer" resultMap="mileageResultSet">

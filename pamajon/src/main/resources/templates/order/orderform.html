@@ -22,7 +22,7 @@
                 <div class="user_level">
                     <div class="user_level floor1" style="line-height: 10px;">
                         <!--/*@thymesVar id="memberName" type=""*/-->
-                        <span style="font-weight: bolder;" th:text="${member.memName}"></span><span> 님은,</span>[<span th:text="${member.memGrade}"></span>]이십니다.</span>
+                        <span style="font-weight: bolder;" th:text="${member.memberName}"></span><span> 님은,</span>[<span th:text="${member.memberGrade}"></span>]이십니다.</span>
                         <!--<span style="font-weight: bolder;"></span><span> 님은,</span>[<span></span>]이십니다.</span>-->
                     </div>
                     <div class="user_level floor2">
@@ -88,9 +88,9 @@
                                     style="font-size: 0.75rem; line-height: 40px;" th:text="${product.optionSize}">
                                        </span>]</div>
                           </td>
-                        <td style="text-align: center; font-weight: bold;">KRW <span th:class="${'product_price '+listIndex.index}" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}"></span></td>
-                        <td style="text-align: center; "><span th:class="${'product_quantity '+listIndex.index}" th:text="${product.optionQuantity}"></span></td>
-                        <td style="text-align: center; "><span th:class="${'product_point '+listIndex.index}"></span>원</td>
+                        <td style="text-align: center; font-weight: bold;">KRW <span th:class="${'product_price '+listIndex.index}" th:id="${'product_price'+listIndex.index}" th:text="${#numbers.formatInteger(product.productPrice,3,'COMMA')}"></span></td>
+                        <td style="text-align: center; "><span th:class="${'product_quantity '+listIndex.index}" th:id="${'product_quantity'+listIndex.index}" th:text="${product.optionQuantity}"></span></td>
+                        <td style="text-align: center; "><span th:class="${'product_point '+listIndex.index}" th:id="${'product_point'+listIndex.index}"></span>원</td>
                         <td style="text-align: center; ">기본배송</td>
                         <td style="text-align: center; ">[<span class="shipfee">무료</span>]</td>
                         <td style="text-align: center; font-weight: bold;">KRW <span th:class="${'product_total '+listIndex.index}"></span></td>

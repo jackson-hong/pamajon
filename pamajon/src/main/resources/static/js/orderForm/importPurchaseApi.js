@@ -177,15 +177,17 @@ function settingTablePrice(){
     // 테이블 가격셋팅 for문
     for(let i = 0 ; i<tableLength; i++){
 
-        //상품의 가격을 알아냄
+        //상품의 가격을 알아냄 상품 가격에 , 가 있으므로 그것을 제거한 후 다시 합치면 가격을 알아낼 수 있음.
         for(let j = 0 ; j < $(`.product_price:eq(${i})`).text().trim().split(",").length ; j++){
             priceStr +=  $(`.product_price:eq(${i})`).text().trim().split(",")[j];
         }
+        //priceStr 에 담긴 가격은 수량에 따른 가격이 아닌 1개의 단일 상품가격임.
         priceStr =""+Number(priceStr);
 
 
         //적립금 Display
-        if(Number(priceStr)>=5_0000 && Number(priceStr) < 100_000) {
+
+      /*  if(Number(priceStr)>=5_0000 && Number(priceStr) < 100_000) {
 
             $(`.product_point:eq(${i})`).text((Math.floor(Number(priceStr)/10_000)*100).toLocaleString());
             //10만단위
@@ -199,8 +201,11 @@ function settingTablePrice(){
         } else if (Number(priceStr)>=10_000_000){
 
             $(`.product_point:eq(${i})`).text((Math.floor(Number(priceStr)/10_000_000)*100_000).toLocaleString());
+        }*/
+        if(Number(priceStr)>=5_0000){
+
         }
-        else {
+        if(Number(priceStr)<5_0000){
             $(`.product_point:eq(${i})`).text('0');
         }
 

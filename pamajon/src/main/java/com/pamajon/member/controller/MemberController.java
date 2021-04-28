@@ -59,6 +59,7 @@ public class MemberController {
     private AES256Util aes;
     private final MemberService service;
     private final ProductService productService;
+    private final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired
     public MemberController(PasswordEncoder passwordEncoder, AES256Util aes, MemberService service, ProductService productService) {

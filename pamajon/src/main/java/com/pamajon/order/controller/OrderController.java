@@ -55,16 +55,27 @@ public class OrderController {
              return "/member/login";
          }
             //세션객체는 member 패키지에 있는 멤버클래스에 담겨야함.
-        com.pamajon.member.model.vo.Member m = (com.pamajon.member.model.vo.Member) request.getSession().getAttribute("loginMember");
+        com.pamajon.member.model.vo.Member m = (com.pamajon.member.model.vo.Member)request.getSession().getAttribute("loginMember");
+         //암호화 해제.
+        com.pamajon.order.model.vo.Member sessionMember = orderService.getMember(m.getUserId());
 
+            LOGGER.info("결제 페이지 들어갈때 복호화되기전 Session 객체 ==>>"+m.toString());
+
+        sessionMember.setMemberEmail(aes256Util.decrypt(sessionMember.getMemberEmail()));
+        sessionMember.setMemberName(aes256Util.decrypt(sessionMember.getMemberName()));
+        sessionMember.setMemberPhone(aes256Util.decrypt(sessionMember.getMemberPhone()));
             model.addAttribute("productList",orderService.getProductOption(productOptionDto));
-            model.addAttribute("member",m);
-            String decryptEmail = m.getMemEmail();
+            model.addAttribute("member",sessionMember);
+
+            String decryptEmail = sessionMember.getMemberEmail();
+            LOGGER.info(sessionMember.toString());
             LOGGER.info(decryptEmail);
             String [] emailArr = decryptEmail.split("@");
             model.addAttribute("emailAddr",emailArr[0]);
             model.addAttribute("emailUrl",emailArr[1]);
-            model.addAttribute("mileage",orderService.getMileage(m.getUserId()));
+            model.addAttribute("mileage",orderService.getMileage(sessionMember.getUserId()));
+
+        LOGGER.info("결제 페이지 들어갈때 복호화된 후 Session 객체 ==>>"+sessionMember.toString());
 
             return "/order/orderform";
         }
