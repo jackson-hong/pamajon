@@ -21,6 +21,7 @@ public class EncryptAddress {
 
         try {
             address.setAddrPhone(aes256Util.encrypt(address.getAddrPhone()));
+            address.setAddrReceiver(aes256Util.encrypt(address.getAddrReceiver()));
             address.setAddrZipcode(aes256Util.encrypt(address.getAddrZipcode()));
             address.setAddr(aes256Util.encrypt(address.getAddr()));
             address.setAddrDetail(aes256Util.encrypt(address.getAddrDetail()));
@@ -37,6 +38,7 @@ public class EncryptAddress {
         try {
             address.setAddrPhone(aes256Util.decrypt(address.getAddrPhone()));
             address.setAddr(aes256Util.decrypt(address.getAddr()));
+            address.setAddrReceiver(aes256Util.decrypt(address.getAddrReceiver()));
             address.setAddrZipcode(aes256Util.decrypt(address.getAddrZipcode()));
             address.setAddrDetail(aes256Util.decrypt(address.getAddrDetail()));
             address.setAddrCellPhone(aes256Util.decrypt(address.getAddrCellPhone()));
@@ -54,6 +56,7 @@ public class EncryptAddress {
                 address.get(i).setAddrPhone(aes256Util.decrypt(address.get(i).getAddrPhone()));
                 address.get(i).setAddrCellPhone(aes256Util.decrypt(address.get(i).getAddrCellPhone()));
                 address.get(i).setAddrZipcode(aes256Util.decrypt(address.get(i).getAddrZipcode()));
+                address.get(i).setAddrReceiver(aes256Util.decrypt(address.get(i).getAddrReceiver()));
                 address.get(i).setAddr(aes256Util.decrypt(address.get(i).getAddr()));
                 address.get(i).setAddrDetail(aes256Util.decrypt(address.get(i).getAddrDetail()));
             }

@@ -4,9 +4,11 @@ import com.pamajon.order.model.vo.AddressDto;
 import com.pamajon.order.model.vo.MileageDto;
 import com.pamajon.order.model.vo.OrderDto;
 import com.pamajon.order.model.vo.SoldDto;
+import com.pamajon.order.model.vo.ProductOptionDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +53,23 @@ public class JSONToObject {
         return soldDto;
     }
 
+    public ProductOptionDto convertToOptionList(List<Map<String,String>> optionList){
+
+        ProductOptionDto productOptionDto = new ProductOptionDto();
+        ArrayList<ProductOptionDto> list = new ArrayList<>();
+
+        for(int i = 0; i<optionList.size(); i++){
+
+            ProductOptionDto tempOptions = new ProductOptionDto();
+            tempOptions.setOptionId(Integer.parseInt(optionList.get(i).get("optionId")));
+            tempOptions.setOptionQuantity(Integer.parseInt(optionList.get(i).get("optionQuantity")));
+            list.add(tempOptions);
+
+        }
+        productOptionDto.setOptionList(list);
+        return productOptionDto;
+    }
+
     public AddressDto convertToAddressDto(Map<String,String> addressMap){
 
         AddressDto addressDto = new AddressDto();
@@ -69,7 +88,6 @@ public class JSONToObject {
 
     public MileageDto convertToMileage(Map<String,String> mileageMap){
 
-
         MileageDto mileageDto = new MileageDto();
         mileageDto.setUserId(mileageMap.get("userId"));
         if(mileageMap.get("mileage").equals("")||mileageMap.get("mileage")==null){
@@ -77,9 +95,6 @@ public class JSONToObject {
         } else {
             mileageDto.setMileage(mileageMap.get("mileage"));
         }
-
-
-
 
         return mileageDto;
     }

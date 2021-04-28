@@ -7,6 +7,7 @@ import com.pamajon.order.model.EncryptAddress;
 import com.pamajon.order.model.EncryptOrder;
 import com.pamajon.order.model.service.OrderService;
 import com.pamajon.order.model.vo.*;
+import com.pamajon.member.model.vo.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
@@ -45,20 +47,39 @@ public class OrderController {
     }
 
     @GetMapping("/order/purchase")
-    public String gotoPurchase(Model model, Member member, ProductOptionDto productOptionDto) throws GeneralSecurityException, UnsupportedEncodingException {
+    public String gotoPurchase(Model model,
+                               ProductOptionDto productOptionDto,
+                               HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
+         if(request.getSession().getAttribute("loginMember")==null){
+             model.addAttribute("warningMessage","로그인 후 결제하실 수 있습니다.");
+             return "/member/login";
+         }
+            //세션객체는 member 패키지에 있는 멤버클래스에 담겨야함.
+        com.pamajon.member.model.vo.Member m = (com.pamajon.member.model.vo.Member) request.getSession().getAttribute("loginMember");
 
-            Member m = orderService.getMember(2056);
             model.addAttribute("productList",orderService.getProductOption(productOptionDto));
-            LOGGER.info("조회 후 member" + m.toString());
-            model.addAttribute("member",encryptMember.decryptMember(m));
-            model.addAttribute("mileage",orderService.getMileage(2056));
+            model.addAttribute("member",m);
+            String decryptEmail = m.getMemEmail();
+            LOGGER.info(decryptEmail);
+            String [] emailArr = decryptEmail.split("@");
+            model.addAttribute("emailAddr",emailArr[0]);
+            model.addAttribute("emailUrl",emailArr[1]);
+            model.addAttribute("mileage",orderService.getMileage(m.getUserId()));
 
             return "/order/orderform";
         }
 
     @RequestMapping("/order/addresslist")
-    public String gotoAddress()
+    public String gotoAddress(HttpServletRequest request,Model model)
     {
+        if(request.getSession().getAttribute("loginMember")==null){
+            model.addAttribute("warningMessage","로그인 후 결제하실 수 있습니다.");
+            return "/member/login";
+        }
+        Member m = (Member)request.getSession().getAttribute("loginMember");
+        LOGGER.info("세션에 담긴값 ==>>"+m.toString());
+
+        model.addAttribute("userId",m.getUserId());
 
         return "/order/addressInput";
     }
@@ -69,11 +90,20 @@ public class OrderController {
             @RequestParam String soldDto,
             @RequestParam String addressDto,//1
             @RequestParam String usedMileageDto,
-            @RequestParam String stackMileageDto){
+            @RequestParam String stackMileageDto,
+            @RequestParam String optionDto){
+        LOGGER.info(orderDto);
+        LOGGER.info(soldDto);
+        LOGGER.info(addressDto);
+        LOGGER.info(usedMileageDto);
+        LOGGER.info(stackMileageDto);
+        LOGGER.info(optionDto);
 
+        //String 으로 넘어온 JSON 값을 맵으로 바꾼후 객체화.
         OrderDto order = jsonToObject.converToOrder(jsonConvertor.jsonConvertor(orderDto));
         SoldDto soldDtos = jsonToObject.convertToSoldList(jsonConvertor.jsonArrayConvertor(soldDto));
         AddressDto address = jsonToObject.convertToAddressDto(jsonConvertor.jsonConvertor(addressDto));
+        ProductOptionDto productOptionDto = jsonToObject.convertToOptionList(jsonConvertor.jsonArrayConvertor(optionDto));
         MileageDto usedmileage =  jsonToObject.convertToMileage(jsonConvertor.jsonConvertor(usedMileageDto));
         MileageDto stackMileage = jsonToObject.convertToMileage(jsonConvertor.jsonConvertor(stackMileageDto));
 
@@ -95,7 +125,7 @@ public class OrderController {
         for (int i = 0 ; i<soldDtos.getSoldList().size();i++){
 
             soldResult = orderService.insertSold(soldDtos.getSoldList().get(i));
-            soldResult = orderService.modifyOptionStock(soldDtos.getSoldList().get(i));
+            soldResult = orderService.modifyOptionStock(productOptionDto.getOptionList().get(i));
             soldResult *= soldResult; //하나라도 insert 안되면 0이 리턴됨
         }
 

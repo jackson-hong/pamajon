@@ -20,11 +20,11 @@ public interface OrderService {
 
     public int insertSold(SoldDto sold);
 
-    public int modifyOptionStock(SoldDto sold);
+    public int modifyOptionStock(ProductOptionDto productOptionDto);
 
     public int stackMileage(MileageDto mileageDto);
 
     public List<ProductOptionDto> getProductOption(ProductOptionDto productOptionDto);
 
-
+    String getUserEmail(int userId);
 }

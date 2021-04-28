@@ -20,9 +20,8 @@ public class DecryptoMachine {
     @Test
     public void decrypto() throws GeneralSecurityException, UnsupportedEncodingException {
 
-        encryptor.setPassword("JEP");
-        encryptor.setAlgorithm("PBEWithMD5AndDES");
-        System.out.println(encryptor.decrypt("TOcCRGyrZG/BNpxOBAzp/lIMxrGeo8loOjftEjRxCgW3o7QqGReqvWJWpV/N2v1DOnEjNjHCHQhPXz0RfBbKIhWLeHAeI5uJRDb9jgIPbKaGuMWj1RZAs73TMg+bUXoUOqDj6CdIin4N0Rg5iXjal6qmmiE+/Yot"));
+
+        System.out.println(aes256Util.decrypt("jqk6jvkFS+NeABsul/H46g=="));
 
     }
 }

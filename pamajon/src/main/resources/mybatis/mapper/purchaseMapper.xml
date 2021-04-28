@@ -7,6 +7,7 @@
         <result property="userId" column="USER_ID"/>
         <result property="memberName" column="MEM_NAME"/>
         <result property="memberPhone" column="MEM_PHONE"/>
+        <result property="memberEmail" column="MEMBER_EMAIL"/>
         <result property="memberGrade" column="MEM_GRADE"/>
         <result property="memberDate" column="MEM_DATE"/>
         <result property="memberStatus" column="MEM_STATUS"/>
@@ -26,7 +27,16 @@
         <result property="productPrice" column="PRODUCT_PRICE"/>
         <result property="productName" column="PRODUCT_NAME"/>
         <result property="productThumbnailImage" column="PRO_IMG_NAME"/>
+        <result property="productOptionSalesRate" column="P_SALES_RATE"/>
+        <result property="productOptionStatus" column="P_OPTION_STATUS"/>
     </resultMap>
+
+    <!--Member 객체 조회 할 경우 Member 패키지에 있는 member 클래스에 담겨야함-->
+    <resultMap id="sessionMemberResultSet" type="com.pamajon.member.model.vo.Member">
+        <result property="memEmail" column="MEMBER_EMAIL"/>
+    </resultMap>
+
+
 
     <select id="getMember" parameterType="integer" resultMap="memberResultSet">
         SELECT
@@ -49,8 +59,10 @@
         FROM
             MILEAGE
         WHERE
-            USER_ID=#{memNo}
-        GROUP BY USER_ID
+            1=1
+          AND USER_ID=#{userId}
+          AND MILE_TYPE='+'
+        GROUP BY USER_ID;
     </select>
 
     <select id="getAddressId" resultType="integer">
@@ -137,14 +149,18 @@
                 MILE_ID,
                 USER_ID,
                 MILE,
-                MILE_CONTENT
+                MILE_CONTENT,
+                MILE_TYPE,
+                MILE_DATE
                 )
                 VALUES
                 (
                  NEXTVAL(SEQ_MILEAGE),
                  #{userId},
-                 -${mileage},
+                 ${mileage},
                  '상품 구매 사용'
+                 ,'-'
+                 ,NOW()
                 )
     </update>
     <update id="stackMileage" parameterType="com.pamajon.order.model.vo.MileageDto">
@@ -154,7 +170,9 @@
             MILE_ID,
             USER_ID,
             MILE,
-            MILE_CONTENT
+            MILE_CONTENT,
+            MILE_TYPE,
+            MILE_DATE
         )
         VALUES
         (
@@ -162,6 +180,8 @@
             #{userId},
             ${mileage},
             '상품 구매 포인트'
+            ,'+'
+            ,NOW()
         )
     </update>
     <insert id="insertSold" parameterType="com.pamajon.order.model.vo.SoldDto">
@@ -182,18 +202,37 @@
                 )
     </insert>
 
-    <update id="modifyOptionStock" parameterType="com.pamajon.order.model.vo.SoldDto">
-             UPDATE
-                    P_OPTION
-                SET
-                   P_QUAN=P_QUAN-${soldQuantity}
-              WHERE
-                   P_OPTION_ID=#{optionId}
+    <update id="modifyOptionStock" parameterType="com.pamajon.order.model.vo.ProductOptionDto">
+        <selectKey resultType="string" keyProperty="productOptionStatus" order="BEFORE">
+            SELECT
+                P_OPTION_STATUS
+            FROM
+                 P_OPTION
+            WHERE
+                P_OPTION_ID=#{optionId}
+        </selectKey>
+        UPDATE
+             P_OPTION
+        <!-- 수량 제한이 있다면 재고 수량을 소진시켜줌-->
+        <if test="productOptionStatus == 'limited'">
+            SET
+             P_QUAN=P_QUAN-${optionQuantity}
+            ,P_SALES_RATE=P_SALES_RATE+${optionQuantity}
+        </if>
+        <!-- 수량 제한이 없다면 재고 수량 소진은 없고 판매량만 증가시킴 -->
+        <if test="productOptionStatus == 'unlimited'">
+            SET
+            P_SALES_RATE=P_SALES_RATE+${optionQuantity}
+        </if>
+        WHERE
+             P_OPTION_ID=#{optionId}
     </update>
+
     <select id="getProductOption" parameterType="com.pamajon.order.model.vo.ProductOptionDto" resultMap="productOptionDtoResultSet">
         SELECT
-                P.PRODUCT_ID AS PRODUCT_ID
+                 P.PRODUCT_ID AS PRODUCT_ID
                 ,P.PRODUCT_NAME AS PRODUCT_NAME
+                ,PO.P_OPTION_ID AS P_OPTION_ID
                 ,P_SIZE
                 ,P_QUAN
                 ,PRODUCT_PRICE
@@ -213,4 +252,14 @@
         AND
                  PO.P_OPTION_ID=${optionId}
     </select>
+
+    <select id="getUserEmail" resultType="string" parameterType="int">
+        SELECT
+              MEMBER_EMAIL
+          FROM
+              MEMBER_ID
+         WHERE
+              USER_ID=#{userId}
+    </select>
+
 </mapper>    

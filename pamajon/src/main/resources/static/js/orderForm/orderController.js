@@ -22,7 +22,7 @@ $("input[name='shippingAddr']").on('click',function(){
         document.getElementsByName("mobile[]")[2].value='';
 
         $.ajax({
-            url:"/addressId",
+            url:"/order/addressId",
             type: "GET",
             success:function (result){
                 console.log(result);
