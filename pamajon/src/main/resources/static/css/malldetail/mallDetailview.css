@@ -1,9 +1,9 @@
-div,
-* {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-}
+/*div,*/
+/** {*/
+/*    box-sizing: border-box;*/
+/*    margin: 0px;*/
+/*    padding: 0px;*/
+/*}*/
 
 #outerTotalWrapper {
     width: 1250px;

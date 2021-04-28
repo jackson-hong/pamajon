@@ -50,7 +50,7 @@ body {
     background-color: rgb(7,34,66);
 }
 ion-icon[name="search-outline"]{
-    font-size: 2.8em;
+    font-size: 3.5em;
     color: white;
 }
 #shop-info-container{
@@ -256,4 +256,8 @@ a {
 }
 .item {
     cursor: pointer;
+}
+
+p {
+    margin: 0;
 }
