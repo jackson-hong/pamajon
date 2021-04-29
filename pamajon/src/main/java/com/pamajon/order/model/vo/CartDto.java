@@ -1,6 +1,5 @@
 package com.pamajon.order.model.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

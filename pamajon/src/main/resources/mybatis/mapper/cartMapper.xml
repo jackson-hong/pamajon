@@ -7,7 +7,7 @@
                                           NEXTVAL(SEQ_CART),
                                           #{pOptionId},
                                           #{userId},
-                                          #{productQuantity}
+                                          #{optionQuantity}
                                       )
     </insert>
 

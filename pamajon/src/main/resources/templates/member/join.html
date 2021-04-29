@@ -145,7 +145,6 @@
     }
 
 </style>
-<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}">
 <div id="title-idx">
     <div id="title">
         JOIN
@@ -371,7 +370,6 @@
 </script>
 <script th:inline="javascript">
     Kakao.init('522e9cc1d4e892ad466431b624bcc7e5')
-    let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
     let promise = function() {
         return new Promise((resolve, reject) => {
             Kakao.Auth.login({

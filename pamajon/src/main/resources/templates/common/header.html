@@ -95,6 +95,9 @@
                     <a th:href="@{/member/myPage}">MYPAGE</a>
                 </div>
                 <div th:if="${session.loginMember != null}" class="user-cate">
+                    <a th:href="@{/order/cart}">CART</a>
+                </div>
+                <div th:if="${session.loginMember != null}" class="user-cate">
                     <a th:href="@{/member/logout}">LOGOUT</a>
                 </div>
             </div>

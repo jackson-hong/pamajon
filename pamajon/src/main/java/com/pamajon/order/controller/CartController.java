@@ -41,6 +41,7 @@ public class CartController {
             CartDto dto = new CartDto();
             dto.setPOptionId(Integer.parseInt((String)option.get("optionId")));
             dto.setOptionQuantity(Integer.parseInt((String)option.get("optionQuantity")));
+            optionList.add(dto);
         });
 
         Optional<Member> member = Optional.ofNullable((Member) sess.getAttribute("loginMember"));
@@ -58,6 +59,21 @@ public class CartController {
         List<CartListDto> cartList = cartService.cartList(userId);
 
         log.info(cartList);
+
+        int priceSum = cartList.stream().mapToInt(cart -> Integer.parseInt(cart.getProductPrice())).sum();
+
+        int delivery = 3000;
+
+        if(priceSum > 50000) delivery = 0;
+
+        int totalPrice = 0;
+
+        totalPrice = priceSum + delivery;
+
+
+        mv.addObject("priceSum", priceSum);
+        mv.addObject("totalPrice",totalPrice);
+        mv.addObject("delivery", delivery);
         mv.addObject("count", cartList.size());
         mv.addObject("cartList", cartList);
         mv.setViewName("/order/cartList");

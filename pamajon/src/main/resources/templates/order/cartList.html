@@ -14,8 +14,9 @@
 <div id="wrapper">
     <div id="wish-wrapper">
         <table border="1">
+            <form>
             <tr>
-                <th colspan="8" class="to-left">
+                <th th:text="|일반상품 (${count})|" colspan="8" class="to-left">
                     일반상품 (*)
                 </th>
             </tr>
@@ -29,7 +30,7 @@
                 <th class="product-order">배송구분</th>
                 <th class="product-recall">선택</th>
             </tr>
-            <tr th:each="item : ${cartList}">
+            <tr th:each="item, index : ${cartList}">
                 <td class="product-select-content">
                     <input class="proCheck" type="checkbox">
                 </td>
@@ -51,6 +52,8 @@
                 </td>
                 <td >
                     -
+                    <input type="hidden" th:name="|optionList[${index}].optionId|" th:value="${item.getOptionId()}">
+                    <input type="hidden">
                 </td>
                 <td>
                     기본배송
@@ -64,10 +67,11 @@
             <tr>
                 <th colspan="8">
                     <div id="order-desc" class="to-right">
-                    상품구매금액 <b>76,000</b> + 배송비 0 (무료) = 합계 : <span class="blue-text">KRW 76,000</span>
+                        상품구매금액 <b th:text="${priceSum}">76,000</b> + 배송비 <span th:text="${delivery}">0</span> (무료) = 합계 : <span th:text="|KRW ${totalPrice}|" class="blue-text">KRW 76,000</span>
                     </div>
                 </th>
             </tr>
+            </form>
         </table>
         <div id="select-btns">
             <div id="select-left-btns">
