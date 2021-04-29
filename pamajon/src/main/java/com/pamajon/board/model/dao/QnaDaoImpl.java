@@ -17,9 +17,7 @@ public class QnaDaoImpl implements QnaDao {
     public int createQna(SqlSession session, QnaDto qnaDto) {return session.insert("qna.createQna" , qnaDto); }
 
     @Override
-    public int readQna(SqlSession session, int qnaId) {
-        return session.selectOne("qna.readQna",qnaId);
-    }
+    public QnaDto readQna(SqlSession session, int qnaId) { return session.selectOne("qna.readQna",qnaId); }
 
     @Override
     public int updateQna(SqlSession session, QnaDto qnaDto) {

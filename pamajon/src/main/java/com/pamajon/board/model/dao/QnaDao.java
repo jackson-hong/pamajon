@@ -13,7 +13,7 @@ public interface QnaDao {
 
     //Qna CRUD
     int createQna(SqlSession session, QnaDto qnaDto);
-    int readQna(SqlSession session, int qnaId);
+    QnaDto readQna(SqlSession session, int qnaId);
     int updateQna(SqlSession session, QnaDto qnaDto);
     int deleteQna(SqlSession session, int qnaId);
 }
