@@ -180,7 +180,7 @@ th {
     text-align: right;
     padding-right: 15px;
 }
-.submit {
+.subBtn {
     background: rgb(75,81,98);
     color: white;
     border:black;
@@ -229,6 +229,22 @@ li {
     padding-left: 1em;
 }
 .quan-con {
-    display: flex;
-    justify-content: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
+}
+
+.quan-con > button {
+    width: 3em;
+    height: 1.6em;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+    border: 1px grey solid;
+    background-color: white;
+    border-radius: 2px;
+
+}
+
+.quan-con > button > * {
+    margin: 0;
 }

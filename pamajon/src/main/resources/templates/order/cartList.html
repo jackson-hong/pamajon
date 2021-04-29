@@ -14,14 +14,14 @@
 <div id="wrapper">
     <div id="wish-wrapper">
         <table border="1">
-            <form>
+            <form id="cartFrm" th:action="@{/order/purchase}" method="GET">
             <tr>
                 <th th:text="|일반상품 (${count})|" colspan="8" class="to-left">
                     일반상품 (*)
                 </th>
             </tr>
             <tr>
-                <th class="product-select"><input type="checkbox"></th>
+                <th class="product-select"><input id="checkMom" type="checkbox"></th>
                 <th class="product-img">이미지</th>
                 <th class="product-detail">상품정보</th>
                 <th class="product-price">판매가</th>
@@ -30,9 +30,9 @@
                 <th class="product-order">배송구분</th>
                 <th class="product-recall">선택</th>
             </tr>
-            <tr th:each="item, index : ${cartList}">
+            <tr th:each="item: ${cartList}">
                 <td class="product-select-content">
-                    <input class="proCheck" type="checkbox">
+                    <input th:value="${item.getSbId()}" class="proCheck" type="checkbox">
                 </td>
                 <td>
                     <img th:src="|@{/images/productImages/}${item.getProductThumbnailImage()}|" class="product-img-content" >
@@ -43,31 +43,37 @@
                     <br>
                 </td>
                 <td class="product-price-content">
-                    <b th:text="${item.getProductPrice()}">KRW 229,000</b>
+                    <b th:text="${#numbers.formatInteger(item.getProductPrice(),3,'COMMA')}">KRW 229,000</b>
                 </td>
                 <td >
                     <div class="quan-con">
-                        <input th:value="${item.getOptionQuantity()}" size="2">
+                        <input th:value="${item.getOptionQuantity()}" size="3">
+                        <input type="hidden" th:value="${item.getSbId()}">
+                        <button type="button" class="cart-modify-quan">변경</button>
                     </div>
                 </td>
                 <td >
                     -
-                    <input type="hidden" th:name="|optionList[${index}].optionId|" th:value="${item.getOptionId()}">
-                    <input type="hidden">
+                    <input type="hidden" th:name="|optionList[${itemStat.index}].optionId|" th:value="${item.getOptionId()}">
+                    <input type="hidden" th:name="|optionList[${itemStat.index}].optionQuantity|" th:value="${item.getOptionQuantity()}">
                 </td>
                 <td>
                     기본배송
                 </td>
                 <td>
-                    <button class="product-date-btn submit">주문하기 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button class="product-date-btn">관심상품 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button  class="product-date-btn deleteBtn"><ion-icon name="close-outline"></ion-icon> 삭제</button>
+                    <button type="button" class="product-date-btn subBtn" th:onclick="|fn_cartPer(${itemStat.index},${item.getOptionId()},${item.getOptionQuantity()})|">주문하기 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
+                    <button th:onclick="|fn_wishInsert('${item.getProductId()}')|" type="button" class="product-date-btn">관심상품 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
+                    <button th:onclick="|fn_delete(${item.getSbId()})|" type="button" class="product-date-btn deleteBtn"><ion-icon name="close-outline"></ion-icon> 삭제</button>
                 </td>
             </tr>
             <tr>
                 <th colspan="8">
                     <div id="order-desc" class="to-right">
-                        상품구매금액 <b th:text="${priceSum}">76,000</b> + 배송비 <span th:text="${delivery}">0</span> (무료) = 합계 : <span th:text="|KRW ${totalPrice}|" class="blue-text">KRW 76,000</span>
+                        상품구매금액 <b th:if="${priceSum != 0}" th:text="${#numbers.formatInteger(priceSum,3,'COMMA')}">0</b>
+                        <b th:if="${priceSum == 0}">0</b>+ 배송비
+                        <span th:if="${delivery != 0}" th:text="${#numbers.formatInteger(delivery,3,'COMMA')}">0</span>
+                        <span th:if="${delivery == 0}">0 (무료)</span>
+                        = 합계 : <span th:text="|KRW ${#numbers.formatInteger(totalPrice,3,'COMMA')}|" class="blue-text">KRW 76,000</span>
                     </div>
                 </th>
             </tr>
@@ -80,8 +86,8 @@
             </div>
             <div id="select-right-btns">
                 <button class="select-right-btn">쇼핑 계속하기</button>
-                <button class="select-right-btn empty">장바구니 비우기</button>
-                <button class="select-right-btn submit">전체상품주문</button>
+                <button onclick="fn_emptyCart()" class="select-right-btn empty">장바구니 비우기</button>
+                <button onclick="fn_cartForward()" class="select-right-btn subBtn">전체상품주문</button>
             </div>
         </div>
 <!--        <div id="pagination">-->
@@ -125,6 +131,115 @@
     function fn_paging(cPage){location.href='/member/wishList?cPage='+cPage;}
 </script>
 <script>
+    function fn_emptyCart(){
+        let input = {};
+        let checks = document.getElementsByClassName('proCheck');
+        for (let i = 0; i < checks.length; i++) {
+            input[i] = checks[i].value;
+        }
+        console.log(input);
+
+        $.ajax({
+            type:"DELETE",
+            url: contextPath + "/order/cart/" + JSON.stringify(input),
+            contentType:'application/json; charset=utf-8',
+            success: (data) => {
+                if(data === 'success'){
+                    alert('정상적으로 비워졌습니다.');
+                    location.reload();
+                    return false;
+                }
+                alert('삭제에 실패하였습니다. 관리자에게 문의해주세요.')
+            },
+            error : (error) => {
+                console.log(error)
+            }
+        })
+    }
+
+    function fn_wishInsert(proId){
+        let productId = proId;
+        $.ajax({
+            type:"POST",
+            contentType : 'application/json; charset=utf-8',
+            url: contextPath + "/product/wishlist",
+            data : JSON.stringify({"productId" : productId}),
+            success: (data) => {
+                if(data === 'SUCCESS')alert("위시리스트에 추가되었습니다");
+                if(data === 'FAIL')alert("실패하였습니다. 관리자에게 문의하세요.");
+                if(data === 'DUPLICATE')alert("이미 위시리스트에 추가되었습니다.");
+            },error: (msg) => {
+                console.log(msg)
+            }
+        })
+    }
+
+    document.getElementById('checkMom').addEventListener('change', function(){
+        if(this.checked){
+            document.querySelectorAll('.proCheck').forEach((ele)=>{
+                ele.checked = true;
+            })
+        }else {
+            document.querySelectorAll('.proCheck').forEach((ele)=>{
+                ele.checked = false;
+            })
+        }
+    })
+
+    let modify = document.querySelectorAll('.cart-modify-quan');
+    modify.forEach(function(ele){
+        ele.addEventListener('click',function(){
+            let quantity = this.parentNode.childNodes[1].value;
+            let sbId = this.parentNode.childNodes[3].value;
+            console.log(quantity, sbId);
+            let input = {"sbId":sbId, "optionQuantity":quantity};
+            $.ajax({
+                type:"PUT",
+                url: contextPath + "/order/cart/" + JSON.stringify(input),
+                contentType:'application/json; charset=utf-8',
+                success: (data) => {
+                    if(data === 'success'){
+                        location.reload();
+                        return false;
+                    }
+                    alert('수정에 실패하였습니다. 관리자에게 문의해주세요.')
+                },
+                error : (error) => {
+                    console.log(error)
+                }
+            })
+        })
+    })
+
+    function fn_cartPer(index, optionId, optionQunatity){
+        let frm = document.createElement('form');
+        frm.setAttribute('action', contextPath + '/order/purchase');
+        frm.setAttribute('method','get');
+        let inp1 = document.createElement('input');
+        inp1.setAttribute('name','optionList[' + index + '].optionId');
+        inp1.setAttribute('value', optionId);
+        let inp2 = document.createElement('input');
+        inp2.setAttribute('name','optionList[' + index + '].optionQuantity');
+        inp2.setAttribute('value', optionQunatity);
+
+        document.body.appendChild(frm);
+        frm.appendChild(inp1);
+        frm.appendChild(inp2);
+        console.log(frm);
+        frm.submit();
+    }
+
+    function fn_cartForward(){
+        let arr = document.querySelectorAll('.product-select-content')
+
+        if(arr.length === 0) {
+            alert("장바구니가 비어있습니다");
+            return;
+        }
+
+        document.getElementById('cartFrm').submit();
+    }
+
     function fn_delete(proId){
         let input = {};
         console.log(proId);
@@ -146,7 +261,7 @@
 
         $.ajax({
             type:"DELETE",
-            url: contextPath + "/member/wishList/" + JSON.stringify(input),
+            url: contextPath + "/order/cart/" + JSON.stringify(input),
             contentType:'application/json; charset=utf-8',
             success: (data) => {
                 if(data === 'success'){

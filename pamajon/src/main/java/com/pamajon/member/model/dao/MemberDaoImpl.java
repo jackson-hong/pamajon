@@ -100,7 +100,7 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public List<Integer> wishlist(SqlSession session, int usid) {
+    public List<Map> wishlist(SqlSession session, int usid) {
         return session.selectList("member.wishlist", usid);
     }
 

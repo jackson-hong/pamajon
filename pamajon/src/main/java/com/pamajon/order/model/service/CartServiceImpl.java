@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Log4j2
@@ -42,5 +43,15 @@ public class CartServiceImpl implements CartService{
     @Override
     public List<CartListDto> cartList(int userId) {
         return dao.cartList(session, userId);
+    }
+
+    @Override
+    public void cartModify(Map input) {
+        dao.cartModify(session, input);
+    }
+
+    @Override
+    public int cartDelete(Map input) {
+        return dao.cartDelete(session, input);
     }
 }

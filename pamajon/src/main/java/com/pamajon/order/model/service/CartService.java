@@ -8,9 +8,12 @@ import com.pamajon.order.model.vo.ProductOptionDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface CartService {
     void cartInsert(ArrayList<CartDto> optionList, Optional<Member> member);
     List<CartListDto> cartList(int userId);
+    void cartModify(Map input);
+    int cartDelete(Map input);
 }

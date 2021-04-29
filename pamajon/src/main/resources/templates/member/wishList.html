@@ -212,7 +212,7 @@
     <div id="wish-wrapper">
         <table border="1">
             <tr>
-                <th class="product-select"><input type="checkbox"></th>
+                <th class="product-select"><input id="checkMom"  type="checkbox"></th>
                 <th class="product-img">이미지</th>
                 <th class="product-detail">상품정보</th>
                 <th class="product-price">판매가</th>
@@ -227,7 +227,7 @@
                     <input class="proCheck" th:value="${pro.get('PRODUCT_ID')}" type="checkbox">
                 </td>
                 <td>
-                    <img class="product-img-content" th:src="@{/images/new6.jpg}">
+                    <img class="product-img-content" th:src="|@{/images/productImages/}${pro.get('PRO_IMG_NAME')}|">
                 </td>
                 <td class="product-info-content">
                     <b th:text="${pro.get('PRODUCT_NAME')}">REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)</b></b><br><br>
@@ -279,6 +279,18 @@
     function fn_paging(cPage){location.href='/member/wishList?cPage='+cPage;}
 </script>
 <script>
+    document.getElementById('checkMom').addEventListener('change', function(){
+        if(this.checked){
+            document.querySelectorAll('.proCheck').forEach((ele)=>{
+                ele.checked = true;
+            })
+        }else {
+            document.querySelectorAll('.proCheck').forEach((ele)=>{
+                ele.checked = false;
+            })
+        }
+    })
+
     function fn_delete(proId){
         let input = {};
         console.log(proId);

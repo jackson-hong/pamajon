@@ -1,5 +1,7 @@
 package com.pamajon.order.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pamajon.member.model.vo.Member;
 import com.pamajon.order.model.service.CartService;
 import com.pamajon.order.model.service.OrderService;
@@ -9,6 +11,7 @@ import com.pamajon.order.model.vo.CartListDto;
 import com.pamajon.order.model.vo.ProductOptionDto;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,11 +63,11 @@ public class CartController {
 
         log.info(cartList);
 
-        int priceSum = cartList.stream().mapToInt(cart -> Integer.parseInt(cart.getProductPrice())).sum();
+        int priceSum = cartList.stream().mapToInt(cart -> {return Integer.parseInt(cart.getProductPrice()) * cart.getOptionQuantity();}).sum();
 
-        int delivery = 3000;
+        int delivery = 0;
 
-        if(priceSum > 50000) delivery = 0;
+        if(priceSum < 50000) delivery = 3000;
 
         int totalPrice = 0;
 
@@ -78,5 +81,56 @@ public class CartController {
         mv.addObject("cartList", cartList);
         mv.setViewName("/order/cartList");
         return mv;
+    }
+
+    @PutMapping("/order/cart/{input}")
+    public String modifyCart(@PathVariable("input") String input){
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Integer> map = new HashMap<>();
+        try {
+            map = mapper.readValue(input, Map.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if(map.isEmpty()) return "INVALID";
+
+        cartService.cartModify(map);
+
+        return "success";
+    }
+
+    @DeleteMapping("/order/cart/{input}")
+    public String wishListDelete(@PathVariable("input") String input, @ModelAttribute("loginMember") Member loginMember){
+        log.info(input);
+
+        //JSON -> Map
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = new HashMap<>();
+        try {
+            map = mapper.readValue(input, Map.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        //맵에서 밸류만 가져오기
+        Collection list = map.values();
+
+        //user id
+        int usid = loginMember.getUserId();
+
+        log.info(list);
+
+        int result = 0;
+        for (Object s : list) {
+            if(s instanceof Integer) s = String.valueOf(s);
+            HashMap wishMap = new HashMap();
+            wishMap.put("usid", usid);
+            wishMap.put("sbId", s);
+            result += cartService.cartDelete(wishMap);
+        }
+
+        if(result == 0) return "error";
+
+        return "success";
     }
 }

@@ -107,7 +107,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<Integer> wishlist(int usid) {
+    public List<Map> wishlist(int usid) {
         return dao.wishlist(session, usid);
     }
 

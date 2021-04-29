@@ -623,11 +623,11 @@ public class MemberController {
     @GetMapping("/wishList")
     public ModelAndView wishlist(ModelAndView mv, @ModelAttribute("loginMember") Member loginMember, @RequestParam(defaultValue = "1") int cPage){
 
-        List<Integer> wishlist = service.wishlist(loginMember.getUserId());
+        List<Map> wishlist = service.wishlist(loginMember.getUserId());
         log.info(wishlist);
-        List<Map> productList = service.selectProductsForWish(wishlist);
+//        List<Map> wishList = service.selectProductsForWish(wishlist);
 
-        productList.stream().map(product -> {
+        wishlist.stream().map(product -> {
             int productPrice = (Integer)product.get("PRODUCT_PRICE");
             int mileage = productPrice/100;
             int deliveryFee;
@@ -640,16 +640,16 @@ public class MemberController {
             return product;
         }).collect(Collectors.toList());
 
-        log.info(productList);
+        log.info(wishlist);
 
-        int leng = productList.size();
+        int leng = wishlist.size();
 
-        productList = productList.subList((cPage-1)*5, cPage*5 > leng ? leng : cPage*5);
+        wishlist = wishlist.subList((cPage-1)*5, cPage*5 > leng ? leng : cPage*5);
 
         String pageBar = PageFactory.getPageBar(leng,cPage,5);
 
         mv.addObject("pageBar", pageBar);
-        mv.addObject("productList", productList);
+        mv.addObject("productList", wishlist);
         mv.setViewName("member/wishList");
         return mv;
     }
