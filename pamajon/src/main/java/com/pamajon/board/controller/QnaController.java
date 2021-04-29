@@ -46,13 +46,13 @@ public class QnaController {
         return mv; }
 
     @PostMapping("/write")
-    public ModelAndView insertQna(ModelAndView mv, @RequestParam Map input, HttpServletRequest request){
+    public ModelAndView insertQna(ModelAndView mv, @RequestParam Map input, @RequestParam int memberId, HttpServletRequest request){
         log.info(input);
         String qnaTitle = (String)input.get("qnaTitle");
         String qnaContent = (String)input.get("qnaContent");
         String qnaSecretCheck = (String)input.get("qnaSecretCheck");
         String qnaPwd = (String) input.get("qnaPwd");
-
+        log.info("memberId > " + memberId);
         log.info("done with get map > QNA pwd: " + qnaPwd);
         try {
             qnaPwd = aes256Util.encrypt(qnaPwd);
@@ -71,7 +71,7 @@ public class QnaController {
         createQna.setQnaStatus(qnaSecret);
         createQna.setQnaPwd(qnaPwd);
 
-        log.info("Assecc to DB");
+        log.info("Access to DB");
         int result = service.createQna(createQna);
 
         if(result==0){
@@ -83,14 +83,18 @@ public class QnaController {
         mv.setViewName("redirect:/qna");
         return mv;
     }
+
+
+    //비밀글일경우 거치는 페이지
     @RequestMapping("/secret")
     public ModelAndView qnaSecret(ModelAndView mv){
         mv.setViewName("/board/qnaSecret");
         return mv; }
 
-    //비밀글일경우 거치는 페이지
     @RequestMapping("/view")
-    public ModelAndView qnaDetail(ModelAndView mv){
+    public ModelAndView qnaDetail(ModelAndView mv, @RequestParam int qnaNo){
+        QnaDto qnaDto = service.readQna(qnaNo);
+        mv.addObject(qnaDto);
         mv.setViewName("/board/qnaDetail");
         return mv; }
 }

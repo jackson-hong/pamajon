@@ -29,9 +29,7 @@ public class QnaServiceImpl implements QnaService {
     public int createQna(QnaDto qnaDto) { return dao.createQna(session,qnaDto); }
 
     @Override
-    public int readQna(int qnaId) {
-        return dao.readQna(session,qnaId);
-    }
+    public QnaDto readQna(int qnaId) {return dao.readQna(session,qnaId); }
 
     @Override
     public int updateQna(QnaDto qnaDto) {

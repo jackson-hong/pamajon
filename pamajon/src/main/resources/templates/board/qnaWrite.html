@@ -181,7 +181,18 @@
                             <input type="text" class="form-control textType" id="qnaTitle" name="qnaTitle" placeholder="QNA 제목을 적어주세요.">
                         </td>
                     </tr>
-
+                    <tr class="tablefloor">
+                        <td class="explanation_wrapper">이름</td>
+                        <td class="userInput">
+                            <input type="text" class="form-control textType" id=memName name="memberName" th:value="이름" disabled>
+                        </td>
+                    </tr>
+                    <tr class="tablefloor" hidden="hidden">
+                        <td class="explanation_wrapper">이름</td>
+                        <td class="userInput">
+                            <input type="text" class="form-control textType" id=memberId name="memberId" value="1">
+                        </td>
+                    </tr>
 
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">*질문내용</td>
