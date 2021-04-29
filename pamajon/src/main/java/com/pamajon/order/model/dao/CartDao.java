@@ -13,4 +13,5 @@ public interface CartDao {
     List<CartListDto> cartList(SqlSession session, int userId);
     void cartModify(SqlSession session, Map input);
     int cartDelete(SqlSession session, Map input);
+    List<Map> setOption(SqlSession session, int productId);
 }

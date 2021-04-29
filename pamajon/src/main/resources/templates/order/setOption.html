@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>옵션 선택</title>
+    <link rel="stylesheet" th:href="@{/css/order/setOption.css}">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="upper-bar">
+            옵션 선택
+        </div>
+        <div id="content">
+            <div th:text="${exam.get('productName')}" id="content-header">
+                BAHAMAS - AMERICA
+            </div>
+            <div id="content-body">
+                <div id="left-image-con">
+                    <img width="100px" height="100px" th:src="|@{/images/productImages/}${imgName}|">
+                    SIZE
+                </div>
+                <div id="right-option-con">
+                    <select id="optionSelecter" name="option">
+                        <option value="empty" >- [필수] 옵션을 선택해 주세요.</option>
+                        <option value="empty" >------------------------</option>
+                        <th:block th:each="item : ${resultMap}">
+                            <option th:value="${item.get('P_OPTION_ID')}" th:text="${item.get('P_SIZE')}" ></option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div id="content-footer">
+                <div id="caution">
+                    ! 위 옵션선택 박스를 선택하시면 아래에 상품이 추가됩니다.
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <hr style="border-top: silver">
+            <div id="total-price">
+                총 상품금액(수량) :KRW <span id="real-price">0</span> <span id="count">(0개)</span>
+            </div>
+            <div id="cart-btns">
+                <button onclick="fn_forward();" type="button">장바구니담기</button>
+            </div>
+        </div>
+    </div>
+<script th:inline="javascript">
+    let contextPath = document.getElementById('contextPathHolder').getAttribute('data-contextPath') ? document.getElementById('contextPathHolder').getAttribute('data-contextPath') : '';
+
+    function fn_forward(){
+        let option_id = document.getElementsByClassName('optionId');
+        let quantity = document.getElementsByClassName('quantity-con');
+        let output = [];
+        for(let i = 0; i < option_id.length; i++){
+            output.push({'optionId':option_id[i].value,
+            'optionQuantity': quantity[i].value})
+        }
+        console.log(output);
+
+        if(output.length === 0) {
+            alert("옵션을 선택해주세요.")
+            return;
+        }
+
+        $.ajax({
+            type:"POST",
+            contentType : 'application/json; charset=utf-8',
+            url: contextPath + "/order/cart",
+            data : JSON.stringify({"optionArr" : output}),
+            success: (data) => {
+                if(data === 'SUCCESS'){
+                    console.log("장바구니에 추가되었습니다.");
+                    window.close();
+                }
+                if(data === 'LOGINNEED'){
+                    alert("로그인이 필요합니다.");
+                    location.href = contextPath + '/member/login';
+                }
+            },error: (msg) => {
+                console.log(msg)
+            }
+        })
+    }
+
+    document.getElementById('optionSelecter').addEventListener('change', function(){
+        let div = document.createElement('div');
+        let option_name;
+        let option_id = this.value;
+        /*<![CDATA[*/
+        let product_name = /*[[ ${exam.get('productName')} ]]*/;
+        let product_price = [[ ${#numbers.formatInteger(exam.get('productPrice'),3,'COMMA')} ]];
+        let product_price_without = [[ ${exam.get('productPrice')} ]];
+        /*]]>*/
+        // console.log(this.childNodes);
+        // console.log(option_id, option_name);
+        // console.dir(this);
+        this.childNodes.forEach(ele => {
+            if(ele.selected) option_name = ele.innerText;
+        })
+        div.innerHTML = '<div class="option-list">\n' +
+            '                    <input type="hidden" class="optionId" value="'+option_id+'">\n' +
+            '                    <div class="option">\n' +
+            '                        <div class="title">\n' +
+            '                            <b>'+product_name+'</b><br>\n' +
+            '                            - '+option_name+'\n' +
+            '                        </div>\n' +
+            '                        <div class="quantity">\n' +
+            '                            <input class="quantity-con" size="2" value="1">\n' +
+            '                            <button class="delete" type="button">x</button>\n' +
+            '                        </div>\n' +
+            '                        <div class="price">\n' +
+            '                            KRW '+product_price+'원<br>\n' +
+            '                        </div>\n' +
+            '                    </div>\n' +
+            '                </div>';
+        document.getElementById('content-footer').appendChild(div);
+
+        let deleteCon = document.getElementsByClassName('delete');
+        for(let i = 0; i < deleteCon.length; i++){
+            let element = deleteCon[i];
+            element.addEventListener('click',function(){
+                this.parentNode.parentNode.parentNode.remove();
+            })
+        }
+
+        let total_price = ((document.getElementById('content-footer').childNodes.length)-3)*product_price_without;
+
+        document.getElementById('real-price').innerText = total_price;
+        document.getElementById('count').innerText = '('+((document.getElementById('content-footer').childNodes.length)-3)+'개)';
+    })
+
+
+</script>
+</body>
+</html>

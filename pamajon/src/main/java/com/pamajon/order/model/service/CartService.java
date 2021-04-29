@@ -16,4 +16,5 @@ public interface CartService {
     List<CartListDto> cartList(int userId);
     void cartModify(Map input);
     int cartDelete(Map input);
+    List<Map> setOption(int productId);
 }

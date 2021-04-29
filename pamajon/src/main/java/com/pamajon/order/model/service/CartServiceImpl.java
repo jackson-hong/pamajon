@@ -54,4 +54,9 @@ public class CartServiceImpl implements CartService{
     public int cartDelete(Map input) {
         return dao.cartDelete(session, input);
     }
+
+    @Override
+    public List<Map> setOption(int productId) {
+        return dao.setOption(session, productId);
+    }
 }

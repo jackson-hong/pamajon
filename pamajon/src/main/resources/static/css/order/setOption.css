@@ -1,0 +1,151 @@
+body {
+    padding: 0;
+    margin: 0;
+    font: 0.75em Verdana,Dotum,AppleGothic,sans-serif;
+    color: #353535;
+    -webkit-font-smoothing: antialiased;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+}
+
+#upper-bar {
+    height: 3em;
+    background-color: rgb(7,34,66);
+    display: flex;
+    align-items: center;
+    padding-left: 1em;
+    color: white;
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#content {
+    /*border: 1px red solid;*/
+    margin: 3em;
+}
+
+#content-header {
+    border-bottom: 2px silver solid;
+    display: flex;
+    justify-content: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 2.5em;
+}
+
+#content-body {
+    margin-top: 2em;
+    display: flex;
+}
+
+#left-image-con {
+    display: flex;
+    width: 40%;
+    font-size: 12px;
+}
+
+#left-image-con > img {
+    margin-right: 2em;
+    border: 1px lightgray solid;
+}
+
+#right-option-con {
+    width: 60%;
+}
+
+#right-option-con > select {
+    width: 95%;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    border: 1px lightgray solid;
+}
+
+#content-footer {
+    margin-top: 1em;
+    height: 17em;
+    overflow: auto;
+}
+
+#caution {
+    color: red;
+}
+
+.option-list {
+    border-bottom: 1px silver solid;
+}
+
+.option {
+    margin: 1em 0.5em;
+    display: flex;
+}
+
+.title {
+    width: 60%;
+}
+
+.quantity {
+    width: 19%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 1em;
+}
+
+.quantity > button {
+    margin-left: 0.5em;
+    background-color: grey;
+    color: white;
+    border: 0;
+    width: 1em;
+    height: 1.5em;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0.1em;
+    border-radius: 2px;
+}
+
+.price {
+    width: 21%;
+    font-weight: bold;
+    color: #008bcc;
+}
+
+button {
+    cursor: pointer;;
+}
+
+#total-price {
+    margin: 1em 1.5em;
+}
+
+#cart-btns {
+    border-top: 1px silver solid;
+    margin-top: 0;
+    background-color: rgba(0,0,0,0.1);
+    height: 3.3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cart-btns > button {
+    width: 8em;
+    height: 2.5em;
+    color: white;
+    background-color: rgb(65,71,88);
+    border-radius: 3px;
+    border: 0;
+}
+
+#real-price {
+    color: #008bcc;
+    font-size: 18px;
+    font-weight: bold;
+}

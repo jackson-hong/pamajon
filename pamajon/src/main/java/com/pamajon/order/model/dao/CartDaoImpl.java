@@ -32,4 +32,9 @@ public class CartDaoImpl implements CartDao{
         return session.delete("cart.cartDelete", input);
     }
 
+    @Override
+    public List<Map> setOption(SqlSession session, int productId) {
+        return session.selectList("cart.setOption", productId);
+    }
+
 }

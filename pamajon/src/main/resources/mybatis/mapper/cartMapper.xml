@@ -27,6 +27,12 @@
         DELETE FROM SHOPPINGBAG WHERE sb_id = #{sbId}
     </delete>
 
+    <select id="setOption" parameterType="int" resultType="map">
+        SELECT * FROM PRODUCT LEFT JOIN PRO_IMAGE PI on PRODUCT.PRODUCT_ID = PI.PRODUCT_ID
+                              LEFT JOIN P_OPTION PO on PRODUCT.PRODUCT_ID = PO.PRODUCT_ID
+        WHERE PRO_IMG_ISDEFAULT = 1 AND PRODUCT.PRODUCT_ID = #{productId}
+    </select>
+
     <resultMap id="cartList" type="com.pamajon.order.model.vo.CartListDto">
         <result column="SB_ID" property="sbId"/>
         <result column="P_OPTION_ID" property="optionId"/>

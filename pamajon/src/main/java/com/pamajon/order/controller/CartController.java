@@ -40,12 +40,14 @@ public class CartController {
         ArrayList<CartDto> optionList = new ArrayList<CartDto>();
         ArrayList<HashMap> inputList = (ArrayList<HashMap>)input.get("optionArr");
 
+        log.info(inputList);
         inputList.forEach(option -> {
             CartDto dto = new CartDto();
             dto.setPOptionId(Integer.parseInt((String)option.get("optionId")));
             dto.setOptionQuantity(Integer.parseInt((String)option.get("optionQuantity")));
             optionList.add(dto);
         });
+        log.info(optionList);
 
         Optional<Member> member = Optional.ofNullable((Member) sess.getAttribute("loginMember"));
         try {
@@ -132,5 +134,26 @@ public class CartController {
         if(result == 0) return "error";
 
         return "success";
+    }
+
+    @GetMapping("/order/option")
+    public ModelAndView setOption(ModelAndView mv,
+                                  @ModelAttribute("loginMember") Member loginMember,
+                                  @RequestParam int productId){
+        int usid = loginMember.getUserId();
+
+        List<Map> resultMap = cartService.setOption(productId);
+
+        HashMap example = new HashMap();
+        example.put("productName", resultMap.get(0).get("PRODUCT_NAME"));
+        example.put("productPrice", resultMap.get(0).get("PRODUCT_PRICE"));
+
+        mv.addObject("exam", example);
+        mv.addObject("imgName", resultMap.get(0).get("PRO_IMG_NAME"));
+        mv.addObject("userId", usid);
+        mv.addObject("resultMap", resultMap);
+        mv.setViewName("/order/setOption");
+
+        return mv;
     }
 }
