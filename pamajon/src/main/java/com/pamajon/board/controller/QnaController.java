@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -23,8 +25,6 @@ import java.util.Map;
 public class QnaController {
 
     private final AES256Util aes256Util;
-
-    @Qualifier("qnaServiceImpl")
     private final QnaServiceImpl service;
 
     public QnaController(AES256Util aes256Util,QnaServiceImpl service) {
@@ -35,9 +35,11 @@ public class QnaController {
 
 
     //Q&A관련
-    @RequestMapping("/")
+    @RequestMapping("/list")
     public ModelAndView qna(ModelAndView mv){
+        List<QnaDto> resultList = service.listQna();
         mv.setViewName("/board/qna");
+        mv.addObject("resultList", resultList);
         return mv;
     }
     @RequestMapping("/write")
@@ -47,6 +49,7 @@ public class QnaController {
 
     @PostMapping("/write")
     public ModelAndView insertQna(ModelAndView mv, @RequestParam Map input, @RequestParam int memberId, HttpServletRequest request){
+
         log.info(input);
         String qnaTitle = (String)input.get("qnaTitle");
         String qnaContent = (String)input.get("qnaContent");
@@ -72,6 +75,9 @@ public class QnaController {
         createQna.setQnaPwd(qnaPwd);
 
         log.info("Access to DB");
+        log.info("trying to insertQna");
+        log.info(">>>>>>>>>>>>>>>");
+
         int result = service.createQna(createQna);
 
         if(result==0){
@@ -93,8 +99,19 @@ public class QnaController {
 
     @RequestMapping("/view")
     public ModelAndView qnaDetail(ModelAndView mv, @RequestParam int qnaNo){
-        QnaDto qnaDto = service.readQna(qnaNo);
-        mv.addObject(qnaDto);
         mv.setViewName("/board/qnaDetail");
         return mv; }
+
+    @RequestMapping("/delete")
+    public ModelAndView qnaDelete(ModelAndView mv, @RequestParam int qnaNo){
+        log.info("proceed Delete > Board No:" + qnaNo +"<");
+        return mv;
+    }
+
+    @RequestMapping("/edit")
+    public ModelAndView qnaModify(ModelAndView mv, @RequestParam int qnaNo){
+        log.info("proceed Modify > Board No:" + qnaNo +"<");
+
+        return mv;
+    }
 }

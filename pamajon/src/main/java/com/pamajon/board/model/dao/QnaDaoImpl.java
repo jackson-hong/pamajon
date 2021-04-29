@@ -10,6 +10,7 @@ import java.util.List;
 @Repository("qnaDaoImpl")
 @Primary
 public class QnaDaoImpl implements QnaDao {
+
     @Override
     public List<QnaDto> listQna(SqlSession session) { return session.selectList("qna.listQna"); }
 
