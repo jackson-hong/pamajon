@@ -4,7 +4,7 @@
 
 `남성 의류 쇼핑몰 구현` 
 - 스프링 부트를 이용한 [모델링 사이트](http://bluesman.co.kr/)의 기능 구현
-
+- Dev Server : http://ec2-3-22-217-41.us-east-2.compute.amazonaws.com 
 
 ## 1. Tech Stack
 <img src="https://img.shields.io/badge/JEP-Pamajon--1.0.0-red">
