@@ -3,7 +3,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/malldetail/mallDetailview.css}">
     <div id="outerTotalWrapper">
@@ -207,6 +207,10 @@
                 if(data === 'SUCCESS')alert("위시리스트에 추가되었습니다");
                 if(data === 'FAIL')alert("실패하였습니다. 관리자에게 문의하세요.");
                 if(data === 'DUPLICATE')alert("이미 위시리스트에 추가되었습니다.");
+                if(data === 'LOGINNEED'){
+                    alert("로그인이 필요합니다");
+                    location.href = contextPath + "/member/login";
+                }
             },error: (msg) => {
                 console.log(msg)
             }

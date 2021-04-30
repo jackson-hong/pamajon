@@ -69,7 +69,7 @@ public class CartController {
 
         int delivery = 0;
 
-        if(priceSum < 50000) delivery = 3000;
+        if(priceSum < 50000 && priceSum > 0) delivery = 3000;
 
         int totalPrice = 0;
 

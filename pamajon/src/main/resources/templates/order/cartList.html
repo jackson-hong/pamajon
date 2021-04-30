@@ -71,7 +71,8 @@
                         <b th:if="${priceSum == 0}">0</b>+ 배송비
                         <span th:if="${delivery != 0}" th:text="${#numbers.formatInteger(delivery,3,'COMMA')}">0</span>
                         <span th:if="${delivery == 0}">0 (무료)</span>
-                        = 합계 : <span th:text="|KRW ${#numbers.formatInteger(totalPrice,3,'COMMA')}|" class="blue-text">KRW 76,000</span>
+                        = 합계 : <span th:if="${totalPrice != 0}" th:text="|KRW ${#numbers.formatInteger(totalPrice,3,'COMMA')}|" class="blue-text">KRW 76,000</span>
+                        <span th:if="${totalPrice == 0}" class="blue-text">KRW 0</span>
                     </div>
                 </th>
             </tr>

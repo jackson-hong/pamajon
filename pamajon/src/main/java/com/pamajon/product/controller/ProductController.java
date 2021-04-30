@@ -12,6 +12,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
@@ -42,10 +43,13 @@ public class ProductController {
     }
 
     @PostMapping("/wishlist")
-    public String wishlistInsert(@ModelAttribute("loginMember")Member loginMember, @RequestBody HashMap input){
+    public String wishlistInsert(HttpSession sess, @RequestBody HashMap input){
         String productId = (String)input.get("productId");
-        log.info(loginMember);
         log.info(productId);
+
+        Member loginMember = (Member) sess.getAttribute("loginMember");
+
+        if(loginMember == null) return "LOGINNEED";
 
         HashMap inputMap = new HashMap();
         inputMap.put("usid", loginMember.getUserId());
