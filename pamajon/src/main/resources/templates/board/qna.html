@@ -319,7 +319,7 @@
             </table>
 
             <div class="qnaWriteBtnBox">
-                <a href="/pamajon/board/qna/write"><input class="qnaWriteBtn" type="button" value="글쓰기"></a>
+                <button class="qnaWriteBtn" type="button" value="글쓰기" onclick="writeQna()" />
             </div>
 
             <div id="paging">
@@ -341,19 +341,6 @@
 
 
             <div id="boardSearch">
-                <select class="form-control">
-                    <option id="searchPeriod-Week">일주일</option>
-                    <option id="searchPeriod-OneMonth">한달</option>
-                    <option id="searchPeriod-threeMonths">세달</option>
-                    <option id="searchPeriod-All">전체</option>
-                </select>
-                <select class="form-control">
-                    <option id="searchByTitle">제목</option>
-                    <option id="searchByContent">내용</option>
-                    <option id="searchByName">글쓴이</option>
-                    <option id="searchById">아이디</option>
-                    <option id="searchByNickName">별명</option>
-                </select>
                 <input type="text" class="SearchForm">
                 <button type="submit" th:method="get" class="search-btn">찾기</button>
             </div>
@@ -362,4 +349,5 @@
 </div>
 </body>
 <th:block th:replace="common/footer.html"></th:block>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/boardMethod.js}"></script>
 </html>

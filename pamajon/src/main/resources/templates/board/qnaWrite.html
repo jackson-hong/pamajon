@@ -189,13 +189,13 @@
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">이름</td>
                         <td class="userInput">
-                            <input type="text" class="form-control textType" id=memName name="memberName" th:value="이름" disabled>
+                            <input type="text" class="form-control textType" id=memName name="memberName" th:value="${writerName}" disabled>
                         </td>
                     </tr>
                     <tr class="tablefloor" hidden="hidden">
                         <td class="explanation_wrapper">이름</td>
                         <td class="userInput">
-                            <input type="text" class="form-control textType" id=memberId name="memberId" value="1">
+                            <input type="text" class="form-control textType" id=userId name="userId" th:value="${userId}">
                         </td>
                     </tr>
 
@@ -210,9 +210,10 @@
                         <td class="explanation_wrapper">비밀글로 변경</td>
                         <td class="userInput">
                             <label>전체 공개</label>
-                            <input type="radio" name="qnaSecretCheck" value="n">
+                            <input type="radio" name="qnaStatus" value=0>
                             <label>비밀글</label>
-                            <input type="radio" name="qnaSecretCheck" value="s">
+                            <input type="radio" name="qnaStatus
+" value=1>
                         </td>
                     </tr>
 
@@ -222,12 +223,10 @@
                             <input type="password" class="qnaPwd" name="qnaPwd" id="pwd">
                         </td>
                     </tr>
-
                 </table>
-
                 <div class="qnaBtn--box">
                     <button type="button" class="qnaBtn" id="upload" onclick="submitForm()">업로드</button>
-                    <button type="button" class="qnaBtn" onclick="location.href='qna'">취소</button>
+                    <button type="button" class="qnaBtn" id="cancelUpload">취소</button>
                 </div>
             </form>
     </div>
