@@ -117,6 +117,7 @@ function submitOption(){
     }
 }
 
+
 function numberFormatter(stirngNumber){
 
  return Number(stirngNumber.split(',').join(''));
