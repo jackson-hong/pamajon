@@ -38,13 +38,13 @@ public class QnaController {
     @RequestMapping("/list")
     public ModelAndView qna(ModelAndView mv){
         List<QnaDto> resultList = service.listQna();
-        mv.setViewName("/board/qna");
+        mv.setViewName("board/qna");
         mv.addObject("resultList", resultList);
         return mv;
     }
     @RequestMapping("/write")
     public ModelAndView qnaWrite(ModelAndView mv){
-        mv.setViewName("/board/qnaWrite");
+        mv.setViewName("board/qnaWrite");
         return mv; }
 
     @PostMapping("/write")
@@ -79,7 +79,7 @@ public class QnaController {
         log.info(">>>>>>>>>>>>>>>");
 
         int result = service.createQna(createQna);
-
+        log.info("Proceed Insert >");
         if(result==0){
             mv.addObject("msg", "저장되지 않았습니다.");
             mv.addObject("loc", "/qna/write");
@@ -94,12 +94,12 @@ public class QnaController {
     //비밀글일경우 거치는 페이지
     @RequestMapping("/secret")
     public ModelAndView qnaSecret(ModelAndView mv){
-        mv.setViewName("/board/qnaSecret");
+        mv.setViewName("board/qnaSecret");
         return mv; }
 
     @RequestMapping("/view")
     public ModelAndView qnaDetail(ModelAndView mv, @RequestParam int qnaNo){
-        mv.setViewName("/board/qnaDetail");
+        mv.setViewName("board/qnaDetail");
         return mv; }
 
     @RequestMapping("/delete")

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>PAMAJON Q&A</title>
+    <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/ckeditor/ckeditor.js}"></script>
+</head>
 </head>
 <style>
     body {
@@ -156,6 +158,9 @@
     .qnaTextCounterBox{
         margin-left :400px;
     }
+    .resize_textarea{
+        padding-right: 30%;
+    }
 </style>
 <body>
 
@@ -196,11 +201,8 @@
 
                     <tr class="tablefloor">
                         <td class="explanation_wrapper">*질문내용</td>
-                        <td class="userInput">
-                            <textarea name="qnaContent" class="qna--content" id="qnaContent"></textarea>
-                            <div class="reviewTextCounterBox">
-                                <span class="qnaTextCounter" style="color: #aaa;">(0 / 최대 2000자)</span>
-                            </div>
+                        <td class="userInput resize_textarea">
+                            <textarea name="qnaContent" id="editor1"></textarea>
                         </td>
                     </tr>
 
@@ -233,16 +235,7 @@
 
 
 <th:block th:replace="common/footer.html"></th:block>
-<script>
-    $('.qna--content').keyup(function(e) {
-        let content = $(this).val();
-        $('.qnaTextCounter').html("(" + content.length + " / 최대 2000자)");
-    });
-
-    function submitForm(){
-        let form = document.getElementById('qna-fm');
-        form.submit();
-    }
-</script>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/CKEDITOR.js}"></script>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/boardMethod.js}"></script>
 </body>
 </html>
