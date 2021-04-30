@@ -63,7 +63,7 @@
                                 <span style="line-height: 40px; font-weight: bolder;" class="product_tfoot_productTotal"></span>
                                 <span style="line-height: 40px;">+ 배송비</span>
                                 <span style="line-height: 40px;">0(무료)</span>
-                                <span style="line-height: 40px;">합계: </span>
+                                <span style="line-height: 40px;">배송비 합계: </span>
                                 <span style="line-height: 40px;" class="product_tfoot_shipfee"></span>
                                 <span style="line-height: 40px;">합계:</span>
                                 <span style="color: #008bcc; font-weight: bold;">KRW</span>
@@ -122,9 +122,10 @@
                         <span style="line-height: 40px;">회원정보와 동일</span>
                         <input type="radio" name="shippingAddr" value="insertNew">
                         <span>새로운배송지</span>
-                        <a href="#none" id="btn_shipp_addr" class="" style="">
+                        <a href="#none" id="btn_shipp_addr">
                             <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_address.gif"
-                                 alt="주소록 보기">
+                                 alt="주소록 보기"
+                                 style="position: relative; top: 6px;">
                         </a>
                     </td>
                 </tr>
@@ -137,10 +138,12 @@
                     <td style="padding-top: 5px">
                         <input style="margin-bottom: 4px;" id="address_zip1" name="addrZipcode"
                             class="inputTypeText" placeholder="" size="6" maxlength="6" readonly="1" value=""
-                            type="text">
+                            type="text"
+                            >
                         <img
                                 src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_zipcode.gif"
-                                 alt="우편번호" onclick="inputAddress()"><br>
+                                alt="우편번호" onclick="inputAddress()"
+                                style="position: relative; top: 6px;"><br>
                         <input style="margin-bottom: 4px;" id="address_addr1" name="addr"
                             class="inputTypeText" placeholder="" size="40" readonly="1" value="" type="text"> <span
                             class="grid">기본주소</span><br>
@@ -275,7 +278,7 @@
             <span class="ec-base-label"><input id="addr_paymethod0" name="addr_paymethod"
                     value="cash" type="radio" checked="checked"><label
                     for="addr_paymethod0">무통장 입금</label></span>
-            <span class="ec-base-label"><input id="addr_paymethod1" name="addr_paymethod" value="card" type="radio"><label for="addr_paymethod1">카드
+            <span class="ec-base-label"><input id="addr_paymethod1" name="addr_paymethod" value="card" type="radio" checked><label for="addr_paymethod1">카드
                     결제</label></span>
         </div>
 
