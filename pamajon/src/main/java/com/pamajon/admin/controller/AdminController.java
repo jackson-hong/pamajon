@@ -80,7 +80,7 @@ public class AdminController {
 
         //로그인 되어있는 유저는 바로 메인페이지로 이동
         if(request.getSession().getAttribute("adminUser") != null){
-            return "redirect:admin/mainPage";
+            return "redirect:mainPage";
         }
 
      return "admin/adminLogin/adminLogin";
@@ -186,7 +186,7 @@ public class AdminController {
         }
 
         md.addAttribute("msg","잘못된 정보가 존재합니다.");
-        md.addAttribute("loc","admin/signin");
+        md.addAttribute("loc","/admin/signin");
 
         return "common/msg";
     }
