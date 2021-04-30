@@ -38,41 +38,41 @@ public class AdminController {
 
         //로그인 안되어있으면 메인페이지로 토스
         if(request.getSession().getAttribute("adminUser") == null){
-            return "redirect:/warning";
+            return "redirect:warning";
         }
 
-        return"/admin/adminMainPage";
+        return"admin/adminMainPage";
 
     }
     @GetMapping("/bResgistration")
     public String gotoResgistration(){
 
-        return "/admin/profile";
+        return "admin/profile";
     }
 
     @GetMapping("/memberManager")
     public String gotoMemberHandler(){
 
-        return "/admin/memberHandler";
+        return "admin/memberHandler";
     }
 
     @GetMapping("/productManager")
     public String gotoProductHandler(){
 
-        return "/admin/productHandler";
+        return "admin/productHandler";
     }
 
     @GetMapping("/productInsert")
     public String gotoInsertProduct(){
 
-        return "/admin/insertProduct";
+        return "admin/insertProduct";
     }
 
     @GetMapping("/shipment")
     public String gotoShipmentPage(){
 
 
-        return "/admin/shipping";
+        return "admin/shipping";
     }
 
     @GetMapping("/signin")
@@ -80,20 +80,20 @@ public class AdminController {
 
         //로그인 되어있는 유저는 바로 메인페이지로 이동
         if(request.getSession().getAttribute("adminUser") != null){
-            return "redirect:/admin/mainPage";
+            return "redirect:admin/mainPage";
         }
 
-     return "/admin/adminLogin/adminLogin";
+     return "admin/adminLogin/adminLogin";
     }
     @GetMapping("/login")
     public String redirectUser(HttpServletRequest request){
 
         //로그인 되어있는 유저는 바로 메인페이지로 이동
         if(request.getSession().getAttribute("adminUser") != null){
-            return "redirect:/admin/mainPage";
+            return "redirect:mainPage";
         }
 
-        return "redirect:/warning";
+        return "redirect:warning";
     }
 
 
@@ -109,7 +109,7 @@ public class AdminController {
         if(selectUser==null){
             session.setAttribute("alarmMsg","아이디를 잘못 입력하셨습니다");
             session.setMaxInactiveInterval(1);
-            return "redirect:/admin/signin";
+            return "redirect:signin";
         }
         if(selectUser!=null && !passwordEncoder.matches(adminUser.getAdminLoginPwd(),selectUser.getAdminLoginPwd())){
             //Fail count +1
@@ -119,7 +119,7 @@ public class AdminController {
                 }
                 session.setAttribute("alarmMsg","입력 실패 횟수가 5회를 초과 하여 더이상 로그인 하실 수 없습니다. 파마존 개발팀 또는 담당 매니저에게 연락 해 주시기 바랍니다.");
                 session.setMaxInactiveInterval(1);
-                return "redirect:/admin/signin";
+                return "redirect:signin";
             }
             adminService.increaseFailCount(adminUser);
             //Fail count select
@@ -135,7 +135,7 @@ public class AdminController {
                 session.setAttribute("alarmMsg", "입력 실패 횟수가 5회를 초과 하여 더이상 로그인 하실 수 없습니다. 파마존 개발팀 또는 담당 매니저에게 연락 해 주시기 바랍니다.");
             }
             session.setMaxInactiveInterval(2);
-            return "redirect:/admin/signin";
+            return "redirect:signin";
         }
         //승인 채킹
         if(selectUser!=null && passwordEncoder.matches(adminUser.getAdminLoginPwd(),selectUser.getAdminLoginPwd())){
@@ -143,17 +143,17 @@ public class AdminController {
             if(selectUser.getAdminApprStatus().equals("DEN")){
                 session.setAttribute("alarmMsg","승인이 거절된 계정입니다. 담당 매니저에게 연락해주시기 바랍니다.");
                 session.setMaxInactiveInterval(2);
-                return "redirect:/admin/signin";
+                return "redirect:signin";
             }
             if(selectUser.getAdminApprStatus().equals("DEL")){
                 session.setAttribute("alarmMsg","삭제된 계정입니다. 담당 매니저에게 연락해주시기 바랍니다.");
                 session.setMaxInactiveInterval(2);
-                return "redirect:/admin/signin";
+                return "redirect:signin";
             }
             if(selectUser.getAdminApprStatus().equals("BLK")){
                 session.setAttribute("alarmMsg","사용이 정지된 계정입니다. 담당 매니저에게 연락해주시기 바랍니다.");
                 session.setMaxInactiveInterval(2);
-                return "redirect:/admin/signin";
+                return "redirect:signin";
             }
 
         }
@@ -175,20 +175,20 @@ public class AdminController {
 
                 Cookie cookie = new Cookie("loginCookie",session.getId());
 
-                cookie.setPath("/admin/signin");
+                cookie.setPath("signin");
                 //쿠키설정완료
                 cookie.setMaxAge(60*60*24*7);
                 response.addCookie(cookie);
 
             }
 
-            return "redirect:/admin/mainPage";
+            return "redirect:mainPage";
         }
 
         md.addAttribute("msg","잘못된 정보가 존재합니다.");
-        md.addAttribute("loc","/admin/signin");
+        md.addAttribute("loc","admin/signin");
 
-        return "/common/msg";
+        return "common/msg";
     }
 
     @GetMapping("/logout")
@@ -200,12 +200,12 @@ public class AdminController {
         request.getSession().invalidate();
         Cookie cookie = new Cookie("loginCookie",null);
         cookie.setMaxAge(0);
-        cookie.setPath("/admin/signin");
+        cookie.setPath("signin");
         response.addCookie(cookie);
 
 
 
-        return "redirect:/admin/signin";
+        return "redirect:signin";
     }
 
 

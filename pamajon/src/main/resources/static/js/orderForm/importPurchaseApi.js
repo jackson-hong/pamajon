@@ -175,6 +175,7 @@ function settingTablePrice(){
     let totalPrice = 0;
     point = 0;
     // 테이블 가격셋팅 for문
+
     for(let i = 0 ; i<tableLength; i++){
 
         //상품의 가격을 알아냄 상품 가격에 , 가 있으므로 그것을 제거한 후 다시 합치면 가격을 알아낼 수 있음.
@@ -203,23 +204,17 @@ function settingTablePrice(){
             $(`.product_point:eq(${i})`).text((Math.floor(Number(priceStr)/10_000_000)*100_000).toLocaleString());
         }*/
         if(Number(priceStr)>=5_0000){
-
+            $(`.product_point:eq(${i})`).text(((priceStr*$(`.product_quantity:eq(${i})`).html())*0.01).toLocaleString());
+            point += (priceStr*$(`.product_quantity:eq(${i})`).html())*0.01;
         }
         if(Number(priceStr)<5_0000){
             $(`.product_point:eq(${i})`).text('0');
         }
 
-        //전체 포인트 연산
-        for(let j = 0 ; j<$(`.product_point:eq(${i})`).text().trim().split(",").length; j++){
-            pointStr += $(`.product_point:eq(${i})`).text().trim().split(",")[j];
-        }
-        point += Number(pointStr);
-
         $(`.product_total:eq(${i})`).text(Number(priceStr*$(`.product_quantity:eq(${i})`).text()).toLocaleString());
 
         totalPrice += Number(priceStr*$(`.product_quantity:eq(${i})`).text());
         priceStr="";
-        pointStr = "";
 
     }
 
@@ -336,8 +331,9 @@ function purchaseTableController(){
     }
     total=Number(totalStr);
     $("#total_price").val(total.toLocaleString());
-    $("#mProductMileage").text(point);
+    $("#mProductMileage").text(point.toLocaleString());
 
+/*
     if(total >= 10_000 && total < 100_000) {
         $("#mAllMileageSum").text(((Math.floor(total/10_000))*100).toLocaleString());
         //10만단위
@@ -355,6 +351,8 @@ function purchaseTableController(){
     else {
         $("#mAllMileageSum").text('0');
     }
+*/
+
 
 }
 /*

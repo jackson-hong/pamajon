@@ -9,6 +9,6 @@ public class WarningPageController {
     @RequestMapping("/warning")
     public String sendToWarningPage(){
 
-        return "/warningPage/warningPage";
+        return "warningPage/warningPage";
     }
 }
