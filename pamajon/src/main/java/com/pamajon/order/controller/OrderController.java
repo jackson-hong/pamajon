@@ -81,7 +81,7 @@ public class OrderController {
     {
         if(request.getSession().getAttribute("loginMember")==null){
             model.addAttribute("warningMessage","로그인 후 결제하실 수 있습니다.");
-            return "/member/login";
+            return "member/login";
         }
         Member m = (Member)request.getSession().getAttribute("loginMember");
         LOGGER.info("세션에 담긴값 ==>>"+m.toString());

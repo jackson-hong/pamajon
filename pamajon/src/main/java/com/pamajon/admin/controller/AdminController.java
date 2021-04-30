@@ -38,7 +38,7 @@ public class AdminController {
 
         //로그인 안되어있으면 메인페이지로 토스
         if(request.getSession().getAttribute("adminUser") == null){
-            return "redirect:warning";
+            return "redirect:/warning";
         }
 
         return"admin/adminMainPage";
@@ -93,7 +93,7 @@ public class AdminController {
             return "redirect:mainPage";
         }
 
-        return "redirect:warning";
+        return "redirect:/warning";
     }
 
 

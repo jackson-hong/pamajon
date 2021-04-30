@@ -22,7 +22,7 @@ public class MallDetailController {
     @GetMapping("/board/detailView")
     public String gotoDetail(){
 
-        return "/detailView/mallDetailView";
+        return "detailView/mallDetailView";
     }
 
 
