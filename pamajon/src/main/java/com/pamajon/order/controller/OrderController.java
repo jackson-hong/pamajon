@@ -52,7 +52,7 @@ public class OrderController {
                                HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
          if(request.getSession().getAttribute("loginMember")==null){
              model.addAttribute("warningMessage","로그인 후 결제하실 수 있습니다.");
-             return "/member/login";
+             return "member/login";
          }
             //세션객체는 member 패키지에 있는 멤버클래스에 담겨야함.
         com.pamajon.member.model.vo.Member m = (com.pamajon.member.model.vo.Member)request.getSession().getAttribute("loginMember");
@@ -73,7 +73,7 @@ public class OrderController {
             model.addAttribute("emailUrl",emailArr[1]);
             model.addAttribute("mileage",orderService.getMileage(sessionMember.getUserId()));
 
-            return "/order/orderform";
+            return "order/orderform";
         }
 
     @RequestMapping("/order/addresslist")
@@ -88,7 +88,7 @@ public class OrderController {
 
         model.addAttribute("userId",m.getUserId());
 
-        return "/order/addressInput";
+        return "order/addressInput";
     }
     @PostMapping("/order/purchase")
     @ResponseBody

@@ -81,7 +81,7 @@ public class CartController {
         mv.addObject("delivery", delivery);
         mv.addObject("count", cartList.size());
         mv.addObject("cartList", cartList);
-        mv.setViewName("/order/cartList");
+        mv.setViewName("order/cartList");
         return mv;
     }
 
@@ -152,7 +152,7 @@ public class CartController {
         mv.addObject("imgName", resultMap.get(0).get("PRO_IMG_NAME"));
         mv.addObject("userId", usid);
         mv.addObject("resultMap", resultMap);
-        mv.setViewName("/order/setOption");
+        mv.setViewName("order/setOption");
 
         return mv;
     }
