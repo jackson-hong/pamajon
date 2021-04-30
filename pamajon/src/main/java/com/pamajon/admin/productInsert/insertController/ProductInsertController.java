@@ -85,6 +85,8 @@ public class ProductInsertController {
                                       @RequestParam(name="productImages") List<MultipartFile> productImages
                                      ,HttpServletRequest request
                                      ,ModelAndView mv) throws IOException {
+        LOGGER.info(productDto.toString());
+        LOGGER.info(productOptionDto.toString());
 
       //product Insert.
         int productInsert = productInsertService.insertProduct(productDto);

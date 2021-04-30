@@ -59,8 +59,6 @@ public class OrderController {
          //암호화 해제.
         com.pamajon.order.model.vo.Member sessionMember = orderService.getMember(m.getUserId());
 
-            LOGGER.info("결제 페이지 들어갈때 복호화되기전 Session 객체 ==>>"+m.toString());
-
         sessionMember.setMemberEmail(aes256Util.decrypt(sessionMember.getMemberEmail()));
         sessionMember.setMemberName(aes256Util.decrypt(sessionMember.getMemberName()));
         sessionMember.setMemberPhone(aes256Util.decrypt(sessionMember.getMemberPhone()));
@@ -74,8 +72,6 @@ public class OrderController {
             model.addAttribute("emailAddr",emailArr[0]);
             model.addAttribute("emailUrl",emailArr[1]);
             model.addAttribute("mileage",orderService.getMileage(sessionMember.getUserId()));
-
-        LOGGER.info("결제 페이지 들어갈때 복호화된 후 Session 객체 ==>>"+sessionMember.toString());
 
             return "/order/orderform";
         }

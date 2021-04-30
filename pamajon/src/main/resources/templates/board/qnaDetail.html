@@ -308,6 +308,11 @@
             text-decoration: underline;
         }
 
+        .qnaDetailBtns{
+            margin-right: 5px;
+            float: right;
+        }
+
     </style>
 
 </head>
@@ -350,7 +355,13 @@
                     <td class="qnaTitle"> 배송 줜나 느리네</td>
                 </tr>
                     <th scope="row">작성자</th>
-                    <td class="qnaMember">홍****</td>
+                    <td class="qnaMember">홍***
+                        <span class="qnaDetailBtns">
+                        <a href=""><img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
+                        <a href=""><img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
+                        </span>
+
+                    </td>
                 <tr>
                     <td colspan="2">
                         <div class="content-info">
