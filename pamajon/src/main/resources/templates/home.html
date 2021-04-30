@@ -1,67 +1,67 @@
 <th:block th:replace="common/header.html"></th:block>
-        <div id="carousel-sales">
-            <div id="left-sales">
-                <div class="left-sale" id="left-sale-1">
-                    NEW ARRIVAL
-                </div>
-                <div class="left-sale" id="left-sale-2">
-                    SALE
-                </div>
-                <div class="left-sale" id="left-sale-3">
-                    JACKET
-                </div>
-                <div class="left-sale" id="left-sale-4">
-                    VEST
-                </div>
-            </div>
-            <div id="center-carousel" class="glider-contain">
-                <div class="glider">
-                    <div class="glider-pic-con"><img th:src="@{/images/glider-1.jpg}"></div>
-                    <div class="glider-pic-con"><img th:src="@{/images/glider-2.jpg}"></div>
-                    <div class="glider-pic-con"><img th:src="@{/images/glider-3.jpg}"></div>
-                    <div class="glider-pic-con"><img th:src="@{/images/glider-4.jpg}"></div>
-                </div>
-                <button aria-label="Previous" class="glider-prev">«</button>
-                <button aria-label="Next" class="glider-next">»</button>
-                <div role="tablist" class="dots"></div>
-            </div>
-            <div id="right-sales">
-                <div class="right-sale" id="right-sale-1">
-                    SPRING<br>
-                    SHIRTS
-                </div>
-                <div class="right-sale" id="right-sale-2">
-                    ALL<br>
-                    COATS
-                </div>
-            </div>
-        </div>
-        <div class="separator">NEW ARRIVAL</div>
-        <div id="new-arrival">
-            <div class="item" th:each="item : ${resultList}">
-                <div class="forClick" th:onclick="|fn_location('/product/${item.get('PRODUCT_ID')}')|">
-                    <div class="item-img-con">
-                        <th:block th:if="${item.get('PRO_IMG_NAME') == 'TEST'}">
-                        <img th:src="@{/images/new1.jpg}">
-                        </th:block>
-                        <th:block th:if="${item.get('PRO_IMG_NAME') != 'TEST'}">
-                            <img th:src="|@{/images/productImages/}${item.get('PRO_IMG_NAME')}|">
-                        </th:block>
-                    </div>
-                    <div class="item-description">
-                        <div th:text="${item.get('PRO_BRAND_NAME')}" class="item-brand">
-                            [BARNS OUTFITTERS]
-                        </div>
-                        <div th:text="${item.get('PRODUCT_NAME')}" class="item-name">
-                            GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)
-                        </div>
-                        <div th:text="${#numbers.formatInteger(item.get('PRODUCT_PRICE'),3,'COMMA')}" class="item-price">
-                            KRW 179,000
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div id="carousel-sales">-->
+<!--            <div id="left-sales">-->
+<!--                <div class="left-sale" id="left-sale-1">-->
+<!--                    NEW ARRIVAL-->
+<!--                </div>-->
+<!--                <div class="left-sale" id="left-sale-2">-->
+<!--                    SALE-->
+<!--                </div>-->
+<!--                <div class="left-sale" id="left-sale-3">-->
+<!--                    JACKET-->
+<!--                </div>-->
+<!--                <div class="left-sale" id="left-sale-4">-->
+<!--                    VEST-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div id="center-carousel" class="glider-contain">-->
+<!--                <div class="glider">-->
+<!--                    <div class="glider-pic-con"><img th:src="@{/images/glider-1.jpg}"></div>-->
+<!--                    <div class="glider-pic-con"><img th:src="@{/images/glider-2.jpg}"></div>-->
+<!--                    <div class="glider-pic-con"><img th:src="@{/images/glider-3.jpg}"></div>-->
+<!--                    <div class="glider-pic-con"><img th:src="@{/images/glider-4.jpg}"></div>-->
+<!--                </div>-->
+<!--                <button aria-label="Previous" class="glider-prev">«</button>-->
+<!--                <button aria-label="Next" class="glider-next">»</button>-->
+<!--                <div role="tablist" class="dots"></div>-->
+<!--            </div>-->
+<!--            <div id="right-sales">-->
+<!--                <div class="right-sale" id="right-sale-1">-->
+<!--                    SPRING<br>-->
+<!--                    SHIRTS-->
+<!--                </div>-->
+<!--                <div class="right-sale" id="right-sale-2">-->
+<!--                    ALL<br>-->
+<!--                    COATS-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="separator">NEW ARRIVAL</div>-->
+<!--        <div id="new-arrival">-->
+<!--            <div class="item" th:each="item : ${resultList}">-->
+<!--                <div class="forClick" th:onclick="|fn_location('/product/${item.get('PRODUCT_ID')}')|">-->
+<!--                    <div class="item-img-con">-->
+<!--                        <th:block th:if="${item.get('PRO_IMG_NAME') == 'TEST'}">-->
+<!--                        <img th:src="@{/images/new1.jpg}">-->
+<!--                        </th:block>-->
+<!--                        <th:block th:if="${item.get('PRO_IMG_NAME') != 'TEST'}">-->
+<!--                            <img th:src="|@{/images/productImages/}${item.get('PRO_IMG_NAME')}|">-->
+<!--                        </th:block>-->
+<!--                    </div>-->
+<!--                    <div class="item-description">-->
+<!--                        <div th:text="${item.get('PRO_BRAND_NAME')}" class="item-brand">-->
+<!--                            [BARNS OUTFITTERS]-->
+<!--                        </div>-->
+<!--                        <div th:text="${item.get('PRODUCT_NAME')}" class="item-name">-->
+<!--                            GUSSET CREW SWEATSHIRTS - CALIFORNIA (BR8533)-->
+<!--                        </div>-->
+<!--                        <div th:text="${#numbers.formatInteger(item.get('PRODUCT_PRICE'),3,'COMMA')}" class="item-price">-->
+<!--                            KRW 179,000-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 <script>
     var glider = new Glider(document.querySelector('.glider'), {
         slidesToShow: 1,
