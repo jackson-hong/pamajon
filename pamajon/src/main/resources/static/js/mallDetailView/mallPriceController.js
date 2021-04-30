@@ -31,7 +31,12 @@ $("select[name='optionId']").on('change', function () {
                     <th style="width:50%;">${this.options[this.selectedIndex].text}
                     </th>
                     <th style="display: flex; padding: 10px 15px 15px 15px;" >
-                        <input type="number" value="1" class="optionQuantity ${arrayNum}" id="optionQuantity${arrayNum}" min="1" onchange="priceCal(${arrayNum},this);" name="optionList[${arrayNum}].optionQuantity" style="width:50px; border: 1px solid lightgray" >
+                        <input type="number" value="1" 
+                               class="optionQuantity ${arrayNum}" 
+                               id="optionQuantity${arrayNum}" 
+                               min="1" 
+                               onchange="priceCal(${arrayNum},this);" 
+                               name="optionList[${arrayNum}].optionQuantity" style="width:50px; border: 1px solid lightgray" >
                     <div onclick="optionDelete(this)" style="cursor:pointer;">
                         &nbsp;<img src="//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif" alt="삭제" id="option_box1_del" class="option_box_del"></div></th>
                     <th style="border: width: 100%">

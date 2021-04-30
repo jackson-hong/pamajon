@@ -43,8 +43,8 @@ function getAddress(){
         success:function (result){
             console.log(result);
             if(result==''){
-
-                alert("기본 배송지가 등록되어있지 않습니다. 주소록 보기를 클릭하여 주소를 등록 해주세요.")
+                alert("기본 배송지가 등록되어있지 않습니다. 주소록 보기를 클릭하여 주소를 등록 해주세요.");
+                $("input[name='addrReloadCheck']").val('reloaded');
             } else {
                 $("input[name='addrId']").val(result.addrId);
                 $("input[name='addrName']").val(result.addrName);

@@ -253,7 +253,7 @@
                         <tr>
                             <th>적립금</th>
                             <td >
-                                <p> <input id="input_mile" name="mileage"  size="23" value="0" type="number" step="1000" min="0"> 원 (총 사용가능 적립금 : <strong
+                                <p> <input id="input_mile" name="mileage"  size="23" value="0" type="number" step="1000" min="0" style="width: 20%"> 원 (총 사용가능 적립금 : <strong
                                         class="txtWarn" th:text="${#numbers.formatInteger(mileage.mileage,3,'COMMA')}">1,000</strong>원)</p>
                                 <ul class="info">
                                     <li>적립금은 최소 0 이상일 때 결제가 가능합니다.</li>
@@ -318,15 +318,18 @@
 <strong id="current_pay_name" style="font-size: 0.75rem;">카드 결제</strong> <span style="font-weight: lighter;">최종결제
     금액</span>
 </h4>
-<p class="price1"><span style="color: #008bcc; font-size: 0.9rem;">KRW </span><input id="total_price" name="total_price"
-        fw-filter="isFill" fw-label="결제금액" fw-msg="" class="inputTypeText" placeholder=""
-        style="text-align:right;ime-mode:disabled;clear:none;border:0px;float:none;background-color: #fafafa;color: #008bcc; font-size: 1.3rem;"
-        size="10" readonly="1" value="478000" type="text"></p>
+        <p class="price1">
+            <span style="color: #008bcc; font-size: 0.9rem;">KRW </span>
+            <input id="total_price" name="total_price"
+                   fw-filter="isFill" fw-label="결제금액" fw-msg="" class="inputTypeText" placeholder=""
+                   style="text-align:right;ime-mode:disabled;clear:none;border:0px;float:none;background-color: #fafafa;color: #008bcc; width: 100%; font-size: 1.3rem;"
+        size="10" readonly="1" value="478000" type="text">
+        </p>
 <p class="paymentAgree" id="chk_purchase_agreement" style="display: none;"><input id="chk_purchase_agreement0"
         name="chk_purchase_agreement" fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T" type="checkbox"
         style="display: none;"><label for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label></p>
         <div class="button"><a href="#none">
-            <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" onclick="processPurchase();" style="width: 230px;" id="btn_payment" alt="결제하기"></a>
+            <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/btn_place_order.gif" onclick="processPurchase();" style="width: 100%;" id="btn_payment" alt="결제하기"></a>
         </div>
 
 <div class="mileage ">

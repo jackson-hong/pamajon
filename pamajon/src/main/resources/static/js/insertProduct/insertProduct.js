@@ -57,9 +57,9 @@ window.onload = function (){
                     for (let i = 0 ; i<responseJSON.length; i++){
 
                         if(responseJSON[i].commonCodeName=='한국'){
-                            originList+=`<option value="${responseJSON[i].commonCodeId}" selected>${responseJSON[i].commonCodeName}</option>`
+                            originList+=`<option value="${responseJSON[i].commonCodeName}" selected>${responseJSON[i].commonCodeName}</option>`
                         } else {
-                            originList+=`<option value="${responseJSON[i].commonCodeId}">${responseJSON[i].commonCodeName}</option>`
+                            originList+=`<option value="${responseJSON[i].commonCodeName}">${responseJSON[i].commonCodeName}</option>`
                         }
 
 
@@ -217,6 +217,7 @@ function brandSelector(e,node){
             let sizeList = "";
         if(httpRequest.status==200){
 
+
             for (let i = 0 ; i<result.length; i++){
                 if(result[i].commonCodeName=='M' || result[i].commonCodeName=='FREESIZE' || result[i].commonCodeName=='28')
                 {
@@ -279,12 +280,20 @@ function brandSelector(e,node){
             const quantityValue = document.getElementById("inputProductQuantity").value;
         }
 
+        let quantityStatusNode = document.getElementsByName("optionQuantityStatus")
+        let quantityStatusValue ="";
+        //재고수량 제한이 없을경우 제한이 있을경우 radio 버튼 Value 를 체크하는 반복문
+        for(let i = 0 ; i<quantityStatusNode.length; i++){
+            if(quantityStatusNode[i].checked){
+                quantityStatusValue=quantityStatusNode[i].value;
+            }
+        }
+        if(quantityStatusValue=='unlimited'){
 
-
-
-        document.getElementById("modalDisplayArea").innerHTML+=
-            `
-                         <div class="optionModal ${optionCount}" id="optionModal${optionCount}">
+            document.getElementById("modalDisplayArea").innerHTML+=
+                `
+                         <div class="optionModal ${optionCount}" id="optionModal${optionCount}"> 
+                                <input type="hidden" value="${quantityStatusValue}" name="optionList[${optionCount}].optionStatus">
                                 <h3 align="center" style="font-weight: bold">등록 옵션 ${optionCount}</h3>
                                 <hr>
                                 <table style="margin-bottom: 10px">
@@ -297,8 +306,9 @@ function brandSelector(e,node){
                                             <td class="optionQuantitiy">재고수량:</td>
                                             <td class="optionQuantitiyDisplay">
                                                 <input type="number" class="form-control" value="-1" name="optionList[${optionCount}].optionQuantity" readonly style="width: 100px;">
-                                                <input type="checkbox" id="quantityModify"  onclick="modifyQuantityFromModal(this)">
-                                                <label for="quantityModify" style="margin: 0px">&nbsp;&nbsp;재고 수량 수정하기</label>
+                                    <!-- 제고 수량 수정기능 잠시 중단. -->            
+                                   <!--             <input type="checkbox" id="quantityModify"  onclick="modifyQuantityFromModal(this)">
+                                                <label for="quantityModify" style="margin: 0px">&nbsp;&nbsp;재고 수량 수정하기</label>-->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -311,6 +321,43 @@ function brandSelector(e,node){
                                 </div>
                             </div>
             `
+
+        }
+        if(quantityStatusValue=='limited'){
+            document.getElementById("modalDisplayArea").innerHTML+=
+                `
+                         <div class="optionModal ${optionCount}" id="optionModal${optionCount}"> 
+                                <input type="hidden" value="${quantityStatusValue}" name="optionList[${optionCount}].optionStatus">
+                                <h3 align="center" style="font-weight: bold">등록 옵션 ${optionCount}</h3>
+                                <hr>
+                                <table style="margin-bottom: 10px">
+                                    <tbody>
+                                        <tr>
+                                            <td class="optionQuantitiy">상세사이즈:</td>
+                                            <td class="optionQuantitiyDisplay"><input type="text" name="optionList[${optionCount}].optionSize" class="form-control modalQuantityDisplay" value="${document.getElementById("sizeDetail").value}" readonly style="width: 100px;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="optionQuantitiy">재고수량:</td>
+                                            <td class="optionQuantitiyDisplay">
+                                                <input type="number" class="form-control" value="${document.getElementById("inputProductQuantity").value}" name="optionList[${optionCount}].optionQuantity" readonly style="width: 100px;">
+                                    <!-- 제고 수량 수정기능 잠시 중단. -->            
+                                   <!--             <input type="checkbox" id="quantityModify"  onclick="modifyQuantityFromModal(this)">
+                                                <label for="quantityModify" style="margin: 0px">&nbsp;&nbsp;재고 수량 수정하기</label>-->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="optionButtonBox">
+                                    <div class="buttonWrapper">
+                                    <button type="button" class="btn btn-info" id="optionModify" onclick="saveProductOption(this)">저장</button>
+                                    <button type="button" class="btn btn-info" id="optionDelete" onclick="deleteOption(this)">삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+            `
+        }
+
+
 
         document.getElementById("userInputButton").innerHTML+=`<button type="button" 
                                                                                 class="btn btn-info ${optionCount}" 

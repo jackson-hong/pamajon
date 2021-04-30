@@ -120,6 +120,7 @@
             ,PRODUCT_ID
             ,P_SIZE
             ,P_QUAN
+            ,P_OPTION_STATUS
         )
         VALUES
         (
@@ -127,6 +128,7 @@
             ,LASTVAL(SEQ_PRODUCT)
             ,#{optionSize}
             ,#{optionQuantity}
+            ,#{optionStatus}
         )
     </insert>
     <insert id="insertProductImages" parameterType="map">
