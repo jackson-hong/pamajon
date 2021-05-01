@@ -1,6 +1,5 @@
 package com.pamajon.board.controller;
 
-import com.pamajon.board.model.dao.QnaDao;
 import com.pamajon.board.model.service.QnaServiceImpl;
 import com.pamajon.board.model.vo.QnaDto;
 import com.pamajon.common.security.AES256Util;
@@ -91,10 +90,15 @@ public class QnaController {
 
 
     //비밀글일경우 거치는 페이지
-    @RequestMapping("/secret")
-    public ModelAndView qnaSecret(ModelAndView mv){
+    @RequestMapping("/secret/{qnaNo}")
+    public ModelAndView qnaSecret(ModelAndView mv, @RequestParam int qnaNo){
         mv.setViewName("board/qnaSecret");
         return mv; }
+
+    public ModelAndView qnaSecret(ModelAndView mv){
+        mv.setViewName("board/qnaSecret");
+        return mv;
+    }
 
     @RequestMapping("/view/{qnaNo}")
     public ModelAndView qnaDetail(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
