@@ -14,6 +14,8 @@ public interface QnaDao {
     //Qna CRUD
     int createQna(SqlSession session, QnaDto qnaDto);
     QnaDto readQna(SqlSession session, int qnaId);
-    int updateQna(SqlSession session, QnaDto qnaDto);
+    int updateQna(SqlSession session, int qnaId);
     int deleteQna(SqlSession session, int qnaId);
+
+    String getWriterName(SqlSession session, int userId);
 }

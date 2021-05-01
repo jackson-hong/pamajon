@@ -1,5 +1,6 @@
 package com.pamajon.board.controller;
 
+import com.pamajon.board.model.dao.QnaDao;
 import com.pamajon.board.model.service.QnaServiceImpl;
 import com.pamajon.board.model.vo.QnaDto;
 import com.pamajon.common.security.AES256Util;
@@ -19,21 +20,28 @@ import java.util.List;
 public class QnaController {
 
     private final AES256Util aes256Util;
-    private final QnaServiceImpl service;
+    private final QnaServiceImpl qnaService;
 
     public QnaController(AES256Util aes256Util,QnaServiceImpl service) {
         this.aes256Util = aes256Util;
-        this.service =service;
+        this.qnaService =service;
     }
 
 
 
-    //Q&A관련
-    @RequestMapping("/list")
+    //Q&A리스트 받아오기
+    @GetMapping("/list")
     public ModelAndView qna(ModelAndView mv, HttpServletRequest request){
-        List<QnaDto> resultList = service.listQna();
+        List<QnaDto> resultList = qnaService.listQna();
+        List<String> writerNames = null;
+
+        for(QnaDto qnaDto : resultList){
+            writerNames.add(qnaService.getWriterName(qnaDto.getUserId()));
+        }
+
         mv.setViewName("board/qna");
         mv.addObject("resultList", resultList);
+        mv.addObject("writerName" , writerNames);
         return mv;
     }
     @RequestMapping("/write")
@@ -74,7 +82,10 @@ public class QnaController {
         }
         log.info("Well Encrypt > " + pwd);
         qnaDto.setQnaPwd(pwd);
+        qnaDto.setUserId(m.getUserId());
+        qnaService.createQna(qnaDto);
 
+        mv.setViewName("redirect:/qna/list");
         return mv;
     }
 
@@ -85,8 +96,10 @@ public class QnaController {
         mv.setViewName("board/qnaSecret");
         return mv; }
 
-    @RequestMapping("/view")
-    public ModelAndView qnaDetail(ModelAndView mv, @RequestParam int qnaNo){
+    @RequestMapping("/view/{qnaNo}")
+    public ModelAndView qnaDetail(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
+        log.info(qnaNo + "no <<<<<< BoardDetail - Load");
+
         mv.setViewName("board/qnaDetail");
         return mv; }
 

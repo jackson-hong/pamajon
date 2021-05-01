@@ -2,30 +2,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pamajon.mapper.QnaMapper">
-    <resultMap id="qnaResultSet" type="com.pamajon.board.model.vo.QnaDto">
-        <result property="qnaId"         column="QNA_ID"/>
-        <result property="productId"     column="PRODUCT_ID"/>
-        <result property="userId"        column="USER_ID"/>
-        <result property="qnaTitle"      column="QNA_TITLE"/>
-        <result property="qnaContent"    column="QNA_CONTENT"/>
-        <result property="qnaDate"       column="QNA_DATE"/>
-        <result property="qnaModifyDate" column="QNA_MODIFY_DATE"/>
-        <result property="qnaPwd"        column="QNA_PWD"/>
-        <result property="qnaStatus"     column="QNA_STATUS"/>
-    </resultMap>
-
-
-    <resultMap id="memberResultSet" type="com.pamajon.order.model.vo.Member">
-        <result property="userId" column="USER_ID"/>
-        <result property="memberName" column="MEM_NAME"/>
-        <result property="memberPhone" column="MEM_PHONE"/>
-        <result property="memberGrade" column="MEM_GRADE"/>
-        <result property="memberDate" column="MEM_DATE"/>
-        <result property="memberStatus" column="MEM_STATUS"/>
-    </resultMap>
-
-<select id="listQna" resultMap="qnaResultSet">
+<mapper namespace="qna">
+<select id="selectQnaList" resultMap="selectQnaList" >
     SELECT * FROM QNA
 </select>
     <insert id="createQna" parameterType="com.pamajon.board.model.vo.QnaDto">
@@ -42,10 +20,9 @@
             QNA_STATUS
         )
         VALUES(
-                  NEXTVAL(SEQ_REVIEW),
-                  #{qnaId},
+                  NEXTVAL(SEQ_QNA),
                   #{productId},
-                  #{userid},
+                  #{userId},
                   #{qnaTitle},
                   #{qnaContent},
                   NOW(),
@@ -100,5 +77,44 @@
         WHERE
             QNA_ID = #{qnaId}
     </delete>
+
+    <select id="getWriterName" parameterType="string">
+        SELECT MEM_NAME FROM MEMBER WHERE USER_ID = #{userId}
+    </select>
+
+    <resultMap id="selectQnaList" type="com.pamajon.board.model.vo.QnaDto">
+        <result property="qnaId"         column="QNA_ID"/>
+        <result property="productId"     column="PRODUCT_ID"/>
+        <result property="userId"        column="USER_ID"/>
+        <result property="qnaTitle"      column="QNA_TITLE"/>
+        <result property="qnaContent"    column="QNA_CONTENT"/>
+        <result property="qnaDate"       column="QNA_DATE"/>
+        <result property="qnaModifyDate" column="QNA_MODIFY_DATE"/>
+        <result property="qnaPwd"        column="QNA_PWD"/>
+        <result property="qnaStatus"     column="QNA_STATUS"/>
+    </resultMap>
+
+
+    <resultMap id="qnaResultSet" type="com.pamajon.board.model.vo.QnaDto">
+        <result property="qnaId"         column="QNA_ID"/>
+        <result property="productId"     column="PRODUCT_ID"/>
+        <result property="userId"        column="USER_ID"/>
+        <result property="qnaTitle"      column="QNA_TITLE"/>
+        <result property="qnaContent"    column="QNA_CONTENT"/>
+        <result property="qnaDate"       column="QNA_DATE"/>
+        <result property="qnaModifyDate" column="QNA_MODIFY_DATE"/>
+        <result property="qnaPwd"        column="QNA_PWD"/>
+        <result property="qnaStatus"     column="QNA_STATUS"/>
+    </resultMap>
+
+
+    <resultMap id="memberResultSet" type="com.pamajon.order.model.vo.Member">
+        <result property="userId" column="USER_ID"/>
+        <result property="memberName" column="MEM_NAME"/>
+        <result property="memberPhone" column="MEM_PHONE"/>
+        <result property="memberGrade" column="MEM_GRADE"/>
+        <result property="memberDate" column="MEM_DATE"/>
+        <result property="memberStatus" column="MEM_STATUS"/>
+    </resultMap>
 
 </mapper>

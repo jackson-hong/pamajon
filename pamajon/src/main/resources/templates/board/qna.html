@@ -95,11 +95,6 @@
             width: 7%;
         }
 
-        .qna-PostViewCount {
-            width: 3%;
-        }
-
-
         .qnaPostOption {
             display: inline;
         }
@@ -220,106 +215,31 @@
                     <th class="qna-PostTitle">제목</th>
                     <th class="qna-UserName">작성자</th>
                     <th class="qna-PostDate">작성일</th>
-                    <th class="qna-PostViewCount">조회</th>
                 </tr>
-                <tr>
+                <tr th:each="qna : ${resultList}">
                     <td>
-                        <p class="qnaPostNum">2313</p>
-                    </td>
-                    <td class="QnaOptionBox">
-                        <p class="qnaPostOption">
-                        </p>
-                    </td>
-                    <td class="qnaTitleAlign">
-                        <a class="qnaPostTitle" href="/board/qna/view">배송 줜나 느리네</a>
-                    </td>
-                    <td>
-                        <p class="qnaUserName">홍**</p>
-                    </td>
-                    <td>
-                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
-                    </td>
-                    <td>
-                        <P CLASS="qnaPostViewCount">10</P>
-                    </td>
-                </tr>
-                <tr>
-
-                    <td>
-                        <p class="qnaPostNum">3244</p>
+                        <p class="qnaPostNum" th:text="${qna.getQnaId()}"></p>
                     </td>
                     <td class="QnaOptionBox">
                         <p class="qnaPostOption">
                             <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46"/>
-                            <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
+                            <span class="productName" th:text="${qna.getProductId()}"></span>
                         </p>
                     </td>
                     <td class="qnaTitleAlign">
-                        <a class="qnaPostTitle" href="/pamajon/board/qna/view">옷이 개작네</a>
+                        <a class="qnaPostTitle" th:onclick="|fn_location('/qna/view/${qna.getQnaId()}')|" th:text="${qna.getQnaTitle()}"></a>
                     </td>
                     <td>
-                        <p class="qnaUserName">김**</p>
+                        <p class="qnaUserName" th:text="${}"></p>
                     </td>
                     <td>
-                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
-                    </td>
-                    <td>
-                        <P CLASS="qnaPostViewCount">101</P>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <p class="qnaPostNum">2315</p>
-                    </td>
-                    <td class="QnaOptionBox">
-                        <p class="qnaPostOption">
-                        </p>
-                    </td>
-                    <td class="qnaTitleAlign">
-                        <a class="qnaPostTitle qnaSecret" href="/pamajon/board/qna/secret">배송 줜나 느리네</a>
-                        <!-- QnASecret 관련 -->
-                        <i class="fas fa-lock"></i>
-                    </td>
-                    <td>
-                        <p class="qnaUserName">홍**</p>
-                    </td>
-                    <td>
-                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
-                    </td>
-                    <td>
-                        <P CLASS="qnaPostViewCount">10</P>
-                    </td>
-                </tr>
-
-                <tr>
-
-                    <td>
-                        <p class="qnaPostNum">3246</p>
-                    </td>
-                    <td class="QnaOptionBox">
-                        <p class="qnaPostOption">
-                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46"/>
-                            <span class="productName">RABBIT HOODIE - BEIGE / BLUE</span>
-                        </p>
-                    </td>
-                    <td class="qnaTitleAlign">
-                        <a class="qnaPostTitle" href="/pamajon/board/qna/view">옷이 개작네</a>
-                    </td>
-                    <td>
-                        <p class="qnaUserName">유**</p>
-                    </td>
-                    <td>
-                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
-                    </td>
-                    <td>
-                        <P CLASS="qnaPostViewCount">100</P>
+                        <p class="qnaPostDate" th:text="${qna.getQnaModifyDate()}"></p>
                     </td>
                 </tr>
             </table>
 
             <div class="qnaWriteBtnBox">
-                <button class="qnaWriteBtn" type="button" value="글쓰기" onclick="writeQna()" />
+                <input class="qnaWriteBtn" type="button" value="글쓰기" onclick="writeQna()" />
             </div>
 
             <div id="paging">

@@ -1,8 +1,6 @@
 package com.pamajon.board.model.service;
 
 import com.pamajon.board.model.vo.QnaDto;
-import com.pamajon.board.model.vo.ReviewDto;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
@@ -16,7 +14,9 @@ public interface QnaService {
 
     QnaDto readQna(int qnaId);
 
-    int updateQna(QnaDto qnaDto);
+    int updateQna(int qnaid);
 
     int deleteQna(int qnaId);
+
+    String getWriterName(int userId);
 }
