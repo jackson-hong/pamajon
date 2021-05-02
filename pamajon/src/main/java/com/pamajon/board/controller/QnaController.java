@@ -1,6 +1,7 @@
 package com.pamajon.board.controller;
 
 import com.pamajon.board.model.service.QnaServiceImpl;
+import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.vo.Member;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -30,17 +32,36 @@ public class QnaController {
 
     //Q&A리스트 받아오기
     @GetMapping("/list")
-    public ModelAndView qna(ModelAndView mv, HttpServletRequest request){
+    public ModelAndView qna(ModelAndView mv, HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
         List<QnaDto> resultList = qnaService.listQna();
-        List<String> writerNames = null;
+        // 데이터 정제해서 표시할 객체 추가
 
-        for(QnaDto qnaDto : resultList){
-            writerNames.add(qnaService.getWriterName(qnaDto.getUserId()));
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+
+        //필요한 값들을 담아줌
+        for(QnaDto qnaDto :resultList){
+            BoardDto boardDto = new BoardDto();
+
+            if(qnaDto.getProductId() != 0){
+                boardDto =qnaService.getProductInfo(qnaDto.getProductId());
+            }
+            boardDto.setQnaId(qnaDto.getQnaId());
+            boardDto.setUserId(qnaDto.getUserId());
+            boardDto.setMemName(aes256Util.decrypt(qnaService.getWriterName(qnaDto.getUserId())));
+            boardDto.setQnaTitle(qnaDto.getQnaTitle());
+            boardDto.setQnaContent(qnaDto.getQnaContent());
+            boardDto.setQnaModifyDate(qnaDto.getQnaModifyDate());
+            boardDto.setQnaPwd(qnaDto.getQnaPwd());
+            boardDto.setQnaStatus(qnaDto.getQnaStatus());
+
+            log.info("setEverything");
+            log.info(boardDto);
+            boardDtoList.add(boardDto);
         }
 
         mv.setViewName("board/qna");
-        mv.addObject("resultList", resultList);
-        mv.addObject("writerName" , writerNames);
+        mv.addObject("resultList", boardDtoList);
         return mv;
     }
     @RequestMapping("/write")

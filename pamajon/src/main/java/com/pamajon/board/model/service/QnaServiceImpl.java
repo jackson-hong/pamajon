@@ -1,6 +1,7 @@
 package com.pamajon.board.model.service;
 
 import com.pamajon.board.model.dao.QnaDao;
+import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +42,9 @@ public class QnaServiceImpl implements QnaService {
 
     @Override
     public String getWriterName(int userId){return dao.getWriterName(session,userId); }
+
+    @Override
+    public BoardDto getProductInfo(int productId){return dao.getProductInfo(session,productId);}
+
+
 }

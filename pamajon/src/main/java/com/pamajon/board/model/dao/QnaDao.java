@@ -1,5 +1,6 @@
 package com.pamajon.board.model.dao;
 
+import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 
@@ -18,4 +19,6 @@ public interface QnaDao {
     int deleteQna(SqlSession session, int qnaId);
 
     String getWriterName(SqlSession session, int userId);
+
+    BoardDto getProductInfo(SqlSession session, int productId);
 }

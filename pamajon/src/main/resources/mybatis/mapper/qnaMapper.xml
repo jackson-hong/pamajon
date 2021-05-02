@@ -4,7 +4,7 @@
 
 <mapper namespace="qna">
 <select id="selectQnaList" resultMap="selectQnaList" >
-    SELECT * FROM QNA
+    SELECT * FROM QNA  order by QNA_ID desc;
 </select>
     <insert id="createQna" parameterType="com.pamajon.board.model.vo.QnaDto">
         INSERT INTO QNA
@@ -78,8 +78,20 @@
             QNA_ID = #{qnaId}
     </delete>
 
-    <select id="getWriterName" parameterType="string">
+    <select id="getWriterName" parameterType="int" resultType="string">
         SELECT MEM_NAME FROM MEMBER WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="getProductInfo" parameterType="com.pamajon.board.model.vo.BoardDto">
+        SELECT
+            PRODUCT_NAME,
+            PRO_IMG_NAME
+        FROM
+            QNA Q
+                JOIN PRODUCT P on P.PRODUCT_ID = Q.PRODUCT_ID
+                JOIN PRO_IMAGE PI on P.PRODUCT_ID = Q.PRODUCT_ID
+        WHERE
+            Q.PRODUCT_ID = #{productId};
     </select>
 
     <resultMap id="selectQnaList" type="com.pamajon.board.model.vo.QnaDto">

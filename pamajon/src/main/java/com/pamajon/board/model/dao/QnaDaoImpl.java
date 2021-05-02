@@ -1,5 +1,6 @@
 package com.pamajon.board.model.dao;
 
+import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -32,4 +33,7 @@ public class QnaDaoImpl implements QnaDao {
 
     @Override
     public  String getWriterName(SqlSession session, int userId){ return  session.selectOne("qna.getWriterName" , userId);}
+
+    @Override
+    public BoardDto getProductInfo(SqlSession session, int productId){ return session.selectOne("qna.getProductInfo", productId);}
 }

@@ -221,16 +221,18 @@
                         <p class="qnaPostNum" th:text="${qna.getQnaId()}"></p>
                     </td>
                     <td class="QnaOptionBox">
+                        <th:block th:if="${qna.getProductName() != null}">
                         <p class="qnaPostOption">
-                            <img class="postImgBox" style="display: inline" align="left" src="http://placehold.it/46"/>
-                            <span class="productName" th:text="${qna.getProductId()}"></span>
+                            <img class="postImgBox" style="display: inline" align="left" th:src="|@{/images/productImages/}${qna.getProductPictureRoot()}|"/>
+                            <span class="productName" th:text="${qna.getProductName()}"></span>
                         </p>
+                        </th:block>
                     </td>
                     <td class="qnaTitleAlign">
                         <a class="qnaPostTitle" th:onclick="|fn_location('/qna/view/${qna.getQnaId()}')|" th:text="${qna.getQnaTitle()}"></a>
                     </td>
                     <td>
-                        <p class="qnaUserName" th:text="${}"></p>
+                        <p class="qnaUserName" th:text="${qna.getMemName()}"></p>
                     </td>
                     <td>
                         <p class="qnaPostDate" th:text="${qna.getQnaModifyDate()}"></p>

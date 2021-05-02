@@ -1,5 +1,6 @@
 package com.pamajon.board.model.service;
 
+import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
 
 import java.util.List;
@@ -11,12 +12,11 @@ public interface QnaService {
 
     //Qna CRUD
     int createQna(QnaDto qnaDto);
-
     QnaDto readQna(int qnaId);
-
     int updateQna(int qnaid);
-
     int deleteQna(int qnaId);
 
+
     String getWriterName(int userId);
+    BoardDto getProductInfo(int productId);
 }
