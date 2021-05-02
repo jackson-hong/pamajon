@@ -229,7 +229,10 @@
                         </th:block>
                     </td>
                     <td class="qnaTitleAlign">
-                        <a class="qnaPostTitle" th:onclick="|fn_location('/qna/view/${qna.getQnaId()}')|" th:text="${qna.getQnaTitle()}"></a>
+                        <th:block>
+                            <a th:if="${qna.getQnaStatus() == 0}" class="qnaPostTitle" th:onclick="|fn_location('/qna/view/${qna.getQnaId()}')|" th:text="${qna.getQnaTitle()}"></a>
+                            <a th:if="${qna.getQnaStatus() != 0}" class="qnaPostTitle" th:onclick="|fn_location('/qna/secret/${qna.getQnaId()}')|" th:text="${qna.getQnaTitle()}"></a>
+                        </th:block>
                     </td>
                     <td>
                         <p class="qnaUserName" th:text="${qna.getMemName()}"></p>

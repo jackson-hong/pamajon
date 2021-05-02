@@ -33,25 +33,12 @@
     </insert>
 
     <select id="readQna" parameterType="integer" resultMap="qnaResultSet">
-        SELECT(
-               QNA_ID,
-               PRODUCT_NAME,
-               MEM_NAME,
-               QNA_TITLE,
-               QNA_CONTENT,
-               QNA_DATE,
-               QNA_PWD,
-               QNA_STATUS
-                  )
-        FROM QNA Q
-                 JOIN
-             MEMBER M,
-             PRODUCT P
-        where
-            Q.USER_ID = M.USER_ID AND
-            Q.PRODUCT_ID = P.PRODUCT_ID
-          and
-            Q.QNA_ID = #{qnaId}
+        SELECT
+            *
+        FROM
+            QNA
+        WHERE
+            QNA_ID = #{qnaId}
     </select>
 
     <update id="updateQna" parameterType="integer">

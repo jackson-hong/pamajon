@@ -104,7 +104,6 @@ public class QnaController {
         qnaDto.setQnaPwd(pwd);
         qnaDto.setUserId(m.getUserId());
         qnaService.createQna(qnaDto);
-
         mv.setViewName("redirect:/qna/list");
         return mv;
     }
@@ -112,7 +111,7 @@ public class QnaController {
 
     //비밀글일경우 거치는 페이지
     @RequestMapping("/secret/{qnaNo}")
-    public ModelAndView qnaSecret(ModelAndView mv, @RequestParam int qnaNo){
+    public ModelAndView qnaSecret(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
         mv.setViewName("board/qnaSecret");
         return mv; }
 
@@ -122,9 +121,31 @@ public class QnaController {
     }
 
     @RequestMapping("/view/{qnaNo}")
-    public ModelAndView qnaDetail(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
+    public ModelAndView qnaDetail(ModelAndView mv, @PathVariable("qnaNo") int qnaNo) throws GeneralSecurityException, UnsupportedEncodingException {
         log.info(qnaNo + "no <<<<<< BoardDetail - Load");
+        QnaDto qnaDto = qnaService.readQna(qnaNo);
+        log.info(qnaDto);
+        BoardDto boardDto = new BoardDto();
 
+        log.info(boardDto);
+        // 상품정보가 있을 경우 상품 정보를 먼저 담는다.
+
+        if(qnaDto.getProductId() != 0){
+            boardDto = qnaService.getProductInfo(qnaDto.getProductId());
+            boardDto.setProductId(qnaDto.getProductId());
+        }
+
+        boardDto.setQnaId(qnaDto.getQnaId());
+        boardDto.setProductId(qnaDto.getProductId());
+        boardDto.setUserId(qnaDto.getUserId());
+        boardDto.setMemName(aes256Util.decrypt(qnaService.getWriterName(qnaDto.getUserId())));
+        boardDto.setQnaTitle(qnaDto.getQnaTitle());
+        boardDto.setQnaContent(qnaDto.getQnaContent());
+        boardDto.setQnaModifyDate(qnaDto.getQnaModifyDate());
+        boardDto.setQnaPwd(qnaDto.getQnaPwd());
+        boardDto.setQnaStatus(qnaDto.getQnaStatus());
+
+        mv.addObject("qna" , boardDto);
         mv.setViewName("board/qnaDetail");
         return mv; }
 

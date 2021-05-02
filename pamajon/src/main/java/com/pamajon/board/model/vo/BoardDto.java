@@ -12,6 +12,7 @@ import java.sql.Date;
 public class BoardDto {
     private int qnaId;
     private int userId;
+    private int productId;
     private String productPictureRoot;
     private String productName;
     private String MemName;
