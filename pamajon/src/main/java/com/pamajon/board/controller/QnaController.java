@@ -6,6 +6,7 @@ import com.pamajon.board.model.vo.QnaDto;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.member.model.vo.Member;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -152,6 +153,14 @@ public class QnaController {
     @RequestMapping("/delete")
     public ModelAndView qnaDelete(ModelAndView mv, @RequestParam int qnaNo){
         log.info("proceed Delete > Board No:" + qnaNo +"<");
+        int result  = qnaService.deleteQna(qnaNo);
+
+        if(result ==0){
+            mv.setStatus(HttpStatus.BAD_REQUEST);
+            return mv;
+        }
+
+        mv.setViewName("redirect:/qna/list");
         return mv;
     }
 

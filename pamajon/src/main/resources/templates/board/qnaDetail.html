@@ -326,20 +326,19 @@
     <div id="idx">
         <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
     </div>
-</div>  
+</div>
 <div id="wrapper">
     <div id="board-wrapper">
-        <th:block>
-        <div class="product-wrapper hasProduct" th:if="${qna.getProductName() != null}">
+        <div class="product-wrapper hasProduct">
             <div class="product-img-box">
-                <a href="/pamajon/board/detailView"> <img class="product-img-content" th:src="|@{/images/productImages/}${qna.getProductPictureRoot()}|"></a>
+                <a href="/pamajon/board/detailView"> <img class="product-img-content" th:src="@{/images/new6.jpg}"></a>
             </div>
             <div class="product-info-box">
-                <a href="/pamajon/board/detailView"> <p class="productName" th:text="${qna.getProductName()}"></p> </a>
+                <a href="/pamajon/board/detailView"> <p class="productName"> REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511) </p> </a>
+                <p class="productPrice">KRW 999,000</p>
                 <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_prd_detail.gif}" alt="상품상세보기"/></a>
             </div>
         </div>
-        </th:block>
 
 
         <div id="contentBox">
@@ -353,24 +352,28 @@
                 <tr>
 
                     <th scope="row">제목</th>
-                    <td class="qnaTitle" th:text="${qna.getQnaTitle()}"></td>
+                    <td class="qnaTitle"> 배송 줜나 느리네</td>
                 </tr>
-                    <th scope="row">작성자</th>
-                    <td class="qnaMember" th:text="${qna.getMemName()}">
-                        <span class="qnaDetailBtns">
+                <th scope="row">작성자</th>
+                <td class="qnaMember">홍***
+                    <span class="qnaDetailBtns">
                         <a href=""><img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
                         <a href=""><img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
                         </span>
 
-                    </td>
+                </td>
                 <tr>
                     <td colspan="2">
                         <div class="content-info">
                             <strong>작성일</strong>
-                            <span class="qnaDate" th:text="${qna.getQnaModifyDate()}"></span>
+                            <span class="qnaDate">2021-01-27 18:58:00</span>
+                            <strong>조회수</strong>
+                            <span class="qnaViewCount">7</span>
                         </div>
-                        <div class="content-detail" th:utext="${qna.getQnaContent()}">
-
+                        <div class="content-detail">
+                            살다살다 이렇게 느린 곳은</br>
+                            처음봤습니다.</br>
+                            거의 한달 걸렸네요.
                         </div>
                     </td>
                 </tr>
@@ -381,7 +384,7 @@
 
         <div class ="btnsWrapper">
             <span class="listbtnWrapper">
-                <a th:href=""><img th:src="@{/images/board/btn_list.gif}" alt="목록"/></a>
+                <a href="/pamajon/board/qna"><img th:src="@{/images/board/btn_list.gif}" alt="목록"/></a>
             </span>
             <span class="answerbtnWrapper">
                 <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_reply.gif}" alt="답변"/></a>
@@ -406,24 +409,24 @@
 
         </div>
 
-<!--        리플 기능 -->
-<!--        <div class="replyBox">-->
-<!--            <fieldset>-->
-<!--                <div class="replyInput">-->
-<!--                    <form method="post" action="">-->
-<!--                        <h3>댓글달기</h3>-->
-<!--                        <label>이름 : </label>-->
-<!--                        <input class="replyName" type="text" value="사용자이름">-->
-<!--                        <label>비밀번호 : </label>-->
-<!--                        <input class="replyPwd" type="password" value="password">-->
-<!--                        <div class="comment-content">-->
-<!--                            <textarea id="comment" name="comment" label="댓글내용"></textarea>-->
-<!--                            <a href="" class="submitImg" id="commentFormSubmit"><img th:src="@{/images/board/btn_comment_submit.gif}" alt="답변"/></a>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </fieldset>-->
-<!--        </div>-->
+        <div class="replyBox">
+            <fieldset>
+                <div class="replyInput">
+                    <form method="post" action="">
+                        <h3>댓글달기</h3>
+                        <label>이름 : </label>
+                        <input class="replyName" type="text" value="사용자이름">
+                        <label>비밀번호 : </label>
+                        <input class="replyPwd" type="password" value="password">
+                        <div class="comment-content">
+                            <textarea id="comment" name="comment" label="댓글내용"></textarea>
+                            <a href="" class="submitImg" id="commentFormSubmit"><img th:src="@{/images/board/btn_comment_submit.gif}" alt="답변"/></a>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+
+        </div>
 
         <div class="boardList">
             <table class="contentTable" border="1">
@@ -436,15 +439,15 @@
                     <th scope="row">이전글보기</th>
                     <td class="qnaBefore"><a href="" class="linkQnaBefore"> 주문 취소 문의 드립니다.</a></td>
                 </tr>
-                    <th scope="row">다음글보기</th>
-                    <td class="qnaAfter"><a href="" class="linkQnaAfter"> 배송이 됐나요?</a></td>
+                <th scope="row">다음글보기</th>
+                <td class="qnaAfter"><a href="" class="linkQnaAfter"> 배송이 됐나요?</a></td>
                 </tbody>
             </table>
         </div>
 
 
         <div id="relatedBox hasProduct">
-        <h3>관련 글 보기</h3>
+            <h3>관련 글 보기</h3>
             <table border="1">
                 <tr>
                     <th class="qna-PostNum">번호</th>

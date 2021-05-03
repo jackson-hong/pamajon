@@ -18,7 +18,7 @@ public interface QnaDao {
     int updateQna(SqlSession session, int qnaId);
     int deleteQna(SqlSession session, int qnaId);
 
+    //Qna get Data from another table
     String getWriterName(SqlSession session, int userId);
-
     BoardDto getProductInfo(SqlSession session, int productId);
 }
