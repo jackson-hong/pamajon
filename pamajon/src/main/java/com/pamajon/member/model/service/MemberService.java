@@ -29,4 +29,5 @@ public interface MemberService {
     List<Map> wishlist(int usid);
     List<Map> selectProductsForWish(List<Integer> wishList);
     int wishDelete(Map map);
+    List<Map> memberOrderList(Map map);
 }

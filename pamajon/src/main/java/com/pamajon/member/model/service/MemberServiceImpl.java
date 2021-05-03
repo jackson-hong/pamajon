@@ -121,4 +121,9 @@ public class MemberServiceImpl implements MemberService{
         return dao.wishDelete(session, map);
     }
 
+    @Override
+    public List<Map> memberOrderList(Map map) {
+        return dao.memberOrderList(session, map);
+    }
+
 }

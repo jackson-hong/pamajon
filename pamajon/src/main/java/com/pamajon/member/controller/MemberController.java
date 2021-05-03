@@ -40,12 +40,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.util.DateUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -335,7 +340,7 @@ public class MemberController {
         return mv;
     }
 
-    @RequestMapping("/orderList")
+    @GetMapping("/order-list")
     public ModelAndView orderList(ModelAndView mv) {
         mv.setViewName("member/orderList");
         return mv;
@@ -397,8 +402,6 @@ public class MemberController {
         mv.setViewName("member/mileage");
         return mv;
     }
-
-
 
     @GetMapping("/changePw")
     public ModelAndView changePw(ModelAndView mv){
@@ -687,6 +690,38 @@ public class MemberController {
         return "success";
     }
 
+    @GetMapping("/order-list/{cPage}")
+    public ModelAndView orderList(@PathVariable("cPage") int cPage,
+                                  ModelAndView mv,
+                                  @RequestParam(required = false) Optional<String> startDate,
+                                  @RequestParam(required = false) Optional<String> endDate){
+        String start = "";
+        String end = "";
+        if(!startDate.isPresent()){
+            LocalDate localDate = LocalDate.now();
+            LocalDate afterLocalDate = localDate.now().plusMonths(3);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            start = localDate.format(formatter);
+            end = afterLocalDate.format(formatter);
+            log.info(start);
+            log.info(end);
+        }else {
+            start = startDate.get();
+            end = endDate.get();
+        }
+        start = start.replace("/0","/");
+        end = end.replace("/0","/");
+        log.info(start);
+        log.info(end);
+        Map input = new HashMap();
+        input.put("startDate", start);
+        input.put("endDate", end);
+        List<Map> resultMap = service.memberOrderList(input);
+        mv.addObject("resultMap", resultMap);
+        mv.setViewName("member/orderList");
+        return mv;
+    }
+
     public int mileageInsert(int usid, int amount, String content, String type){
 
         Map map = new HashMap();
@@ -722,4 +757,6 @@ public class MemberController {
         mv.setViewName("common/msg");
         return mv;
     }
+
+
 }

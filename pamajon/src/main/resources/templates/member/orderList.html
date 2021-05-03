@@ -237,6 +237,9 @@
     .page-btn:last-of-type {
         border-right: 1px silver solid;
     }
+    button {
+        cursor: pointer;
+    }
 </style>
 <div id="title-idx">
     <div id="title">
@@ -271,7 +274,7 @@
                 ~
                 <input type="text" id="date-end" class="datepicker" size="10">
                 <ion-icon onclick="fn_calEnd();" name="calendar-outline"></ion-icon>
-                <button type="button" id="date-submit">조회</button>
+                <button onclick="fn_date_submit()" type="button" id="date-submit">조회</button>
             </div>
         </div>
         <div id="order-des">
@@ -329,10 +332,10 @@
         </div>
     </div>
 </div>
-<script>
+<script th:inline="javascript">
     $(function(){
         $(".datepicker").datepicker({
-            dateFormat:"yy-mm-dd"
+            dateFormat:"yy/mm/dd"
         });
     });
     function fn_calStart(){
@@ -340,6 +343,24 @@
     }
     function fn_calEnd(){
         $("#date-end").focus();
+    }
+    function fn_date_submit(){
+        let start_date = document.getElementById('date-start').value;
+        let end_date = document.getElementById('date-end').value;
+        let now = Date.now();
+        console.log(start_date, end_date);
+
+        if(now < end_date){
+            alert('날짜를 확인해주세요.')
+            return
+        }
+
+        if(Date.parse(start_date) > Date.parse(end_date)){
+            alert('날짜를 확인해주세요.')
+            return
+        }
+
+        location.href = contextPath + '/member/order-list/1?startDate='+start_date+'&endDate='+end_date;
     }
 </script>
 <th:block th:replace="common/footer.html"></th:block>

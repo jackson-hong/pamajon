@@ -29,4 +29,5 @@ public interface MemberDao {
     List<Map> wishlist(SqlSession session, int usid);
     List<Map> selectProductsForWish(SqlSession session, List<Integer> wishList);
     int wishDelete(SqlSession session, Map map);
+    List<Map> memberOrderList(SqlSession session, Map map);
 }

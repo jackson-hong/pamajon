@@ -150,6 +150,10 @@
     <delete id="wishDelete" parameterType="map">
         DELETE FROM WISHLIST WHERE PRODUCT_ID = #{proId} AND USER_ID = #{usid}
     </delete>
+
+    <select id="memberOrderList" parameterType="map" resultType="map">
+        
+    </select>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>
