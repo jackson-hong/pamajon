@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PAMAJON Q&A</title>
+    <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/ckeditor/ckeditor.js}"></script>
+</head>
+</head>
+<style>
+    body {
+        font: 0.75em Verdana, Dotum, AppleGothic, sans-serif;
+        color: #353535;
+    }
+
+    #title-idx {
+        margin-top: 2.5em;
+        display: flex;
+    }
+
+    #title {
+        margin-left: 65px;
+        text-align: right;
+        justify-items: left;
+        width: 50%;
+        font-size: 22px;
+        font-weight: 900;
+        color: #353535;
+        font-family: 'Spoqa Han Sans', 'Sans-serif' !important;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    #idx {
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+    }
+
+    #wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    #board-wrapper {
+        margin-top: 2.5em;
+        min-width: 100em;
+        max-width: 120em;
+    }
+
+
+    .qnaBlock {
+        justify-content: center;
+        width: 60%;
+        margin-left: 25%;
+    }
+    .qnaBlock > .titleSection {
+        border-bottom: 2px solid black;
+    }
+
+    .insertQnaTable {
+        margin-top:5px ;
+        margin-left: 10%;
+        width:100%;
+    }
+
+    .explanation_wrapper {
+        padding:25px 80px 10px 0px;
+        width:180px;
+    }
+
+    select.form-control{
+        width:300px;
+    }
+    .imgBox {
+        border: 1px solid black;
+        width:130px;
+        height: 130px;
+        margin-right: 10px;
+
+    }
+    input.textType {
+        width:350px;
+        border: none;
+        border-bottom: 1px solid darkgray;
+    }
+    label {
+        cursor: pointer;
+    }
+    input[name="quantity"] , #quantityOption{
+        cursor: pointer;
+    }
+
+    .filebox {display:inline-block; margin-right: 10px; margin-top: 5px;}
+
+    .filebox label {
+        display: inline-block;
+        padding: .5em .75em;
+        color: #999;
+        font-size: inherit;
+        line-height: normal;
+        vertical-align: middle;
+        background-color: #fdfdfd;
+        cursor: pointer;
+        border: 1px solid #ebebeb;
+        border-bottom-color: #e2e2e2;
+        border-radius: .25em;
+    }
+
+    .filebox input[type="file"] {  /* 파일 필드 숨기기 */
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip:rect(0,0,0,0);
+        border: 0;
+    }
+
+    .filebox.bs3-primary label {
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        margin-bottom: 10px;
+    }
+    .previewImg{
+        width:100%;
+        height:100%;
+    }
+    .btn.btn-primary{
+        margin:0;
+
+    }
+    .btn.btn-info{
+        margin-right: 10px;
+    }
+    .qna--content{
+        width: 500px;
+        height: 500px;
+    }
+
+    .qnaComment{
+        width: 500px;
+        height: 15px;
+    }
+    .qnaBtn--box{
+        text-align: center;
+    }
+    .qnaBtn{
+        margin: 10px 10px 0 10px;
+        width: 80px;
+        height: 30px;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        border-radius: 3px;
+        color: white;
+        font-size: inherit;
+    }
+    .qnaTextCounterBox{
+        margin-left :400px;
+    }
+    .resize_textarea{
+        padding-right: 30%;
+    }
+</style>
+<body>
+
+<th:block th:replace="common/header.html"></th:block>
+
+<div id="title-idx">
+    <div id="title">
+        <span>Q&A</span>
+    </div>
+    <div id="idx">
+        <a href="/pamajon">HOME</a> > <a href="">Q&A</a>
+    </div>
+</div>
+
+<div id="wrapper">
+    <div id="board-wrapper">
+
+        <form method="POST" id="qna-fm" th:action="@{/qna/write/}">
+            <table class="insertQnaTable">
+                <tr class="tablefloor">
+                    <td class="explanation_wrapper">제목</td>
+                    <td class="userInput">
+                        <input type="text" class="form-control textType" id="qnaTitle" name="qnaTitle" placeholder="QNA 제목을 적어주세요.">
+                    </td>
+                </tr>
+                <tr class="tablefloor">
+                    <td class="explanation_wrapper">이름</td>
+                    <td class="userInput">
+                        <input type="text" class="form-control textType" id=memName name="memberName" th:value="${writerName}" disabled>
+                    </td>
+                </tr>
+                <tr class="tablefloor" hidden="hidden">
+                    <td class="explanation_wrapper">이름</td>
+                    <td class="userInput">
+                        <input type="text" class="form-control textType" id=userId name="userId" th:value="${userId}">
+                    </td>
+                </tr>
+
+                <tr class="tablefloor">
+                    <td class="explanation_wrapper">*질문내용</td>
+                    <td class="userInput resize_textarea">
+                        <textarea name="qnaContent" id="editor1"></textarea>
+                    </td>
+                </tr>
+
+                <tr class="tablefloor">
+                    <td class="explanation_wrapper">비밀글로 변경</td>
+                    <td class="userInput">
+                        <label>전체 공개</label>
+                        <input type="radio" name="qnaStatus" value=0>
+                        <label>비밀글</label>
+                        <input type="radio" name="qnaStatus" value=1>
+                    </td>
+                </tr>
+
+                <tr class="tablefloor">
+                    <td class="explanation_wrapper">비밀번호 입력</td>
+                    <td class="userInput">
+                        <input type="password" class="qnaPwd" name="qnaPwd" id="pwd">
+                    </td>
+                </tr>
+            </table>
+            <div class="qnaBtn--box">
+                <button type="button" class="qnaBtn" id="upload" onclick="submitForm()">업로드</button>
+                <button type="button" class="qnaBtn" id="cancelUpload">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<th:block th:replace="common/footer.html"></th:block>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/CKEDITOR.js}"></script>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/boardMethod.js}"></script>
+</body>
+</html>

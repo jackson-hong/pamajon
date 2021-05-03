@@ -148,6 +148,15 @@ public class QnaController {
 
         mv.addObject("qna" , boardDto);
         mv.setViewName("board/qnaDetail");
+
+        /**
+         * 넘겨줘서 처리해야하는 것들
+         * 1.이전글, 이후글 제목과 링크
+         * 2.연관된 상품이 있을 경우, 그 상품에 대한 정보, 가격, 링크
+         * 3.같은 상품에 대한 질문들모음
+         *
+         * 추후, 댓글 추가
+         */
         return mv; }
 
     @RequestMapping("/delete")
@@ -165,9 +174,32 @@ public class QnaController {
     }
 
     @RequestMapping("/edit")
-    public ModelAndView qnaModify(ModelAndView mv, @RequestParam int qnaNo){
+    public ModelAndView qnaModify(ModelAndView mv, @RequestParam int qnaNo) throws GeneralSecurityException, UnsupportedEncodingException {
         log.info("proceed Modify > Board No:" + qnaNo +"<");
+        QnaDto qnaDto = qnaService.readQna(qnaNo);
 
+        log.info(qnaDto);
+        BoardDto boardDto = new BoardDto();
+        log.info(boardDto);
+        // 상품정보가 있을 경우 상품 정보를 먼저 담는다.
+
+        if(qnaDto.getProductId() != 0){
+            boardDto = qnaService.getProductInfo(qnaDto.getProductId());
+            boardDto.setProductId(qnaDto.getProductId());
+        }
+
+        boardDto.setQnaId(qnaDto.getQnaId());
+        boardDto.setProductId(qnaDto.getProductId());
+        boardDto.setUserId(qnaDto.getUserId());
+        boardDto.setMemName(aes256Util.decrypt(qnaService.getWriterName(qnaDto.getUserId())));
+        boardDto.setQnaTitle(qnaDto.getQnaTitle());
+        boardDto.setQnaContent(qnaDto.getQnaContent());
+        boardDto.setQnaModifyDate(qnaDto.getQnaModifyDate());
+        boardDto.setQnaPwd(qnaDto.getQnaPwd());
+        boardDto.setQnaStatus(qnaDto.getQnaStatus());
+
+        mv.addObject("qna" , boardDto);
+        mv.setViewName("board/qnaEdit");
         return mv;
     }
 }
