@@ -160,7 +160,7 @@
         width: 7%;
     }
     .product-detail {
-        width: 50%;
+        width: 40%;
     }
     .product-quantity {
         width: 5%;
@@ -252,8 +252,8 @@
 <div id="wrapper">
     <div id="order-wrapper">
         <div id="order-top-btns">
-            <div class="order-top-btn top-select">주문내역조회 (0)</div>
-            <div class="order-top-btn">취소/반품/교환 (0)</div>
+            <div th:text="|주문내역조회 (${size})|" class="order-top-btn top-select">주문내역조회 (0)</div>
+<!--            <div class="order-top-btn">취소/반품/교환 (0)</div>-->
         </div>
         <div id="order-period-con">
             <div id="order-period-con-in">
@@ -261,18 +261,15 @@
                     <option value="all">전체 주문처리 상태</option>
                 </select>
                 <div class="bar"></div>
-
-
-
-                <button class="period-btn">오늘</button>
-                <button class="period-btn">1주일</button>
-                <button class="period-btn">1개월</button>
-                <button class="period-btn">3개월</button>
-                <button class="period-btn">6개월</button>
-                <input type="text" id="date-start" class="datepicker" size="10">
+                <button onclick="fn_date_btns('today')" class="period-btn">오늘</button>
+                <button onclick="fn_date_btns('week')" class="period-btn">1주일</button>
+                <button onclick="fn_date_btns('month')" class="period-btn">1개월</button>
+                <button onclick="fn_date_btns('3month')" class="period-btn">3개월</button>
+                <button onclick="fn_date_btns('6month')" class="period-btn">6개월</button>
+                <input th:value="${startDate}" type="text" id="date-start" class="datepicker" size="10">
                 <ion-icon onclick="fn_calStart();" name="calendar-outline"></ion-icon>
                 ~
-                <input type="text" id="date-end" class="datepicker" size="10">
+                <input th:value="${endDate}" type="text" id="date-end" class="datepicker" size="10">
                 <ion-icon onclick="fn_calEnd();" name="calendar-outline"></ion-icon>
                 <button onclick="fn_date_submit()" type="button" id="date-submit">조회</button>
             </div>
@@ -295,43 +292,56 @@
                 <th class="product-state">주문처리상태</th>
                 <th class="product-recall">취소/교환/반품</th>
             </tr>
-            <tr>
+            <tr th:each="item : ${resultMap}">
                 <td class="product-date-content">
-                    2021-01-18<br>
-                    <a href="#">[20210118-0000197]</a><br>
-                    <button class="product-date-btn">주문취소 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>
-                    <button class="product-date-btn">교환신청 <ion-icon name="chevron-forward-outline"></ion-icon></button>
+                    <span th:text="${item.get('ORDER_DATE')}"> 2021-01-18</span><br>
+                    <a th:text="|[${item.get('SOLD_ID')}]|" href="#">[20210118-0000197]</a><br>
+<!--                    <button class="product-date-btn">주문취소 <ion-icon name="chevron-forward-outline"></ion-icon></button><br>-->
+<!--                    <button class="product-date-btn">교환신청 <ion-icon name="chevron-forward-outline"></ion-icon></button>-->
                 </td>
                 <td>
-                    <img class="product-img-content" th:src="@{/images/new6.jpg}">
+                    <img class="product-img-content" th:src="|@{/images/productImages/}${item.get('PRO_IMG_NAME')}|">
                 </td>
                 <td class="product-info-content">
-                    <b>REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)</b></b><br><br>
-                    <small>[옵션: L(100~103)]</small>
+                    <b th:text="${item.get('PRODUCT_NAME')}">REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)</b></b><br><br>
+                    <small th:text="|[옵션: ${item.get('P_SIZE')}]|">[옵션: L(100~103)]</small>
                 </td>
-                <td>
+                <td th:text="${item.get('SOLD_QUANTITY')}">
                     1
                 </td>
                 <td class="product-price-content">
-                    <b>KRW 229,000</b>
+                    <b th:text="|KRW ${#numbers.formatInteger(item.get('PRODUCT_PRICE'),3,'COMMA')}|">KRW 229,000</b>
                 </td>
                 <td>
-                    <p class="blue-text">입금전</p>
+                    <th:block th:if="${item.get('ORDER_DELI_STATUS') == 0}">
+                        <p class="blue-text">입금전</p>
+                    </th:block>
+                    <th:block th:if="${item.get('ORDER_DELI_STATUS') == 1}">
+                        <p class="blue-text">배송준비중</p>
+                    </th:block>
+                    <th:block th:if="${item.get('ORDER_DELI_STATUS') == 2}">
+                        <p class="blue-text">배송중</p>
+                    </th:block>
+                    <th:block th:if="${item.get('ORDER_DELI_STATUS') == 3}">
+                        <p class="blue-text">배송완료</p>
+                    </th:block>
                 </td>
                 <td>
                     -
                 </td>
             </tr>
         </table>
-        <div id="pagination">
-            <button class="page-btn" id="big-left"><<</button>
-            <button class="page-btn" id="left"><</button>
-            <button class="page-btn selected" id="num-page">1</button>
-            <button class="page-btn" id="right">></button>
-            <button class="page-btn" id="big-right">>></button>
-        </div>
+        <th:block th:utext="${pageBar}"></th:block>
+<!--        <div id="pagination">-->
+<!--            <button class="page-btn" id="big-left"><<</button>-->
+<!--            <button class="page-btn" id="left"><</button>-->
+<!--            <button class="page-btn selected" id="num-page">1</button>-->
+<!--            <button class="page-btn" id="right">></button>-->
+<!--            <button class="page-btn" id="big-right">>></button>-->
+<!--        </div>-->
     </div>
 </div>
+<script th:src="@{/js/moment.js}"></script>
 <script th:inline="javascript">
     $(function(){
         $(".datepicker").datepicker({
@@ -361,6 +371,36 @@
         }
 
         location.href = contextPath + '/member/order-list/1?startDate='+start_date+'&endDate='+end_date;
+    }
+    function fn_paging(cPage){
+        let start_date = document.getElementById('date-start').value;
+        let end_date = document.getElementById('date-end').value;
+        location.href='/member/order-list/'+cPage+'?startDate='+start_date+'&endDate='+end_date;
+    }
+    function fn_date_btns(period){
+        let now = new Date();
+        let startDate = '';
+        now = moment(now).format('YYYY/MM/DD');
+        if(period === 'today'){
+            startDate = now;
+        }
+        if(period === 'week'){
+            startDate = moment().subtract(7, 'days');
+            startDate = startDate.format('YYYY/MM/DD');
+        }
+        if(period === 'month'){
+            startDate = moment().subtract(1, 'months');
+            startDate = startDate.format('YYYY/MM/DD');
+        }
+        if(period === '3month'){
+            startDate = moment().subtract(3, 'months');
+            startDate = startDate.format('YYYY/MM/DD');
+        }
+        if(period === '6month'){
+            startDate = moment().subtract(6, 'months');
+            startDate = startDate.format('YYYY/MM/DD');
+        }
+        location.href='/member/order-list/'+1+'?startDate='+startDate+'&endDate='+now;
     }
 </script>
 <th:block th:replace="common/footer.html"></th:block>

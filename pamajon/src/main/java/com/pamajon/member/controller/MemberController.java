@@ -692,6 +692,7 @@ public class MemberController {
 
     @GetMapping("/order-list/{cPage}")
     public ModelAndView orderList(@PathVariable("cPage") int cPage,
+                                  @ModelAttribute("loginMember") Member loginMember,
                                   ModelAndView mv,
                                   @RequestParam(required = false) Optional<String> startDate,
                                   @RequestParam(required = false) Optional<String> endDate){
@@ -699,10 +700,10 @@ public class MemberController {
         String end = "";
         if(!startDate.isPresent()){
             LocalDate localDate = LocalDate.now();
-            LocalDate afterLocalDate = localDate.now().plusMonths(3);
+            LocalDate afterLocalDate = localDate.now().minusMonths(3);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-            start = localDate.format(formatter);
-            end = afterLocalDate.format(formatter);
+            start = afterLocalDate.format(formatter);
+            end = localDate.format(formatter);
             log.info(start);
             log.info(end);
         }else {
@@ -711,12 +712,28 @@ public class MemberController {
         }
         start = start.replace("/0","/");
         end = end.replace("/0","/");
-        log.info(start);
-        log.info(end);
+
         Map input = new HashMap();
         input.put("startDate", start);
         input.put("endDate", end);
+        input.put("usid", loginMember.getUserId());
         List<Map> resultMap = service.memberOrderList(input);
+        resultMap.stream().map(ele -> {
+            ele.put("ORDER_DATE",ele.get("ORDER_DATE").toString());
+            return ele;
+        }).collect(Collectors.toList());
+        log.info(resultMap);
+
+        int leng = resultMap.size();
+
+        resultMap = resultMap.subList((cPage-1)*5, cPage*5 > leng ? leng : cPage*5);
+
+        String pageBar = PageFactory.getPageBar(leng,cPage,5);
+
+        mv.addObject("pageBar", pageBar);
+        mv.addObject("size", resultMap.size());
+        mv.addObject("startDate", start);
+        mv.addObject("endDate", end);
         mv.addObject("resultMap", resultMap);
         mv.setViewName("member/orderList");
         return mv;
