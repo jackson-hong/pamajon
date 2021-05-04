@@ -134,6 +134,7 @@ public class QnaController {
         if(qnaDto.getProductId() != 0){
             boardDto = qnaService.getProductInfo(qnaDto.getProductId());
             boardDto.setProductId(qnaDto.getProductId());
+
         }
 
         boardDto.setQnaId(qnaDto.getQnaId());
@@ -148,6 +149,7 @@ public class QnaController {
 
         mv.addObject("qna" , boardDto);
         mv.setViewName("board/qnaDetail");
+
 
         /**
          * 넘겨줘서 처리해야하는 것들

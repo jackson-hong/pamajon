@@ -3,9 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="qna">
-<select id="selectQnaList" resultMap="selectQnaList" >
-    SELECT * FROM QNA  order by QNA_ID desc;
-</select>
+    <select id="selectQnaList" resultMap="selectQnaList" >
+        SELECT * FROM QNA  order by QNA_ID desc;
+    </select>
+
+
     <insert id="createQna" parameterType="com.pamajon.board.model.vo.QnaDto">
         INSERT INTO QNA
         (
@@ -78,8 +80,16 @@
                 JOIN PRODUCT P on P.PRODUCT_ID = Q.PRODUCT_ID
                 JOIN PRO_IMAGE PI on P.PRODUCT_ID = Q.PRODUCT_ID
         WHERE
-            Q.PRODUCT_ID = #{productId};
+            Q.PRODUCT_ID = #{productId}
     </select>
+
+<!-- 상품이 있을 경우 같은 상품관련 게시글을 반환한다 -->
+    <select id="selectRelatedQnaList" resultMap="selectQnaList" parameterType="integer">
+        SELECT * FROM QNA where PRODUCT_ID = #{productId} order by QNA_ID desc
+    </select>
+
+
+
 
     <resultMap id="selectQnaList" type="com.pamajon.board.model.vo.QnaDto">
         <result property="qnaId"         column="QNA_ID"/>
