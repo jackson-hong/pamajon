@@ -121,7 +121,7 @@ public class QnaController {
         return mv;
     }
 
-    @RequestMapping("/view/{qnaNo}")
+    @GetMapping("/view/{qnaNo}")
     public ModelAndView qnaDetail(ModelAndView mv, @PathVariable("qnaNo") int qnaNo) throws GeneralSecurityException, UnsupportedEncodingException {
         log.info(qnaNo + "no <<<<<< BoardDetail - Load");
         QnaDto qnaDto = qnaService.readQna(qnaNo);
@@ -161,7 +161,7 @@ public class QnaController {
          */
         return mv; }
 
-    @RequestMapping("/delete")
+    @GetMapping("/delete/{qnaNo}")
     public ModelAndView qnaDelete(ModelAndView mv, @RequestParam int qnaNo){
         log.info("proceed Delete > Board No:" + qnaNo +"<");
         int result  = qnaService.deleteQna(qnaNo);
@@ -175,7 +175,7 @@ public class QnaController {
         return mv;
     }
 
-    @RequestMapping("/edit")
+    @GetMapping("/edit/{qnaNo}")
     public ModelAndView qnaModify(ModelAndView mv, @RequestParam int qnaNo) throws GeneralSecurityException, UnsupportedEncodingException {
         log.info("proceed Modify > Board No:" + qnaNo +"<");
         QnaDto qnaDto = qnaService.readQna(qnaNo);

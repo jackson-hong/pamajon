@@ -352,11 +352,11 @@
                 <tr>
 
                     <th scope="row">제목</th>
-                    <td class="qnaTitle"> 배송 줜나 느리네</td>
+                    <td class="qnaTitle" th:text="${qna.getQnaTitle()}"></td>
                 </tr>
                 <th scope="row">작성자</th>
-                <td class="qnaMember">홍***
-                    <span class="qnaDetailBtns">
+                <td class="qnaMember" th:text="${qna.getMemName()}">
+                        <span class="qnaDetailBtns">
                         <a href=""><img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
                         <a href=""><img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
                         </span>
@@ -366,18 +366,13 @@
                     <td colspan="2">
                         <div class="content-info">
                             <strong>작성일</strong>
-                            <span class="qnaDate">2021-01-27 18:58:00</span>
-                            <strong>조회수</strong>
-                            <span class="qnaViewCount">7</span>
+                            <span class="qnaDate" th:text="${qna.getQnaModifyDate()}"></span>
                         </div>
-                        <div class="content-detail">
-                            살다살다 이렇게 느린 곳은</br>
-                            처음봤습니다.</br>
-                            거의 한달 걸렸네요.
+                        <div class="content-detail" th:utext="${qna.getQnaContent()}">
+
                         </div>
                     </td>
                 </tr>
-
                 </tbody>
             </table>
         </div>
