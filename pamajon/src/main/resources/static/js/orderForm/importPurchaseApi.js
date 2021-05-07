@@ -142,7 +142,7 @@ function processPurchase(){
 
             let stackMileageDto = JSON.stringify({
                 userId:$("input[name='userNo']").val(),
-                mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
+                mileage:`${removeCommaConvertToNumber($("#mProductMileage").text().trim())}`
             });
 
             $.ajax({
