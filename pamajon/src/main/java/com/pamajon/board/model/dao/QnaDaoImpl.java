@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class QnaDaoImpl implements QnaDao {
@@ -36,4 +37,7 @@ public class QnaDaoImpl implements QnaDao {
 
     @Override
     public BoardDto getProductInfo(SqlSession session, int productId){ return session.selectOne("qna.getProductInfo", productId);}
+
+//    @Override
+//    public int getTotal(SqlSession session) { return session.selectMap("qna.selectQnaTotal", Map ); }
 }

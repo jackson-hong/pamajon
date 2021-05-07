@@ -46,5 +46,6 @@ public class QnaServiceImpl implements QnaService {
     @Override
     public BoardDto getProductInfo(int productId){return dao.getProductInfo(session,productId);}
 
-
+    @Override
+    public int getTotal() { return dao.getTotal(session); }
 }

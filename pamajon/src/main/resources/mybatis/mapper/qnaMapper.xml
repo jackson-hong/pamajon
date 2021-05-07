@@ -6,7 +6,9 @@
     <select id="selectQnaList" resultMap="selectQnaList" >
         SELECT * FROM QNA  order by QNA_ID desc;
     </select>
-
+    <select id="selectQnaTotal" resultType="int" >
+        SELECT COUNT (*) FROM QNA;
+    </select>
 
     <insert id="createQna" parameterType="com.pamajon.board.model.vo.QnaDto">
         INSERT INTO QNA

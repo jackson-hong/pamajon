@@ -150,7 +150,9 @@ public class QnaController {
         mv.addObject("qna" , boardDto);
         mv.setViewName("board/qnaDetail");
 
-
+        int total = qnaService.getTotal();
+        int before = qnaNo -1;
+        int after = qnaNo +1;
         /**
          * 넘겨줘서 처리해야하는 것들
          * 1.이전글, 이후글 제목과 링크

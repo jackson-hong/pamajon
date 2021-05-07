@@ -21,4 +21,6 @@ public interface QnaDao {
     //Qna get Data from another table
     String getWriterName(SqlSession session, int userId);
     BoardDto getProductInfo(SqlSession session, int productId);
+
+    int getTotal(SqlSession session);
 }

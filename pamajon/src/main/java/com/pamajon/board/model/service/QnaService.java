@@ -19,4 +19,6 @@ public interface QnaService {
 
     String getWriterName(int userId);
     BoardDto getProductInfo(int productId);
+
+    int getTotal();
 }
