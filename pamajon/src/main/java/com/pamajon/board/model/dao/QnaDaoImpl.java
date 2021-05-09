@@ -38,6 +38,6 @@ public class QnaDaoImpl implements QnaDao {
     @Override
     public BoardDto getProductInfo(SqlSession session, int productId){ return session.selectOne("qna.getProductInfo", productId);}
 
-//    @Override
-//    public int getTotal(SqlSession session) { return session.selectMap("qna.selectQnaTotal", Map ); }
+    @Override
+    public int getTotal(SqlSession session) { return 1; }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/css/order/address.css" th:href="@{/css/order/address.css}">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+<div class="xans-element- xans-myshop xans-myshop-addrlist ec-base-layer">
+    <div class="header">
+        <h1>배송 주소록 관리</h1>
+    </div>
+    <div class="content">
+        <div class="ec-base-help">
+            <h2>배송주소록 유의사항</h2>
+            <div class="inner">
+                <ul>
+                    <li>배송 주소록은 최대 10개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
+                    <li>자동 업데이트를 원하지 않을 경우 주소록 고정 선택을 선택하시면 선택된 주소록은 업데이트 대상에서 제외됩니다.</li>
+                    <li>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ec-base-table typeList">
+            <table id="addrTable" style="border-collapse: collapse; width: 760px;">
+                <thead class="head" >
+                <tr style="height: 40px;">
+                    <th  ><span class=""><input id="allCheck" onclick="checkAll()" value=""
+                                                type="checkbox"></span></th>
+                    <th  style="width: 90px;">주소록 고정
+                    </th>
+                    <th style="width: 90px;">배송지명</th>
+                    <th style="width: 90px;">수령인</th>
+                    <th style="width: 90px;">일반전화</th>
+                    <th style="width: 100px;"> 휴대전화</th>
+                    <th>주소</th>
+                    <th style="width: 80px;">배송지관리</th>
+                </tr>
+                </thead>
+                <tbody class=" center">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ec-base-button 1" style="display: none; justify-content: center; margin-top: 15px;">
+        <img style="cursor: pointer; margin-right: 5px;" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_cancel.gif" alt="취소" onclick="listDisplay()">
+        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register2.gif" alt="등록" style="margin-right: 5px; cursor: pointer;" onclick="sendAddrToServer();">
+    </div>
+
+    <div class="ec-base-button 2" style="display: flex; justify-content: center; margin-top: 15px;">
+        <img
+                src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_delete.gif"
+                onclick="deleteAddress()"
+                alt="선택 주소록 삭제"
+                style="margin-right: 5px; cursor: pointer">
+        <img onclick="insertAddr('basic')" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
+             alt="배송지 등록" style="cursor: pointer">
+    </div>
+</div>
+<input type="hidden" name="addrId" value="">
+<input type="hidden" name="userNo" value="">
+<input type="hidden" name="updateCheck" value="">
+</body>
+</html>

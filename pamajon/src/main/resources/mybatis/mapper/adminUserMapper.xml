@@ -24,6 +24,16 @@
         <result property="sessionLimit" column="SESSIONLIMIT"/>
     </resultMap>
 
+    <resultMap id="shipmentResultSet" type="com.pamajon.admin.model.vo.ShipmentListDto">
+        <result property="orderId" column="ORDER_ID"/>
+        <result property="orderEmail" column="ORDER_EMAIL"/>
+        <result property="receiver" column="ADDR_RECEIVER"/>
+        <result property="orderPhone" column="ORDER_PHONE"/>
+        <result property="orderPurchase" column="ORDER_PURCHASE"/>
+        <result property="orderDeliveryStatus" column="ORDER_DELI_STATUS"/>
+        <result property="orderDate" column="ORDER_DATE"/>
+    </resultMap>
+
     <select id="getUser" parameterType="com.pamajon.admin.model.vo.AdminUser" resultMap="adminUser">
         SELECT
              ADMIN_ID
@@ -129,5 +139,30 @@
         WHERE
             ADMIN_LOGIN_ID=#{adminLoginId}
     </update>
+
+    <select id="getListCount" resultType="int">
+        SELECT COUNT(1)
+        FROM   ORDER_P op
+    </select>
+
+    <select id="getShipmentList" resultMap="shipmentResultSet">
+        SELECT
+             ORDER_ID,
+             ORDER_EMAIL,
+             al.ADDR_RECEIVER AS ADDR_RECEIVER,
+             ORDER_PHONE,
+             ORDER_PURCHASE,
+             ORDER_DELI_STATUS,
+             DATE_FORMAT(ORDER_DATE ,'%Y-%m-%d') AS ORDER_DATE
+        FROM
+             ORDER_P op,
+             ADDRESS_LIST al
+        WHERE
+             1=1
+          AND
+             op.ADDR_ID = al.ADDR_ID
+     ORDER BY
+             ORDER_DATE DESC
+    </select>
 
 </mapper>    

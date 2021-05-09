@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="robots" content="noindex,nofollow">
-    <title>빈페이지</title>
+    <title>배송관리 페이지</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
 
     <!-- Custom CSS -->
     <link href="css/style.min.css" rel="stylesheet" th:href="@{/adminTemplateResources/css/style.min.css}">
+    <link href="css/style.min.css" rel="stylesheet" th:href="@{/css/admin/shipment.css}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -17,17 +18,6 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<style>
-    .shippingList:hover{
-        background-color: lightgray;
-        cursor: pointer;
-    }
-    #pageWrapper{
-        width: 100%;
-        height: 30px;
-        border: 1px solid red;
-    }
-</style>
 
 <body>
 <!-- ============================================================== -->
@@ -83,9 +73,15 @@
                                 <option value="Receiver">받는사람 검색</option>
                                 <option value="ReceiverPhone">연락처 검색</option>
                             </select>
-                            <input type="date" id="startDate" name="startDate" class="form-control" style="width: 12%">
-                            <span style="line-height: 38px">&nbsp;~&nbsp;</span>
-                            <input type="date" id="endDate" name="endDate" class="form-control" style="width: 12%">
+                            <div id="dateSearchBlock" style="width: 34%; display: flex">
+                                <input type="date" id="shippingSearch-startDate" name="startDate" class="form-control" style="width: 38%" readonly>
+                                <span style="line-height: 38px">&nbsp;~&nbsp;</span>
+                                <input type="date" id="shippingSearch-endDate" name="endDate" class="form-control" style="width: 38%" readonly>
+                                <div id="dateCheckBox" style="width: 24%; display: block; padding-top: 18px; margin-left: 7px;">
+                                    <input type="checkbox" name="searchAllWithoutDate" id="searchAllWithoutDate" checked>
+                                    <label for="searchAllWithoutDate" style="cursor: pointer">날짜 전체검색</label>
+                                </div>
+                            </div>
                             <input type="number" class="form-control" style="width:200px; margin-left: 20px">
                             <button type="button" class="btn btn-primary" style="height: 85%">검색</button>
                         </div>
@@ -113,52 +109,36 @@
                                                 <th class="border-top-0" >결제이메일</th>
                                                 <th class="border-top-0" >받는사람</th>
                                                 <th class="border-top-0" >연락처</th>
-                                                <th class="border-top-0" >상품명</th>
                                                 <th class="border-top-0" >결제가격</th>
                                                 <th class="border-top-0" >배송상태</th>
                                                 <th class="border-top-0" >결제일</th>
                                             </tr>
                                             </thead>
-                                            <tbody >
-                                            <tr class="shippingList">
-                                                <td style="vertical-align: middle">12345</td>
-                                                <td style="vertical-align: middle">yhy1045@naver.com</td>
-                                                <td style="vertical-align: middle">유호연</td>
-                                                <td style="vertical-align: middle">010-9953-6824</td>
-                                                <td style="vertical-align: middle">젠킨스 후드티</td>
-                                                <td style="vertical-align: middle">229,000</td>
-                                                <td style="vertical-align: middle">배송중</td>
-                                                <td style="vertical-align: middle">2021-01-14</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="vertical-align: middle">12345</td>
-                                                <td style="vertical-align: middle">yhy1045@naver.com</td>
-                                                <td style="vertical-align: middle">유호연</td>
-                                                <td style="vertical-align: middle">010-9953-6824</td>
-                                                <td style="vertical-align: middle">젠킨스 후드티</td>
-                                                <td style="vertical-align: middle">229,000</td>
-                                                <td style="vertical-align: middle">배송중</td>
-                                                <td style="vertical-align: middle">2021-01-14</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td style="vertical-align: middle">12345</td>
-                                                <td style="vertical-align: middle">yhy1045@naver.com</td>
-                                                <td style="vertical-align: middle">유호연</td>
-                                                <td style="vertical-align: middle">010-9953-6824</td>
-                                                <td style="vertical-align: middle">젠킨스 후드티</td>
-                                                <td style="vertical-align: middle">229,000</td>
-                                                <td style="vertical-align: middle">배송중</td>
-                                                <td style="vertical-align: middle">2021-01-14</td>
-                                            </tr>
-
-
-
+                                            <tbody id="shipmentListDisplayArea">
                                             </tbody>
                                         </table>
 
-                                        <div id = "pageWrapper">
+                                        <div id="pageWrapper">
+                                            <div id="displayPage">
+                                                <div id="pageLeftHandler">
 
+                                                </div>
+                                                <nav aria-label="Page navigation example" id="pageMiddleHandler">
+                                                    <ul class="pagination" id="pagination">
+                                                       <!-- <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                                                        <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                        <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                                                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>-->
+                                                    </ul>
+                                                </nav>
+                                                <!--총 검색된 게시글이 몇개인지를 검색-->
+                                                <div id="pageRightHandler">
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -201,28 +181,8 @@
 <!-- All Jquery -->
 <!-- ============================================================== -->
 <th:block th:replace="admin/adminCommon/adminCommonJs.html"></th:block>
-<script>
-    $(function (){
-
-        $("#searchOption").change(function(){
-            if($("#searchOption option:checked").val()=="pPrice"){
-                $("#priceInput").css('display','flex');
-                $("#nameInput").css('display','none');
-                $("#codeInput").css('display','none');
-
-            } else if ($("#searchOption option:checked").val()=="pName"){
-                $("#priceInput").css('display','none');
-                $("#nameInput").css('display','flex');
-                $("#codeInput").css('display','none');
-            } else {
-                $("#priceInput").css('display','none');
-                $("#nameInput").css('display','none');
-                $("#codeInput").css('display','flex');
-            }
-        });
-    })
-
-</script>
+<script defer src="../../static/js/shipment/shipmentNodeController.js" th:src="@{/js/shipment/shipmentNodeController.js}"></script>
+<script defer src="../../static/js/shipment/shipmentNodeController.js" th:src="@{/js/shipment/getShipmentList.js}"></script>
 </body>
 
 </html>

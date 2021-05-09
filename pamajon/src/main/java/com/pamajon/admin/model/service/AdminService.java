@@ -1,7 +1,10 @@
 package com.pamajon.admin.model.service;
 
 import com.pamajon.admin.model.vo.AdminUser;
+import com.pamajon.admin.model.vo.ShipmentListDto;
+import com.pamajon.common.vo.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface AdminService {
@@ -22,4 +25,8 @@ public interface AdminService {
 
 
     void expireSessionInfo(AdminUser loginUser);
+
+    PageInfo getPage(Integer pageNum);
+
+    List<Object> getShipmentList(PageInfo pageInfo);
 }

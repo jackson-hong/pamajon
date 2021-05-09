@@ -2,15 +2,18 @@ package com.pamajon.admin.controller;
 
 import com.pamajon.admin.model.service.AdminService;
 import com.pamajon.admin.model.vo.AdminUser;
+import com.pamajon.admin.model.vo.ShipmentListDto;
+import com.pamajon.common.page.Pagination;
+import com.pamajon.common.vo.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping(value="/admin")
@@ -70,7 +74,6 @@ public class AdminController {
 
     @GetMapping("/shipment")
     public String gotoShipmentPage(){
-
 
         return "admin/shipping";
     }
@@ -207,6 +210,15 @@ public class AdminController {
 
         return "redirect:signin";
     }
+    @GetMapping("/shipmentList/{pageNum}")
+    public ResponseEntity<List<Object>> getShipmentList(@PathVariable Integer pageNum
+                                                                ){
+        //Test 완료
+        PageInfo pageInfo = adminService.getPage(pageNum);
+        //Test 완료 (return 값에 결제 리스트와 마지막 index에는 페이지 정보가 담겨있음.)
+        return new ResponseEntity<>(adminService.getShipmentList(pageInfo), HttpStatus.OK);
+    }
+
 
 
 
