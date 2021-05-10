@@ -2,6 +2,7 @@ package com.pamajon.admin.controller;
 
 import com.pamajon.admin.model.service.AdminService;
 import com.pamajon.admin.model.vo.AdminUser;
+import com.pamajon.admin.model.vo.SearchParameterDto;
 import com.pamajon.admin.model.vo.ShipmentListDto;
 import com.pamajon.common.page.Pagination;
 import com.pamajon.common.vo.PageInfo;
@@ -217,6 +218,14 @@ public class AdminController {
         PageInfo pageInfo = adminService.getPage(pageNum);
         //Test 완료 (return 값에 결제 리스트와 마지막 index에는 페이지 정보가 담겨있음.)
         return new ResponseEntity<>(adminService.getShipmentList(pageInfo), HttpStatus.OK);
+    }
+
+    @PostMapping("/shipmentList")
+    public ResponseEntity<List<Object>> getShipmentListBySearch(@RequestParam String searchParameter){
+
+
+        return new ResponseEntity<>(adminService.getShipmentListBySearch(searchParameter),HttpStatus.OK);
+
     }
 
 

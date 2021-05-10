@@ -1,7 +1,6 @@
 package com.pamajon.admin.model.service;
 
 import com.pamajon.admin.model.vo.AdminUser;
-import com.pamajon.admin.model.vo.ShipmentListDto;
 import com.pamajon.common.vo.PageInfo;
 
 import java.util.List;
@@ -29,4 +28,6 @@ public interface AdminService {
     PageInfo getPage(Integer pageNum);
 
     List<Object> getShipmentList(PageInfo pageInfo);
+
+    List<Object> getShipmentListBySearch(String searchParameter);
 }

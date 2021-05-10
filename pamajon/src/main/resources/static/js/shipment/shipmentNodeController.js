@@ -26,18 +26,17 @@ searchDateCheckbox.addEventListener('click',searchDateHandler);
 
 //날짜 전체검색 체크박스 핸들러/
 function searchDateHandler(){
-    //날짜가에 상관없이 검색을 유저가 선택한 경우 (전체검색)
+    //날짜에 상관없이 검색을 유저가 선택한 경우 (전체검색)
     if(searchDateCheckbox.checked){
         searchstartDate.setAttribute("readonly",true);
         searchEndDate.setAttribute("readonly",true);
         searchEndDate.value='';
-        searchEndDate.value='';
+        searchstartDate.value='';
 
     }
-
     //날짜 검색을 선택 한 경우
     if(!searchDateCheckbox.checked){
-        //
+
         searchstartDate.removeAttribute("readonly");
         searchEndDate.removeAttribute("readonly");
     }

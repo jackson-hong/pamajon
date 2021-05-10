@@ -73,7 +73,7 @@ public class AdminServiceImpl implements AdminService{
         //총 오더가 몇개인지 가져와야함.
         int listCount = adminMapper.getListCount();
 
-        return Pagination.getPageInfo(listCount,pageNum,10,20);
+        return Pagination.getPageInfo(listCount,pageNum,10,30);
     }
 
     @Override
@@ -95,6 +95,13 @@ public class AdminServiceImpl implements AdminService{
         return shipmentListDtosAndPage;
     }
 
+    @Override
+    public List<Object> getShipmentListBySearch(String searchParameter) {
+
+        LOGGER.info(searchParameter.toString());
+
+        return null;
+    }
 
 
 }

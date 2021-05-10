@@ -13,7 +13,7 @@ public class Pagination {
         int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 
         // * endPage : startPage, PageLimit, maxPage 영향을 받는다.
-        int endPage = startPage + pageLimit + 1;
+        int endPage = startPage + pageLimit;
         if(endPage > maxPage) {
             endPage = maxPage;
         }
