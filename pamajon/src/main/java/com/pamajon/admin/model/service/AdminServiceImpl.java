@@ -1,6 +1,10 @@
 package com.pamajon.admin.model.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pamajon.admin.SetSearchParameterDtoFromJSON;
 import com.pamajon.admin.model.vo.AdminUser;
+import com.pamajon.admin.model.vo.SearchParameterDto;
 import com.pamajon.admin.model.vo.ShipmentListDto;
 import com.pamajon.common.page.Pagination;
 import com.pamajon.common.security.AES256Util;
@@ -12,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,11 +101,29 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<Object> getShipmentListBySearch(String searchParameter) {
+    public List<Object> getShipmentListBySearch(String searchParameter) throws JsonProcessingException {
+        //DEBUGGING JSON
+        //{"pageNum":1,"searchOption":"ReceiverEmail","startDate":"2021-05-01","endDate":"2021-05-03","searchDateOptionCheckBox":"unchecked","searchOrderValue":"asd"}
+        Map<String,String> searchParameterMap = new HashMap<>();
 
-        LOGGER.info(searchParameter.toString());
+        //StringType JSON 객체를 Map 으로 치환
+        searchParameterMap = new ObjectMapper().readValue(searchParameter,Map.class);
 
-        return null;
+        //Map 으로 치환된 JSON 타입을 객체형으로 변환
+        SearchParameterDto searchParameterDto = SetSearchParameterDtoFromJSON.converToObject(searchParameterMap);
+
+        //페이징 객체 생성
+        int listCount = adminMapper.getShipmentListBySearchCount(searchParameterDto);
+        PageInfo pageInfo = Pagination.getPageInfo(listCount,searchParameterDto.getPageNum(),10,30);
+
+        //몇개의 데이터를 갖고올 것인지 결정하여 RowBounds 에 담음
+        int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset,pageInfo.getBoardLimit());
+
+        List<Object> getShipmentListBySearch = adminMapper.getShipmentListBySearch(searchParameterDto,rowBounds);
+        getShipmentListBySearch.add(pageInfo);
+
+        return getShipmentListBySearch;
     }
 
 

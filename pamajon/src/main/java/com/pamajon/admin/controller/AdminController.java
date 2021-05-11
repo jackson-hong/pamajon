@@ -1,5 +1,6 @@
 package com.pamajon.admin.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pamajon.admin.model.service.AdminService;
 import com.pamajon.admin.model.vo.AdminUser;
 import com.pamajon.admin.model.vo.SearchParameterDto;
@@ -221,7 +222,7 @@ public class AdminController {
     }
 
     @PostMapping("/shipmentList")
-    public ResponseEntity<List<Object>> getShipmentListBySearch(@RequestParam String searchParameter){
+    public ResponseEntity<List<Object>> getShipmentListBySearch(@RequestParam String searchParameter) throws JsonProcessingException {
 
 
         return new ResponseEntity<>(adminService.getShipmentListBySearch(searchParameter),HttpStatus.OK);

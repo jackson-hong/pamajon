@@ -1,5 +1,6 @@
 package com.pamajon.pamajon;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pamajon.admin.model.service.AdminServiceImpl;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.common.vo.PageInfo;
@@ -23,9 +24,11 @@ public class AdminTest {
     AES256Util aes256Util;
 
     @Test
-    public void adminPagingTest() throws GeneralSecurityException, UnsupportedEncodingException {
+    public void adminPagingTest() throws GeneralSecurityException, UnsupportedEncodingException, JsonProcessingException {
 
-        System.out.println(aes256Util.encrypt("yhy10"));
+        String searchParameter = "{pageNum=1, searchOption=ReceiverEmail, startDate=, endDate=, searchDateOptionCheckBox=checked, searchOrderValue=asd}";
+        adminService.getShipmentListBySearch(searchParameter);
+
 
     }
 }

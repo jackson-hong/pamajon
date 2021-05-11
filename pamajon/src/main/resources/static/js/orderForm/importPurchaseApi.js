@@ -488,7 +488,7 @@ function processPurchaseTest(){
                 orderPurchase:`${removeCommaConvertToNumber($("#total_price").val())}`,
                 orderMessage:`${$("input[name='orderMessage']").val()}`,
                 orderDeliveryStatus:"1",
-                orderDate:`${date.getFullYear()}/${date.getMonth()}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
+                orderDate:`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
             //    orderCardNum:`${rsp.card_number}`,
             //    orderTransName:`${$("input[name='orderTransName']").val()}`,
                 orderMethod:`card`,

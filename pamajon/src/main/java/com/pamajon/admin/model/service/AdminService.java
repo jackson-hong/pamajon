@@ -1,5 +1,6 @@
 package com.pamajon.admin.model.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pamajon.admin.model.vo.AdminUser;
 import com.pamajon.common.vo.PageInfo;
 
@@ -29,5 +30,5 @@ public interface AdminService {
 
     List<Object> getShipmentList(PageInfo pageInfo);
 
-    List<Object> getShipmentListBySearch(String searchParameter);
+    List<Object> getShipmentListBySearch(String searchParameter) throws JsonProcessingException;
 }

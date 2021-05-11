@@ -165,4 +165,96 @@
              ORDER_DATE DESC
     </select>
 
+    <select id="getShipmentListBySearchCount" resultType="int" parameterType="com.pamajon.admin.model.vo.SearchParameterDto">
+        SELECT
+            COUNT(1)
+        FROM
+            ORDER_P op,
+            ADDRESS_LIST al
+        WHERE
+            1=1
+        AND
+            op.ADDR_ID = al.ADDR_ID
+        <!-- 유저가 날짜검색을 조건으로 추가 했을경우 실행되는 쿼리문 -->
+        <if test="searchDateOptionCheckBox=='unchecked'">
+            AND
+                DATE_FORMAT(REPLACE(ORDER_DATE,'-',''),'%Y%m%d')
+                                                                BETWEEN DATE_FORMAT(REPLACE(#{startDate},'-',''),'%Y%m%d')
+                                                                AND DATE_FORMAT(REPLACE(#{endDate},'-',''),'%Y%m%d')
+        </if>
+        <choose>
+            <!-- 유저가 날짜검색을 조건으로 추가 했을경우 실행되는 쿼리문 -->
+            <when test="searchOption=='ReceiverEmail'">
+                AND
+                ORDER_EMAIL LIKE CONCAT("%",#{searchOrderValue},"%")
+            </when>
+            <!-- 결제 번호로 검색 -->
+            <when test="searchOption=='purchaseNo'">
+                AND
+                ORDER_ID=#{searchOrderValue}
+            </when>
+            <!-- 받는사람으로 검색조건 -->
+            <when test="searchOption=='Receiver'">
+                AND
+                al.ADDR_RECEIVER LIKE CONCAT("%",#{searchOrderValue},"%")
+            </when>
+            <!-- 받는사람 전화번호로 검색 -->
+            <when test="searchOption=='ReceiverPhone'">
+                AND
+                   ORDER_PHONE LIKE CONCAT("%",#{searchOrderValue},"%")
+            </when>
+        </choose>
+                ORDER BY
+                         ORDER_DATE DESC
+    </select>
+
+    <select id="getShipmentListBySearch" resultMap="shipmentResultSet" parameterType="com.pamajon.admin.model.vo.SearchParameterDto">
+        SELECT
+             ORDER_ID,
+             ORDER_EMAIL,
+             al.ADDR_RECEIVER AS ADDR_RECEIVER,
+             ORDER_PHONE,
+             ORDER_PURCHASE,
+             ORDER_DELI_STATUS,
+             DATE_FORMAT(ORDER_DATE ,'%Y-%m-%d') AS ORDER_DATE
+        FROM
+             ORDER_P op,
+             ADDRESS_LIST al
+        WHERE
+             1=1
+          AND
+             op.ADDR_ID = al.ADDR_ID
+        <!-- 유저가 날짜검색을 조건으로 추가 했을경우 실행되는 쿼리문 -->
+        <if test="searchDateOptionCheckBox=='unchecked'">
+            AND
+                DATE_FORMAT(REPLACE(ORDER_DATE,'-',''),'%Y%m%d')
+                                                                BETWEEN DATE_FORMAT(REPLACE(#{startDate},'-',''),'%Y%m%d')
+                                                                    AND DATE_FORMAT(REPLACE(#{endDate},'-',''),'%Y%m%d')
+        </if>
+        <choose>
+            <!-- 유저가 날짜검색을 조건으로 추가 했을경우 실행되는 쿼리문 -->
+            <when test="searchOption=='ReceiverEmail'">
+             AND
+                ORDER_EMAIL LIKE CONCAT("%",#{searchOrderValue},"%")
+            </when>
+            <!-- 결제 번호로 검색 -->
+            <when test="searchOption=='purchaseNo'">
+            AND
+                ORDER_ID=#{searchOrderValue}
+            </when>
+            <!-- 받는사람으로 검색조건 -->
+            <when test="searchOption=='Receiver'">
+            AND
+                al.ADDR_RECEIVER LIKE CONCAT("%",#{searchOrderValue},"%")
+            </when>
+            <!-- 받는사람 전화번호로 검색 -->
+            <when test="searchOption=='ReceiverPhone'">
+            AND
+                ORDER_PHONE LIKE CONCAT("%",#{searchOrderValue},"%")
+            </when>
+        </choose>
+              ORDER BY
+                  ORDER_DATE DESC
+    </select>
+
 </mapper>    

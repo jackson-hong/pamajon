@@ -39,6 +39,7 @@ function searchDateHandler(){
 
         searchstartDate.removeAttribute("readonly");
         searchEndDate.removeAttribute("readonly");
+        searchEndDate.value=`${year}-${month}-${date}`;
     }
 
 }
