@@ -3,8 +3,11 @@ package com.pamajon.board.controller;
 import com.pamajon.board.model.service.QnaServiceImpl;
 import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
+import com.pamajon.common.page.PageFactory;
 import com.pamajon.common.security.AES256Util;
+import com.pamajon.common.vo.PageInfo;
 import com.pamajon.member.model.vo.Member;
+import com.pamajon.order.model.vo.ProductDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +35,20 @@ public class QnaController {
 
 
     //Q&A리스트 받아오기
-    @GetMapping("/list")
-    public ModelAndView qna(ModelAndView mv, HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
+    @GetMapping("/list/{cPage}")
+    public ModelAndView qna(@PathVariable("cPage") int cPage,
+                            ModelAndView mv,
+                            HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
+
         List<QnaDto> resultList = qnaService.listQna();
         // 데이터 정제해서 표시할 객체 추가
 
         List<BoardDto> boardDtoList = new ArrayList<>();
 
+        int length = resultList.size();
+        PageInfo pageInfo;
 
+        String pagebar = PageFactory.getPageBar(length, cPage ,10);
         //필요한 값들을 담아줌
         for(QnaDto qnaDto :resultList){
             BoardDto boardDto = new BoardDto();
@@ -134,7 +143,6 @@ public class QnaController {
         if(qnaDto.getProductId() != 0){
             boardDto = qnaService.getProductInfo(qnaDto.getProductId());
             boardDto.setProductId(qnaDto.getProductId());
-
         }
 
         boardDto.setQnaId(qnaDto.getQnaId());
@@ -153,6 +161,8 @@ public class QnaController {
         int total = qnaService.getTotal();
         int before = qnaNo -1;
         int after = qnaNo +1;
+
+        ProductDto productInfo;
         /**
          * 넘겨줘서 처리해야하는 것들
          * 1.이전글, 이후글 제목과 링크
