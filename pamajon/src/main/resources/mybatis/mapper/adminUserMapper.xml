@@ -34,6 +34,15 @@
         <result property="orderDate" column="ORDER_DATE"/>
     </resultMap>
 
+    <resultMap id="ShipmentDetailResultSet" type="com.pamajon.admin.model.vo.ShipmentDetailDto">
+        <result property="orderId" column="ORDER_ID"/>
+        <result property="proImgName" column="PRO_IMG_NAME"/>
+        <result property="productName" column="PRODUCT_NAME"/>
+        <result property="productSize" column="P_SIZE"/>
+        <result property="productQuantity" column="SOLD_QUANTITY "/>
+        <result property="orderStatus" column="ORDER_STATUS"/>
+    </resultMap>
+
     <select id="getUser" parameterType="com.pamajon.admin.model.vo.AdminUser" resultMap="adminUser">
         SELECT
              ADMIN_ID
@@ -256,5 +265,36 @@
               ORDER BY
                   ORDER_DATE DESC
     </select>
+    
+    <select id="getOrderListDetail" resultMap="ShipmentDetailResultSet" parameterType="int">
+        SELECT
+            op.ORDER_ID AS ORDER_ID,
+            PRO_IMG_NAME AS PRO_IMG_NAME,
+            p.PRODUCT_NAME AS PRODUCT_NAME,
+            po.P_SIZE AS P_SIZE,
+            s.SOLD_QUANTITY AS SOLD_QUANTITY ,
+            op.ORDER_STATUS AS ORDER_STATUS
+        from SOLD s,
+             P_OPTION po,
+             PRODUCT p,
+             PRO_IMAGE pi2,
+             ORDER_P op
+        WHERE
+            1=1
+          AND
+             s.P_OPTION_ID = po.P_OPTION_ID
+          AND
+             po.PRODUCT_ID = p.PRODUCT_ID
+          AND
+             p.PRODUCT_ID = pi2.PRODUCT_ID
+          AND
+             op.ORDER_ID = s.ORDER_ID
+          AND
+             pi2.PRO_IMG_ISDEFAULT ='1'
+          AND
+             op.order_id=#{orderNo}
+    </select>
+
+
 
 </mapper>    

@@ -11,7 +11,7 @@
 <body>
 <div class="xans-element- xans-myshop xans-myshop-addrlist ec-base-layer">
     <div class="header">
-        <h1>배송 주소록 관리</h1>
+        <h1>결제내역 상세보기.</h1>
     </div>
     <div class="content">
         <div class="ec-base-help">
@@ -29,8 +29,6 @@
             <table id="addrTable" style="border-collapse: collapse; width: 760px;">
                 <thead class="head" >
                 <tr style="height: 40px;">
-                    <th  ><span class=""><input id="allCheck" onclick="checkAll()" value=""
-                                                type="checkbox"></span></th>
                     <th  style="width: 90px;">주소록 고정
                     </th>
                     <th style="width: 90px;">배송지명</th>
@@ -48,14 +46,14 @@
         </div>
     </div>
     <div class="ec-base-button 1" style="display: none; justify-content: center; margin-top: 15px;">
-        <img style="cursor: pointer; margin-right: 5px;" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_cancel.gif" alt="취소" onclick="listDisplay()">
-        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register2.gif" alt="등록" style="margin-right: 5px; cursor: pointer;" onclick="sendAddrToServer();">
+        <img style="cursor: pointer; margin-right: 5px;" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_cancel.gif" alt="취소" >
+        <img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register2.gif" alt="등록" style="margin-right: 5px; cursor: pointer;" >
     </div>
 
     <div class="ec-base-button 2" style="display: flex; justify-content: center; margin-top: 15px;">
         <img
                 src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_delete.gif"
-                onclick="deleteAddress()"
+
                 alt="선택 주소록 삭제"
                 style="margin-right: 5px; cursor: pointer">
         <img onclick="insertAddr('basic')" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"

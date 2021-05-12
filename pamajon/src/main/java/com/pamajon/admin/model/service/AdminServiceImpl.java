@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pamajon.admin.SetSearchParameterDtoFromJSON;
 import com.pamajon.admin.model.vo.AdminUser;
 import com.pamajon.admin.model.vo.SearchParameterDto;
+import com.pamajon.admin.model.vo.ShipmentDetailDto;
 import com.pamajon.admin.model.vo.ShipmentListDto;
 import com.pamajon.common.page.Pagination;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.common.vo.PageInfo;
 import com.pamajon.mapper.AdminMapper;
+import com.pamajon.order.model.vo.OrderDto;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +80,7 @@ public class AdminServiceImpl implements AdminService{
         //총 오더가 몇개인지 가져와야함.
         int listCount = adminMapper.getListCount();
 
-        return Pagination.getPageInfo(listCount,pageNum,10,30);
+        return Pagination.getPageInfo(listCount,pageNum,10,10);
     }
 
     @Override
@@ -114,7 +116,7 @@ public class AdminServiceImpl implements AdminService{
 
         //페이징 객체 생성
         int listCount = adminMapper.getShipmentListBySearchCount(searchParameterDto);
-        PageInfo pageInfo = Pagination.getPageInfo(listCount,searchParameterDto.getPageNum(),10,30);
+        PageInfo pageInfo = Pagination.getPageInfo(listCount,searchParameterDto.getPageNum(),10,10);
 
         //몇개의 데이터를 갖고올 것인지 결정하여 RowBounds 에 담음
         int offset = (pageInfo.getCurrentPage() - 1) * pageInfo.getBoardLimit();
@@ -124,6 +126,12 @@ public class AdminServiceImpl implements AdminService{
         getShipmentListBySearch.add(pageInfo);
 
         return getShipmentListBySearch;
+    }
+
+    @Override
+    public List<ShipmentDetailDto> getOrderListDetail(int orderNo) {
+
+        return adminMapper.getOrderListDetail(orderNo);
     }
 
 

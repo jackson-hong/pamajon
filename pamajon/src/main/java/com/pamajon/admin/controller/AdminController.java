@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pamajon.admin.model.service.AdminService;
 import com.pamajon.admin.model.vo.AdminUser;
 import com.pamajon.admin.model.vo.SearchParameterDto;
+import com.pamajon.admin.model.vo.ShipmentDetailDto;
 import com.pamajon.admin.model.vo.ShipmentListDto;
 import com.pamajon.common.page.Pagination;
 import com.pamajon.common.vo.PageInfo;
+import com.pamajon.order.model.vo.OrderDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -228,6 +231,22 @@ public class AdminController {
         return new ResponseEntity<>(adminService.getShipmentListBySearch(searchParameter),HttpStatus.OK);
 
     }
+    @PostMapping("/shipmentlistbypage")
+    public ResponseEntity<List<Object>> getShipmentListBySearchAndPage(@RequestParam String searchParameterByPage) throws JsonProcessingException {
+
+
+        return new ResponseEntity<>(adminService.getShipmentListBySearch(searchParameterByPage),HttpStatus.OK);
+
+    }
+    @GetMapping("/orderlist/{orderNo}")
+    public ModelAndView getOrderListDetailToPopup(@PathVariable int orderNo,ModelAndView mv){
+
+        List<ShipmentDetailDto> orderDtos = adminService.getOrderListDetail(orderNo);
+        mv.addObject("orderList",orderDtos);
+        mv.setViewName("admin/adminPopups/ShippingDetailPopup");
+        return mv;
+    }
+
 
 
 
