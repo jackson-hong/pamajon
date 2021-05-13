@@ -35,8 +35,8 @@ public class QnaController {
 
 
     //Q&A리스트 받아오기
-    @GetMapping("/list/{cPage}")
-    public ModelAndView qna(@PathVariable("cPage") int cPage,
+    @GetMapping("/list/{pageNum}")
+    public ModelAndView qna(@PathVariable("pageNum") int pageNum,
                             ModelAndView mv,
                             HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
 
@@ -46,9 +46,9 @@ public class QnaController {
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         int length = resultList.size();
-        PageInfo pageInfo;
+        PageInfo pageInfo = qnaService.getPages(pageNum);
 
-        String pagebar = PageFactory.getPageBar(length, cPage ,10);
+        String pageBar = PageFactory.getPageBar(length, pageNum ,10);
         //필요한 값들을 담아줌
         for(QnaDto qnaDto :resultList){
             BoardDto boardDto = new BoardDto();
@@ -71,6 +71,7 @@ public class QnaController {
         }
 
         mv.setViewName("board/qna");
+        mv.addObject("pageBar", pageBar);
         mv.addObject("resultList", boardDtoList);
         return mv;
     }

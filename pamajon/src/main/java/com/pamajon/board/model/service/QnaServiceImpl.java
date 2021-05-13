@@ -3,6 +3,8 @@ package com.pamajon.board.model.service;
 import com.pamajon.board.model.dao.QnaDao;
 import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
+import com.pamajon.common.page.Pagination;
+import com.pamajon.common.vo.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,4 +50,10 @@ public class QnaServiceImpl implements QnaService {
 
     @Override
     public int getTotal() { return dao.getTotal(session); }
+
+    @Override
+    public PageInfo getPages(Integer pageNum) {
+        int listCount = dao.getTotal(session);
+        return Pagination.getPageInfo(listCount,pageNum,10,10);
+    }
 }

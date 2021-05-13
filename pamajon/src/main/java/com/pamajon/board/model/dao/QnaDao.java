@@ -2,6 +2,7 @@ package com.pamajon.board.model.dao;
 
 import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
+import com.pamajon.common.vo.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 
 

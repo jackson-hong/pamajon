@@ -2,6 +2,7 @@ package com.pamajon.board.model.service;
 
 import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
+import com.pamajon.common.vo.PageInfo;
 
 import java.util.List;
 
@@ -20,5 +21,8 @@ public interface QnaService {
     String getWriterName(int userId);
     BoardDto getProductInfo(int productId);
 
+    //총 수를 체크
     int getTotal();
+
+    PageInfo getPages(Integer pageNum);
 }
