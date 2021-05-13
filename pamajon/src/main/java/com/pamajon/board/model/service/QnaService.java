@@ -23,6 +23,4 @@ public interface QnaService {
 
     //총 수를 체크
     int getTotal();
-
-    PageInfo getPages(Integer pageNum);
 }

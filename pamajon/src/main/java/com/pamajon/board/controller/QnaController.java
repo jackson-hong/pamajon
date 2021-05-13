@@ -44,11 +44,6 @@ public class QnaController {
         // 데이터 정제해서 표시할 객체 추가
 
         List<BoardDto> boardDtoList = new ArrayList<>();
-
-        int length = resultList.size();
-        PageInfo pageInfo = qnaService.getPages(pageNum);
-
-        String pageBar = PageFactory.getPageBar(length, pageNum ,10);
         //필요한 값들을 담아줌
         for(QnaDto qnaDto :resultList){
             BoardDto boardDto = new BoardDto();
@@ -69,6 +64,11 @@ public class QnaController {
             log.info(boardDto);
             boardDtoList.add(boardDto);
         }
+
+//Paging
+        int length = resultList.size();
+        boardDtoList =boardDtoList.subList((pageNum-1)*10, pageNum*10 > length ? length : pageNum*10);
+        String pageBar = PageFactory.getPageBar(length, pageNum ,10);
 
         mv.setViewName("board/qna");
         mv.addObject("pageBar", pageBar);
@@ -115,7 +115,7 @@ public class QnaController {
         qnaDto.setQnaPwd(pwd);
         qnaDto.setUserId(m.getUserId());
         qnaService.createQna(qnaDto);
-        mv.setViewName("redirect:/qna/list");
+        mv.setViewName("redirect:/qna/list/1");
         return mv;
     }
 

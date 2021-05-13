@@ -50,10 +50,4 @@ public class QnaServiceImpl implements QnaService {
 
     @Override
     public int getTotal() { return dao.getTotal(session); }
-
-    @Override
-    public PageInfo getPages(Integer pageNum) {
-        int listCount = dao.getTotal(session);
-        return Pagination.getPageInfo(listCount,pageNum,10,10);
-    }
 }

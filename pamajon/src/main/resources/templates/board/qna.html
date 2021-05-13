@@ -247,22 +247,7 @@
                 <input class="qnaWriteBtn" type="button" value="글쓰기" onclick="writeQna()" />
             </div>
 
-            <div id="paging">
-                <button class="page-btn" id="big-left"><<</button>
-                <button class="page-btn" id="left"><</button>
-                <button class="page-btn selected pageNum">1</button>
-                <button class="page-btn pageNum">2</button>
-                <button class="page-btn pageNum">3</button>
-                <button class="page-btn pageNum">4</button>
-                <button class="page-btn pageNum">5</button>
-                <button class="page-btn pageNum">6</button>
-                <button class="page-btn pageNum">7</button>
-                <button class="page-btn pageNum">8</button>
-                <button class="page-btn pageNum">9</button>
-                <button class="page-btn pageNum">10</button>
-                <button class="page-btn" id="right">></button>
-                <button class="page-btn" id="big-right">>></button>
-            </div>
+            <th:block th:utext="${pageBar}"></th:block>
 
 
             <div id="boardSearch">
