@@ -29,14 +29,12 @@
             <table id="addrTable" style="border-collapse: collapse; width: 760px;">
                 <thead class="head" >
                 <tr style="height: 40px;">
-                    <th  style="width: 90px;">주소록 고정
-                    </th>
-                    <th style="width: 90px;">배송지명</th>
-                    <th style="width: 90px;">수령인</th>
-                    <th style="width: 90px;">일반전화</th>
-                    <th style="width: 100px;"> 휴대전화</th>
-                    <th>주소</th>
-                    <th style="width: 80px;">배송지관리</th>
+                    <th style="width: 90px;">주문번호</th>
+                    <th style="width: 100px;">상품 이미지</th>
+                    <th style="width: 280px;">상품명</th>
+                    <th style="width: 80px;">주문수량</th>
+                    <th style="width: 100px;">가격</th>
+                    <th style="width: 100px;">배송상태</th>
                 </tr>
                 </thead>
                 <tbody class=" center">
@@ -51,13 +49,8 @@
     </div>
 
     <div class="ec-base-button 2" style="display: flex; justify-content: center; margin-top: 15px;">
-        <img
-                src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_delete.gif"
-
-                alt="선택 주소록 삭제"
-                style="margin-right: 5px; cursor: pointer">
-        <img onclick="insertAddr('basic')" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
-             alt="배송지 등록" style="cursor: pointer">
+        <img onclick="window.close()" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
+             alt="닫기" style="cursor: pointer">
     </div>
 </div>
 <input type="hidden" name="addrId" value="">

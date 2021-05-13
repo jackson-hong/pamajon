@@ -12,7 +12,7 @@
                 let $addrTable = $("#addrTable > tbody");
                 let str = "";
                 for (let i = 0; i < result.length; i++) {
-                    str += `  <tr class="xans-record-" style="height: 100px; border-bottom: 1px solid rgb(215, 213, 213);">
+                    str += `<tr class="xans-record-" style="height: 100px; border-bottom: 1px solid rgb(215, 213, 213);">
                         <td style="display: none">${result[i].addrId}</td>
                         <td><input name="ma_idx" value="${result[i].addrId}" type="checkbox" onclick="checkboxLengthCheck()"></td>`
                     if (result[i].addrStatus == "0") {

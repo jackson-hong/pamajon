@@ -26,8 +26,11 @@ public class AdminTest {
     @Test
     public void adminPagingTest() throws GeneralSecurityException, UnsupportedEncodingException, JsonProcessingException {
 
-        String searchParameter = "{pageNum=1, searchOption=ReceiverEmail, startDate=, endDate=, searchDateOptionCheckBox=checked, searchOrderValue=asd}";
-        adminService.getShipmentListBySearch(searchParameter);
+
+    }
+
+    @Test
+    public void decryptoMachine(){
 
 
     }

@@ -3,8 +3,8 @@
 $("#btn_shipp_addr").on('click',function (){
     window.open( "/order/addresslist",
                "주소입력창",
-             "width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes",
-             "_blank" );
+             "width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes"
+            );
 })
 $("input[name='shippingAddr']").on('click',function(){
 

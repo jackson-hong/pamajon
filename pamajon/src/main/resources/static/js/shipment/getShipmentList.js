@@ -243,8 +243,7 @@ function showupShipmentDetailPopup(node){
         window.open(
             `/admin/orderlist/${node.childNodes[1].innerHTML}`,
             "결제 상세내역",
-            "width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes",
-            "_blank"
+            "width=800, height=800, toolbar=no, menubar=no, scrollbars=no, resizable=yes"
         );
 
 }
