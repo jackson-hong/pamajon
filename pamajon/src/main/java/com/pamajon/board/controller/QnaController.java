@@ -184,7 +184,7 @@ public class QnaController {
             return mv;
         }
 
-        mv.setViewName("redirect:/qna/list");
+        mv.setViewName("redirect:/qna/list/1");
         return mv;
     }
 
