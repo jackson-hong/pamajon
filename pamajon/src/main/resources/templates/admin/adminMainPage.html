@@ -117,7 +117,7 @@
                             <div class="d-md-flex">
                                 <ul class="list-inline d-flex ml-auto">
                                     <li class="pl-3">
-                                        <h5><i class="fa fa-circle m-r-5 text-info"></i>Mac</h5>
+                                        <h5><i class="fa fa-circle m-r-5 text-info"></i>단위:원</h5>
                                     </li>
                          
                                 </ul>
@@ -129,78 +129,53 @@
                     </div>
                 </div>
                 <script>
-                    var ctx = document.getElementById('myChart');
-                var myChart = new Chart(ctx, { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug','Oct','Nov',"Dec"],
-                datasets: [{ label: '# of Votes', data: [5, 19, 3, 5, 2, 3,7,7,7,7,7,7],
-                backgroundColor: [ 'rgba(54, 162, 235, 0.2)',
-                                   'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'],
-                borderColor: [ 'rgba(54, 162, 235, 1)',
-                               'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(54, 162, 235, 1)',],
-                borderWidth: 1 }] }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } }); 
+
+
+
+                    $.ajax({
+                        url:"/admin/salesRate",
+                        type:"GET",
+                        success:function(result){
+
+                            let monthlyRate = [];
+
+                            for(let i = 0; i<result.length; i++){
+                                monthlyRate.push(result[i].total);
+                            }
+
+                            var ctx = document.getElementById('myChart');
+                            var myChart = new Chart(ctx, { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug','Oct','Nov',"Dec"],
+                                    datasets: [{ label: '월별 판매현황', data: monthlyRate,
+                                        backgroundColor: [ 'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'],
+                                        borderColor: [ 'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(54, 162, 235, 1)',],
+                                        borderWidth: 1 }] }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } });
+
+                        }
+                    })
+
                 </script>
-
-                <div class="row">
-                    <div class="col-md-12 col-lg-12 col-sm-12">
-                        <div class="white-box">
-                            <div class="d-md-flex mb-3">
-                                <h3 class="box-title mb-0">Recent sales</h3>
-                                <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
-                                    <select class="form-control row border-top">
-                                        <option>March 2017</option>
-                                        <option>April 2017</option>
-                                        <option>May 2017</option>
-                                        <option>June 2017</option>
-                                        <option>July 2017</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table no-wrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">이름</th>
-                                            <th class="border-top-0">상품코드</th>
-                                            <th class="border-top-0">날짜</th>
-                                            <th class="border-top-0">가격</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="txt-oflo">홍지운</td>
-                                            <td>KHQ1231LOQ</td>
-                                            <td class="txt-oflo">April 18, 2017</td>
-                                            <td><span class="text-success">$24</span></td>
-                                        </tr>
-                             
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>

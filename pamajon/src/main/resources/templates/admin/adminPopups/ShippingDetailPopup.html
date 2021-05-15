@@ -11,16 +11,16 @@
 <body>
 <div class="xans-element- xans-myshop xans-myshop-addrlist ec-base-layer">
     <div class="header">
-        <h1>결제내역 상세보기.</h1>
+        <h1>결제내역 상세보기</h1>
     </div>
     <div class="content">
         <div class="ec-base-help">
-            <h2>배송주소록 유의사항</h2>
+            <h2>배송 유의사항</h2>
             <div class="inner">
                 <ul>
-                    <li>배송 주소록은 최대 10개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
-                    <li>자동 업데이트를 원하지 않을 경우 주소록 고정 선택을 선택하시면 선택된 주소록은 업데이트 대상에서 제외됩니다.</li>
-                    <li>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
+                    <li>여기 들어갈 알맞은 말이.</li>
+                    <li>생각이 나지 않아 일단 임시로.</li>
+                    <li>작성 해놓음.</li>
                 </ul>
             </div>
         </div>
@@ -38,7 +38,39 @@
                 </tr>
                 </thead>
                 <tbody class=" center">
-
+                <tr th:each="orderList:${orderList}">
+                <td>
+                    <span>[</span>
+                    <span th:text="${orderList.orderId}">5017</span>
+                    <span>]</span>
+                </td>
+                <td><img width="100px" th:src="|@{/images/productImages/}${orderList.proImgName}|"></td>
+                <td>
+                    <span th:text="${orderList.productName}">ABCDEFasdasdasdasdasdasdasd</span><br/>
+                    <span>[</span>
+                    <span th:text="${orderList.productSize}"></span>
+                    <span>]</span>
+                </td>
+                <td>
+                    <span th:text="${orderList.productQuantity}">5</span>
+                </td>
+                <td>
+                    <span style="font-weight: bold; color: #0ba8ef">KRW</span><br>
+                    <span style="font-weight: bold; color: #0ba8ef" th:text="${#numbers.formatInteger((orderList.productPrice*orderList.productQuantity),3,'COMMA')}">56,000</span>
+                </td>
+                <th:block th:if="${orderList.orderStatus == '0'}">
+                <td><span>입금전</span></td>
+                </th:block>
+                <th:block th:if="${orderList.orderStatus == '1'}">
+                    <td><span>배송 준비중</span></td>
+                </th:block>
+                <th:block th:if="${orderList.orderStatus == '2'}">
+                    <td><span>배송중</span></td>
+                </th:block>
+                <th:block th:if="${orderList.orderStatus == '3'}">
+                    <td><span>배송완료</span></td>
+                </th:block>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -49,8 +81,7 @@
     </div>
 
     <div class="ec-base-button 2" style="display: flex; justify-content: center; margin-top: 15px;">
-        <img onclick="window.close()" src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_address_register.gif"
-             alt="닫기" style="cursor: pointer">
+        <button style="width: 100px; height: 30px;background-color: #495164; color: white; cursor: pointer;" onclick="window.close();">닫기</button>
     </div>
 </div>
 <input type="hidden" name="addrId" value="">

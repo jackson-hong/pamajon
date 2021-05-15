@@ -2,10 +2,7 @@ package com.pamajon.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pamajon.admin.model.service.AdminService;
-import com.pamajon.admin.model.vo.AdminUser;
-import com.pamajon.admin.model.vo.SearchParameterDto;
-import com.pamajon.admin.model.vo.ShipmentDetailDto;
-import com.pamajon.admin.model.vo.ShipmentListDto;
+import com.pamajon.admin.model.vo.*;
 import com.pamajon.common.page.Pagination;
 import com.pamajon.common.vo.PageInfo;
 import com.pamajon.order.model.vo.OrderDto;
@@ -226,14 +223,10 @@ public class AdminController {
 
     @PostMapping("/shipmentList")
     public ResponseEntity<List<Object>> getShipmentListBySearch(@RequestParam String searchParameter) throws JsonProcessingException {
-
-
         return new ResponseEntity<>(adminService.getShipmentListBySearch(searchParameter),HttpStatus.OK);
-
     }
     @PostMapping("/shipmentlistbypage")
     public ResponseEntity<List<Object>> getShipmentListBySearchAndPage(@RequestParam String searchParameterByPage) throws JsonProcessingException {
-
 
         return new ResponseEntity<>(adminService.getShipmentListBySearch(searchParameterByPage),HttpStatus.OK);
 
@@ -247,8 +240,11 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("/salesRate")
+    public ResponseEntity<List<MonthlyRateDto>> getMonthlySalesRate(){
 
-
+        return new ResponseEntity<>(adminService.getMonthlySalesRate(),HttpStatus.OK);
+    }
 
 
 }

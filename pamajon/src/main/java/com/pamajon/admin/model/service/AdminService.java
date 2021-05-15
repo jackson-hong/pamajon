@@ -2,6 +2,7 @@ package com.pamajon.admin.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pamajon.admin.model.vo.AdminUser;
+import com.pamajon.admin.model.vo.MonthlyRateDto;
 import com.pamajon.admin.model.vo.ShipmentDetailDto;
 import com.pamajon.common.vo.PageInfo;
 import com.pamajon.order.model.vo.OrderDto;
@@ -35,4 +36,6 @@ public interface AdminService {
     List<Object> getShipmentListBySearch(String searchParameter) throws JsonProcessingException;
 
     List<ShipmentDetailDto> getOrderListDetail(int orderNo);
+
+    List<MonthlyRateDto> getMonthlySalesRate();
 }
