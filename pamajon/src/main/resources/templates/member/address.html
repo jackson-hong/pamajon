@@ -209,9 +209,16 @@
                 <td>
                     <input class="addrCheck" th:value="${addr.getAddrId()}" type="checkbox">
                 </td>
+              <!-- 수정코드 2021-05-16 by 유호연 조건문 달아서 대표주소에만 버튼 보여지도록 수정 -->
+              <th:block th:if="${addr.addrStatus==false}">
                 <td>
                     <button class="addr-sm-btn">해제</button>
                 </td>
+                </th:block>
+                <th:block th:if="${addr.addrStatus==true}">
+                    <td>
+                    </td>
+                </th:block>
                 <td th:text="${addr.getAddrName()}">
                 </td>
                 <td th:text="${addr.getAddrReceiver()}">
