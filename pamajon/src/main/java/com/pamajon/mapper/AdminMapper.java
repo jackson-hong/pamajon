@@ -1,9 +1,6 @@
 package com.pamajon.mapper;
 
-import com.pamajon.admin.model.vo.AdminUser;
-import com.pamajon.admin.model.vo.SearchParameterDto;
-import com.pamajon.admin.model.vo.ShipmentDetailDto;
-import com.pamajon.admin.model.vo.ShipmentListDto;
+import com.pamajon.admin.model.vo.*;
 import com.pamajon.common.vo.PageInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -39,4 +36,6 @@ public interface AdminMapper {
     List<Object> getShipmentListBySearch(SearchParameterDto searchParameterDto,RowBounds rowBounds);
 
     List<ShipmentDetailDto> getOrderListDetail(int orderNo);
+
+    List<MonthlyRateDto> getMonthlySalesRate();
 }

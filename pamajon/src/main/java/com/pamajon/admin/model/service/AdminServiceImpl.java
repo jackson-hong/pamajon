@@ -2,25 +2,19 @@ package com.pamajon.admin.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pamajon.admin.AscendingInteger;
 import com.pamajon.admin.SetSearchParameterDtoFromJSON;
-import com.pamajon.admin.model.vo.AdminUser;
-import com.pamajon.admin.model.vo.SearchParameterDto;
-import com.pamajon.admin.model.vo.ShipmentDetailDto;
-import com.pamajon.admin.model.vo.ShipmentListDto;
+import com.pamajon.admin.model.vo.*;
 import com.pamajon.common.page.Pagination;
 import com.pamajon.common.security.AES256Util;
 import com.pamajon.common.vo.PageInfo;
 import com.pamajon.mapper.AdminMapper;
-import com.pamajon.order.model.vo.OrderDto;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -132,6 +126,30 @@ public class AdminServiceImpl implements AdminService{
     public List<ShipmentDetailDto> getOrderListDetail(int orderNo) {
 
         return adminMapper.getOrderListDetail(orderNo);
+    }
+
+    @Override
+    public List<MonthlyRateDto> getMonthlySalesRate() {
+
+        List<MonthlyRateDto> monthlyRateDtos = adminMapper.getMonthlySalesRate();
+
+        // 0월은 존재하지 않음. 가시성을 높이기 위하여 13까지 배열을 설정하며 0번 index 는 사용하지 않음.
+        boolean [] monthCheck = new boolean[13];
+
+        // 해당월에 해당하는 boolean 배열을 true 로 셋팅.
+        for(int i = 0; i<monthlyRateDtos.size() ;i++){
+            monthCheck[monthlyRateDtos.get(i).getMonth()] = true;
+        }
+        for(int i = 1 ; i<monthCheck.length; i++){
+
+            if(monthCheck[i]==false){
+                // 해당월 자료가 안넘어왔을시 0으로 셋팅
+                monthlyRateDtos.add(new MonthlyRateDto(i,0));
+            }
+        }
+        Collections.sort(monthlyRateDtos,new AscendingInteger());
+
+        return monthlyRateDtos;
     }
 
 

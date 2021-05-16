@@ -464,6 +464,7 @@ public class MemberController {
                 e.printStackTrace();
             }
         });
+        log.info(resultList.toString());
         mv.addObject("addrList", resultList);
         mv.setViewName("member/address");
         return mv;
@@ -545,8 +546,19 @@ public class MemberController {
         String addrZipcode = (String)map.get("addrZipcode");
         String addr = (String)map.get("addr");
         String addrDetail = (String)map.get("addrDetail");
-        boolean isDefault = false;
-        if((String)map.get("isDefault") != null && (String)map.get("isDefault") == "on")isDefault = true;
+     // 수정코드 -------------------------------------------- 2021-05-16 by 유호연
+     // 수정사유 DB 에 들어있는 대표주소 true flase 가 바뀌어있었음.
+        boolean isDefault=true;
+        //이 케이스는 사용자가 대표주소로 사용하겠다고 클릭을 하게된 케이스임.
+        if((String)map.get("isDefault") != null && ((String)map.get("isDefault")).equals("on")) {
+           //
+            isDefault = false;
+        }
+      // 기존코드 -------------------------------------------- 2021-05-16 by 유호연
+     /*   boolean isDefault = false;
+        if((String)map.get("isDefault") != null && (String)map.get("isDefault") == "on")isDefault = true;*/
+      // 기존코드 --------------------------------------------
+
 
         //암호화
         addrPhone = aes.encrypt(addrPhone);
@@ -568,6 +580,7 @@ public class MemberController {
         memberAddr.setAddrDetail(addrDetail);
         memberAddr.setAddrStatus(isDefault);
 
+        log.info(memberAddr.toString());
         int result = service.addrInsert(memberAddr);
 
         if(result == 0) return msg(mv,"관리자에게 문의하세요","/member/myPage");

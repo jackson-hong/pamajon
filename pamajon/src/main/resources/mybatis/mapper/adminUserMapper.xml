@@ -39,8 +39,14 @@
         <result property="proImgName" column="PRO_IMG_NAME"/>
         <result property="productName" column="PRODUCT_NAME"/>
         <result property="productSize" column="P_SIZE"/>
-        <result property="productQuantity" column="SOLD_QUANTITY "/>
+        <result property="productQuantity" column="SOLD_QUANTITY"/>
         <result property="orderStatus" column="ORDER_STATUS"/>
+        <result property="productPrice" column="PRODUCT_PRICE"/>
+    </resultMap>
+
+    <resultMap id="monthlyRateResultSet" type="com.pamajon.admin.model.vo.MonthlyRateDto">
+        <result property="month" column="MONTH"/>
+        <result property="total" column="TOTAL"/>
     </resultMap>
 
     <select id="getUser" parameterType="com.pamajon.admin.model.vo.AdminUser" resultMap="adminUser">
@@ -272,8 +278,9 @@
             PRO_IMG_NAME AS PRO_IMG_NAME,
             p.PRODUCT_NAME AS PRODUCT_NAME,
             po.P_SIZE AS P_SIZE,
-            s.SOLD_QUANTITY AS SOLD_QUANTITY ,
-            op.ORDER_STATUS AS ORDER_STATUS
+            s.SOLD_QUANTITY AS SOLD_QUANTITY,
+            op.ORDER_STATUS AS ORDER_STATUS,
+            p.PRODUCT_PRICE AS PRODUCT_PRICE
         from SOLD s,
              P_OPTION po,
              PRODUCT p,
@@ -295,6 +302,18 @@
              op.order_id=#{orderNo}
     </select>
 
-
+    <!-- 월별 합계 쿼리문 -->
+    <select id="getMonthlySalesRate" resultMap="monthlyRateResultSet">
+        SELECT
+            MONTH(ORDER_DATE) AS `MONTH`,
+            SUM(ORDER_PURCHASE) AS `TOTAL`
+        FROM
+            ORDER_P op
+        WHERE
+            1=1
+          AND
+            DATE_FORMAT(ORDER_DATE,'%Y') = DATE_FORMAT(NOW(),'%Y')
+        GROUP BY `MONTH`
+    </select>
 
 </mapper>    

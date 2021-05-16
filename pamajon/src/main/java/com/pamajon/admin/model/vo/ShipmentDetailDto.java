@@ -14,6 +14,7 @@ public class ShipmentDetailDto {
     private String proImgName;
     private String productName;
     private String productSize;
-    private String productQuantity;
+    private int productQuantity;
     private String orderStatus;
+    private int productPrice;
 }
