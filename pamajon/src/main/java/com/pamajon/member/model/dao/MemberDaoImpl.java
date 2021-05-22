@@ -125,4 +125,9 @@ public class MemberDaoImpl implements MemberDao{
     public int updateCurrentLoginTime(SqlSession session, Member m) {
         return session.update("member.updateCurrentLoginTime",m);
     }
+
+    @Override
+    public int updateLoiginCount(SqlSession session, Member m) {
+        return session.update("member.updateLoiginCount",m);
+    }
 }

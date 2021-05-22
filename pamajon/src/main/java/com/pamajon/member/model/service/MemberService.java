@@ -31,4 +31,5 @@ public interface MemberService {
     int wishDelete(Map map);
     List<Map> memberOrderList(Map map);
     int updateCurrentLoginTime(Member m);
+    int updateLoiginCount(Member m);
 }
