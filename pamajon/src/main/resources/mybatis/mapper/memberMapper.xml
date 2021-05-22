@@ -161,6 +161,15 @@
           AND ORDER_DATE BETWEEN #{startDate} AND #{endDate};
     </select>
     
+    <update id="updateCurrentLoginTime" parameterType="com.pamajon.member.model.vo.Member">
+        UPDATE TABLE
+                    MEMBER
+                 SET
+                    MEM_LAST_LOGIN_DATE = DATE_FORMAT(NOW()+INTERVAL 9 hour, '%Y-%m-%d %H:%m')
+               WHERE
+                    USER_ID=#{userId}
+    </update>
+    
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">
         <result property="userId" column="USER_ID"/>
         <result property="memName" column="MEM_NAME"/>

@@ -126,4 +126,9 @@ public class MemberServiceImpl implements MemberService{
         return dao.memberOrderList(session, map);
     }
 
+    @Override
+    public int updateCurrentLoginTime(Member m) { return dao.updateCurrentLoginTime(session,m);
+
+    }
+
 }

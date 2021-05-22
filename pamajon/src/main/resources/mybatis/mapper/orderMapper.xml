@@ -34,7 +34,9 @@
             ON
         M.USER_ID = AL.USER_ID
         WHERE
-            AL.USER_ID =${userNo}
+            AL.USER_ID =#{userNo}
+          AND
+            AL.ADDR_STATUS!='3'
     </select>
 
     <select id="regularCheck" parameterType="integer" resultType="integer">
@@ -42,7 +44,7 @@
             COUNT(*)
         FROM ADDRESS_LIST AL
         WHERE
-            USER_ID=${userNo}
+            USER_ID=#{userNo}
           AND
             ADDR_STATUS ='0';
     </select>
@@ -72,14 +74,16 @@
 
     </insert>
 
-    <delete id="deleteAddress" parameterType="hashmap">
-        DELETE
-        FROM ADDRESS_LIST
+    <update id="deleteAddress" parameterType="hashmap">
+        UPDATE
+             ADDRESS_LIST
+          SET
+             ADDR_STATUS='3'
         WHERE
         <foreach collection="addrList" item="type" index="index" separator="OR">
             (USER_ID = #{userNo} AND ADDR_ID = #{type})
         </foreach>
-    </delete>
+    </update>
 
     <update id="updateAddress" parameterType="com.pamajon.order.model.vo.AddressDto">
         UPDATE
@@ -106,7 +110,9 @@
         FROM
             ADDRESS_LIST
         WHERE
-            ADDR_ID =${addrNo}
+            ADDR_ID =#{addrNo}
+         AND
+            ADDR_STATUS!='3'
     </select>
     <update id="modifyAddress" parameterType="com.pamajon.order.model.vo.AddressDto">
         UPDATE
@@ -139,7 +145,7 @@
         FROM
             ADDRESS_LIST
         WHERE
-            USER_ID =${userNo}
+            USER_ID =#{userNo}
           AND
             ADDR_STATUS='0'
     </select>

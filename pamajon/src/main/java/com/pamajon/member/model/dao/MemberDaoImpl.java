@@ -120,4 +120,9 @@ public class MemberDaoImpl implements MemberDao{
     public List<Map> memberOrderList(SqlSession session, Map map) {
         return session.selectList("member.memberOrderList", map);
     }
+
+    @Override
+    public int updateCurrentLoginTime(SqlSession session, Member m) {
+        return session.update("member.updateCurrentLoginTime",m);
+    }
 }
