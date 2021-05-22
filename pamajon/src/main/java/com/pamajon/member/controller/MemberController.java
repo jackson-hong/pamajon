@@ -214,6 +214,11 @@ public class MemberController {
         m.setIsSocial(isSocial);
         HttpSession sess = req.getSession();
         sess.setAttribute("loginMember",m);
+
+        /*------ 2021-05-22 로그인 했을 시 로그인 카운트 +1 , 최종 로그인 시간 업데이트 기능 추가  By 유호연  -------*/
+
+            int updateCurrentLoginTimeChecker = service.updateCurrentLoginTime(m);
+
         mv.setViewName("redirect:/member/myPage");
         return mv;
     }

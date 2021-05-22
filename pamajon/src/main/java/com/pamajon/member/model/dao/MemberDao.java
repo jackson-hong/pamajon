@@ -30,4 +30,5 @@ public interface MemberDao {
     List<Map> selectProductsForWish(SqlSession session, List<Integer> wishList);
     int wishDelete(SqlSession session, Map map);
     List<Map> memberOrderList(SqlSession session, Map map);
+    int updateCurrentLoginTime(SqlSession session, Member m);
 }

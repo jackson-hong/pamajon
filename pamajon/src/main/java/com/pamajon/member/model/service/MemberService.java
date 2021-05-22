@@ -30,4 +30,5 @@ public interface MemberService {
     List<Map> selectProductsForWish(List<Integer> wishList);
     int wishDelete(Map map);
     List<Map> memberOrderList(Map map);
+    int updateCurrentLoginTime(Member m);
 }
