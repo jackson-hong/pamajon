@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+    <resultMap id="memberResultSet" type="com.pamajon.pamajonUserBatchProject.schdeuling.model.vo.Member">
+        <result property="userId" column="USER_ID"/>
+        <result property="lastLoginDate" column="MEM_LAST_LOGIN_DATE"/>
+        <result property="memGrade" column="MEM_GRADE"/>
+        <result property="memStatus" column="MEM_STATUS"/>
+    </resultMap>
+
+    <select id="modifyUserStatus" resultMap="memberResultSet" parameterType="hashmap">
+        SELECT USER_ID
+        FROM
+            (
+                SELECT
+                      USER_ID,
+                      ROW_NUMBER() OVER() AS ROWNUM
+                  FROM
+                      MEMBER
+                 WHERE
+                      DATEDIFF(DATE_FORMAT(NOW(),'%Y%m%d'),DATE_FORMAT(MEM_LAST_LOGIN_DATE ,'%Y%m%d'))>=180
+                  AND
+                      MEM_STATUS=='0'
+            )AA
+        WHERE ROWNUM BETWEEN #{start} AND #{end}
+    </select>
+
+    <update id="updateUserStatus" parameterType="java.util.List">
+        UPDATE
+              MEMBER
+           SET
+              MEM_GRADE='휴면계정',
+              MEM_STATUS='2'
+         WHERE
+              1=1
+           AND
+            <foreach collection="list" item="element" index="index" open="(" close=")" separator="OR">
+                USER_ID = #{element.userId}
+            </foreach>
+    </update>
+    <insert id="exceptionLogUpdate" parameterType="hashmap">
+        INSERT
+              INTO
+                  BATCH_EXCEPTION_METADATA
+            VALUES
+                  (
+                      NEXTVAL(SEQ_EXCEPTION),
+                     ,#{content}
+                     ,NOW()
+                     ,#{class}
+                     ,#{applicationName}
+                  )
+
+    </insert>
+
+
+
+
+</mapper>    
