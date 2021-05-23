@@ -178,31 +178,32 @@
 <div id="wrapper">
     <div id="board-wrapper">
 
-        <form method="POST" id="qna-fm" th:action="@{/qna/write/}">
+        <form method="POST" id="qna-fm" th:action="@{/qna/edit}">
             <table class="insertQnaTable">
+                <tr class="tablefloor" hidden>
+                    <td class="explanation_wrapper">수정 번호</td>
+                    <td class="userInput">
+                        <input type="text" class="form-control textType" id="qnaId" name="qnaId" placeholder="QNA 제목을 적어주세요." th:value="${qna.getQnaId()}">
+                    </td>
+                </tr>
+
                 <tr class="tablefloor">
                     <td class="explanation_wrapper">제목</td>
                     <td class="userInput">
-                        <input type="text" class="form-control textType" id="qnaTitle" name="qnaTitle" placeholder="QNA 제목을 적어주세요.">
+                        <input type="text" class="form-control textType" id="qnaTitle" name="qnaTitle" placeholder="QNA 제목을 적어주세요." th:value="${qna.getQnaTitle()}">
                     </td>
                 </tr>
                 <tr class="tablefloor">
                     <td class="explanation_wrapper">이름</td>
                     <td class="userInput">
-                        <input type="text" class="form-control textType" id=memName name="memberName" th:value="${writerName}" disabled>
-                    </td>
-                </tr>
-                <tr class="tablefloor" hidden="hidden">
-                    <td class="explanation_wrapper">이름</td>
-                    <td class="userInput">
-                        <input type="text" class="form-control textType" id=userId name="userId" th:value="${userId}">
+                        <input type="text" class="form-control textType" id=memName name="memberName" th:value="${qna.getMemName()}" disabled>
                     </td>
                 </tr>
 
                 <tr class="tablefloor">
                     <td class="explanation_wrapper">*질문내용</td>
                     <td class="userInput resize_textarea">
-                        <textarea name="qnaContent" id="editor1"></textarea>
+                        <textarea name="qnaContent" id="editor1" th:utext="${qna.getQnaContent()}"></textarea>
                     </td>
                 </tr>
 
@@ -234,6 +235,6 @@
 
 <th:block th:replace="common/footer.html"></th:block>
 <script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/CKEDITOR.js}"></script>
-<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/boardMethod.js}"></script>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/qnaMethod.js}"></script>
 </body>
 </html>

@@ -329,16 +329,16 @@
 </div>
 <div id="wrapper">
     <div id="board-wrapper">
-        <div class="product-wrapper hasProduct">
-            <div class="product-img-box">
-                <a href="/pamajon/board/detailView"> <img class="product-img-content" th:src="@{/images/new6.jpg}"></a>
-            </div>
-            <div class="product-info-box">
-                <a href="/pamajon/board/detailView"> <p class="productName"> REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511) </p> </a>
-                <p class="productPrice">KRW 999,000</p>
-                <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_prd_detail.gif}" alt="상품상세보기"/></a>
-            </div>
-        </div>
+<!--        <div class="product-wrapper hasProduct">-->
+<!--            <div class="product-img-box">-->
+<!--                <a href="/pamajon/board/detailView"> <img class="product-img-content" th:src="@{/images/new6.jpg}"></a>-->
+<!--            </div>-->
+<!--            <div class="product-info-box">-->
+<!--                <a href="/pamajon/board/detailView"> <p class="productName"> REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511) </p> </a>-->
+<!--                <p class="productPrice">KRW 999,000</p>-->
+<!--                <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_prd_detail.gif}" alt="상품상세보기"/></a>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
         <div id="contentBox">
@@ -355,21 +355,18 @@
                     <td class="qnaTitle" th:text="${qna.getQnaTitle()}"></td>
                 </tr>
                 <th scope="row">작성자</th>
-                <td class="qnaMember" th:text="${qna.getMemName()}">
-                        <span class="qnaDetailBtns">
-                        <a onclick="delete"><img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
-                        <a onclick=""><img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
-                        </span>
-
-                </td>
+                <td class="qnaMember" th:text="${qna.getMemName()}"></td>
                 <tr>
                     <td colspan="2">
                         <div class="content-info">
                             <strong>작성일</strong>
                             <span class="qnaDate" th:text="${qna.getQnaModifyDate()}"></span>
+                <span class="qnaDetailBtns">
+                    <a onclick="modifyQna()">   <img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
+                    <a onclick="deleteQna()" ><img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
+                </span>
                         </div>
                         <div class="content-detail" th:utext="${qna.getQnaContent()}">
-
                         </div>
                     </td>
                 </tr>
@@ -379,106 +376,107 @@
 
         <div class ="btnsWrapper">
             <span class="listbtnWrapper">
-                <a href="/pamajon/board/qna"><img th:src="@{/images/board/btn_list.gif}" alt="목록"/></a>
+                <a onclick="gotoQnaList()"><img th:src="@{/images/board/btn_list.gif}" alt="목록"/></a>
             </span>
             <span class="answerbtnWrapper">
-                <a href="/pamajon/board/detailView"><img th:src="@{/images/board/btn_reply.gif}" alt="답변"/></a>
+                <a href="writeQnaAnswer()"><img th:src="@{/images/board/btn_reply.gif}" alt="답변"/></a>
             </span>
         </div>
 
-        <div class="comment-box">
-            <div class="comment-user-detail">
-                <div class="comment-user-name-and-date">
-                    <span class="commentUserName">김****</span>
-                    <span class="commentDate">2021-02-02 10:31:35</span>
-                </div>
-                <div class="comment-user-btns">
-                    <img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>
-                    <img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>
-                </div>
-            </div>
-            <div class="comment-detail">
-                1111
-            </div>
+<!--        <div class="comment-box">-->
+<!--            <div class="comment-user-detail">-->
+<!--                <div class="comment-user-name-and-date">-->
+<!--                    <span class="commentUserName">김****</span>-->
+<!--                    <span class="commentDate">2021-02-02 10:31:35</span>-->
+<!--                </div>-->
+<!--                <div class="comment-user-btns">-->
+<!--                    <img th:src="@{/images/board/btn_ico_modify.gif}" alt="수정"/></a>-->
+<!--                    <img th:src="@{/images/board/btn_ico_delete.gif}" alt="삭제"/></a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="comment-detail">-->
+<!--                1111-->
+<!--            </div>-->
 
 
-        </div>
+<!--        </div>-->
 
-        <div class="replyBox">
-            <fieldset>
-                <div class="replyInput">
-                    <form method="post" action="">
-                        <h3>댓글달기</h3>
-                        <label>이름 : </label>
-                        <input class="replyName" type="text" value="사용자이름">
-                        <label>비밀번호 : </label>
-                        <input class="replyPwd" type="password" value="password">
-                        <div class="comment-content">
-                            <textarea id="comment" name="comment" label="댓글내용"></textarea>
-                            <a href="" class="submitImg" id="commentFormSubmit"><img th:src="@{/images/board/btn_comment_submit.gif}" alt="답변"/></a>
-                        </div>
-                    </form>
-                </div>
-            </fieldset>
+<!--        <div class="replyBox">-->
+<!--            <fieldset>-->
+<!--                <div class="replyInput">-->
+<!--                    <form method="post" action="">-->
+<!--                        <h3>댓글달기</h3>-->
+<!--                        <label>이름 : </label>-->
+<!--                        <input class="replyName" type="text" value="사용자이름">-->
+<!--                        <label>비밀번호 : </label>-->
+<!--                        <input class="replyPwd" type="password" value="password">-->
+<!--                        <div class="comment-content">-->
+<!--                            <textarea id="comment" name="comment" label="댓글내용"></textarea>-->
+<!--                            <a href="" class="submitImg" id="commentFormSubmit"><img th:src="@{/images/board/btn_comment_submit.gif}" alt="답변"/></a>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </fieldset>-->
+<!--        </div>-->
 
-        </div>
-
-        <div class="boardList">
-            <table class="contentTable" border="1">
-                <colgroup>
-                    <col style = "width: 130px;">
-                    <col style = "width: auto;">
-                </colgroup>
-                <tbody class="beforeAndAfter">
-                <tr>
-                    <th scope="row">이전글보기</th>
-                    <td class="qnaBefore"><a href="" class="linkQnaBefore"> 주문 취소 문의 드립니다.</a></td>
-                </tr>
-                <th scope="row">다음글보기</th>
-                <td class="qnaAfter"><a href="" class="linkQnaAfter"> 배송이 됐나요?</a></td>
-                </tbody>
-            </table>
-        </div>
+<!--        <div class="boardList">-->
+<!--            <table class="contentTable" border="1">-->
+<!--                <colgroup>-->
+<!--                    <col style = "width: 130px;">-->
+<!--                    <col style = "width: auto;">-->
+<!--                </colgroup>-->
+<!--                <tbody class="beforeAndAfter">-->
+<!--                <tr>-->
+<!--                    <th scope="row">이전글보기</th>-->
+<!--                    <td class="qnaBefore"><a href="" class="linkQnaBefore"> 주문 취소 문의 드립니다.</a></td>-->
+<!--                </tr>-->
+<!--                <th scope="row">다음글보기</th>-->
+<!--                <td class="qnaAfter"><a href="" class="linkQnaAfter"> 배송이 됐나요?</a></td>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
 
-        <div id="relatedBox hasProduct">
-            <h3>관련 글 보기</h3>
-            <table border="1">
-                <tr>
-                    <th class="qna-PostNum">번호</th>
-                    <th class="qna-PostOption">상품정보</th>
-                    <th class="qna-PostTitle">제목</th>
-                    <th class="qna-UserName">작성자</th>
-                    <th class="qna-PostDate">작성일</th>
-                    <th class="qna-PostViewCount">조회</th>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="qnaPostNum">2313</p>
-                    </td>
-                    <td class="QnaOptionBox">
-                        <p class="qnaPostOption">
-                            REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)
-                        </p>
-                    </td>
-                    <td class="qnaTitleAlign">
-                        <a class="qnaPostTitle" href="">배송 줜나 느리네</a>
-                    </td>
-                    <td>
-                        <p class="qnaUserName">홍**</p>
-                    </td>
-                    <td>
-                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>
-                    </td>
-                    <td>
-                        <P CLASS="qnaPostViewCount">10</P>
-                    </td>
-                </tr>
-            </table>
-        </div>
+<!--        <div id="relatedBox hasProduct">-->
+<!--            <h3>관련 글 보기</h3>-->
+<!--            <table border="1">-->
+<!--                <tr>-->
+<!--                    <th class="qna-PostNum">번호</th>-->
+<!--                    <th class="qna-PostOption">상품정보</th>-->
+<!--                    <th class="qna-PostTitle">제목</th>-->
+<!--                    <th class="qna-UserName">작성자</th>-->
+<!--                    <th class="qna-PostDate">작성일</th>-->
+<!--                    <th class="qna-PostViewCount">조회</th>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <p class="qnaPostNum">2313</p>-->
+<!--                    </td>-->
+<!--                    <td class="QnaOptionBox">-->
+<!--                        <p class="qnaPostOption">-->
+<!--                            REVERSWAVE PRINTED SWEATSHIRTS - WHITE (BR8511)-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td class="qnaTitleAlign">-->
+<!--                        <a class="qnaPostTitle" href="">배송 줜나 느리네</a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <p class="qnaUserName">홍**</p>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <p class="qnaPostDate">2021-01-23<br/> 13:13:13</p>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <P CLASS="qnaPostViewCount">10</P>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
     </div>
 </div>
+<input hidden="hidden" id="qnaNum" th:value="${qna.getQnaId()}">
 <th:block th:replace="common/footer.html"></th:block>
+<script src="../../static/js/ckeditor/ckeditor.js" th:src="@{/js/board/qnaMethod.js}"></script>
 </body>
 <script>
 </script>

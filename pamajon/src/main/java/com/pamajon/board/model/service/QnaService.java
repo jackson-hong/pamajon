@@ -14,7 +14,7 @@ public interface QnaService {
     //Qna CRUD
     int createQna(QnaDto qnaDto);
     QnaDto readQna(int qnaId);
-    int updateQna(int qnaid);
+    int updateQna(QnaDto qnaDto);
     int deleteQna(int qnaId);
 
 

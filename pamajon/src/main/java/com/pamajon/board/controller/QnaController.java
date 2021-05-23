@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class QnaController {
         mv.addObject("resultList", boardDtoList);
         return mv;
     }
+
     @RequestMapping("/write")
     public ModelAndView qnaWrite(ModelAndView mv, HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
         if(request.getSession().getAttribute("loginMember")==null){
@@ -120,16 +122,22 @@ public class QnaController {
     }
 
 
-    //비밀글일경우 거치는 페이지
-    @RequestMapping("/secret/{qnaNo}")
-    public ModelAndView qnaSecret(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
-        mv.setViewName("board/qnaSecret");
-        return mv; }
-
-    public ModelAndView qnaSecret(ModelAndView mv){
-        mv.setViewName("board/qnaSecret");
-        return mv;
-    }
+//    //비밀글일경우 거치는 페이지
+//    @RequestMapping("/secret/{qnaNo}")
+//    public ModelAndView qnaSecret(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
+//        mv.setViewName("board/qnaSecret");
+//        return mv; }
+//
+//    @RequestMapping("/secret/view/{qnaNo}")
+//    public ModelAndView qnaSecret(HttpServletRequest request, ModelAndView mv, @PathVariable("qnaNo") int qnaNo,@PathVariable("qnaPwd") String qnaPwd){
+//
+//        if(request.getSession().getAttribute("adminUser") != null){
+//            mv.setViewName("board/qnaDetail");
+//            return mv;
+//        }
+//        mv.setViewName("board/qnaSecret");
+//        return mv;
+//    }
 
     @GetMapping("/view/{qnaNo}")
     public ModelAndView qnaDetail(ModelAndView mv, @PathVariable("qnaNo") int qnaNo) throws GeneralSecurityException, UnsupportedEncodingException {
@@ -163,36 +171,54 @@ public class QnaController {
         int before = qnaNo -1;
         int after = qnaNo +1;
 
+        if(after > total){
+            after = -1;
+        }
+
+        if(before < 0){
+
+        }
+
         ProductDto productInfo;
         /**
          * 넘겨줘서 처리해야하는 것들
          * 1.이전글, 이후글 제목과 링크
          * 2.연관된 상품이 있을 경우, 그 상품에 대한 정보, 가격, 링크
          * 3.같은 상품에 대한 질문들모음
-         *
-         * 추후, 댓글 추가
          */
+
+
         return mv; }
 
     @GetMapping("/delete/{qnaNo}")
-    public ModelAndView qnaDelete(ModelAndView mv, @RequestParam int qnaNo){
+    public ModelAndView qnaDelete(ModelAndView mv, @PathVariable("qnaNo") int qnaNo){
         log.info("proceed Delete > Board No:" + qnaNo +"<");
         int result  = qnaService.deleteQna(qnaNo);
 
-        if(result ==0){
+        if(result == 0){
             mv.setStatus(HttpStatus.BAD_REQUEST);
             return mv;
         }
-
+        mv.addObject("message", qnaNo+"번 글을 삭제했습니다.");
         mv.setViewName("redirect:/qna/list/1");
         return mv;
     }
 
     @GetMapping("/edit/{qnaNo}")
-    public ModelAndView qnaModify(ModelAndView mv, @RequestParam int qnaNo) throws GeneralSecurityException, UnsupportedEncodingException {
+    public ModelAndView qnaModify(ModelAndView mv, @PathVariable("qnaNo") int qnaNo, HttpServletRequest request) throws GeneralSecurityException, UnsupportedEncodingException {
+
+        if(request.getSession().getAttribute("loginMember")==null){
+            mv.addObject("warningMessage","로그인이 필요한 서비스입니다.");
+            mv.setViewName("member/login");
+            return mv;
+        }
+        // 세션 가지고 오기
+        Member m = (Member) request.getSession().getAttribute("loginMember");
+        log.info(m);
+
+
         log.info("proceed Modify > Board No:" + qnaNo +"<");
         QnaDto qnaDto = qnaService.readQna(qnaNo);
-
         log.info(qnaDto);
         BoardDto boardDto = new BoardDto();
         log.info(boardDto);
@@ -215,6 +241,26 @@ public class QnaController {
 
         mv.addObject("qna" , boardDto);
         mv.setViewName("board/qnaEdit");
+        return mv;
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView updateQna(ModelAndView mv,
+                                  QnaDto qnaDto,
+                                  HttpServletRequest request){
+
+        if(request.getSession().getAttribute("loginMember")==null){
+            mv.addObject("warningMessage","로그인이 필요한 서비스입니다.");
+            mv.setViewName("member/login");
+            return mv;
+        }
+        // 세션 가지고 오기
+        Member m = (Member) request.getSession().getAttribute("loginMember");
+        log.info(qnaDto);
+        log.info(m);
+        qnaDto.setUserId(m.getUserId());
+        qnaService.updateQna(qnaDto);
+        mv.setViewName("redirect:/qna/view/" + qnaDto.getQnaId());
         return mv;
     }
 }

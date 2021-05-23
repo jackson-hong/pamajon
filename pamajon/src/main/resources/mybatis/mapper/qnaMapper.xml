@@ -45,7 +45,7 @@
             QNA_ID = #{qnaId}
     </select>
 
-    <update id="updateQna" parameterType="integer">
+    <update id="updateQna" parameterType="com.pamajon.board.model.vo.QnaDto">
         UPDATE
             QNA
         SET
@@ -54,12 +54,7 @@
             QNA_STATUS = #{qnaStatus},
             QNA_MODIFY_DATE = SYSDATE()
         WHERE
-            QNA_TITLE,
-            QNA_CONTENT,
-            QNA_STATUS
-        WHERE
             QNA_ID = #{qnaId}
-
     </update>
 
     <delete id="deleteQna" parameterType="integer">
