@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.pamajon.common.page.PageFactory;
 import com.pamajon.common.security.AES256Util;
+import com.pamajon.customexception.exceptionclass.UserCountUpdateFailedException;
+import com.pamajon.customexception.exceptionclass.UserCurrentDateUpdateFailedException;
 import com.pamajon.member.model.service.MemberService;
 import com.pamajon.member.model.service.MemberServiceImpl;
 import com.pamajon.member.model.vo.Member;
@@ -137,8 +139,23 @@ public class MemberController {
         loginMember.setMemEmail(email);
         loginMember.setIsSocial(1);
         log.info("*****KAKAOLOGIN*****: " + loginMember);
-
         sess.setAttribute("loginMember", loginMember);
+
+        /*------ 2021-05-22 로그인 했을 시 로그인 카운트 +1 , 최종 로그인 시간 업데이트 기능 추가  By 유호연  -------*/
+        try{
+            service.updateCurrentLoginTime(loginMember);
+        } catch (UserCurrentDateUpdateFailedException e){
+            new UserCurrentDateUpdateFailedException(String.format("해당 ID[%s] 로 날짜 업데이트 를 실패하였습니다.", loginMember.getUserId()));
+        }
+
+        try{
+            service.updateLoiginCount(loginMember);
+        } catch (UserCountUpdateFailedException e){
+            new UserCountUpdateFailedException(String.format("해당 ID[%s] 로 카운트 +1 작업에 실패하였습니다.", loginMember.getUserId()));
+        }
+        /*------ 2021-05-22 로그인 했을 시 로그인 카운트 +1 , 최종 로그인 시간 업데이트 기능 추가  By 유호연  -------*/
+
+
         return "EXIST";
     }
 
@@ -216,8 +233,18 @@ public class MemberController {
         sess.setAttribute("loginMember",m);
 
         /*------ 2021-05-22 로그인 했을 시 로그인 카운트 +1 , 최종 로그인 시간 업데이트 기능 추가  By 유호연  -------*/
+            try{
+                service.updateCurrentLoginTime(m);
+            } catch (UserCurrentDateUpdateFailedException e){
+                new UserCurrentDateUpdateFailedException(String.format("해당 ID[%s] 로 날짜 업데이트 를 실패하였습니다.", m.getUserId()));
+            }
 
-            int updateCurrentLoginTimeChecker = service.updateCurrentLoginTime(m);
+            try{
+                service.updateLoiginCount(m);
+            } catch (UserCountUpdateFailedException e){
+                new UserCountUpdateFailedException(String.format("해당 ID[%s] 로 카운트 +1 작업에 실패하였습니다.", m.getUserId()));
+            }
+        /*------ 2021-05-22 로그인 했을 시 로그인 카운트 +1 , 최종 로그인 시간 업데이트 기능 추가  By 유호연  -------*/
 
         mv.setViewName("redirect:/member/myPage");
         return mv;

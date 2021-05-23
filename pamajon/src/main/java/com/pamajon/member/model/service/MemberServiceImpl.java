@@ -131,4 +131,9 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
+    @Override
+    public int updateLoiginCount(Member m) {
+        return dao.updateLoiginCount(session,m);
+    }
+
 }

@@ -162,12 +162,35 @@
     </select>
     
     <update id="updateCurrentLoginTime" parameterType="com.pamajon.member.model.vo.Member">
-        UPDATE TABLE
+        UPDATE
                     MEMBER
                  SET
-                    MEM_LAST_LOGIN_DATE = DATE_FORMAT(NOW()+INTERVAL 9 hour, '%Y-%m-%d %H:%m')
+                    MEM_LAST_LOGIN_DATE = DATE_FORMAT(NOW(), '%Y-%m-%d %H:%m')
                WHERE
                     USER_ID=#{userId}
+    </update>
+
+    <update id="updateLoiginCount" parameterType="com.pamajon.member.model.vo.Member">
+        <selectKey resultType="string" keyProperty="memGrade" order="BEFORE">
+            SELECT
+                  MEM_GRADE
+              FROM
+                  MEMBER
+             WHERE
+                  USER_ID=#{userId}
+        </selectKey>
+        <if test="memGrade=='일반회원'">
+            UPDATE
+                   USERCOUNTER
+                SET
+                   ENTER_COUNT=ENTER_COUNT+1
+        </if>
+        <if test="memGrade=='VIP회원'">
+            UPDATE
+                  USERCOUNTER
+               SET
+                  ENTER_VIPCOUNT=ENTER_VIPCOUNT+1
+        </if>
     </update>
     
     <resultMap id="selectMem" type="com.pamajon.member.model.vo.Member">

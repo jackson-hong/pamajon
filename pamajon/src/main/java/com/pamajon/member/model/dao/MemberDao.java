@@ -31,4 +31,6 @@ public interface MemberDao {
     int wishDelete(SqlSession session, Map map);
     List<Map> memberOrderList(SqlSession session, Map map);
     int updateCurrentLoginTime(SqlSession session, Member m);
+
+    int updateLoiginCount(SqlSession session, Member m);
 }
