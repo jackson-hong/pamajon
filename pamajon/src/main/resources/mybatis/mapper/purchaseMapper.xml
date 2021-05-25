@@ -208,6 +208,27 @@
                 )
     </insert>
 
+    <insert id="insertSold_v2" parameterType="java.util.List">
+        INSERT INTO
+            SOLD
+        (
+            SOLD_ID,
+            ORDER_ID,
+            P_OPTION_ID,
+            SOLD_QUANTITY
+        )
+        VALUES
+        <foreach collection="list" item="element" separator=",">
+        (
+            NEXTVAL(SEQ_SOLD),
+            LASTVAL(SEQ_ORDER),
+            #{element.optionId},
+            #{element.soldQuantity}
+        )
+        </foreach>
+
+    </insert>
+
     <update id="modifyOptionStock" parameterType="com.pamajon.order.model.vo.ProductOptionDto">
         <selectKey resultType="string" keyProperty="productOptionStatus" order="BEFORE">
             SELECT
@@ -233,6 +254,7 @@
         WHERE
              P_OPTION_ID=#{optionId}
     </update>
+
 
     <select id="getProductOption" parameterType="com.pamajon.order.model.vo.ProductOptionDto" resultMap="productOptionDtoResultSet">
         SELECT

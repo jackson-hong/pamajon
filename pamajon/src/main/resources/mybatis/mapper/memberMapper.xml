@@ -94,7 +94,7 @@
     </select>
 
     <select id="selectAddrList" parameterType="int" resultMap="selectAddrList">
-        SELECT * from ADDRESS_LIST WHERE USER_ID = #{usid}
+        SELECT * from ADDRESS_LIST WHERE USER_ID = #{usid} AND ADDR_STATUS!='3'
     </select>
 
     <select id="selectAddr" parameterType="int" resultMap="selectAddrList">
@@ -151,15 +151,45 @@
         DELETE FROM WISHLIST WHERE PRODUCT_ID = #{proId} AND USER_ID = #{usid}
     </delete>
 
-    <select id="memberOrderList" parameterType="map" resultType="map">
+    <select id="memberOrderList_KEEP" parameterType="map" resultType="map">
         SELECT * FROM ORDER_P P LEFT JOIN SOLD S on P.ORDER_ID = S.ORDER_ID
                                 LEFT JOIN P_OPTION on P_OPTION.P_OPTION_ID = S.P_OPTION_ID
                                 LEFT JOIN PRODUCT on P_OPTION.PRODUCT_ID = PRODUCT.PRODUCT_ID
                                 LEFT JOIN PRO_IMAGE PI on P_OPTION.PRODUCT_ID = PI.PRODUCT_ID
         WHERE PRO_IMG_ISDEFAULT = 1
           AND USER_ID = #{usid}
-          AND ORDER_DATE BETWEEN #{startDate} AND #{endDate};
+          AND ORDER_DATE BETWEEN #{startDate} AND #{endDate}
     </select>
+
+    <select id="memberOrderList" parameterType="map" resultType="map">
+        SELECT
+            *
+        FROM
+            ORDER_P op,
+            SOLD s,
+            P_OPTION po,
+            PRODUCT p,
+            PRO_IMAGE pi2
+        WHERE
+            1=1
+          AND
+            op.ORDER_ID=s.ORDER_ID
+          AND
+            s.P_OPTION_ID = po.P_OPTION_ID
+          AND
+            po.PRODUCT_ID = p.PRODUCT_ID
+          AND
+            p.PRODUCT_ID = pi2.PRODUCT_ID
+          AND
+            PRO_IMG_ISDEFAULT = '1'
+          AND
+            USER_ID = #{usid}
+          AND
+             DATE_FORMAT(REPLACE(ORDER_DATE,'-',''),'%Y%m%d')
+                BETWEEN DATE_FORMAT(REPLACE(#{startDate},'-',''),'%Y%m%d')
+                AND DATE_FORMAT(REPLACE(#{endDate},'-',''),'%Y%m%d')
+    </select>
+
     
     <update id="updateCurrentLoginTime" parameterType="com.pamajon.member.model.vo.Member">
         UPDATE

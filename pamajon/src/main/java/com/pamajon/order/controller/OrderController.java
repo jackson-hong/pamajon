@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -90,9 +91,11 @@ public class OrderController {
 
         return "order/addressInput";
     }
-    @PostMapping("/order/purchase")
+
+    // 결제 로직 변경에 따른 리펙토링 //
+    @PostMapping("/v1/order/purchase")
     @ResponseBody
-    public ResponseEntity<Integer> updatePurchaseInfo(
+    public ResponseEntity<Integer> updatePurchaseInfo_v1(
             @RequestParam String orderDto,//2
             @RequestParam String soldDto,
             @RequestParam String addressDto,//1
@@ -130,7 +133,6 @@ public class OrderController {
 
         //옵션별 배열 인서트
         for (int i = 0 ; i<soldDtos.getSoldList().size();i++){
-
             soldResult = orderService.insertSold(soldDtos.getSoldList().get(i));
             soldResult = orderService.modifyOptionStock(productOptionDto.getOptionList().get(i));
             soldResult *= soldResult; //하나라도 insert 안되면 0이 리턴됨
@@ -144,4 +146,25 @@ public class OrderController {
     public ResponseEntity<Integer> getAddressId(){
         return new ResponseEntity(orderService.getAddressId(), HttpStatus.OK);
     }
+
+    //2021-05-25 결제 비즈니스 로직 컨트롤러로 이전 트랜젝션 로직 적용. By 유호연
+    
+    @PostMapping("/v2/order/purchase")
+    @ResponseBody
+    public ResponseEntity<Integer> updatePurchaseInfo_v2(
+            @RequestParam String orderDto,//2
+            @RequestParam String soldDto,
+            @RequestParam String addressDto,//1
+            @RequestParam String usedMileageDto,
+            @RequestParam String stackMileageDto,
+            @RequestParam String optionDto){
+
+        int successCheck = orderService.orderinsert(orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto,optionDto);
+
+        return new ResponseEntity<>(successCheck,HttpStatus.OK);
+    }
+
+
+
+
 }

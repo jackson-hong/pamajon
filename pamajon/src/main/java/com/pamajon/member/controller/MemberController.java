@@ -496,7 +496,7 @@ public class MemberController {
                 e.printStackTrace();
             }
         });
-        log.info(resultList.toString());
+      //  log.info(resultList.toString());
         mv.addObject("addrList", resultList);
         mv.setViewName("member/address");
         return mv;
@@ -586,6 +586,8 @@ public class MemberController {
            //
             isDefault = false;
         }
+     // 수정코드 -------------------------------------------- 2021-05-16 by 유호연
+
       // 기존코드 -------------------------------------------- 2021-05-16 by 유호연
      /*   boolean isDefault = false;
         if((String)map.get("isDefault") != null && (String)map.get("isDefault") == "on")isDefault = true;*/

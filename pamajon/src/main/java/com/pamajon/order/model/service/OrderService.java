@@ -27,4 +27,6 @@ public interface OrderService {
     public List<ProductOptionDto> getProductOption(ProductOptionDto productOptionDto);
 
     String getUserEmail(int userId);
+
+    int orderinsert(String orderDto, String soldDto, String addressDto, String usedMileageDto, String stackMileageDto, String optionDto);
 }

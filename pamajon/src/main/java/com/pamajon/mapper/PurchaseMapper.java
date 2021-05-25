@@ -3,6 +3,9 @@ package com.pamajon.mapper;
 import com.pamajon.order.model.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mapper
 public interface PurchaseMapper {
 
@@ -27,4 +30,8 @@ public interface PurchaseMapper {
     public ProductOptionDto getProductOption(ProductOptionDto productOptionDto);
 
     String getUserEmail(int userId);
+
+    void insertSold_v2(List<SoldDto> soldList);
+
+    void modifyOptionStock_v2(List<ProductOptionDto> optionList);
 }

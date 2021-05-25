@@ -146,7 +146,7 @@ function processPurchase(){
             });
 
             $.ajax({
-                url:"/order/purchase",
+                url:"/v2/order/purchase",
                 type:"POST",
                 traditional: true,
                 data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto,optionDto},
@@ -439,7 +439,7 @@ function emailTest(){
 
 }
 */
-//결제하기 디버길할때 쓰는 메소드.
+//결제하기 디버깅할때 쓰는 메소드.
 function processPurchaseTest(){
 
     let merchant_name_arr = [];
@@ -515,26 +515,24 @@ function processPurchaseTest(){
 
             let stackMileageDto = JSON.stringify({
                 userId:$("input[name='userNo']").val(),
-                mileage:`${removeCommaConvertToNumber($("#mAllMileageSum").text().trim())}`
+                mileage:`${removeCommaConvertToNumber($("#mProductMileage").text().trim())}`
             });
 
             $.ajax({
-                url:"/order/purchase",
+                url:"/v2/order/purchase",
                 type:"POST",
                 traditional: true,
                 data:{orderDto,soldDto,addressDto,usedMileageDto,stackMileageDto,optionDto},
                 success:function (result){
                     if(result>0){
+
+                        location.href='/member/order-list/1';
+
                         $.ajax({
                             url:"/order/email",
                             type: "POST",
                             data: {to:`${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
-                                productName:"aaa"},
-                            success:function (result){
-                                if(result>0){
-
-                                }
-                            }
+                                productName:"aaa"}
                         })
                     }
                 }

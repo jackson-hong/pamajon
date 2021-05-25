@@ -94,7 +94,7 @@ public class WebSocketController implements ActiveUserChangeListener {
 
     @GetMapping("/admin/chatroom")
     public String getWebSocketWithSockJs() {
-        return "/admin/chattingRoom";
+        return "admin/chattingRoom";
     }
 
 }

@@ -1,10 +1,20 @@
 package com.pamajon.order.model.service;
 
+import com.pamajon.common.security.AES256Util;
 import com.pamajon.mapper.PurchaseMapper;
+import com.pamajon.order.JSONConvertor;
+import com.pamajon.order.JSONToObject;
+import com.pamajon.order.model.EncryptAddress;
+import com.pamajon.order.model.EncryptOrder;
 import com.pamajon.order.model.vo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +25,21 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private final PurchaseMapper purchaseMapper;
+    @Autowired
+    private JSONConvertor jsonConvertor;
+    @Autowired
+    private JSONToObject jsonToObject;
+    @Autowired
+    private EncryptAddress encryptAddress;
+    @Autowired
+    private EncryptOrder encryptOrder;
+    @Autowired
+    private AES256Util aes256Util;
+    @Autowired
+    private EncryptMember encryptMember;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
+
 
     public OrderServiceImpl(PurchaseMapper purchaseMapper){
         this.purchaseMapper = purchaseMapper;
@@ -89,4 +114,37 @@ public class OrderServiceImpl implements OrderService{
         return purchaseMapper.getUserEmail(userId);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor={Exception.class})
+    public int orderinsert(String orderDto, String soldDto, String addressDto, String usedMileageDto, String stackMileageDto, String optionDto) {
+
+        OrderDto order = jsonToObject.converToOrder(jsonConvertor.jsonConvertor(orderDto));
+        SoldDto soldDtos = jsonToObject.convertToSoldList(jsonConvertor.jsonArrayConvertor(soldDto));
+        AddressDto address = jsonToObject.convertToAddressDto(jsonConvertor.jsonConvertor(addressDto));
+        ProductOptionDto productOptionDto = jsonToObject.convertToOptionList(jsonConvertor.jsonArrayConvertor(optionDto));
+        MileageDto usedmileage =  jsonToObject.convertToMileage(jsonConvertor.jsonConvertor(usedMileageDto));
+        MileageDto stackMileage = jsonToObject.convertToMileage(jsonConvertor.jsonConvertor(stackMileageDto));
+
+
+        // 주소가 새로 입력되었을경우 주소부터 insert 함
+        if(address.getAddrReloadCheck().equals("reloaded")){
+            purchaseMapper.createAddress(encryptAddress.encryption(address));
+        }
+        purchaseMapper.createOrder(encryptOrder.encryptOrder(order));
+
+        if(!usedmileage.getMileage().equals("0")){
+            purchaseMapper.insertMileage(usedmileage);
+        }
+        if(!stackMileage.getMileage().equals("0")){
+            purchaseMapper.stackMileage(stackMileage);
+        }
+        purchaseMapper.insertSold_v2(soldDtos.getSoldList());
+
+        for (int i = 0 ; i <soldDtos.getSoldList().size(); i++){
+            purchaseMapper.modifyOptionStock(productOptionDto.getOptionList().get(i));
+        }
+
+
+        return 1;
+    }
 }
