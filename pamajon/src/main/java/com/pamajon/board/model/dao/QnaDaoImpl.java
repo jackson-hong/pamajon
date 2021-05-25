@@ -2,12 +2,10 @@ package com.pamajon.board.model.dao;
 
 import com.pamajon.board.model.vo.BoardDto;
 import com.pamajon.board.model.vo.QnaDto;
-import com.pamajon.common.vo.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class QnaDaoImpl implements QnaDao {
@@ -24,8 +22,8 @@ public class QnaDaoImpl implements QnaDao {
     public QnaDto readQna(SqlSession session, int qnaId) { return session.selectOne("qna.readQna",qnaId); }
 
     @Override
-    public int updateQna(SqlSession session, int qnaId) {
-        return session.update("qna.updateQna",qnaId);
+    public int updateQna(SqlSession session, QnaDto qnaDto) {
+        return session.update("qna.updateQna",qnaDto);
     }
 
     @Override
