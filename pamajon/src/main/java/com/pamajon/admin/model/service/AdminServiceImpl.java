@@ -147,6 +147,7 @@ public class AdminServiceImpl implements AdminService{
                 monthlyRateDtos.add(new MonthlyRateDto(i,0));
             }
         }
+        //1월부터 12월까지 정렬.
         Collections.sort(monthlyRateDtos,new AscendingInteger());
 
         return monthlyRateDtos;
