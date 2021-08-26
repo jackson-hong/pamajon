@@ -67,7 +67,7 @@ function processPurchase(){
         pay_method : 'card',
         merchant_uid : 'pamajon_' + new Date().getTime(),
         name : "파마존 결제내역",
-        amount : 100, //${removeCommaConvertToNumber($("#total_price").val())} <== 실제 결제테스트는 이 주석을 풀고 사용.
+        amount : `${removeCommaConvertToNumber($("#total_price").val())}`,
         buyer_email : `${document.getElementsByName("email[]")[0].value.trim()}@${document.getElementsByName("email[]")[1].value.trim()}`,
         buyer_name : `${$("input[name='addrReceiver']").val().trim()}`,
         buyer_tel : `${document.getElementsByName("mobile[]")[0].value.trim()}-${document.getElementsByName("mobile[]")[1].value.trim()}-${document.getElementsByName("mobile[]")[2].value.trim()}`,
